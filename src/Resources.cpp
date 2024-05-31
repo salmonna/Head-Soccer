@@ -11,8 +11,7 @@ Resources::Resources(){
 	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png" ,"Stage.png"};
 	loadFromFile(fileNames,m_menuTexture);
 
-	std::vector<std::string> boardFileNames{ "Stadium.png","Goal - Back.png","Goal - Side.png"
-											"Goal - Top.png" };
+	std::vector<std::string> boardFileNames{ "Stadium.png", "Goal - Side.png" }; //"Goal - Back.png" //, ,"Goal - Top.png" };
 	loadFromFile(boardFileNames, m_boardTexture);
 
 

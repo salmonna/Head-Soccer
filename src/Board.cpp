@@ -15,6 +15,8 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
 		auto sprite = sf::Sprite(texturs[i]);
 		m_vecSprits.push_back(sprite);
 	}
+	m_vecSprits[1].setPosition(-40,630);
+	m_vecSprits[1].scale(0.6,0.6);
 }
 
 //=============================================== respond =======================================//
