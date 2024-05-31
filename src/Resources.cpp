@@ -8,8 +8,8 @@
 //constractor of resources file are loading files
 Resources::Resources(){
 
-	//std::vector<std::string> fileNames{"Exit.png","Background.png","Start.png","Replay.png"};
-	//loadFromFile(fileNames,m_menuTexture);
+	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png" ,"Stage.png"};
+	loadFromFile(fileNames,m_menuTexture);
 
 	std::vector<std::string> boardFileNames{ "Stadium.png","Goal - Back.png","Goal - Side.png"
 											"Goal - Top.png" };

@@ -9,6 +9,7 @@ Window::Window() {}
 //----------------------------------------------------------------
 void Window::open() {
 	m_window.create(sf::VideoMode(1800,1013), "Head Soccer");
+	m_window.setFramerateLimit(60);
 }
 
 // Checks if the window is open.

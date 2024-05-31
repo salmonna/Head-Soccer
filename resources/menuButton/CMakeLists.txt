@@ -1,0 +1,5 @@
+configure_file ("Play.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Quit.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Setting.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Stage.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Tutorial.png" ${CMAKE_BINARY_DIR} COPYONLY)
