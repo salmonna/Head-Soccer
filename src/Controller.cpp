@@ -27,13 +27,13 @@ void Controller::runTheGame()
 			m_menu.draw(m_window.getWindow());
 			continue;
 		}
-		else if (m_gameBoard.isOpen())
+		else if (m_gameBoard.isOpen() && false)
 		{
 			m_gameBoard.respond(m_window.getMousePressed());
 			m_gameBoard.draw(m_window.getWindow());
 			continue;
 		}
-		else if (m_gameResults.isOpen())
+		else if (m_gameResults.isOpen() && false)
 		{
 			m_gameResults.respond(m_window.getMousePressed());
 			m_gameResults.draw(m_window.getWindow());
