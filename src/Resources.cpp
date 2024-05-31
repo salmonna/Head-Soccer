@@ -11,8 +11,9 @@ Resources::Resources(){
 	//std::vector<std::string> fileNames{"Exit.png","Background.png","Start.png","Replay.png"};
 	//loadFromFile(fileNames,m_menuTexture);
 
-	//std::vector<std::string> boardFileNames{ "Help.png", "Save.png"};
-	//loadFromFile(boardFileNames, m_boardTexture);
+	std::vector<std::string> boardFileNames{ "Stadium.png","Goal - Back.png","Goal - Side.png"
+											"Goal - Top.png" };
+	loadFromFile(boardFileNames, m_boardTexture);
 
 
 	//if (!m_font.loadFromFile("Font.otf"))

@@ -26,7 +26,7 @@ void Controller::runTheGame()
 			m_menu.respond(m_window.getMousePressed());
 			m_menu.draw(m_window.getWindow());
 			continue;
-		}
+		} 
 		else if (m_gameBoard.isOpen())
 		{
 			m_gameBoard.respond(m_window.getMousePressed());

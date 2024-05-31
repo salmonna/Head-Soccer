@@ -8,7 +8,7 @@ Window::Window() {}
 // Opens a new window with the specified number of columns and rows.
 //----------------------------------------------------------------
 void Window::open() {
-	m_window.create(sf::VideoMode(1000,800), "Sticks");
+	m_window.create(sf::VideoMode(1800,1013), "Head Soccer");
 }
 
 // Checks if the window is open.
