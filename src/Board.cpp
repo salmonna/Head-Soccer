@@ -36,6 +36,9 @@ void Board::draw(sf::RenderWindow& window) {
 	{
 		window.draw(m_vecSprits[i]);
 	}
+
+	//draw the score board
+	m_scoreBoard.draw(window);
 }
 
 //check if board is open

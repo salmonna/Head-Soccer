@@ -18,6 +18,7 @@ public:
 	std::vector<sf::Texture>& gameResultsTexture();
 	std::vector<sf::Texture>& getMenuTexture();
 	std::vector<sf::Texture>& getBoardTexture();
+	std::vector<sf::Texture>& getScoreBoardTexture();
 	sf::Font & getFont();
 
 private:
@@ -31,6 +32,7 @@ private:
 	std::vector<sf::Texture> m_menuTexture;
 	std::vector<sf::Texture> m_boardTexture;
 	std::vector<sf::Texture> m_gameResultsTexture;
+	std::vector<sf::Texture> m_scoreBoardTexture;
 	sf::Font m_font;
 
 };

@@ -15,6 +15,9 @@ Resources::Resources(){
 	loadFromFile(boardFileNames, m_boardTexture);
 
 
+	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png"};
+	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
+
 	//if (!m_font.loadFromFile("Font.otf"))
 	//{
 	//	throw FileException("Font file not load!");
@@ -51,6 +54,14 @@ std::vector<sf::Texture>& Resources::gameResultsTexture() {
 
 	return m_gameResultsTexture;
 }
+
+
+//gameResultsTexture
+std::vector<sf::Texture>& Resources::getScoreBoardTexture() {
+
+	return m_scoreBoardTexture;
+}
+
 //getFont
 sf::Font & Resources::getFont() {
 
