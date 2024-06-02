@@ -9,14 +9,7 @@
 // Constructor for the Board class
 Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
 {
-
-	for (int i = 0; i < texturs.size(); i++)
-	{
-		auto sprite = sf::Sprite(texturs[i]);
-		m_vecSprits.push_back(sprite);
-	}
-	m_vecSprits[1].setPosition(-40,630);
-	m_vecSprits[1].scale(0.6,0.6);
+    m_backGroundStadium.setTexture(texturs[0]);
 }
 
 //=============================================== respond =======================================//
@@ -32,10 +25,8 @@ void Board::respond(sf::Vector2f loc) {
 // Method to draw all sticks in the window
 void Board::draw(sf::RenderWindow& window) {
    
-	for (int i = 0; i < m_vecSprits.size(); i++)
-	{
-		window.draw(m_vecSprits[i]);
-	}
+    window.draw(m_backGroundStadium);
+    m_goal.draw(window);
 }
 
 //check if board is open

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Window.h"
+#include "Goal.h"
 
 class Board
 {
@@ -20,7 +21,9 @@ private:
 
 
 	bool m_boardOpen;
-	std::vector<sf::Sprite> m_vecSprits;
+
+	sf::Sprite m_backGroundStadium;
+	Goal m_goal;
 	
 };
 
