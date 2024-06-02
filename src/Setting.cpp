@@ -10,7 +10,7 @@ Setting::Setting(sf::Texture& texture)
 
 
 // Method to simulate clicking the button
-bool Setting::click() const {
+bool Setting::click() {
 	return true;
 }
 

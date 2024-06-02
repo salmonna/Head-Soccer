@@ -8,7 +8,7 @@ class BaseButton {
 public:
 
     // Method to simulate clicking the button
-    virtual bool click() const = 0;
+    virtual bool click() = 0;
 
     // Method to display button information
     virtual void draw(sf::RenderWindow& window) const = 0;

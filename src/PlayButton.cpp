@@ -11,7 +11,7 @@ PlayButton::PlayButton(sf::Texture& texture)
 }
 
 // Method to simulate clicking the button
-bool PlayButton::click() const {
+bool PlayButton::click() {
 	return false;
 }
 

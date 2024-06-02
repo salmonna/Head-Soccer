@@ -25,6 +25,10 @@ void Controller::runTheGame()
 		{
 			m_menu.respond(m_window.getMousePressed());
 			m_menu.draw(m_window.getWindow());
+			if (m_menu.isExit())
+			{
+				m_window.close();
+			}
 			continue;
 		}
 		else if (m_gameBoard.isOpen())

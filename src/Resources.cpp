@@ -15,10 +15,10 @@ Resources::Resources(){
 	loadFromFile(boardFileNames, m_boardTexture);
 
 
-	//if (!m_font.loadFromFile("Font.otf"))
-	//{
-	//	throw FileException("Font file not load!");
-	//}
+	if (!m_font.loadFromFile("Font.otf"))
+	{
+		throw FileException("Font file not load!");
+	}
 
 }
 

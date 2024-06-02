@@ -10,7 +10,7 @@ public:
 	QuitButton(sf::Texture& texture);
 
     // Method to simulate clicking the button
-    virtual bool click() const override;
+    virtual bool click() override;
 
     // Method to display button information
     virtual void draw(sf::RenderWindow& window) const override;

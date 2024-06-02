@@ -8,7 +8,7 @@
 #include "TutorialButton.h"
 
 //menu constractor initilize his members
-Menu::Menu(std::vector<sf::Texture>& texturs):m_menuOpen(true){
+Menu::Menu(std::vector<sf::Texture>& texturs):m_menuOpen(true),m_exit(false){
 
 	m_buttons.push_back(std::make_unique<PlayButton>(texturs[0]));
 	m_buttons.push_back(std::make_unique<QuitButton>(texturs[1]));
@@ -24,6 +24,10 @@ void Menu::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 			m_menuOpen = m_buttons[i]->click();
+			if (!m_menuOpen && i == 1)
+			{
+				m_exit = true;
+			}
 			break;
 		}
 	}
@@ -43,4 +47,9 @@ void Menu::draw(sf::RenderWindow& window) const{
 //return menu open
 bool Menu::isOpen() const {
 	return m_menuOpen;
+}
+
+//return menu open
+bool Menu::isExit() const {
+	return m_exit;
 }
