@@ -31,13 +31,8 @@ void Board::respond(sf::Vector2f loc) {
 void Board::draw(sf::RenderWindow& window) {
    
 
-	//for (int i = 0; i < m_vecSprits.size(); i++)
-	//{
-		//window.draw(m_vecSprits[i]);
-	//}
-
 	//draw the score board
-	m_scoreBoard.draw(window);
+	
 
     window.draw(m_backGroundStadium);
 
@@ -45,7 +40,7 @@ void Board::draw(sf::RenderWindow& window) {
     {
         m_goalObjects[i]->draw(window);
     }
-
+	m_scoreBoard.draw(window);
 }
 
 //check if board is open

@@ -28,7 +28,6 @@ private:
 
 	bool m_boardOpen;
 
-	std::vector<sf::Sprite> m_vecSprits;
 	ScoreBoard m_scoreBoard;
 
 	sf::Sprite m_backGroundStadium;
