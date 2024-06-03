@@ -18,10 +18,13 @@ public:
 
 private:
 
+	int m_jump;
+	int m_pos;
 
 	bool m_boardOpen;
 	std::vector<sf::Sprite> m_vecSprits;
-	
+
+	sf::Clock m_moveClock;
 };
 
 

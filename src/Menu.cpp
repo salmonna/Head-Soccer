@@ -35,6 +35,7 @@ void Menu::respond(sf::Vector2f mousePressed) {
 	for (int i = 0; i < m_buttons.size() - 2; i++)
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
+			
 			m_buttonPressed[i] = m_buttons[i]->click();
 			if (m_buttonPressed[i] && i == 1)
 			{
