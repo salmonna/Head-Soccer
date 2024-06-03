@@ -32,7 +32,7 @@ void Controller::runTheGame()
 		}
 		else if (m_gameBoard.isOpen())
 		{
-			m_gameBoard.respond(m_window.getMousePressed());
+			m_gameBoard.respond(m_window.getKeyPressed());
 			m_gameBoard.draw(m_window.getWindow());
 			continue;
 		}
