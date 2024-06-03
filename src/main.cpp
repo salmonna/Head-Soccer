@@ -4,7 +4,7 @@
 #include <exception>
 #include <iostream>
 
-// The main function of the program.
+// The main function of the program
 //----------------------------------------------------------------
 int main() {
 

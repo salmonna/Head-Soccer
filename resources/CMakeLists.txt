@@ -1,2 +1,3 @@
 add_subdirectory(menuButton)
 add_subdirectory(Background)
+add_subdirectory(ScoreBoard)
