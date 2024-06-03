@@ -18,10 +18,10 @@ Resources::Resources(){
 	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png"};
 	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
 
-	//if (!m_font.loadFromFile("Font.otf"))
-	//{
-	//	throw FileException("Font file not load!");
-	//}
+	if (!m_font.loadFromFile("Font.otf"))
+	{
+		throw FileException("Font file not load!");
+	}
 
 }
 

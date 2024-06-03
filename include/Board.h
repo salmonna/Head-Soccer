@@ -19,6 +19,8 @@ public:
 
 private:
 
+	void timeCalculation();
+
 
 	bool m_boardOpen;
 	std::vector<sf::Sprite> m_vecSprits;

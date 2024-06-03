@@ -7,7 +7,7 @@
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
+Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(120)
 {
 
 	for (int i = 0; i < texturs.size(); i++)
@@ -45,4 +45,16 @@ void Board::draw(sf::RenderWindow& window) {
 bool Board::isOpen() const{
 
     return m_boardOpen;
+}
+
+
+//time calculation
+void Board::timeCalculation()
+{
+	m_scoreBoard.timeCalculation();
+
+	if (m_scoreBoard.timeIsOver())
+	{
+		m_boardOpen = false;
+	}
 }
