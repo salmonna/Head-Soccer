@@ -13,16 +13,22 @@ public:
 
 	void move(int keyPressed);
 
+	
+
 	~Player();
 
 private:
 
 	int m_jump;
 	int m_pos;
+	int m_move;
 
 	bool m_movePlayer;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
+
+	void kick();
+	void moveLeft();
 };
 
