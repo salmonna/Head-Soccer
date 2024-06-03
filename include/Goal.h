@@ -6,8 +6,8 @@ class Goal
 {
 	public:
 		Goal();
-		~Goal();
-		void draw(sf::RenderWindow & window);
+		virtual ~Goal();
+		virtual void draw(sf::RenderWindow & window) = 0;
 
 	private:
 

@@ -22,13 +22,19 @@ RightGoal::RightGoal()
 	}
 	m_rightGoal.push_back(otherSideGoal);
 	m_rightGoal[0].setPosition(1755,580);
+	m_rightGoal[1].setPosition(1805, 590);
+	m_rightGoal[2].setPosition(1750, 580);
+	m_rightGoal[3].setPosition(1810, 625);
 }
 
 //---------------- draw the goal --------------------
 void RightGoal::draw(sf::RenderWindow& window) {
 
 	
-	window.draw(m_rightGoal[0]);
+	for (size_t i = 0; i < m_rightGoal.size(); i++)
+	{
+		window.draw(m_rightGoal[i]);
+	}
 }
 
 //--------- D-tor --------------

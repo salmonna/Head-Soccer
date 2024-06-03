@@ -1,14 +1,15 @@
 #pragma once
 #include <vector>
 #include "Resources.h"
+#include "Goal.h"
 
-class RightGoal
+class RightGoal :public Goal
 {
 	public:
 		RightGoal();
-		~RightGoal();
+		virtual ~RightGoal();
 
-		void draw(sf::RenderWindow &  window);
+		virtual void draw(sf::RenderWindow &  window) override;
 
 	private:
 		std::vector<sf::Sprite> m_rightGoal;

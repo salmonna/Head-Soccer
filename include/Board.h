@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Goal.h"
 #include "RightGoal.h"
+#include <memory>
 
 class Board
 {
@@ -24,8 +25,7 @@ private:
 	bool m_boardOpen;
 
 	sf::Sprite m_backGroundStadium;
-	Goal m_goal;
-	RightGoal m_rightGoal;
+	std::vector<std::unique_ptr<Goal>> m_goalObjects;
 	
 };
 
