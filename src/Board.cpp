@@ -30,16 +30,15 @@ void Board::respond(sf::Vector2f loc) {
 // Method to draw all sticks in the window
 void Board::draw(sf::RenderWindow& window) {
    
-
-	//draw the score board
-	
-
     window.draw(m_backGroundStadium);
 
+    //draw the goals
     for (size_t i = 0; i < m_goalObjects.size(); i++)
     {
         m_goalObjects[i]->draw(window);
     }
+
+    //draw the score board
 	m_scoreBoard.draw(window);
 }
 

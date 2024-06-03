@@ -21,6 +21,8 @@ RightGoal::RightGoal()
 		}
 	}
 	m_rightGoal.push_back(otherSideGoal);
+
+	//set position
 	m_rightGoal[0].setPosition(1755,580);
 	m_rightGoal[1].setPosition(1805, 590);
 	m_rightGoal[2].setPosition(1750, 580);
