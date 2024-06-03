@@ -3,7 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Window.h"
+
 #include "ScoreBoard.h"
+#include "Goal.h"
+#include "RightGoal.h"
+#include <memory>
+
 
 class Board
 {
@@ -22,10 +27,12 @@ private:
 	void timeCalculation();
 
 	bool m_boardOpen;
+
 	std::vector<sf::Sprite> m_vecSprits;
 	ScoreBoard m_scoreBoard;
 
-
+	sf::Sprite m_backGroundStadium;
+	std::vector<std::unique_ptr<Goal>> m_goalObjects;
 };
 
 

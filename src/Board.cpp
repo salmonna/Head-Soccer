@@ -4,19 +4,16 @@
 #include "Resources.h"
 #include <fstream>
 #include "FileException.h"
+#include "LeftGoal.h"
 
 
 // Constructor for the Board class
 Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(60)
 {
+    m_backGroundStadium.setTexture(texturs[0]);
 
-	for (int i = 0; i < texturs.size(); i++)
-	{
-		auto sprite = sf::Sprite(texturs[i]);
-		m_vecSprits.push_back(sprite);
-	}
-	m_vecSprits[1].setPosition(-40,630);
-	m_vecSprits[1].scale(0.6,0.6);
+    m_goalObjects.push_back(std::make_unique<LeftGoal>());
+    m_goalObjects.push_back(std::make_unique<RightGoal>());
 }
 
 //=============================================== respond =======================================//
@@ -33,13 +30,22 @@ void Board::respond(sf::Vector2f loc) {
 // Method to draw all sticks in the window
 void Board::draw(sf::RenderWindow& window) {
    
-	for (int i = 0; i < m_vecSprits.size(); i++)
-	{
-		window.draw(m_vecSprits[i]);
-	}
+
+	//for (int i = 0; i < m_vecSprits.size(); i++)
+	//{
+		//window.draw(m_vecSprits[i]);
+	//}
 
 	//draw the score board
 	m_scoreBoard.draw(window);
+
+    window.draw(m_backGroundStadium);
+
+    for (size_t i = 0; i < m_goalObjects.size(); i++)
+    {
+        m_goalObjects[i]->draw(window);
+    }
+
 }
 
 //check if board is open
