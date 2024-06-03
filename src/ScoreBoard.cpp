@@ -3,7 +3,7 @@
 #include "Resources.h"
 
 ScoreBoard::ScoreBoard(int gameTime) : timeCounterSec(gameTime % 60), 
-timeCounterMin(gameTime / 60), m_gameTime(gameTime)
+timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0)
 {
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getScoreBoardTexture();
@@ -15,11 +15,24 @@ timeCounterMin(gameTime / 60), m_gameTime(gameTime)
 	float x = 1800 / 2 -1200/2;
 	m_SpriteVec[0].setPosition(x, -500);
 
-	//font
-	m_textVec.push_back(sf::Text());
-	m_textVec[0].setFont(Resources::getInstance().getFont());
-	m_textVec[0].setCharacterSize(50);
-	m_textVec[0].setPosition(0, 0);
+
+	sf::Font & font = Resources::getInstance().getFont();
+	for (int i = 0; i < 3; i++)
+	{
+		m_textVec.push_back(sf::Text());
+		m_textVec[i].setFont(font);
+		m_textVec[i].setCharacterSize(70);
+		m_textVec[i].setFillColor(sf::Color::White);
+
+
+	}
+
+	//font time pos
+	m_textVec[0].setPosition(875, 0);
+
+	//font points pos
+	m_textVec[1].setPosition(x+175, 50);
+	m_textVec[2].setPosition(x + 1200-175-20, 50);
 	
 
 }
@@ -32,12 +45,15 @@ void ScoreBoard::draw(sf::RenderWindow& window)
 		window.draw(m_SpriteVec[i]);
 	}
 
+	
 	for (int i = 0; i < m_textVec.size(); i++)
 	{
 		window.draw(m_textVec[i]);
 	}
 }
 
+
+//========================Time=======================
 void ScoreBoard::timeCalculation()
 {
 	sf::Time timeForSec = m_clockEverySec.getElapsedTime();
@@ -54,17 +70,27 @@ void ScoreBoard::timeCalculation()
 
 	if (secondsForSec >= 1)
 	{
+		std::string str = std::to_string(timeCounterMin) + ":" + std::to_string(timeCounterSec);
 		--timeCounterSec;
-
-		std::string str = "Game Time: " + std::to_string(timeCounterMin) + ":" + std::to_string(timeCounterSec);
 		m_textVec[0].setString(str);
 		m_clockEverySec = sf::Clock();
 	}
 
 }
-
-
 bool ScoreBoard::timeIsOver()
 {
-	return timeCounterSec == 1 && timeCounterMin == 0;
+	return timeCounterSec == 0 && timeCounterMin == 0;
+}
+
+//=======================Points=======================
+void ScoreBoard::updateScore(int p1Points, int p2Points)
+{
+	m_p1Points += p1Points;
+	m_p2Points += p2Points;
+
+	std::string str = std::to_string(m_p1Points);
+	m_textVec[1].setString(str);
+
+	str = std::to_string(m_p2Points);
+	m_textVec[2].setString(str);
 }

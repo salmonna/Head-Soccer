@@ -10,6 +10,8 @@ public:
 	void draw(sf::RenderWindow& window);
 
 	void timeCalculation();
+	void updateScore(int p1Points, int p2Points);
+
 	bool timeIsOver();
 
 	~ScoreBoard() = default;
@@ -26,4 +28,10 @@ private:
 	//text & sprite
 	std::vector<sf::Text> m_textVec;
 	std::vector<sf::Sprite> m_SpriteVec;
+
+	//points
+	int m_p1Points;
+	int m_p2Points;
+
+
 };

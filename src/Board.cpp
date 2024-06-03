@@ -7,7 +7,7 @@
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(120)
+Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(60)
 {
 
 	for (int i = 0; i < texturs.size(); i++)
@@ -24,7 +24,8 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 // Method to check if a given location corresponds to a stick
 void Board::respond(sf::Vector2f loc) {
 
-    
+	timeCalculation();
+	m_scoreBoard.updateScore(0, 0);
 }
 
 //=============================================== draw =======================================//
@@ -47,10 +48,11 @@ bool Board::isOpen() const{
     return m_boardOpen;
 }
 
-
+//=======================================Time==================================
 //time calculation
 void Board::timeCalculation()
 {
+
 	m_scoreBoard.timeCalculation();
 
 	if (m_scoreBoard.timeIsOver())
