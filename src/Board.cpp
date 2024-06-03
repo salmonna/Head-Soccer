@@ -26,7 +26,10 @@ void Board::respond(sf::Vector2f loc) {
 void Board::draw(sf::RenderWindow& window) {
    
     window.draw(m_backGroundStadium);
+
     m_goal.draw(window);
+
+    m_rightGoal.draw(window);
 }
 
 //check if board is open

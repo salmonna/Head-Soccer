@@ -4,6 +4,7 @@
 #include <vector>
 #include "Window.h"
 #include "Goal.h"
+#include "RightGoal.h"
 
 class Board
 {
@@ -24,6 +25,7 @@ private:
 
 	sf::Sprite m_backGroundStadium;
 	Goal m_goal;
+	RightGoal m_rightGoal;
 	
 };
 

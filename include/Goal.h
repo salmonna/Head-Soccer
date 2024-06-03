@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <SFML/Graphics.hpp>
+#include "Resources.h"
 
 class Goal
 {
