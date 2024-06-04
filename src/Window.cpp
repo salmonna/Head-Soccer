@@ -56,18 +56,6 @@ void Window::checkMouseReleased(sf::Event event) {
 	m_mousePressed.y = -1;
 }
 
-// checkKeyReleased
-void Window::checkKeyReleased(sf::Event event) {
-
-	switch (event.KeyReleased)
-	{
-	case sf::Keyboard::Space:
-		m_keyPressed = 57;
-		return;
-	}
-	m_keyPressed = 0;
-}
-
 
 // Returns the reference to the window object.
 //----------------------------------------------------------------

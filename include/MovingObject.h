@@ -12,7 +12,7 @@ public:
 
 	virtual void move(int keyPressed) = 0;
 
-	~MovingObject() = default;
+	virtual ~MovingObject() = default;
 
 private:
 	

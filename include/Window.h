@@ -26,5 +26,4 @@ private:
 	unsigned int m_keyPressed;
 
 	void checkMouseReleased(sf::Event event);
-	void checkKeyReleased(sf::Event event);
 };

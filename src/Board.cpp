@@ -18,7 +18,7 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true),m_jump(0),m_po
 	m_movingObject.push_back(std::make_unique<Player>(texturs[2]));
 
 	m_vecSprits[1].setPosition(-40,630);
-	m_vecSprits[1].scale(0.6,0.6);
+	m_vecSprits[1].scale(float(0.6), float(0.6));
 }
 
 //=============================================== respond =======================================//

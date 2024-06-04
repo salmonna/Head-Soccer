@@ -19,7 +19,7 @@ Menu::Menu(std::vector<sf::Texture>& texturs):m_menuOpen(true),m_exit(false),m_p
 	m_buttons.push_back(std::make_unique<TutorialButton>(texturs[3]));
 	m_buttons.push_back(std::make_unique<MultiplayerButton>(texturs[4]));
 	m_buttons.push_back(std::make_unique<PlayerButton>(texturs[5]));
-
+	
 	m_Stage.setTexture(texturs[6]);
 
 	for (int i = 0; i < m_buttons.size(); i++)
