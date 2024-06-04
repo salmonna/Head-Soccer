@@ -15,10 +15,6 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
     m_backGroundStadium.setTexture(texturs[0]);
 
 
-    m_goalObjects.push_back(std::make_unique<LeftGoal>());
-    m_goalObjects.push_back(std::make_unique<RightGoal>());
-
-
 	//StaticObject* staticObject = std::make_unique<ScoreBoard>(60);
 	m_gameObjects.push_back(std::make_unique<ScoreBoard>(60));
 
