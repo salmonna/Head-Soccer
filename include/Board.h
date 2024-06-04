@@ -6,8 +6,6 @@
 
 #include "ScoreBoard.h"
 #include "Goal.h"
-#include "RightGoal.h"
-#include <memory>
 
 
 class Board
@@ -31,7 +29,9 @@ private:
 	ScoreBoard m_scoreBoard;
 
 	sf::Sprite m_backGroundStadium;
-	std::vector<std::unique_ptr<Goal>> m_goalObjects;
+
+	Goal m_leftGoal;
+	Goal m_rightGoal;
 };
 
 

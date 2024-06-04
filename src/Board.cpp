@@ -4,16 +4,13 @@
 #include "Resources.h"
 #include <fstream>
 #include "FileException.h"
-#include "LeftGoal.h"
 
 
 // Constructor for the Board class
 Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(60)
 {
     m_backGroundStadium.setTexture(texturs[0]);
-
-    m_goalObjects.push_back(std::make_unique<LeftGoal>());
-    m_goalObjects.push_back(std::make_unique<RightGoal>());
+    m_rightGoal.setRightGoal();
 }
 
 //=============================================== respond =======================================//
@@ -33,10 +30,12 @@ void Board::draw(sf::RenderWindow& window) {
     window.draw(m_backGroundStadium);
 
     //draw the goals
-    for (size_t i = 0; i < m_goalObjects.size(); i++)
+    m_rightGoal.draw(window);
+    m_leftGoal.draw(window);
+    /*for (size_t i = 0; i < m_goalObjects.size(); i++)
     {
         m_goalObjects[i]->draw(window);
-    }
+    }*/
 
     //draw the score board
 	m_scoreBoard.draw(window);
