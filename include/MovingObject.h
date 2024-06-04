@@ -1,20 +1,19 @@
 
+#include  "GameObject.h"
 
-#pragma once
-#include "Window.h"
 
-class MovingObject
+class MovingObject:public GameObject
 {
 public:
-	MovingObject();
+	MovingObject(int keyPressed) = default;
 
+	virtual void move() = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 
-	virtual void move(int keyPressed) = 0;
 
-	virtual ~MovingObject() = default;
+	~MovingObject() = default;
 
 private:
-	
+
 };
 

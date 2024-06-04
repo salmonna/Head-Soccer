@@ -1,5 +1,4 @@
 
-
 #pragma once
 #include "MovingObject.h"
 #include <SFML/Graphics.hpp>
@@ -37,4 +36,3 @@ private:
 
 	void movePlayer(sf::Vector2f startPos, int jump);
 };
-

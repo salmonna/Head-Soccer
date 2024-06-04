@@ -123,4 +123,3 @@ void Player::movePlayer(sf::Vector2f startPos, int jump) {
 		m_moveClock.restart();
 	}
 }
-
