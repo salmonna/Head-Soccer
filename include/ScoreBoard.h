@@ -1,13 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "StaticObject.h"
 
 
-
-class ScoreBoard
+class ScoreBoard : public StaticObject
 {
 public:
 	ScoreBoard(int gameTime);
-	void draw(sf::RenderWindow& window);
+	virtual void draw(sf::RenderWindow& window) override;
 
 	void timeCalculation();
 	void updateScore(int p1Points, int p2Points);

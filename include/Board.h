@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Window.h"
-
+#include "GameObject.h"
 #include "ScoreBoard.h"
 #include "Goal.h"
 
@@ -14,7 +14,7 @@ public:
 	Board(std::vector<sf::Texture>& texturs);
 
 	void respond(sf::Vector2f loc);
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow & window);
 	
 	bool isOpen() const;
 
@@ -26,7 +26,11 @@ private:
 
 	bool m_boardOpen;
 
-	ScoreBoard m_scoreBoard;
+	//game objects vector
+	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+
+	std::vector<sf::Sprite> m_vecSprits;
+
 
 	sf::Sprite m_backGroundStadium;
 
