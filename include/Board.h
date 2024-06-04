@@ -7,14 +7,18 @@
 #include "ScoreBoard.h"
 #include "Goal.h"
 
+#include "MovingObject.h"
+
 
 class Board
 {
 public:
 	Board(std::vector<sf::Texture>& texturs);
 
-	void respond(sf::Vector2f loc);
-	void draw(sf::RenderWindow & window);
+
+	void respond(int keyPressed);
+	void draw(sf::RenderWindow& window);
+
 	
 	bool isOpen() const;
 
@@ -24,18 +28,24 @@ private:
 
 	void timeCalculation();
 
+
+	std::vector<std::unique_ptr<MovingObject>> m_movingObject;
+
+
 	bool m_boardOpen;
 
 	//game objects vector
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
-	std::vector<sf::Sprite> m_vecSprits;
 
 
 	sf::Sprite m_backGroundStadium;
 
 	Goal m_leftGoal;
 	Goal m_rightGoal;
+
+	sf::Clock m_moveClock;
+
 };
 
 

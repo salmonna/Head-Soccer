@@ -25,11 +25,14 @@ void Controller::runTheGame()
 		{
 			m_menu.respond(m_window.getMousePressed());
 			m_menu.draw(m_window.getWindow());
+			if (m_menu.isExit())
+				m_window.close();
+
 			continue;
 		}
 		else if (m_gameBoard.isOpen())
 		{
-			m_gameBoard.respond(m_window.getMousePressed());
+			m_gameBoard.respond(m_window.getKeyPressed());
 			m_gameBoard.draw(m_window.getWindow());
 			continue;
 		}

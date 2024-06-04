@@ -3,16 +3,24 @@
 #include "PlayButton.h"
 
 
-PlayButton::PlayButton(sf::Texture& texture)
+PlayButton::PlayButton(sf::Texture& texturs):m_playPressed(false)
 {
-	m_play.setTexture(texture);
+	m_play.setTexture(texturs);
 	m_play.setPosition(100, 100);
 
 }
 
 // Method to simulate clicking the button
-bool PlayButton::click() const {
-	return false;
+bool PlayButton::click() {
+	
+	if (m_playPressed)
+	{
+		m_playPressed = false;
+	}
+	else {
+		m_playPressed = true;
+	}
+	return m_playPressed;
 }
 
 // Method to display button information

@@ -4,13 +4,13 @@
 #include "Resources.h"
 #include <fstream>
 #include "FileException.h"
-
+#include "Player.h"
 
 #include "StaticObject.h"
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
+Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true),m_jump(0),m_pos(0)
 {
     m_backGroundStadium.setTexture(texturs[0]);
 
@@ -21,16 +21,26 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
 
     m_rightGoal.setRightGoal();
 
+	m_movingObject.push_back(std::make_unique<Player>(texturs[2]));
+
+
 }
 
 //=============================================== respond =======================================//
 
 // Method to check if a given location corresponds to a stick
-void Board::respond(sf::Vector2f loc) {
+void Board::respond(int keyPressed) {
+
 
 	timeCalculation();
 	//m_scoreBoard.updateScore(0, 0);
 	m_gameObjects[0]->updateScore(0, 0);
+
+	for (int i = 0; i < m_movingObject.size(); i++)
+	{
+		m_movingObject[i]->move(keyPressed);
+	}
+
 }
 
 //=============================================== draw =======================================//
@@ -50,6 +60,12 @@ void Board::draw(sf::RenderWindow& window) {
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw(window);
+	}
+
+
+	for (int i = 0; i < m_movingObject.size(); i++)
+	{
+		m_movingObject[i]->draw(window);
 	}
 
 }

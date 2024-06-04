@@ -1,10 +1,11 @@
+
 #include  "GameObject.h"
 
 
 class MovingObject:public GameObject
 {
 public:
-	MovingObject() = default;
+	MovingObject(int keyPressed) = default;
 
 	virtual void move() = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
@@ -15,3 +16,4 @@ public:
 private:
 
 };
+
