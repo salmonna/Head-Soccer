@@ -38,7 +38,7 @@ timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0
 }
 
 
-void ScoreBoard::draw(sf::RenderWindow& window)
+void ScoreBoard::draw(sf::RenderWindow & window)
 {
 	for (int i = 0; i < m_SpriteVec.size(); i++)
 	{
