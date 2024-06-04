@@ -1,4 +1,5 @@
 
+#pragma once
 #include "Player.h"
 
 Player::Player(sf::Texture& texture):m_jump(0), m_pos(0),m_move(0)
@@ -11,6 +12,9 @@ Player::Player(sf::Texture& texture):m_jump(0), m_pos(0),m_move(0)
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
 	m_sprite.setPosition(272, 700);
+
+	m_startSprite.push_back(sf::Vector2f(145, 125));
+	m_startSprite.push_back(sf::Vector2f(145, 280));
 }
 
 void Player::draw(sf::RenderWindow& window) {
@@ -29,11 +33,11 @@ void Player::move(int keyPressed) {
 	switch (m_move)
 	{
 	case 57:
-		kick();
+		movePlayer(m_startSprite[0],600);
 		m_movePlayer = true;
 
 	case 71:
-		moveLeft();
+		movePlayer(m_startSprite[1], 600);
 		m_movePlayer = true;
 
 	}
@@ -44,11 +48,11 @@ void Player::move(int keyPressed) {
 
 }
 
-void Player::kick() {
+void Player::movePlayer(sf::Vector2f startPos, int jump) {
 	float sec = m_moveClock.getElapsedTime().asMilliseconds();
 	if (100 > sec)
 	{
-		if (m_jump > 600)
+		if (m_jump > jump)
 		{
 			m_jump = 0;
 			m_pos = 0;
@@ -59,7 +63,7 @@ void Player::kick() {
 			m_jump += 115;
 			m_pos += 10;
 		}
-		sf::IntRect characterRect(160 + m_jump, 125, 95, 100); // Assuming each character is 32x32 pixels
+		sf::IntRect characterRect(startPos.x + m_jump, startPos.y, 95, 100); // Assuming each character is 32x32 pixels
 
 		// Set the texture rectangle to the character's position and size on the sprite sheet
 		m_sprite.setTextureRect(characterRect);
@@ -72,7 +76,7 @@ void Player::kick() {
 		m_pos = 0;
 		m_move = 0;
 		m_movePlayer = false;
-		sf::IntRect characterRect(160 + m_jump, 125, 95, 100); // Assuming each character is 32x32 pixels
+		sf::IntRect characterRect(startPos.x + m_jump, startPos.y, 95, 100); // Assuming each character is 32x32 pixels
 
 		// Set the texture rectangle to the character's position and size on the sprite sheet
 		m_sprite.setTextureRect(characterRect);
@@ -81,45 +85,3 @@ void Player::kick() {
 	}
 }
 
-
-void Player::moveLeft() {
-	float sec = m_moveClock.getElapsedTime().asMilliseconds();
-	if (100 > sec)
-	{
-		if (m_jump > 600)
-		{
-			m_jump = 0;
-			m_pos = 0;
-
-		}
-		else
-		{
-			m_jump += 115;
-			m_pos += 10;
-		}
-		sf::IntRect characterRect(160 + m_jump, 125, 95, 100); // Assuming each character is 32x32 pixels
-
-		// Set the texture rectangle to the character's position and size on the sprite sheet
-		m_sprite.setTextureRect(characterRect);
-		m_sprite.setPosition(272, 700);
-
-	}
-	else
-	{
-		m_jump = 0;
-		m_pos = 0;
-		m_move = 0;
-		m_movePlayer = false;
-		sf::IntRect characterRect(160 + m_jump, 125, 95, 100); // Assuming each character is 32x32 pixels
-
-		// Set the texture rectangle to the character's position and size on the sprite sheet
-		m_sprite.setTextureRect(characterRect);
-		m_sprite.setPosition(272, 700);
-		m_moveClock.restart();
-	}
-}
-
-
-Player::~Player()
-{
-}

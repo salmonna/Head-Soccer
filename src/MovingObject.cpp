@@ -4,7 +4,3 @@
 MovingObject::MovingObject()
 {
 }
-
-MovingObject::~MovingObject()
-{
-}
