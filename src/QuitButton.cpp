@@ -10,8 +10,8 @@ QuitButton::QuitButton(sf::Texture& texture)
 
 
 // Method to simulate clicking the button
-bool QuitButton::click() const {
-	return false;
+bool QuitButton::click() {
+	return true;
 }
 
 // Method to display button information

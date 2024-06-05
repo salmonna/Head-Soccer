@@ -14,7 +14,7 @@ public:
 
 	bool timeIsOver();
 
-	~ScoreBoard() = default;
+	virtual ~ScoreBoard() = default;
 
 private:
 

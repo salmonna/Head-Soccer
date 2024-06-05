@@ -4,10 +4,11 @@
 #include "BaseButton.h"
 #include <SFML/Graphics.hpp>
 
-class PlayButton:public BaseButton
+
+class MultiplayerButton :public BaseButton
 {
 public:
-	PlayButton(sf::Texture& texturs);
+    MultiplayerButton(sf::Texture& texture);
 
     // Method to simulate clicking the button
     virtual bool click() override;
@@ -18,12 +19,9 @@ public:
     // Method to check button position
     virtual bool contains(sf::Vector2f position) const override;
 
-	~PlayButton() = default;
+    ~MultiplayerButton() = default;
 
 private:
-
-    bool m_playPressed;
-
-    sf::Sprite m_play;
+    sf::Sprite m_multiplayer;
 };
 

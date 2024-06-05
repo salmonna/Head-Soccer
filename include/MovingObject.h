@@ -1,3 +1,5 @@
+
+#pragma once
 #include  "GameObject.h"
 
 
@@ -6,7 +8,7 @@ class MovingObject:public GameObject
 public:
 	MovingObject() = default;
 
-	virtual void move() = 0;
+	virtual void move(int keyPressed) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 
 
@@ -15,3 +17,4 @@ public:
 private:
 
 };
+
