@@ -13,8 +13,12 @@ public:
 	virtual void draw(sf::RenderWindow& window) override;
 	virtual void move(int keyPressed) override;
 
+	virtual void move(int keyPressed) {};
 
-	~Ball() = default;
+	virtual sf::Sprite& getSprite() { return m_sprite; };
+
+
+	virtual ~Ball() = default;
 
 private:
 	void updateBall(float deltaTime);
@@ -28,5 +32,6 @@ private:
 
 	sf::Clock m_clock;
 
+	sf::Sprite m_sprite;
 };
 
