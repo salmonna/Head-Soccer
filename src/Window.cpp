@@ -40,7 +40,7 @@ void Window::eventFunc() {
 	}
 	m_mousePressed.x = -1;
 	m_mousePressed.y = -1;
-	m_keyPressed = 0;
+	m_keyPressed = -2;
 }
 //------------------------------------------------------------------//
 // checkMouseReleased

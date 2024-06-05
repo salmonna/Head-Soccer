@@ -3,17 +3,13 @@
 #include "MovingObject.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
-
-enum UserPressed
-{
-	SPACE = 57, LEFT = 71, RIGHT = 72, JUMP = 73, DOWN = -1, SLIDE = 74
-};
+#include "Keyboard.h"
 
 
 class Player: public MovingObject
 {
 public:
-	Player(sf::Texture& texture, bool right);
+	Player(sf::Texture& texture, bool right, Keyboard keys);
 
 	virtual void draw(sf::RenderWindow& window) override;
 
@@ -22,17 +18,21 @@ public:
 	~Player() = default;
 private:
 
-	int m_jump;
+	int m_numOfJump;
 	int m_posX;
 	int m_posY;
 	int m_move;
 
 	bool m_movePlayer;
+	bool m_playerSide;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
 
 	std::vector<sf::Vector2f> m_startSprite;
 
+	Keyboard m_keys;
+
 	void movePlayer(sf::Vector2f startPos, int jump);
+	bool keyPressedValid(int keyPressed);
 };
