@@ -12,9 +12,11 @@
 Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
 {
     m_backGroundStadium.setTexture(texturs[0]);
+	auto scoreBoard = std::make_shared<ScoreBoard>(60);
 
-	//StaticObject* staticObject = std::make_unique<ScoreBoard>(60);
-	m_staticObject.push_back(std::make_unique<ScoreBoard>(60));
+	m_staticObject.push_back(scoreBoard);
+	m_gameObject.push_back(scoreBoard);
+
 
     m_rightGoal.setRightGoal();
 
@@ -54,9 +56,9 @@ void Board::draw(sf::RenderWindow& window) {
 
 	//draw the score board
 
-	for (int i = 0; i < m_staticObject.size(); i++)
+	for (int i = 0; i < m_gameObject.size(); i++)
 	{
-		m_staticObject[i]->draw(window);
+		m_gameObject[i]->draw(window);
 	}
 
 
