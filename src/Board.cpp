@@ -5,23 +5,20 @@
 #include <fstream>
 #include "FileException.h"
 #include "Player.h"
-
 #include "StaticObject.h"
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true),m_jump(0),m_pos(0)
+Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
 {
     m_backGroundStadium.setTexture(texturs[0]);
 
-
 	//StaticObject* staticObject = std::make_unique<ScoreBoard>(60);
-	m_gameObjects.push_back(std::make_unique<ScoreBoard>(60));
-
+	m_staticObject.push_back(std::make_unique<ScoreBoard>(60));
 
     m_rightGoal.setRightGoal();
 
-	m_movingObject.push_back(std::make_unique<Player>(texturs[2]));
+	m_movingObject.push_back(std::make_unique<Player>(texturs[1]));
 
 
 }
@@ -34,7 +31,7 @@ void Board::respond(int keyPressed) {
 
 	timeCalculation();
 	//m_scoreBoard.updateScore(0, 0);
-	m_gameObjects[0]->updateScore(0, 0);
+	m_staticObject[0]->updateScore(0, 0);
 
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
@@ -57,9 +54,9 @@ void Board::draw(sf::RenderWindow& window) {
 
 	//draw the score board
 
-	for (int i = 0; i < m_gameObjects.size(); i++)
+	for (int i = 0; i < m_staticObject.size(); i++)
 	{
-		m_gameObjects[i]->draw(window);
+		m_staticObject[i]->draw(window);
 	}
 
 
@@ -81,9 +78,9 @@ bool Board::isOpen() const{
 void Board::timeCalculation()
 {
 	//game board = m_gameObjects[0]
-	m_gameObjects[0]->timeCalculation();
+	m_staticObject[0]->timeCalculation();
 
-	if (m_gameObjects[0]->timeIsOver())
+	if (m_staticObject[0]->timeIsOver())
 	{
 		m_boardOpen = false;
 	}

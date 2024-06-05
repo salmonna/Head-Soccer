@@ -13,13 +13,13 @@ enum UserPressed
 class Player: public MovingObject
 {
 public:
-	Player(sf::Texture& texture);
+	Player(sf::Texture& texture, bool right);
 
-	void draw(sf::RenderWindow& window) override;
+	virtual void draw(sf::RenderWindow& window) override;
 
-	void move(int keyPressed) override;
+	virtual void move(int keyPressed) override;
 
-
+	~Player() = default;
 private:
 
 	int m_jump;

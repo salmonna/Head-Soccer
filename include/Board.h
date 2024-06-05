@@ -6,8 +6,8 @@
 #include "GameObject.h"
 #include "ScoreBoard.h"
 #include "Goal.h"
-
 #include "MovingObject.h"
+#include "Player.h"
 
 
 class Board
@@ -19,7 +19,6 @@ public:
 	void respond(int keyPressed);
 	void draw(sf::RenderWindow& window);
 
-	
 	bool isOpen() const;
 
 	~Board() = default;
@@ -28,16 +27,12 @@ private:
 
 	void timeCalculation();
 
-
 	std::vector<std::unique_ptr<MovingObject>> m_movingObject;
-
 
 	bool m_boardOpen;
 
 	//game objects vector
-	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
-
-
+	std::vector<std::unique_ptr<StaticObject>> m_staticObject;
 
 	sf::Sprite m_backGroundStadium;
 
