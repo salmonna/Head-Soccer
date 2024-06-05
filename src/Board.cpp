@@ -6,6 +6,7 @@
 #include "FileException.h"
 #include "Player.h"
 #include "StaticObject.h"
+#include "Keyboard.h"
 
 
 // Constructor for the Board class
@@ -14,12 +15,13 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
     m_backGroundStadium.setTexture(texturs[0]);
 
 	//StaticObject* staticObject = std::make_unique<ScoreBoard>(60);
-	m_staticObject.push_back(std::make_unique<ScoreBoard>(60));
+	m_staticObject.push_back(std::make_unique<ScoreBoard>(90));
 
     m_rightGoal.setRightGoal();
-
-	m_movingObject.push_back(std::make_unique<Player>(texturs[1]));
-
+	Keyboard player1(57, 71,72,73,-1,74);
+	Keyboard player2(25,0 ,3 ,22 , -1, 18);
+	m_movingObject.push_back(std::make_unique<Player>(texturs[1],true, player1));
+	m_movingObject.push_back(std::make_unique<Player>(texturs[1], false, player2));
 
 }
 
