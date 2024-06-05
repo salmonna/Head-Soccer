@@ -37,8 +37,8 @@ private:
 
 	sf::Sprite m_backGroundStadium;
 
-	Goal m_leftGoal;
-	Goal m_rightGoal;
+	//Goal m_leftGoal;
+	//Goal m_rightGoal;
 
 	sf::Clock m_moveClock;
 

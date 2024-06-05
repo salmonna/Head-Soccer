@@ -8,11 +8,14 @@ public:
 	Ball();
 
 	virtual void draw(sf::RenderWindow& window) override;
+	virtual void move(int keyPressed) override;
 
 
 	~Ball() = default;
 
 private:
+	sf::Sprite m_sprite;
+	sf::Vector2f m_ballVelocity;
 
 };
 
