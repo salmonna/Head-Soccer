@@ -1,7 +1,7 @@
 #include "Ball.h"
 #include "Resources.h"
 
-Ball::Ball():m_ballVelocity(20.0f, -30.0f), m_ball(25.0f)
+Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
 {
 
 	
@@ -24,17 +24,10 @@ void Ball::draw(sf::RenderWindow & window)
 
 void  Ball::move(int keyPressed)
 {
-	float deltaTime = m_clock.restart().asSeconds();
-
-	// עדכון הכדור
-	updateBall(deltaTime);
-
-};
 
 
+    float deltaTime = m_clock.restart().asSeconds();
 
-void Ball::updateBall(float deltaTime)
-{
     const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
     const float restitution = 0.8f;  // מקדם ההתנגשות
 
@@ -73,4 +66,5 @@ void Ball::updateBall(float deltaTime)
 
 
 
-}
+};
+

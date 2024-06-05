@@ -20,7 +20,6 @@ public:
 	virtual ~Ball() = default;
 
 private:
-	void updateBall(float deltaTime);
 
 
 	sf::Sprite m_sprite;
