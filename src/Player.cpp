@@ -3,8 +3,9 @@
 #include "Player.h"
 #include <iostream>
 
-Player::Player(sf::Texture& texture):m_jump(0), m_posX(0), m_posY(0), m_move(0), m_movePlayer(false)
+Player::Player(sf::Texture& texture, bool right):m_jump(0), m_posX(0), m_posY(0), m_move(0), m_movePlayer(false)
 {
+
 	m_sprite.setTexture(texture);
 
 	// Define the rectangle to select the character from the sprite sheet
@@ -13,6 +14,7 @@ Player::Player(sf::Texture& texture):m_jump(0), m_posX(0), m_posY(0), m_move(0),
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
 	m_sprite.setPosition(272, 750);
+	m_sprite.scale(-1, 1);
 
 	m_startSprite.push_back(sf::Vector2f(145, 125));
 	m_startSprite.push_back(sf::Vector2f(145, 240));
@@ -84,6 +86,7 @@ void Player::move(int keyPressed) {
 		// Set the texture rectangle to the character's position and size on the sprite sheet
 		m_sprite.setTextureRect(characterRect);
 		m_sprite.setPosition(float(272 + m_posX), float(750));
+		
 	}
 
 }

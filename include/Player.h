@@ -13,7 +13,7 @@ enum UserPressed
 class Player: public MovingObject
 {
 public:
-	Player(sf::Texture& texture);
+	Player(sf::Texture& texture, bool right);
 
 	virtual void draw(sf::RenderWindow& window) override;
 
