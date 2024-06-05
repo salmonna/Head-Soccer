@@ -142,3 +142,6 @@ bool Player::keyPressedValid(int keyPressed) {
 	return false;
 }
 
+sf::Sprite& Player::getSprite() {
+	return m_sprite;
+}

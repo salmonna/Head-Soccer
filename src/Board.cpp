@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "StaticObject.h"
 #include "Keyboard.h"
+#include "Ball.h"
+#include "CollisionHandling.h"
 
 
 // Constructor for the Board class
@@ -15,13 +17,19 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
     m_backGroundStadium.setTexture(texturs[0]);
 
 	//StaticObject* staticObject = std::make_unique<ScoreBoard>(60);
-	m_staticObject.push_back(std::make_unique<ScoreBoard>(90));
+	m_staticObject.push_back(std::make_shared<ScoreBoard>(90));
 
     m_rightGoal.setRightGoal();
 	Keyboard player1(57, 71,72,73,-1,74);
 	Keyboard player2(25,0 ,3 ,22 , -1, 18);
-	m_movingObject.push_back(std::make_unique<Player>(texturs[1],true, player1));
-	m_movingObject.push_back(std::make_unique<Player>(texturs[1], false, player2));
+	m_movingObject.push_back(std::make_shared<Player>(texturs[1],true, player1));
+	m_movingObject.push_back(std::make_shared<Player>(texturs[1], false, player2));
+
+	m_movingObject.push_back(std::make_shared<Ball>());
+
+	m_collidingObject.push_back(m_movingObject[0]);
+	m_collidingObject.push_back(m_movingObject[1]);
+	m_collidingObject.push_back(m_movingObject[2]);
 
 }
 
@@ -40,8 +48,30 @@ void Board::respond(int keyPressed) {
 		m_movingObject[i]->move(keyPressed);
 	}
 
-}
+	for_each_pair(m_collidingObject.begin(), m_collidingObject.end(), [&](auto& a, auto& b) {
+		if (collide(*a, *b))
+		{
+			processCollision(*a, *b);
+		}
+	});
 
+}
+//=============================================== for_each_pair =======================================//
+
+// STL-like algorithm to run over all pairs
+template <typename FwdIt, typename Fn>
+void Board::for_each_pair(FwdIt begin, FwdIt end, Fn fn)
+{
+	for (; begin != end; ++begin)
+		for (auto second = begin + 1; second != end; ++second)
+			fn(*begin, *second);
+}
+//=============================================== collide =======================================//
+bool Board::collide(GameObject& a, GameObject& b)
+{
+
+	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
+}
 //=============================================== draw =======================================//
 
 // Method to draw all sticks in the window

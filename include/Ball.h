@@ -9,10 +9,15 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) override;
 
+	virtual void move(int keyPressed) {};
 
-	~Ball() = default;
+	virtual sf::Sprite& getSprite() { return m_sprite; };
+
+
+	virtual ~Ball() = default;
 
 private:
 
+	sf::Sprite m_sprite;
 };
 

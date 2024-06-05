@@ -15,6 +15,8 @@ public:
 
 	virtual void move(int keyPressed) override;
 
+	virtual sf::Sprite& getSprite() override;
+
 	virtual ~Player() = default;
 private:
 

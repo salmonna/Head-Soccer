@@ -19,6 +19,11 @@ public:
 	void respond(int keyPressed);
 	void draw(sf::RenderWindow& window);
 
+	template <typename FwdIt, typename Fn>
+	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
+
+	bool collide(GameObject& a, GameObject& b);
+
 	bool isOpen() const;
 
 	~Board() = default;
@@ -27,12 +32,14 @@ private:
 
 	void timeCalculation();
 
-	std::vector<std::unique_ptr<MovingObject>> m_movingObject;
+	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 
 	bool m_boardOpen;
 
 	//game objects vector
-	std::vector<std::unique_ptr<StaticObject>> m_staticObject;
+	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
+
+	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 
 	sf::Sprite m_backGroundStadium;
 
