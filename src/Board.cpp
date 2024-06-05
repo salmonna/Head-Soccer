@@ -9,14 +9,13 @@
 #include "Ball.h"
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
+Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(60)
 {
+	//update back gound stadium
     m_backGroundStadium.setTexture(texturs[0]);
-	auto scoreBoard = std::make_shared<ScoreBoard>(60);
-	m_staticObject.push_back(scoreBoard);
-	m_gameObject.push_back(scoreBoard);
 
 
+	//update left and right goals
 	auto rGoal = std::make_shared<Goal>();
 	rGoal->setRightGoal();
 	auto lGoal = std::make_shared<Goal>();
@@ -27,14 +26,12 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
 
 
 
-
-    //m_rightGoal.setRightGoal();
-
+	//update player
 	auto player1 = std::make_shared<Player>(texturs[1]);
 	m_movingObject.push_back(player1);
 	m_gameObject.push_back(player1);
 
-
+	//update ball
 	auto ball = std::make_shared<Ball>();
 	m_movingObject.push_back(ball);
 	m_gameObject.push_back(ball);
@@ -48,10 +45,10 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true)
 void Board::respond(int keyPressed) {
 
 
-	//timeCalculation();
-	//m_scoreBoard.updateScore(0, 0);
-	//m_staticObject[0]->updateScore(0, 0);
+	timeCalculation();
+	m_scoreBoard.updateScore(0, 0);
 
+	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
 		m_movingObject[i]->move(keyPressed);
@@ -64,25 +61,17 @@ void Board::respond(int keyPressed) {
 // Method to draw all objects in the window
 void Board::draw(sf::RenderWindow& window) {
 
+	//draw the back ground stadium and field
     window.draw(m_backGroundStadium);
 
-    //draw the goals
-    //m_rightGoal.draw(window);
-    //m_leftGoal.draw(window);
-   
-
-	//draw the score board
-
+	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)
 	{
 		m_gameObject[i]->draw(window);
 	}
 
-
-	//for (int i = 0; i < m_movingObject.size(); i++)
-	//{
-	//	m_movingObject[i]->draw(window);
-	//}
+	//draw the score board
+	m_scoreBoard.draw(window);
 
 }
 
@@ -97,10 +86,10 @@ bool Board::isOpen() const{
 void Board::timeCalculation()
 {
 	//game board = m_gameObjects[0];
-	//m_staticObject[0]->timeCalculation();
+	m_scoreBoard.timeCalculation();
 
-	//if (m_staticObject[0]->timeIsOver())
-	//{
-	//	m_boardOpen = false;
-	//}
+	if (m_scoreBoard.timeIsOver())
+	{
+		m_boardOpen = false;
+	}
 }
