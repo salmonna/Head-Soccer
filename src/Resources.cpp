@@ -24,6 +24,10 @@ Resources::Resources(){
 	std::vector<std::string> characters{ "ItalyPlayer.png" }; 
 	loadFromFile(characters, m_boardTexture);
 
+
+	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
+	loadFromFile(balls, m_ballTexture);
+
 	if (!m_font.loadFromFile("Font.otf"))
 	{
 		throw FileException("Font file not load!");
@@ -72,6 +76,13 @@ std::vector<sf::Texture>& Resources::gameResultsTexture() {
 std::vector<sf::Texture>& Resources::getScoreBoardTexture() {
 
 	return m_scoreBoardTexture;
+}
+
+
+//gameResultsTexture
+std::vector<sf::Texture>& Resources::getBallTexture() {
+
+	return m_ballTexture;
 }
 
 //getFont

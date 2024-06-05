@@ -14,8 +14,6 @@ class Board
 {
 public:
 	Board(std::vector<sf::Texture>& texturs);
-
-
 	void respond(int keyPressed);
 	void draw(sf::RenderWindow& window);
 
@@ -34,19 +32,18 @@ private:
 
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 
+	std::vector<std::shared_ptr<GameObject>> m_gameObject;
+	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
+
 	bool m_boardOpen;
+	ScoreBoard m_scoreBoard;
+
 
 	//game objects vector
-	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 
 	sf::Sprite m_backGroundStadium;
-
-	Goal m_leftGoal;
-	Goal m_rightGoal;
-
-	sf::Clock m_moveClock;
 
 };
 
