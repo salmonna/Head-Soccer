@@ -15,7 +15,7 @@ public:
 
 	virtual void move(int keyPressed) override;
 
-	~Player() = default;
+	virtual ~Player() = default;
 private:
 
 	int m_numOfJump;
