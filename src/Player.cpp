@@ -55,9 +55,9 @@ void Player::move(int keyPressed) {
 		break;
 
 	case JUMP://jump
-		if (m_posY > -55)
+		if (m_posY > -105)
 		{
-			m_posY -= 10;
+			m_posY -= 20;
 		}
 		movePlayer(m_startSprite[2], 400);
 
@@ -69,7 +69,7 @@ void Player::move(int keyPressed) {
 		break;
 
 	case DOWN://down
-		m_posY += 10;
+		m_posY += 20;
 		movePlayer(m_startSprite[3], 400);
 		break;
 
