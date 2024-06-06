@@ -12,9 +12,15 @@ public:
 	void timeCalculation();
 	void updateScore(int p1Points, int p2Points);
 
+	virtual sf::Sprite& getSprite() { return m_SpriteVec[0]; };
+
 	bool timeIsOver();
 
 	virtual ~ScoreBoard() = default;
+
+
+
+
 
 private:
 

@@ -55,7 +55,8 @@ void Goal::setRightGoal() {
 	m_goalSprite[3].setPosition(1810, 625);
 
 }
-//--------- D-tor --------------
-Goal::~Goal()
-{
+
+sf::Sprite& Goal::getSprite() {
+
+	return m_goalSprite[2];
 }

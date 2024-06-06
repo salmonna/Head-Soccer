@@ -14,10 +14,13 @@ class Board
 {
 public:
 	Board(std::vector<sf::Texture>& texturs);
-
-
 	void respond(int keyPressed);
 	void draw(sf::RenderWindow& window);
+
+	template <typename FwdIt, typename Fn>
+	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
+
+	bool collide(GameObject& a, GameObject& b);
 
 	bool isOpen() const;
 
@@ -27,19 +30,20 @@ private:
 
 	void timeCalculation();
 
-	std::vector<std::unique_ptr<MovingObject>> m_movingObject;
+	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
+
+	std::vector<std::shared_ptr<GameObject>> m_gameObject;
+	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	bool m_boardOpen;
+	ScoreBoard m_scoreBoard;
+
 
 	//game objects vector
-	std::vector<std::unique_ptr<StaticObject>> m_staticObject;
+
+	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 
 	sf::Sprite m_backGroundStadium;
-
-	Goal m_leftGoal;
-	Goal m_rightGoal;
-
-	sf::Clock m_moveClock;
 
 };
 

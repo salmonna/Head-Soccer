@@ -15,7 +15,9 @@ public:
 
 	virtual void move(int keyPressed) override;
 
-	~Player() = default;
+	virtual sf::Sprite& getSprite() override;
+
+	virtual ~Player() = default;
 private:
 
 	int m_numOfJump;

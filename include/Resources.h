@@ -22,6 +22,7 @@ public:
 	std::vector<sf::Texture>& getScoreBoardTexture();
 
 	std::vector<sf::Texture>& getGoalTexture();
+	std::vector<sf::Texture>& getBallTexture();
 
 	sf::Font & getFont();
 
@@ -40,6 +41,8 @@ private:
 	std::vector<sf::Texture> m_scoreBoardTexture;
 
 	std::vector<sf::Texture> m_goalTexture;
+	std::vector<sf::Texture> m_ballTexture;
+
 
 	sf::Font m_font;
 
