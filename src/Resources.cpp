@@ -22,7 +22,7 @@ Resources::Resources(){
 
 
 	std::vector<std::string> characters{ "ItalyPlayer.png" }; 
-	loadFromFile(characters, m_boardTexture);
+	loadFromFile(characters, m_characters);
 
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
@@ -90,5 +90,9 @@ sf::Font & Resources::getFont() {
 
 	return m_font;
 }
-	
 
+//get characters
+std::vector<sf::Texture>& Resources::getCharactersTexture() {
+
+	return m_characters;
+}
