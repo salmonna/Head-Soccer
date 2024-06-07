@@ -18,8 +18,6 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	//update back gound stadium
     m_backGroundStadium.setTexture(texturs[0]);
 
-
-
 	//update left and right goals
 	auto rGoal = std::make_shared<Goal>();
 	rGoal->setRightGoal();
@@ -30,24 +28,18 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	m_gameObject.push_back(rGoal);
 
 
-
-	//update player
-	auto player1 = std::make_shared<Player>(texturs[1]);
-	m_movingObject.push_back(player1);
-	m_gameObject.push_back(player1);
+	Keyboard keyPlayer1(57, 71,72,73,-1,74);
+	Keyboard keyPlayer2(25,0 ,3 ,22 , -1, 18);
+	m_movingObject.push_back(std::make_shared<Player>(texturs[1],true, keyPlayer1));
+	m_movingObject.push_back(std::make_shared<Player>(texturs[1], false, keyPlayer2));
+	m_gameObject.push_back(m_movingObject[0]);
+	m_gameObject.push_back(m_movingObject[1]);
+	
 
 	//update ball
 	auto ball = std::make_shared<Ball>();
 	m_movingObject.push_back(ball);
 	m_gameObject.push_back(ball);
-
-
-	Keyboard player1(57, 71,72,73,-1,74);
-	Keyboard player2(25,0 ,3 ,22 , -1, 18);
-	m_movingObject.push_back(std::make_shared<Player>(texturs[1],true, player1));
-	m_movingObject.push_back(std::make_shared<Player>(texturs[1], false, player2));
-
-	m_movingObject.push_back(std::make_shared<Ball>());
 
 
 	m_collidingObject.push_back(m_movingObject[0]);
