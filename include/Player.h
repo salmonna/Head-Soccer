@@ -9,7 +9,7 @@
 class Player: public MovingObject
 {
 public:
-	Player(sf::Texture& texture, bool right, Keyboard keys);
+	Player(bool right, Keyboard keys);
 
 	virtual void draw(sf::RenderWindow& window) override;
 
@@ -27,11 +27,13 @@ private:
 
 	bool m_movePlayer;
 	bool m_playerSide;
+	bool m_moveDown;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
 
 	std::vector<sf::Vector2f> m_startSprite;
+
 
 	Keyboard m_keys;
 

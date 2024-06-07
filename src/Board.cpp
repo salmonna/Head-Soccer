@@ -28,10 +28,10 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	m_gameObject.push_back(rGoal);
 
 
-	Keyboard keyPlayer1(57, 71,72,73,-1,74);
-	Keyboard keyPlayer2(25,0 ,3 ,22 , -1, 18);
-	m_movingObject.push_back(std::make_shared<Player>(texturs[1],true, keyPlayer1));
-	m_movingObject.push_back(std::make_shared<Player>(texturs[1], false, keyPlayer2));
+	Keyboard keyPlayer1(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up,sf::Keyboard::Down);
+	Keyboard keyPlayer2(sf::Keyboard::Z, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+	m_movingObject.push_back(std::make_shared<Player>(true, keyPlayer1));
+	m_movingObject.push_back(std::make_shared<Player>(false, keyPlayer2));
 	m_gameObject.push_back(m_movingObject[0]);
 	m_gameObject.push_back(m_movingObject[1]);
 	
