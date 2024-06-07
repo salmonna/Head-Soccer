@@ -13,7 +13,7 @@
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(60)
+Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(180)
 {
 	//update back gound stadium
     m_backGroundStadium.setTexture(texturs[0]);

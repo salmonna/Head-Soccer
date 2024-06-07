@@ -28,6 +28,13 @@ Player::Player(sf::Texture& texture, bool right, Keyboard keys):m_numOfJump(0), 
 
 }
 
+
+sf::Vector2f  Player::getPosition() const
+{
+	return m_sprite.getPosition();
+
+}
+
 //draw plater
 void Player::draw(sf::RenderWindow& window) {
 

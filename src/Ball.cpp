@@ -6,20 +6,45 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
 
 	
 	//get ball 1
-	auto texture = &(Resources::getInstance().getBallTexture()[0]);
+
+
+	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
+
 	// הגדרת הכדור
     m_ball.setTexture(texture);
     m_ball.setOrigin(m_ball.getRadius(), m_ball.getRadius());
-    m_ball.setPosition(900.0f, 988.0f); // מיקום הכדור למטה בריצ
-    
+    m_ball.setPosition(900.0f, 988.0f); 
+
+    m_sprite.setTexture(*texture);
+}
+
+
+
+sf::Vector2f Ball::getPosition() const
+{
+    return m_sprite.getPosition();
 
 }
 
 void Ball::draw(sf::RenderWindow & window)
 {
-	//window.draw(m_sprite);
 	window.draw(m_ball);
 }
+
+
+
+sf::Sprite & Ball::getSprite()
+{
+    m_sprite.setPosition(m_ball.getPosition());
+    return m_sprite;
+}
+
+void Ball::setBallVelocity(sf::Vector2f direction, float kickStrength, float kickVerticalBoost)
+{
+    m_ballVelocity += direction * kickStrength;
+    m_ballVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
+}
+
 
 
 void  Ball::move(int keyPressed)

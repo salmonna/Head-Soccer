@@ -13,29 +13,40 @@
 namespace // anonymous namespace — the standard way to make function "static"
 {
 
+
+
     // primary collision-processing functions
-    void playerCollidBall(GameObject& /*spaceShip*/,
-        GameObject& /*asteroid*/)
+    void playerCollidBall(GameObject& player,
+        GameObject& ball)
     {
-        // To get the actual types and use them:
-        // SpaceShip& ship = dynamic_cast<SpaceShip&>(spaceShip);
-        // Asteroid&  ast  = dynamic_cast<Asteroid&>(asteroid);
-        // or:
-        // SpaceShip& ship = static_cast<SpaceShip&>(spaceShip);
-        // Asteroid&  ast  = static_cast<Asteroid&>(asteroid);
+
+
+        Ball & ballObject = dynamic_cast<Ball&>(ball);
+        Player & playerObject = dynamic_cast<Player&>(player);
+        
+
+        const float kickStrength = 2.0f; // עוצמת הבעיטה
+        const float kickVerticalBoost = -1.0f; // עוצמת הבעיטה האנכית
+
+        sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
+        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        direction /= length; // נרמול הכיוון
+     
+        ballObject.setBallVelocity(direction, kickStrength, kickVerticalBoost);
+
 
         std::cout << "player and ball collision!\n";
     }
 
-    void playerCollidPlayer(GameObject& /*spaceShip*/,
-        GameObject& /*spaceStation*/)
+    void playerCollidPlayer(GameObject& player1,
+        GameObject& player2)
     {
-        std::cout << "Player and Player collision!\n";
+        std::cout << "Player1 and Player2 collision!\n";
         //system("cls");
     }
 
-    void ballCollidGoal(GameObject& /*asteroid*/,
-        GameObject& /*spaceStation*/)
+    void ballCollidGoal(GameObject& ball,
+        GameObject& goal)
     {
         std::cout << "Ball and Goal collision!\n";
     }
@@ -46,20 +57,20 @@ namespace // anonymous namespace — the standard way to make function "static"
     // secondary collision-processing functions that just
     // implement symmetry: swap the parameters and call a
     // primary function
-    void ballColliedPlayer(GameObject& asteroid,
-        GameObject& spaceShip)
+    void ballColliedPlayer(GameObject& ball,
+        GameObject& player)
     {
-        playerCollidBall(spaceShip, asteroid);
+        playerCollidBall(player, ball);
     }
-    void playerColliedPlayer(GameObject& spaceStation,
-        GameObject& spaceShip)
+    void playerColliedPlayer(GameObject& player2,
+        GameObject& player1)
     {
-        playerCollidPlayer(spaceShip, spaceStation);
+        playerCollidPlayer(player1, player2);
     }
-    void GoalColliedBall(GameObject& spaceStation,
-        GameObject& asteroid)
+    void GoalColliedBall(GameObject& goal,
+        GameObject& ball)
     {
-        ballCollidGoal(asteroid, spaceStation);
+        ballCollidGoal(ball, goal);
     }
     //...
 
