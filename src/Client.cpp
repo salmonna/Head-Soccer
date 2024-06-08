@@ -1,12 +1,16 @@
 
 #include "Client.h"
+#include "FileException.h"
 
-
-Client::Client():m_connected(false),m_server("127.0.0.1"),m_port(53000)
+Client::Client():m_connected(false),m_server("192.168.1.24"),m_port(53000)
 {
     if (m_socket.connect(m_server, m_port) == sf::Socket::Done) {
         std::cout << "Connected to server " << m_server << std::endl;
         m_connected = true;
+    }
+    else
+    {
+        throw FileException("Faild to conect to server");
     }
 }
 
