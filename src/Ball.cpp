@@ -1,7 +1,7 @@
 #include "Ball.h"
 #include "Resources.h"
 
-Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
+Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_keyPressed(-2)
 {
 
 	
@@ -63,8 +63,8 @@ void  Ball::move(int keyPressed)
         m_ballVelocity.y = -m_ballVelocity.y * restitution;
     }
 
-
-
-
 };
 
+int Ball::getKeypressed() {
+    return m_keyPressed;
+}

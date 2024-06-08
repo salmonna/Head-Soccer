@@ -30,7 +30,7 @@ namespace // anonymous namespace — the standard way to make function "static"
     void playerCollidPlayer(GameObject& /*spaceShip*/,
         GameObject& /*spaceStation*/)
     {
-        std::cout << "Player and Player collision!\n";
+        //std::cout << "Player and Player collision!\n";
         //system("cls");
     }
 

@@ -44,7 +44,7 @@ void Player::move(int keyPressed) {
 		m_moveClock.restart();
 	}
 
-	if (sf::Keyboard::isKeyPressed(m_keys.JUMP)) {//jump
+	if (m_move == m_keys.JUMP) {//jump
 		if (m_posY > -105)
 		{
 			m_posY -= 20;
@@ -57,23 +57,23 @@ void Player::move(int keyPressed) {
 			m_moveDown = true;
 		}
 	}
-	else if(sf::Keyboard::isKeyPressed(m_keys.SPACE))//kick
-		movePlayer(m_startSprite[0],7);
-	else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
+	else if (m_move == m_keys.SPACE)//kick
+		movePlayer(m_startSprite[0], 7);
+	else if (m_move == m_keys.LEFT) {//move left
 		m_posX -= 5;
 		movePlayer(m_startSprite[1], 6);
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
+	else if (m_move == m_keys.RIGHT) {//move right
 		m_posX += 5;
 		movePlayer(m_startSprite[1], 6);
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
+	else if (m_move == m_keys.SLIDE) {//slide
 		if (m_playerSide)
 			m_posX -= 5;
 		else m_posX += 5;
-		
+
 		movePlayer(m_startSprite[4], 7);
-	}	
+	}
 	else if (m_moveDown) {//down
 		m_posY += 20;
 		movePlayer(m_startSprite[3], 3);
@@ -147,4 +147,8 @@ bool Player::keyPressedValid(int keyPressed) {
 
 sf::Sprite& Player::getSprite() {
 	return m_sprite;
+}
+
+int Player::getKeypressed() {
+	return m_move;
 }

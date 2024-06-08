@@ -12,20 +12,20 @@ Client::Client():m_connected(false),m_server("127.0.0.1"),m_port(53000)
 
 void Client::receiveData(MovingObject& otherPlayer) {
     sf::Packet packet;
-    
+
     if (m_socket.receive(packet) == sf::Socket::Done) {
-        float x, y;
-        packet >> x >> y;
-        otherPlayer.getSprite().setPosition(x, y);
+        float key;
+        packet >> key;
+        otherPlayer.move(key);
     }
     packet.clear();
-
 }
 
 void Client::sendData(MovingObject& player) {
     sf::Packet packet;
+    float key = player.getKeypressed();
     sf::Vector2f position = player.getSprite().getPosition();
-    packet << position.x << position.y;
+    packet << key;
     if (m_socket.send(packet) != sf::Socket::Done) {
         std::cerr << "Failed to send data to the server" << std::endl;
     }

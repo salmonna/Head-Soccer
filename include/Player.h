@@ -17,6 +17,8 @@ public:
 
 	virtual sf::Sprite& getSprite() override;
 
+	virtual int getKeypressed() override;
+
 	virtual ~Player() = default;
 private:
 

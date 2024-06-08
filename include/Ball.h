@@ -12,7 +12,7 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) override;
 	virtual void move(int keyPressed) override;
-
+	virtual int getKeypressed() override;
 
 	virtual sf::Sprite& getSprite() { return m_sprite; };
 
@@ -20,7 +20,7 @@ public:
 	virtual ~Ball() = default;
 
 private:
-
+	int m_keyPressed;
 
 	sf::Sprite m_sprite;
 
