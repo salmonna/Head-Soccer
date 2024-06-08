@@ -45,7 +45,8 @@ void Goal::setRightGoal() {
 	//change direction of the goal to right by scale
 	for (size_t i = 0; i < m_goalSprite.size(); i++)
 	{
-		m_goalSprite[i].scale(-1,1);
+		m_goalSprite[i].scale(-1, 1);
+		
 	}
 
 	//set position of the right goal 
@@ -58,5 +59,10 @@ void Goal::setRightGoal() {
 
 sf::Sprite& Goal::getSprite() {
 
-	return m_goalSprite[2];
+	return m_goalSprite[0];
 }
+
+//sf::Sprite& Goal::getSprite(int i) {
+//
+//	return m_goalSprite[i];
+//}

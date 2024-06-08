@@ -12,6 +12,8 @@ public:
 	void setRightGoal();
 
 	virtual sf::Sprite& getSprite()override;
+	//sf::Sprite& getSprite(int i);
+
 
 	virtual ~Goal() = default;
 

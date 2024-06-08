@@ -17,7 +17,7 @@ Player::Player(bool right, Keyboard keys):m_numOfJump(0), m_posX(0), m_posY(0), 
 	m_sprite.setPosition(272, 750);
 	if (m_playerSide)
 	{
-		m_sprite.scale(-1, 1);
+		m_sprite.setScale(-1, 1);
 	}
 
 	m_startSprite.push_back(sf::Vector2f(145, 125));
@@ -35,11 +35,22 @@ sf::Vector2f  Player::getPosition() const
 
 }
 
+
+//get keys
+Keyboard Player::getKey() const 
+{
+	return m_keys;
+}
+
+
+
 //draw plater
 void Player::draw(sf::RenderWindow& window) {
 
 	window.draw(m_sprite);
 }
+
+
 
 //function that find where to move and  call to another function 
 void Player::move(int keyPressed) {

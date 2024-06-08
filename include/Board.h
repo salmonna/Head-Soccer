@@ -31,18 +31,11 @@ private:
 	void timeCalculation();
 
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
-
 	std::vector<std::shared_ptr<GameObject>> m_gameObject;
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	bool m_boardOpen;
 	ScoreBoard m_scoreBoard;
-
-
-	//game objects vector
-
-	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
-
 	sf::Sprite m_backGroundStadium;
 
 };
