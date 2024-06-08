@@ -90,7 +90,6 @@ void Player::move(int keyPressed) {
 		m_sprite.setPosition(float(272 + m_posX), float(750));
 	}
 
-
 }
 
 //function that move the player

@@ -8,7 +8,7 @@
 #include "Goal.h"
 #include "MovingObject.h"
 #include "Player.h"
-
+#include "Client.h"
 
 class Board
 {
@@ -38,7 +38,7 @@ private:
 	bool m_boardOpen;
 	ScoreBoard m_scoreBoard;
 
-
+	Client m_client;
 	//game objects vector
 
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
