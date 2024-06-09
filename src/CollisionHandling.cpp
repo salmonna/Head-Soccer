@@ -10,33 +10,67 @@
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
 
+
 namespace // anonymous namespace — the standard way to make function "static"
 {
 
+
+
     // primary collision-processing functions
-    void playerCollidBall(GameObject& /*spaceShip*/,
-        GameObject& /*asteroid*/)
+    void playerCollidBall(GameObject& player,
+        GameObject& ball)
     {
-        // To get the actual types and use them:
-        // SpaceShip& ship = dynamic_cast<SpaceShip&>(spaceShip);
-        // Asteroid&  ast  = dynamic_cast<Asteroid&>(asteroid);
-        // or:
-        // SpaceShip& ship = static_cast<SpaceShip&>(spaceShip);
-        // Asteroid&  ast  = static_cast<Asteroid&>(asteroid);
+
+        Ball & ballObject = dynamic_cast<Ball&>(ball);
+        Player & playerObject = dynamic_cast<Player&>(player);
+
+        float kickStrength = 500.0f; // עוצמת הבעיטה
+        float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
+
+        sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
+        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        direction /= length; // נרמול הכיוון
+       
+        sf::Vector2f currVelocity = ballObject.getVelocity();
+
+
+
+        if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
+        {
+            // עדכון מהירות הכדור בעקבות הבעיטה
+            currVelocity += direction * kickStrength;
+            currVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
+
+        }
+        else
+        {
+
+            const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
+            const float restitution = 0.8f;  // מקדם ההתנגשות
+            float dotProduct = currVelocity.x * direction.x + currVelocity.y * direction.y;
+
+            if (dotProduct < 0) { // Ensure the ball is moving towards the player
+                sf::Vector2f reflection = 2.0f * dotProduct * direction;
+                currVelocity -= reflection * restitution;
+            }
+        }        
+     
+        ballObject.setBallVelocity(currVelocity);
 
         std::cout << "player and ball collision!\n";
     }
 
-    void playerCollidPlayer(GameObject& /*spaceShip*/,
-        GameObject& /*spaceStation*/)
-    {
-        //std::cout << "Player and Player collision!\n";
+    void playerCollidPlayer(GameObject& player1,
+        GameObject& player2)
+    {                                                              
+        std::cout << "Player1 and Player2 collision!\n";
         //system("cls");
     }
 
-    void ballCollidGoal(GameObject& /*asteroid*/,
-        GameObject& /*spaceStation*/)
+    void ballCollidGoal(GameObject& ball,
+        GameObject& goal)
     {
+
         std::cout << "Ball and Goal collision!\n";
     }
 
@@ -46,20 +80,20 @@ namespace // anonymous namespace — the standard way to make function "static"
     // secondary collision-processing functions that just
     // implement symmetry: swap the parameters and call a
     // primary function
-    void ballColliedPlayer(GameObject& asteroid,
-        GameObject& spaceShip)
+    void ballColliedPlayer(GameObject& ball,
+        GameObject& player)
     {
-        playerCollidBall(spaceShip, asteroid);
+        playerCollidBall(player, ball);
     }
-    void playerColliedPlayer(GameObject& spaceStation,
-        GameObject& spaceShip)
+    void playerColliedPlayer(GameObject& player2,
+        GameObject& player1)
     {
-        playerCollidPlayer(spaceShip, spaceStation);
+        playerCollidPlayer(player1, player2);
     }
-    void GoalColliedBall(GameObject& spaceStation,
-        GameObject& asteroid)
+    void GoalColliedBall(GameObject& goal,
+        GameObject& ball)
     {
-        ballCollidGoal(asteroid, spaceStation);
+        ballCollidGoal(ball, goal);
     }
     //...
 

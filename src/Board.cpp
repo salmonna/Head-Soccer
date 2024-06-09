@@ -12,7 +12,7 @@
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(60)
+Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(180)
 {
 	//update back gound stadium
     m_backGroundStadium.setTexture(texturs[0]);
@@ -41,10 +41,6 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	m_movingObject.push_back(ball);
 	m_gameObject.push_back(ball);
 
-
-	m_collidingObject.push_back(m_movingObject[0]);
-	m_collidingObject.push_back(m_movingObject[1]);
-	m_collidingObject.push_back(m_movingObject[2]);
 
 }
 
@@ -77,10 +73,29 @@ void Board::respond(int keyPressed) {
 		//}
 	}
 
-	for_each_pair(m_collidingObject.begin(), m_collidingObject.end(), [&](auto& a, auto& b) {
+	for_each_pair(m_gameObject.begin(), m_gameObject.end(), [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
 			processCollision(*a, *b);
+
+			if ((typeid(*a) == typeid(Goal) && typeid(*b) == typeid(Ball)))
+			{
+				Ball& ballObject = dynamic_cast<Ball&>(*b);
+
+				if (&(dynamic_cast<Goal&>(*a)) == &(dynamic_cast<Goal&>(*m_staticObject[0]))) //check was goal
+				{
+					m_scoreBoard.updateScore(0, 1);
+				}
+				else
+				{
+					m_scoreBoard.updateScore(1, 0);
+				}
+
+				
+				
+				ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+				ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
+			}		
 		}
 	});
 
@@ -101,6 +116,26 @@ bool Board::collide(GameObject& a, GameObject& b)
 
 	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
 }
+
+//bool Board::collide(GameObject& a, GameObject& b)
+//{
+//
+//	sf::FloatRect otherBounds = b.getSprite().getGlobalBounds();
+//
+//
+//	// Convert the corners of the other bounding box to the local space of this sprite
+//	sf::Vector2f topLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top));
+//	sf::Vector2f topRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top));
+//	sf::Vector2f bottomLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top + otherBounds.height));
+//	sf::Vector2f bottomRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top + otherBounds.height));
+//
+//	// Check if any of the corners are within the local bounds of this sprite
+//	sf::FloatRect localBounds = a.getSprite().getLocalBounds();
+//	return localBounds.contains(topLeft) || localBounds.contains(topRight) ||
+//		localBounds.contains(bottomLeft) || localBounds.contains(bottomRight);
+//
+//}
+
 //=============================================== draw =======================================//
 
 // Method to draw all objects in the window
