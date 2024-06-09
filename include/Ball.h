@@ -23,7 +23,8 @@ public:
 
 private:
 
-
+	//void ballCollisionWithTopGoal();
+	void handleCollision(const sf::FloatRect& scoreBar);
 	sf::Sprite m_sprite;
 	sf::CircleShape m_ball;
 

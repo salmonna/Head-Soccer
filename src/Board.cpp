@@ -79,8 +79,8 @@ void Board::respond(int keyPressed) {
 
 				
 				
-				ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
-				ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
+				//ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+				//ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 			}		
 		}
 	});

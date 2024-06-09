@@ -1,5 +1,5 @@
 #include "Goal.h"
-
+#include <iostream>
 
 //--------- C-tor --------------
 Goal::Goal()
@@ -37,6 +37,13 @@ void Goal::draw(sf::RenderWindow& window) {
 	{
 		window.draw(m_goalSprite[i]);
 	}
+
+	//std::cout << m_goalSprite[2].getGlobalBounds().getPosition().x << "\n";
+	//std::cout << m_goalSprite[2].getGlobalBounds().getPosition().y << "\n";
+
+	//std::cout << m_goalSprite[2].getGlobalBounds().getPosition().x + m_goalSprite[2].getGlobalBounds().width << "\n";
+	//std::cout << m_goalSprite[2].getGlobalBounds().getPosition().y + m_goalSprite[2].getGlobalBounds().height << "\n";
+
 }
 
 //-----------set Right Goal -------------------------
