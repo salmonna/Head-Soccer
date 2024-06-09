@@ -33,7 +33,7 @@ void Window::eventFunc() {
 			checkMouseReleased(event);
 			return ;
 
-		case sf::Event::KeyReleased:
+		case sf::Event::KeyPressed:
 			m_keyPressed = event.size.width;
 			return;
 		}
