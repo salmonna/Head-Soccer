@@ -8,9 +8,9 @@ Player::Player(bool right, Keyboard keys):m_numOfJump(0), m_posX(0), m_posY(0), 
 							m_moveDown(false), m_movePlayer(false), m_keys(keys), m_playerSide(right)
 {
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
-
+	int st = 170;
 	// Define the rectangle to select the character from the sprite sheet
-	sf::IntRect characterRect(145, 125, 95, 100); // Assuming each character is 32x32 pixels
+	sf::IntRect characterRect(st, 125, 55, 90); // Assuming each character is 32x32 pixels
 
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
@@ -20,11 +20,11 @@ Player::Player(bool right, Keyboard keys):m_numOfJump(0), m_posX(0), m_posY(0), 
 		m_sprite.setScale(-1, 1);
 	}
 
-	m_startSprite.push_back(sf::Vector2f(145, 125));
-	m_startSprite.push_back(sf::Vector2f(145, 240));
-	m_startSprite.push_back(sf::Vector2f(145, 5));
-	m_startSprite.push_back(sf::Vector2f(145, 455));
-	m_startSprite.push_back(sf::Vector2f(145, 360));
+	m_startSprite.push_back(sf::Vector2f(st, 125));
+	m_startSprite.push_back(sf::Vector2f(st, 240));
+	m_startSprite.push_back(sf::Vector2f(st, 5));
+	m_startSprite.push_back(sf::Vector2f(st, 455));
+	m_startSprite.push_back(sf::Vector2f(st, 360));
 
 }
 
@@ -102,7 +102,7 @@ void Player::move(int keyPressed) {
 	}
 	else {//return to regular position 
 		m_posY = 0;
-		sf::IntRect characterRect(145, 585, 95, 100); // Assuming each character is 32x32 pixels
+		sf::IntRect characterRect(170, 585, 55, 90); // Assuming each character is 32x32 pixels
 		// Set the texture rectangle to the character's position and size on the sprite sheet
 		m_sprite.setTextureRect(characterRect);
 		m_sprite.setPosition(float(272 + m_posX), float(750));
@@ -138,7 +138,7 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite) {
 		m_movePlayer = false;
 		m_moveClock.restart();
 	}		
-	sf::IntRect characterRect(int(startPos.x + m_numOfJump), int(startPos.y), 95, 100); // Assuming each character is 32x32 pixels
+	sf::IntRect characterRect(int(startPos.x + m_numOfJump), int(startPos.y), 55, 90); // Assuming each character is 32x32 pixels
 	
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);

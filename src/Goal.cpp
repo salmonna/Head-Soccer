@@ -59,7 +59,7 @@ void Goal::setRightGoal() {
 
 sf::Sprite& Goal::getSprite() {
 
-	return m_goalSprite[0];
+	return m_goalSprite[1];
 }
 
 //sf::Sprite& Goal::getSprite(int i) {

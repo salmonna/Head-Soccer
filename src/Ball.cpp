@@ -1,22 +1,18 @@
 #include "Ball.h"
 #include "Resources.h"
 #include "Keyboard.h"
+#include <iostream>
 
 Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
 {
-
-	
-	//get ball 1
-
-
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
 	// הגדרת הכדור
+    m_sprite.setTexture(*texture);
     m_ball.setTexture(texture);
+   // m_ball.set
     m_ball.setOrigin(m_ball.getRadius(), m_ball.getRadius());
     m_ball.setPosition(900.0f, 988.0f); 
-
-    m_sprite.setTexture(*texture);
 }
 
 
@@ -46,7 +42,12 @@ void Ball::draw(sf::RenderWindow & window)
 
 sf::Sprite & Ball::getSprite()
 {
+    m_sprite.setOrigin(m_ball.getOrigin());
     m_sprite.setPosition(m_ball.getPosition());
+    //std::cout << m_sprite.getOrigin().x << ' ' << m_sprite.getOrigin().y << ' ' << std::endl;
+    //std::cout << m_ball.getOrigin().x << ' ' << m_ball.getOrigin().y << ' ' << std::endl;
+    //std::cout << m_sprite.getPosition().x << ' ' << m_sprite.getPosition().y << ' ' << std::endl;
+    //std::cout << m_ball.getPosition().x << ' ' << m_ball.getPosition().y << ' ' << std::endl;
     return m_sprite;
 }
 
@@ -100,13 +101,6 @@ void  Ball::move(int keyPressed)
         m_ball.setPosition(m_ball.getPosition().x, windowBounds.top + windowBounds.height - m_ball.getRadius());
         m_ballVelocity.y = -m_ballVelocity.y * restitution;
     }
-
-
-    //// בדיקת התנגשות עם ה-Score Bars
-    //if (ballBounds.intersects(leftTopScoreBar) || ballBounds.intersects(rightTopScoreBar)) {
-    //    m_ball.setPosition(m_ball.getPosition().x, 1750.0f - m_ball.getRadius());
-    //    m_ballVelocity.y = -m_ballVelocity.y * restitution;
-    //}
 
 };
 

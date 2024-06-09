@@ -68,7 +68,7 @@ void Board::respond(int keyPressed) {
 			{
 				Ball& ballObject = dynamic_cast<Ball&>(*b);
 
-				if (&(dynamic_cast<Goal&>(*a)) == &(dynamic_cast<Goal&>(*m_staticObject[0]))) //check where was the goal
+				if (&(dynamic_cast<Goal&>(*a)) == &(dynamic_cast<Goal&>(*m_staticObject[0]))) //check was goal
 				{
 					m_scoreBoard.updateScore(0, 1);
 				}
