@@ -1,5 +1,5 @@
 #pragma once
-#include "QuitButton.h"
+#include "button/QuitButton.h"
 
 QuitButton::QuitButton(sf::Texture& texture)
 {

@@ -1,4 +1,4 @@
-#include "Ball.h"
+#include "gameObject/Ball.h"
 #include "Resources.h"
 
 Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_keyPressed(-2)
@@ -24,7 +24,6 @@ void Ball::draw(sf::RenderWindow & window)
 
 void  Ball::move(int keyPressed)
 {
-
 
     float deltaTime = m_clock.restart().asSeconds();
 

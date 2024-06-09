@@ -1,5 +1,5 @@
 
-#include "MovingObject.h"
+#include "gameObject/MovingObject.h"
 
 //MovingObject::MovingObject()
 //{

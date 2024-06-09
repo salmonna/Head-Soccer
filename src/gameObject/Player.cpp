@@ -1,10 +1,10 @@
 
 #pragma once
-#include "Player.h"
+#include "gameObject/Player.h"
 #include <iostream>
 #include "Resources.h"
 
-Player::Player(bool right, Keyboard keys):m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2),
+Player::Player(bool right, Keyboard keys):m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2),m_gravity(0),
 							m_moveDown(false), m_movePlayer(false), m_keys(keys), m_playerSide(right)
 {
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
@@ -45,10 +45,12 @@ void Player::move(int keyPressed) {
 	}
 
 	if (m_move == m_keys.JUMP) {//jump
-		if (m_posY > -105)
+		/*if (m_posY > -105)
 		{
 			m_posY -= 20;
-		}
+		}*/
+		
+		m_posY -= 20;
 		movePlayer(m_startSprite[2], 3);
 
 		//after jumping need to go down
@@ -103,6 +105,8 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite) {
 		{
 			m_numOfJump = 0;
 			m_move = -2;
+			m_gravity = 0;
+			m_posY = 0;
 			m_movePlayer = false;
 			return;
 		}
@@ -116,6 +120,8 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite) {
 	{
 		m_numOfJump = 0;
 		m_move = -2;
+		m_gravity = 0;
+		m_posY = 0;
 		m_movePlayer = false;
 		m_moveClock.restart();
 	}		

@@ -1,6 +1,6 @@
 
 #pragma once
-#include "MultiplayerButton.h"
+#include "button/MultiplayerButton.h"
 
 
 MultiplayerButton::MultiplayerButton(sf::Texture& texture)

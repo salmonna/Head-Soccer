@@ -3,11 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Window.h"
-#include "GameObject.h"
-#include "ScoreBoard.h"
-#include "Goal.h"
-#include "MovingObject.h"
-#include "Player.h"
+#include "gameObject/GameObject.h"
+#include "gameObject/ScoreBoard.h"
+#include "gameObject/Goal.h"
+#include "gameObject/MovingObject.h"
+#include "gameObject/Player.h"
 #include "Client.h"
 
 class Board
@@ -38,7 +38,7 @@ private:
 	bool m_boardOpen;
 	ScoreBoard m_scoreBoard;
 
-	Client m_client;
+	//Client m_client;
 	//game objects vector
 
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;

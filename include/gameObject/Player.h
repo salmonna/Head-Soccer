@@ -26,6 +26,7 @@ private:
 	int m_posX;
 	int m_posY;
 	int m_move;
+	int m_gravity;
 
 	bool m_movePlayer;
 	bool m_playerSide;

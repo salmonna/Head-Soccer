@@ -1,5 +1,5 @@
 #pragma once
-#include "ScoreBoard.h"
+#include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 
 ScoreBoard::ScoreBoard(int gameTime) : timeCounterSec(gameTime % 60), 
