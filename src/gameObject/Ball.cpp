@@ -107,3 +107,8 @@ void  Ball::move(int keyPressed)
     
 
 };
+
+float Ball::getRadius() const {
+
+    return m_ball.getRadius();
+}
