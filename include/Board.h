@@ -5,7 +5,9 @@
 #include "Window.h"
 #include "GameObject.h"
 #include "ScoreBoard.h"
-#include "Goal.h"
+#include "GoalSide.h"
+#include "GoalBack.h"
+#include "GoalTop.h"
 #include "MovingObject.h"
 #include "Player.h"
 

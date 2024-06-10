@@ -8,7 +8,9 @@
 
 #include "Player.h"
 #include "Ball.h"
-#include "Goal.h"
+#include "GoalSide.h"
+#include "GoalBack.h"
+#include "GoalTop.h"
 #include "Keyboard.h"
 
 
@@ -72,17 +74,19 @@ namespace // anonymous namespace — the standard way to make function "static"
         //system("cls");
     }
 
-    void ballCollidGoal(GameObject& ball,
+    void ballCollidGoalTop(GameObject& ball,
         GameObject& goal)
     {
 
         std::cout << "Ball and Goal collision!\n";
     }
 
-    void playerCollidWithGoal(GameObject& player , GameObject& goal) {
+    void ballCollidWithGoalBack(GameObject& ball , GameObject& goalBack) {
 
-        std::cout << "player and Goal collision!\n";
+        std::cout << "ball and GoalBack collision!\n";
     }
+
+    void handleUnnecessaryCollision(GameObject& side, GameObject& back) {}
 
     //...
 
@@ -99,15 +103,21 @@ namespace // anonymous namespace — the standard way to make function "static"
     {
         playerCollidPlayer(player1, player2);
     }
-    void GoalColliedBall(GameObject& goal,
+    void GoalTopColliedBall(GameObject& goal,
         GameObject& ball)
     {
-        ballCollidGoal(ball, goal);
+        ballCollidGoalTop(ball, goal);
     }
-    void goalCollidWithPlayer(GameObject& goal, GameObject& player) {
+  
 
-        playerCollidWithGoal(player,goal);
+    void GoalBackCollidWithBall(GameObject& goalBack , GameObject& ball) {
+
+        ballCollidWithGoalBack(ball, goalBack);
     }
+    //void backCollidWithSide(GameObject& back, GameObject& side) {
+
+    //    SideCollidWithBAck(side , back);
+    //}
     //...
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
@@ -121,14 +131,25 @@ namespace // anonymous namespace — the standard way to make function "static"
         HitMap phm;
         phm[Key(typeid(Player), typeid(Ball))] = &playerCollidBall;
         phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
-        phm[Key(typeid(Ball), typeid(Goal))] = &ballCollidGoal;
-        phm[Key(typeid(Player), typeid(Goal))] = &playerCollidWithGoal;
+        phm[Key(typeid(Ball), typeid(GoalTop))] = &ballCollidGoalTop;
+        phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
 
 
         phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
         phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
-        phm[Key(typeid(Goal), typeid(Ball))] = &GoalColliedBall;
-        phm[Key(typeid(Goal), typeid(Player))] = &goalCollidWithPlayer;
+        phm[Key(typeid(GoalTop), typeid(Ball))] = &GoalTopColliedBall;
+        phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
+
+        //collision player with goal back
+        phm[Key(typeid(Player), typeid(GoalBack))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(GoalBack), typeid(Player))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(GoalTop), typeid(Player))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(Player), typeid(GoalTop))] = &handleUnnecessaryCollision;
+
+        //collision by the goal sides
+        phm[Key(typeid(GoalBack), typeid(GoalTop))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(GoalTop), typeid(GoalBack))] = &handleUnnecessaryCollision;
+
         //...
         return phm;
     }

@@ -21,7 +21,7 @@ public:
 
 	std::vector<sf::Texture>& getScoreBoardTexture();
 
-	std::vector<sf::Texture>& getGoalTexture();
+	sf::Texture& getGoalTexture(int index);
 	std::vector<sf::Texture>& getBallTexture();
 	std::vector<sf::Texture>& getCharactersTexture();
 

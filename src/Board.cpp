@@ -19,14 +19,32 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
     m_backGroundStadium.setTexture(texturs[0]);
 
 	//update left and right goals
-	auto rGoal = std::make_shared<Goal>();
+	
+	/*auto rGoal = std::make_shared<Goal>();
 	rGoal->setRightGoal();
-	auto lGoal = std::make_shared<Goal>();
-	m_staticObject.push_back(lGoal);
-	m_staticObject.push_back(rGoal);
-	m_gameObject.push_back(lGoal);
-	m_gameObject.push_back(rGoal);
+	auto leftGoalSide = std::make_shared<GoalSide>(32, 580, false);
 
+	m_staticObject.push_back(leftGoalSide);
+	m_staticObject.push_back(rGoal);
+	m_gameObject.push_back(leftGoalSide);
+	m_gameObject.push_back(rGoal);*/
+
+	auto leftInsideSide = std::make_shared<GoalSide>(32, 580, false);
+	auto leftBackSide = std::make_shared<GoalBack>(-15, 590, false);
+	auto rightInsideSide = std::make_shared<GoalSide>(1755, 580, true);
+	auto rightBackSide = std::make_shared<GoalBack>(1805, 590, true);
+
+	auto leftTopBar = std::make_shared<GoalTop>(40, 580, false);
+	auto leftOutsideSide = std::make_shared<GoalSide>(-20, 625, false);
+	auto rightTopBar = std::make_shared<GoalTop>(1750, 580, true);
+	auto rightOutsideSide = std::make_shared<GoalSide>(1810, 625, true);
+
+	m_gameObject.push_back(leftInsideSide);
+	m_gameObject.push_back(rightInsideSide);
+	m_gameObject.push_back(leftBackSide);
+	m_gameObject.push_back(rightBackSide);
+	m_gameObject.push_back(leftTopBar);
+	m_gameObject.push_back(rightTopBar);
 
 	Keyboard keyPlayer1(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up,sf::Keyboard::Down);
 	Keyboard keyPlayer2(sf::Keyboard::Z, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
@@ -41,6 +59,9 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	m_movingObject.push_back(ball);
 	m_gameObject.push_back(ball);
 
+	
+	m_gameObject.push_back(leftOutsideSide);
+	m_gameObject.push_back(rightOutsideSide);
 
 }
 
@@ -59,7 +80,12 @@ void Board::respond(int keyPressed) {
 		m_movingObject[i]->move(keyPressed);
 	}
 
-	for_each_pair(m_gameObject.begin(), m_gameObject.end(), [&](auto& a, auto& b) {
+	for (int i = 0; i < m_gameObject.size(); i++)
+	{
+		//m_movingObject[i]->move(keyPressed);
+	}
+
+	for_each_pair(m_gameObject.begin()+2, m_gameObject.end()-2, [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
 			processCollision(*a, *b);
@@ -103,24 +129,7 @@ bool Board::collide(GameObject& a, GameObject& b)
 	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
 }
 
-//bool Board::collide(GameObject& a, GameObject& b)
-//{
-//
-//	sf::FloatRect otherBounds = b.getSprite().getGlobalBounds();
-//
-//
-//	// Convert the corners of the other bounding box to the local space of this sprite
-//	sf::Vector2f topLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top));
-//	sf::Vector2f topRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top));
-//	sf::Vector2f bottomLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top + otherBounds.height));
-//	sf::Vector2f bottomRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top + otherBounds.height));
-//
-//	// Check if any of the corners are within the local bounds of this sprite
-//	sf::FloatRect localBounds = a.getSprite().getLocalBounds();
-//	return localBounds.contains(topLeft) || localBounds.contains(topRight) ||
-//		localBounds.contains(bottomLeft) || localBounds.contains(bottomRight);
-//
-//}
+
 
 //=============================================== draw =======================================//
 
