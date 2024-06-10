@@ -2,12 +2,12 @@
 #include "Menu.h"
 #include <iostream>
 #include "Resources.h"
-#include "QuitButton.h"
-#include "PlayButton.h"
-#include "Setting.h"
-#include "TutorialButton.h"
-#include "MultiplayerButton.h"
-#include "PlayerButton.h"
+#include "button/QuitButton.h"
+#include "button/PlayButton.h"
+#include "button/Setting.h"
+#include "button/TutorialButton.h"
+#include "button/MultiplayerButton.h"
+#include "button/PlayerButton.h"
 
 //menu constractor initilize his members
 Menu::Menu(std::vector<sf::Texture>& texturs):m_menuOpen(true),m_exit(false),m_play(false){

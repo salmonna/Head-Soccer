@@ -1,5 +1,5 @@
 #pragma once
-#include "Setting.h"
+#include "button/Setting.h"
 
 Setting::Setting(sf::Texture& texture)
 {

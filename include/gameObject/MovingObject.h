@@ -13,7 +13,7 @@ public:
 	virtual sf::Vector2f getPosition() const = 0;
 
 	//virtual void update(sf::Sprite & ball, sf::Vector2f& velocity, float deltaTime) = 0;
-
+	virtual int getKeypressed() = 0;
 
 	~MovingObject() = default;
 

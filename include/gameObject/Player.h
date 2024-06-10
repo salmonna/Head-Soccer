@@ -14,9 +14,11 @@ public:
 	virtual void draw(sf::RenderWindow& window) override;
 	virtual void move(int keyPressed) override;
 
-	virtual  sf::Vector2f  getPosition() const override;
+	virtual  sf::Vector2f getPosition() const override;
 
 	virtual sf::Sprite& getSprite() override;
+
+	virtual int getKeypressed() override;
 
 	Keyboard getKey() const;
 
@@ -27,6 +29,7 @@ private:
 	int m_posX;
 	int m_posY;
 	int m_move;
+	int m_gravity;
 
 	bool m_movePlayer;
 	bool m_playerSide;
@@ -40,6 +43,6 @@ private:
 
 	Keyboard m_keys;
 
-	void movePlayer(sf::Vector2f startPos, int jump);
+	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
 	bool keyPressedValid(int keyPressed);
 };

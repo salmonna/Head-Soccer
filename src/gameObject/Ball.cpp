@@ -1,9 +1,9 @@
-#include "Ball.h"
+#include "gameObject/Ball.h"
 #include "Resources.h"
 #include "Keyboard.h"
 #include <iostream>
 
-Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
+Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_keyPressed(-2)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -104,3 +104,6 @@ void  Ball::move(int keyPressed)
 
 };
 
+int Ball::getKeypressed() {
+    return m_keyPressed;
+}

@@ -4,11 +4,10 @@
 #include "Resources.h"
 #include <fstream>
 #include "FileException.h"
-#include "Player.h"
-#include "StaticObject.h"
-
+#include "gameObject/Player.h"
+#include "gameObject/StaticObject.h"
 #include "Keyboard.h"
-#include "Ball.h"
+#include "gameObject/Ball.h"
 #include "CollisionHandling.h"
 
 
@@ -29,9 +28,10 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 
 
 	Keyboard keyPlayer1(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up,sf::Keyboard::Down);
-	Keyboard keyPlayer2(sf::Keyboard::Z, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+	Keyboard keyPlayer2(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
 	m_movingObject.push_back(std::make_shared<Player>(true, keyPlayer1));
 	m_movingObject.push_back(std::make_shared<Player>(false, keyPlayer2));
+	//m_client.sendData(*m_movingObject[1]);
 	m_gameObject.push_back(m_movingObject[0]);
 	m_gameObject.push_back(m_movingObject[1]);
 	
@@ -57,6 +57,20 @@ void Board::respond(int keyPressed) {
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
 		m_movingObject[i]->move(keyPressed);
+		//if (i == 1)
+		//{
+		//	//othere player
+		//	//m_client.receiveData(*m_movingObject[i]);
+		//}
+		//else if(i == 0)
+		//{
+		//	m_movingObject[i]->move(keyPressed);
+		//	//m_client.sendData(*m_movingObject[i]);
+		//}
+		//else
+		//{
+		//	
+		//}
 	}
 
 	for_each_pair(m_gameObject.begin(), m_gameObject.end(), [&](auto& a, auto& b) {

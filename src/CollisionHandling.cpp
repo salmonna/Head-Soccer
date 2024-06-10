@@ -6,10 +6,9 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include "Player.h"
-#include "Ball.h"
-#include "Goal.h"
-#include "Keyboard.h"
+#include "gameObject/Player.h"
+#include "gameObject/Ball.h"
+#include "gameObject/Goal.h"
 
 
 namespace // anonymous namespace — the standard way to make function "static"
