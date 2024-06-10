@@ -71,18 +71,27 @@ void  Ball::move(int keyPressed)
     // עדכון מיקום הכדור
     m_ball.move(m_ballVelocity * deltaTime);
 
+    //-----------------------------------------------------------------------------------------------
+    sf::FloatRect leftTopScoreBar(40.f, 580.f, 150.4f, 631.f);
+    sf::FloatRect rightTopScoreBar(1750.f, 580.f, 184.f, 85.f);
+
+
+
     // בדיקת התנגשות עם הקרקע
     if (m_ball.getPosition().y + m_ball.getRadius() >= 835.0f) {
         m_ball.setPosition(m_ball.getPosition().x, 835.0f - m_ball.getRadius());
         m_ballVelocity.y = -m_ballVelocity.y * restitution;
     }
 
+
+
     // בדיקת התנגשות עם הקירות והחלון
     sf::FloatRect ballBounds = m_ball.getGlobalBounds();
     sf::FloatRect windowBounds(0.0f, 0.0f, 1800.0f, 835.0f);
 
-    sf::FloatRect leftTopScoreBar(40.f, 580.f, 224.f, 665.f);
-    sf::FloatRect rightTopScoreBar(1750.f, 580.f, 1934.f, 665.f);
+    handleCollision(leftTopScoreBar);
+    handleCollision(rightTopScoreBar);
+
 
     if (ballBounds.left < windowBounds.left) {
         m_ball.setPosition(windowBounds.left + m_ball.getRadius(), m_ball.getPosition().y);
@@ -100,5 +109,6 @@ void  Ball::move(int keyPressed)
         m_ball.setPosition(m_ball.getPosition().x, windowBounds.top + windowBounds.height - m_ball.getRadius());
         m_ballVelocity.y = -m_ballVelocity.y * restitution;
     }
+    
 
 };

@@ -10,6 +10,11 @@
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
 
+#include "GoalSide.h"
+#include "GoalBack.h"
+#include "GoalTop.h"
+#include "Keyboard.h"
+
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
@@ -25,7 +30,11 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player & playerObject = dynamic_cast<Player&>(player);
 
         float kickStrength = 500.0f; // עוצמת הבעיטה
-        float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
+        //float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
+        float kickVerticalBoost = -1200.0f; // עוצמת הבעיטה האנכית
+
+
+
 
         sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
         float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
@@ -67,13 +76,19 @@ namespace // anonymous namespace — the standard way to make function "static"
         //system("cls");
     }
 
-    void ballCollidGoal(GameObject& ball,
+    void ballCollidGoalTop(GameObject& ball,
         GameObject& goal)
     {
 
         std::cout << "Ball and Goal collision!\n";
     }
 
+    void ballCollidWithGoalBack(GameObject& ball , GameObject& goalBack) {
+
+        std::cout << "ball and GoalBack collision!\n";
+    }
+
+    void handleUnnecessaryCollision(GameObject& side, GameObject& back) {}
 
     //...
 
@@ -90,11 +105,21 @@ namespace // anonymous namespace — the standard way to make function "static"
     {
         playerCollidPlayer(player1, player2);
     }
-    void GoalColliedBall(GameObject& goal,
+    void GoalTopColliedBall(GameObject& goal,
         GameObject& ball)
     {
-        ballCollidGoal(ball, goal);
+        ballCollidGoalTop(ball, goal);
     }
+  
+
+    void GoalBackCollidWithBall(GameObject& goalBack , GameObject& ball) {
+
+        ballCollidWithGoalBack(ball, goalBack);
+    }
+    //void backCollidWithSide(GameObject& back, GameObject& side) {
+
+    //    SideCollidWithBAck(side , back);
+    //}
     //...
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
@@ -106,13 +131,27 @@ namespace // anonymous namespace — the standard way to make function "static"
     HitMap initializeCollisionMap()
     {
         HitMap phm;
-        phm[Key(typeid(Player), typeid(Ball))] = &playerCollidBall;//shipAsteroid;
-        phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;//shipStation;
-        phm[Key(typeid(Ball), typeid(Goal))] = &ballCollidGoal;//asteroidStation;
+        phm[Key(typeid(Player), typeid(Ball))] = &playerCollidBall;
+        phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
+        phm[Key(typeid(Ball), typeid(GoalTop))] = &ballCollidGoalTop;
+        phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
 
-        phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;//shipAsteroid;
-        phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;//shipStation;
-        phm[Key(typeid(Goal), typeid(Ball))] = &GoalColliedBall;//asteroidStation;
+
+        phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
+        phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
+        phm[Key(typeid(GoalTop), typeid(Ball))] = &GoalTopColliedBall;
+        phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
+
+        //collision player with goal back
+        phm[Key(typeid(Player), typeid(GoalBack))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(GoalBack), typeid(Player))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(GoalTop), typeid(Player))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(Player), typeid(GoalTop))] = &handleUnnecessaryCollision;
+
+        //collision by the goal sides
+        phm[Key(typeid(GoalBack), typeid(GoalTop))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(GoalTop), typeid(GoalBack))] = &handleUnnecessaryCollision;
+
         //...
         return phm;
     }

@@ -50,9 +50,9 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 
 //getGoalTexture
 
-std::vector<sf::Texture>& Resources::getGoalTexture() {
+sf::Texture& Resources::getGoalTexture(int index) {
 
-	return m_goalTexture;
+	return m_goalTexture[index];
 }
 //getMenuTexture
 

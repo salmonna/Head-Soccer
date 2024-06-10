@@ -11,7 +11,6 @@ public:
 	virtual void draw(sf::RenderWindow& window) override;
 	void setRightGoal();
 
-	virtual sf::Sprite& getSprite()override;
 	//sf::Sprite& getSprite(int i);
 
 

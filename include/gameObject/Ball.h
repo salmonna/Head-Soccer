@@ -21,14 +21,14 @@ public:
 	virtual ~Ball() = default;
 
 private:
-	int m_keyPressed;
 
+	//void ballCollisionWithTopGoal();
+	void handleCollision(const sf::FloatRect& scoreBar);
 	sf::Sprite m_sprite;
 	sf::CircleShape m_ball;
 
 	sf::Vector2f m_ballVelocity;
 
 	sf::Clock m_clock;
-	GameObject* is();
 };
 
