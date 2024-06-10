@@ -26,6 +26,8 @@ public:
 
 	bool isOpen() const;
 
+	void updateScoreBar();
+
 	~Board() = default;
 
 private:

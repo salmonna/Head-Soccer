@@ -78,10 +78,58 @@ namespace // anonymous namespace — the standard way to make function "static"
         GameObject& goal)
     {
 
+        Ball& ballObject = dynamic_cast<Ball&>(ball);
+        GoalTop& goalObject = dynamic_cast<GoalTop&>(goal);
+
+        auto scoreBar = goalObject.getSprite().getGlobalBounds();
+        auto ballVelocity = ballObject.getVelocity();;
+
+        const float restitution = 0.8f;
+
+        float ballLeft = ballObject.getPosition().x - ballObject.getRadius();
+        float ballRight = ballObject.getPosition().x + ballObject.getRadius();
+        float ballTop = ballObject.getPosition().y - ballObject.getRadius();
+        float ballBottom = ballObject.getPosition().y + ballObject.getRadius();
+
+        if (ballRight >= scoreBar.left && ballLeft <= scoreBar.left + scoreBar.width &&
+            ballBottom >= scoreBar.top && ballTop <= scoreBar.top + scoreBar.height) {
+
+            if (ballTop < scoreBar.top) {
+                // Ball hit the top
+                ballObject.setPosition(sf::Vector2f(ballObject.getPosition().x, scoreBar.top - ballObject.getRadius()));
+                ballVelocity.y = -ballObject.getVelocity().y * restitution;
+            }
+            else if (ballBottom > scoreBar.top + scoreBar.height) {
+                // Ball hit the bottom
+                ballObject.setPosition(sf::Vector2f(ballObject.getPosition().x, scoreBar.top + scoreBar.height + ballObject.getRadius()));
+                ballVelocity.y = -ballVelocity.y * restitution;
+            }
+            else if (ballLeft < scoreBar.left) {
+                // Ball hit the left side
+                ballObject.setPosition(sf::Vector2f(scoreBar.left - ballObject.getRadius(), ballObject.getPosition().y));
+                ballVelocity.x = -ballVelocity.x * restitution;
+            }
+            else if (ballRight > scoreBar.left + scoreBar.width) {
+                // Ball hit the right side
+                ballObject.setPosition(sf::Vector2f(scoreBar.left + scoreBar.width + ballObject.getRadius(), ballObject.getPosition().y));
+                ballVelocity.x = -ballVelocity.x * restitution;
+            }
+        }
+
+        ballObject.setBallVelocity(ballVelocity);
+
         std::cout << "Ball and Goal collision!\n";
     }
 
     void ballCollidWithGoalBack(GameObject& ball , GameObject& goalBack) {
+
+        Ball& ballObject = dynamic_cast<Ball&>(ball);
+        GoalBack& goalObject = dynamic_cast<GoalBack&>(goalBack);
+
+        goalObject.setIfGoal(true);
+
+        ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+        ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 
         std::cout << "ball and GoalBack collision!\n";
     }

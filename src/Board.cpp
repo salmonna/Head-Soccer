@@ -39,6 +39,9 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	auto rightTopBar = std::make_shared<GoalTop>(1750, 580, true);
 	auto rightOutsideSide = std::make_shared<GoalSide>(1810, 625, true);
 
+	m_staticObject.push_back(leftBackSide);
+	m_staticObject.push_back(rightBackSide);
+
 	m_gameObject.push_back(leftInsideSide);
 	m_gameObject.push_back(rightInsideSide);
 	m_gameObject.push_back(leftBackSide);
@@ -80,38 +83,19 @@ void Board::respond(int keyPressed) {
 		m_movingObject[i]->move(keyPressed);
 	}
 
-	for (int i = 0; i < m_gameObject.size(); i++)
-	{
-		//m_movingObject[i]->move(keyPressed);
-	}
 
 	for_each_pair(m_gameObject.begin()+2, m_gameObject.end()-2, [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
-			processCollision(*a, *b);
-
-			if ((typeid(*a) == typeid(Goal) && typeid(*b) == typeid(Ball)))
-			{
-				Ball& ballObject = dynamic_cast<Ball&>(*b);
-
-				if (&(dynamic_cast<Goal&>(*a)) == &(dynamic_cast<Goal&>(*m_staticObject[0]))) //check was goal
-				{
-					m_scoreBoard.updateScore(0, 1);
-				}
-				else
-				{
-					m_scoreBoard.updateScore(1, 0);
-				}
-
-				
-				
-				//ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
-				//ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
-			}		
+			processCollision(*a, *b);	
 		}
 	});
 
+	updateScoreBar();
 }
+
+
+
 //=============================================== for_each_pair =======================================//
 
 // STL-like algorithm to run over all pairs
@@ -129,7 +113,24 @@ bool Board::collide(GameObject& a, GameObject& b)
 	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
 }
 
+//=============================================== update ScoreBar =======================================//
+void Board::updateScoreBar() {
 
+	GoalBack& leftGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[0]);
+	GoalBack& rightGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[1]);
+
+	if (leftGoalBack.getIfGoal()) {
+
+		m_scoreBoard.updateScore(0, 1);
+		leftGoalBack.setIfGoal(false);
+	}
+	else if (rightGoalBack.getIfGoal())
+	{
+		m_scoreBoard.updateScore(1, 0);
+		rightGoalBack.setIfGoal(false);
+	}
+
+}
 
 //=============================================== draw =======================================//
 
