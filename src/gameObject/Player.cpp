@@ -76,11 +76,11 @@ void Player::move(int keyPressed) {
 	}
 	else if (m_move == m_keys.SPACE)//kick
 		movePlayer(m_startSprite[0], 7, 30);
-	else if (m_move == m_keys.LEFT) {//move left
+	else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
 		m_posX -= 5;
 		movePlayer(m_startSprite[1], 6, 30);
 	}
-	else if (m_move == m_keys.RIGHT) {//move right
+	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
 		m_posX += 5;
 		movePlayer(m_startSprite[1], 6, 30);
 	}
@@ -143,19 +143,12 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 		}
 		m_movePlayer = true;
 	}
-	/*	else
+	else
 	{
-		m_numOfJump = 0;
-		m_move = -2;
-		m_movePlayer = false;
+		/*m_sprite.move(float(272 + m_posX), float(750 + m_posY));*/
 		
-	}*/		
-	//sf::IntRect characterRect(int(startPos.x + m_numOfJump), int(startPos.y), 80, 90); // Assuming each character is 32x32 pixels
-	//
-	//// Set the texture rectangle to the character's position and size on the sprite sheet
-	//m_sprite.setTextureRect(characterRect);
-	//m_sprite.setPosition(float(272 + m_posX), float(750 + m_posY));
-	//m_sprite.move(float(272 + m_posX), float(750 + m_posY));
+	}		
+
 }
 
 //function that check if user pressed on valid key
