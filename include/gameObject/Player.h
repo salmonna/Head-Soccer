@@ -13,12 +13,8 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) override;
 	virtual void move(int keyPressed) override;
-
 	virtual  sf::Vector2f getPosition() const override;
-
 	virtual sf::Sprite& getSprite() override;
-
-	virtual int getKeypressed() override;
 
 	Keyboard getKey() const;
 
@@ -30,19 +26,16 @@ private:
 	int m_posY;
 	int m_move;
 	int m_gravity;
-
-	bool m_movePlayer;
 	bool m_playerSide;
-	bool m_moveDown;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
 
 	std::vector<sf::Vector2f> m_startSprite;
 
-
 	Keyboard m_keys;
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
-	bool keyPressedValid(int keyPressed);
+	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
+	void updateGravityAndCollision();
 };

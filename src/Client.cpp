@@ -27,7 +27,7 @@ void Client::receiveData(MovingObject& otherPlayer) {
 
 void Client::sendData(MovingObject& player) {
     sf::Packet packet;
-    float key = player.getKeypressed();
+    float key = 0;
     sf::Vector2f position = player.getSprite().getPosition();
     packet << key;
     if (m_socket.send(packet) != sf::Socket::Done) {

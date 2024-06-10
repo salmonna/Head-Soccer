@@ -5,15 +5,10 @@
 #include "Resources.h"
 
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),
-m_moveDown(false), m_movePlayer(false), m_keys(keys), m_playerSide(right)
+										 m_keys(keys), m_playerSide(right)
 {
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
-
-	// Define the rectangle to select the character from the sprite sheet
-	sf::IntRect characterRect(160, 125, 80, 90); // Assuming each character is 32x32 pixels
-
-	// Set the texture rectangle to the character's position and size on the sprite sheet
-	m_sprite.setTextureRect(characterRect);
+	resetToPosition();
 	
 	if (m_playerSide)
 	{
@@ -25,18 +20,10 @@ m_moveDown(false), m_movePlayer(false), m_keys(keys), m_playerSide(right)
 		m_sprite.setPosition(272, 750);
 	}
 	
-
 	m_startSprite.push_back(sf::Vector2f(160, 126));
 	m_startSprite.push_back(sf::Vector2f(160, 244));
-	m_startSprite.push_back(sf::Vector2f(160, 5));
-	m_startSprite.push_back(sf::Vector2f(160, 463));
+	m_startSprite.push_back(sf::Vector2f(160, 8));
 	m_startSprite.push_back(sf::Vector2f(160, 365));
-}
-
-//get keys
-Keyboard Player::getKey() const 
-{
-	return m_keys;
 }
 
 
@@ -47,32 +34,18 @@ void Player::draw(sf::RenderWindow& window) {
 	window.draw(m_sprite);
 }
 
-
-
 //function that find where to move and  call to another function 
 void Player::move(int keyPressed) {
 
-	//if user preesed keyboard keep it in member
-	if (keyPressedValid(keyPressed))
-	{
-		m_move = keyPressed;
-		m_moveClock.restart();
-	}
-
 	if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
-		
 		if (m_posY > -200)
-		{
 			m_posY -= 15;
-		}
 		
 		movePlayer(m_startSprite[2], 7, 50);
 	}
-	else {//return to regular position 
-			sf::IntRect characterRect(160, 590, 80, 90); // Assuming each character is 32x32 pixels
-			// Set the texture rectangle to the character's position and size on the sprite sheet
-			m_sprite.setTextureRect(characterRect);
-			m_sprite.setPosition(float(272 + m_posX), float(750));
+	else {
+		// Reset to default position if not jumping
+		resetToPosition();
 	}
 
 	if (sf::Keyboard::isKeyPressed(m_keys.SPACE))//kick
@@ -86,41 +59,17 @@ void Player::move(int keyPressed) {
 		movePlayer(m_startSprite[1], 6, 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
-		if (m_playerSide)
-			m_posX -= 5;
-		else m_posX += 5;
-
-		movePlayer(m_startSprite[4], 7, 1);
-	}
-	else if (m_moveDown) {//down
-		m_posY += 20;
-		movePlayer(m_startSprite[3], 3, 10);
-		if (m_posY >= 0)
-		{
-			m_moveDown = false;
-		}
-	}
-	
-
-
-
-	if (m_sprite.getPosition().y < 750)
-	{
-		m_sprite.setPosition(float(272 + m_posX), float(750 + m_posY+m_gravity));
-		m_gravity += 7;
-	}
-	else
-	{
-		m_gravity = 0;
-		m_posY = 0;
+	    (m_playerSide) ? m_posX -= 5 : m_posX += 5;
+		movePlayer(m_startSprite[3], 6, 1);
 	}
 
+	// Handle gravity and ground collision
+	updateGravityAndCollision();
 }
 
 //function that move the player
 void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 
-	/*float maxTime = 40;*/
 	float sec = float(m_moveClock.getElapsedTime().asMilliseconds());
 	if (maxTime < sec)
 	{
@@ -128,54 +77,55 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 		{
 			m_numOfJump = 0;
 			m_move = -2;
-			m_movePlayer = false;
+			
 			return;
 		}
 		else
 		{
 			m_moveClock.restart();
 			m_numOfJump += 115;
-			sf::IntRect characterRect(int(startPos.x + m_numOfJump), int(startPos.y), 80, 90);
-			m_sprite.setTextureRect(characterRect);
-			m_sprite.setPosition(float(272 + m_posX), float(750 + m_posY));
+			resetToPosition(startPos, m_numOfJump, m_posX, m_posY);
 		}
-		m_movePlayer = true;
+		
+	}
+}
+
+
+// Reset to default position if not jumping
+void Player::resetToPosition(sf::Vector2f startPos,int numOfJump ,int posX, int posY) {
+
+	sf::IntRect characterRect(startPos.x+ numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
+	// Set the texture rectangle to the character's position and size on the sprite sheet
+	m_sprite.setTextureRect(characterRect);
+	m_sprite.setPosition(float(272 + m_posX), float(750+ posY));
+}
+
+// Handle gravity and ground collision
+void Player::updateGravityAndCollision() {
+	if (m_sprite.getPosition().y < 750)
+	{
+		m_sprite.setPosition(float(272 + m_posX), float(750 + m_posY + m_gravity));
+		m_gravity += 5;
 	}
 	else
 	{
-		/*m_sprite.move(float(272 + m_posX), float(750 + m_posY));*/
-		
-	}		
-
+		m_gravity = 0;
+		m_posY = 0;
+	}
 }
 
-//function that check if user pressed on valid key
-bool Player::keyPressedValid(int keyPressed) {
-
-
-	if (m_keys.SPACE == keyPressed)//kick
-		return true;
-	else if (m_keys.LEFT == keyPressed)//move left
-		return true;
-	else if (m_keys.RIGHT == keyPressed)//move right
-		return true;
-	else if (m_keys.JUMP == keyPressed)//jump
-		return true;
-	else if (m_keys.SLIDE == keyPressed)//slide
-		return true;
-
-	return false;
-}
 
 sf::Sprite& Player::getSprite() {
 	return m_sprite;
 }
 
-int Player::getKeypressed() {
-	return m_move;
-}
-
 sf::Vector2f Player::getPosition() const {
 
 	return m_sprite.getPosition();
+}
+
+//get keys
+Keyboard Player::getKey() const 
+{
+	return m_keys;
 }

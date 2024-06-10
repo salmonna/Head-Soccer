@@ -15,7 +15,6 @@ public:
 	virtual sf::Vector2f getPosition() const override;
 	virtual sf::Sprite& getSprite() override;
 	sf::Vector2f getVelocity() const;
-	virtual int getKeypressed() override;
 	void setPosition(sf::Vector2f position);
 	void setBallVelocity(sf::Vector2f velocity);
 
@@ -30,5 +29,6 @@ private:
 	sf::Vector2f m_ballVelocity;
 
 	sf::Clock m_clock;
+	GameObject* is();
 };
 

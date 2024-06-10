@@ -15,7 +15,6 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_keyPressed(-2)
     m_ball.setPosition(900.0f, 988.0f); 
 }
 
-
 void Ball::setPosition(sf::Vector2f position)
 {
     m_ball.setPosition(position);
@@ -103,7 +102,3 @@ void  Ball::move(int keyPressed)
     }
 
 };
-
-int Ball::getKeypressed() {
-    return m_keyPressed;
-}
