@@ -26,7 +26,6 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	m_gameObject.push_back(lGoal);
 	m_gameObject.push_back(rGoal);
 
-
 	Keyboard keyPlayer1(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up,sf::Keyboard::Down);
 	Keyboard keyPlayer2(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
 	m_movingObject.push_back(std::make_shared<Player>(true, keyPlayer1));
@@ -34,14 +33,11 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 	//m_client.sendData(*m_movingObject[1]);
 	m_gameObject.push_back(m_movingObject[0]);
 	m_gameObject.push_back(m_movingObject[1]);
-	
 
 	//update ball
 	auto ball = std::make_shared<Ball>();
 	m_movingObject.push_back(ball);
 	m_gameObject.push_back(ball);
-
-
 }
 
 //=============================================== respond =======================================//
@@ -57,20 +53,6 @@ void Board::respond(int keyPressed) {
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
 		m_movingObject[i]->move(keyPressed);
-		//if (i == 1)
-		//{
-		//	//othere player
-		//	//m_client.receiveData(*m_movingObject[i]);
-		//}
-		//else if(i == 0)
-		//{
-		//	m_movingObject[i]->move(keyPressed);
-		//	//m_client.sendData(*m_movingObject[i]);
-		//}
-		//else
-		//{
-		//	
-		//}
 	}
 
 	for_each_pair(m_gameObject.begin(), m_gameObject.end(), [&](auto& a, auto& b) {
@@ -90,9 +72,6 @@ void Board::respond(int keyPressed) {
 				{
 					m_scoreBoard.updateScore(1, 0);
 				}
-
-				
-				
 				ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
 				ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 			}		
@@ -116,25 +95,6 @@ bool Board::collide(GameObject& a, GameObject& b)
 
 	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
 }
-
-//bool Board::collide(GameObject& a, GameObject& b)
-//{
-//
-//	sf::FloatRect otherBounds = b.getSprite().getGlobalBounds();
-//
-//
-//	// Convert the corners of the other bounding box to the local space of this sprite
-//	sf::Vector2f topLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top));
-//	sf::Vector2f topRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top));
-//	sf::Vector2f bottomLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top + otherBounds.height));
-//	sf::Vector2f bottomRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top + otherBounds.height));
-//
-//	// Check if any of the corners are within the local bounds of this sprite
-//	sf::FloatRect localBounds = a.getSprite().getLocalBounds();
-//	return localBounds.contains(topLeft) || localBounds.contains(topRight) ||
-//		localBounds.contains(bottomLeft) || localBounds.contains(bottomRight);
-//
-//}
 
 //=============================================== draw =======================================//
 

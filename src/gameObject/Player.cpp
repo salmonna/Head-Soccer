@@ -59,7 +59,7 @@ void Player::move(int keyPressed) {
 		m_moveClock.restart();
 	}
 
-	if (m_move == m_keys.JUMP) {//jump
+	if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
 		
 		if (m_posY > -200)
 		{
@@ -67,44 +67,42 @@ void Player::move(int keyPressed) {
 		}
 		
 		movePlayer(m_startSprite[2], 7, 50);
-
-		//after jumping need to go down
-		//if (!m_movePlayer)
-		//{
-		//	m_moveDown = true;
-		//}
 	}
-	else if (m_move == m_keys.SPACE)//kick
-		movePlayer(m_startSprite[0], 7, 30);
+	else {//return to regular position 
+			sf::IntRect characterRect(160, 590, 80, 90); // Assuming each character is 32x32 pixels
+			// Set the texture rectangle to the character's position and size on the sprite sheet
+			m_sprite.setTextureRect(characterRect);
+			m_sprite.setPosition(float(272 + m_posX), float(750));
+	}
+
+	if (sf::Keyboard::isKeyPressed(m_keys.SPACE))//kick
+		movePlayer(m_startSprite[0], 7, 10);
 	else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
 		m_posX -= 5;
-		movePlayer(m_startSprite[1], 6, 30);
+		movePlayer(m_startSprite[1], 6, 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
 		m_posX += 5;
-		movePlayer(m_startSprite[1], 6, 30);
+		movePlayer(m_startSprite[1], 6, 10);
 	}
-	else if (m_move == m_keys.SLIDE) {//slide
+	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
 		if (m_playerSide)
 			m_posX -= 5;
 		else m_posX += 5;
 
-		movePlayer(m_startSprite[4], 7, 30);
+		movePlayer(m_startSprite[4], 7, 1);
 	}
 	else if (m_moveDown) {//down
 		m_posY += 20;
-		movePlayer(m_startSprite[3], 3, 30);
+		movePlayer(m_startSprite[3], 3, 10);
 		if (m_posY >= 0)
 		{
 			m_moveDown = false;
 		}
 	}
-	else {//return to regular position 
-		sf::IntRect characterRect(160, 590, 80, 90); // Assuming each character is 32x32 pixels
-		// Set the texture rectangle to the character's position and size on the sprite sheet
-		m_sprite.setTextureRect(characterRect);
-		m_sprite.setPosition(float(272 + m_posX), float(750));
-	}
+	
+
+
 
 	if (m_sprite.getPosition().y < 750)
 	{
