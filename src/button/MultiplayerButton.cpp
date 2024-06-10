@@ -10,8 +10,8 @@ MultiplayerButton::MultiplayerButton(sf::Texture& texture)
 }
 
 // Method to simulate clicking the button
-bool MultiplayerButton::click() {
-	return false;
+GameState *  MultiplayerButton::click() {
+	return NULL;
 }
 
 // Method to display button information

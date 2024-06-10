@@ -42,7 +42,7 @@ Keyboard Player::getKey() const
 
 
 //draw plater
-void Player::draw(sf::RenderWindow& window) {
+void Player::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_sprite);
 }
@@ -50,72 +50,72 @@ void Player::draw(sf::RenderWindow& window) {
 
 
 //function that find where to move and  call to another function 
-void Player::move(int keyPressed) {
+void Player::move(sf::Vector2f pressed) {
 
-	//if user preesed keyboard keep it in member
-	if (keyPressedValid(keyPressed))
-	{
-		m_move = keyPressed;
-		m_moveClock.restart();
-	}
+	////if user preesed keyboard keep it in member
+	//if (keyPressedValid(pressed))
+	//{
+	//	m_move = pressed;
+	//	m_moveClock.restart();
+	//}
 
-	if (m_move == m_keys.JUMP) {//jump
-		
-		if (m_posY > -200)
-		{
-			m_posY -= 15;
-		}
-		
-		movePlayer(m_startSprite[2], 7, 50);
+	//if (m_move == m_keys.JUMP) {//jump
+	//	
+	//	if (m_posY > -200)
+	//	{
+	//		m_posY -= 15;
+	//	}
+	//	
+	//	movePlayer(m_startSprite[2], 7, 50);
 
-		//after jumping need to go down
-		//if (!m_movePlayer)
-		//{
-		//	m_moveDown = true;
-		//}
-	}
-	else if (m_move == m_keys.SPACE)//kick
-		movePlayer(m_startSprite[0], 7, 30);
-	else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
-		m_posX -= 5;
-		movePlayer(m_startSprite[1], 6, 30);
-	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
-		m_posX += 5;
-		movePlayer(m_startSprite[1], 6, 30);
-	}
-	else if (m_move == m_keys.SLIDE) {//slide
-		if (m_playerSide)
-			m_posX -= 5;
-		else m_posX += 5;
+	//	//after jumping need to go down
+	//	//if (!m_movePlayer)
+	//	//{
+	//	//	m_moveDown = true;
+	//	//}
+	//}
+	//else if (m_move == m_keys.SPACE)//kick
+	//	movePlayer(m_startSprite[0], 7, 30);
+	//else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
+	//	m_posX -= 5;
+	//	movePlayer(m_startSprite[1], 6, 30);
+	//}
+	//else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
+	//	m_posX += 5;
+	//	movePlayer(m_startSprite[1], 6, 30);
+	//}
+	//else if (m_move == m_keys.SLIDE) {//slide
+	//	if (m_playerSide)
+	//		m_posX -= 5;
+	//	else m_posX += 5;
 
-		movePlayer(m_startSprite[4], 7, 30);
-	}
-	else if (m_moveDown) {//down
-		m_posY += 20;
-		movePlayer(m_startSprite[3], 3, 30);
-		if (m_posY >= 0)
-		{
-			m_moveDown = false;
-		}
-	}
-	else {//return to regular position 
-		sf::IntRect characterRect(160, 590, 80, 90); // Assuming each character is 32x32 pixels
-		// Set the texture rectangle to the character's position and size on the sprite sheet
-		m_sprite.setTextureRect(characterRect);
-		m_sprite.setPosition(float(272 + m_posX), float(750));
-	}
+	//	movePlayer(m_startSprite[4], 7, 30);
+	//}
+	//else if (m_moveDown) {//down
+	//	m_posY += 20;
+	//	movePlayer(m_startSprite[3], 3, 30);
+	//	if (m_posY >= 0)
+	//	{
+	//		m_moveDown = false;
+	//	}
+	//}
+	//else {//return to regular position 
+	//	sf::IntRect characterRect(160, 590, 80, 90); // Assuming each character is 32x32 pixels
+	//	// Set the texture rectangle to the character's position and size on the sprite sheet
+	//	m_sprite.setTextureRect(characterRect);
+	//	m_sprite.setPosition(float(272 + m_posX), float(750));
+	//}
 
-	if (m_sprite.getPosition().y < 750)
-	{
-		m_sprite.setPosition(float(272 + m_posX), float(750 + m_posY+m_gravity));
-		m_gravity += 7;
-	}
-	else
-	{
-		m_gravity = 0;
-		m_posY = 0;
-	}
+	//if (m_sprite.getPosition().y < 750)
+	//{
+	//	m_sprite.setPosition(float(272 + m_posX), float(750 + m_posY+m_gravity));
+	//	m_gravity += 7;
+	//}
+	//else
+	//{
+	//	m_gravity = 0;
+	//	m_posY = 0;
+	//}
 
 }
 

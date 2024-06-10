@@ -12,8 +12,12 @@
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(180)
+Board::Board():m_boardOpen(true), m_scoreBoard(180)
 {
+
+
+	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
+
 	//update back gound stadium
     m_backGroundStadium.setTexture(texturs[0]);
 
@@ -47,7 +51,7 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 //=============================================== respond =======================================//
 
 // Method to check if a given location corresponds to a stick
-void Board::respond(int keyPressed) {
+void Board::respond(sf::Vector2f pressed) {
 
 
 	timeCalculation();
@@ -56,21 +60,8 @@ void Board::respond(int keyPressed) {
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
-		m_movingObject[i]->move(keyPressed);
-		//if (i == 1)
-		//{
-		//	//othere player
-		//	//m_client.receiveData(*m_movingObject[i]);
-		//}
-		//else if(i == 0)
-		//{
-		//	m_movingObject[i]->move(keyPressed);
-		//	//m_client.sendData(*m_movingObject[i]);
-		//}
-		//else
-		//{
-		//	
-		//}
+		m_movingObject[i]->move(pressed);
+
 	}
 
 	for_each_pair(m_gameObject.begin(), m_gameObject.end(), [&](auto& a, auto& b) {
@@ -100,6 +91,14 @@ void Board::respond(int keyPressed) {
 	});
 
 }
+
+
+GameState* Board::handleEvents()
+{
+	return NULL;
+}
+
+
 //=============================================== for_each_pair =======================================//
 
 // STL-like algorithm to run over all pairs
@@ -113,33 +112,12 @@ void Board::for_each_pair(FwdIt begin, FwdIt end, Fn fn)
 //=============================================== collide =======================================//
 bool Board::collide(GameObject& a, GameObject& b)
 {
-
 	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
 }
-
-//bool Board::collide(GameObject& a, GameObject& b)
-//{
-//
-//	sf::FloatRect otherBounds = b.getSprite().getGlobalBounds();
-//
-//
-//	// Convert the corners of the other bounding box to the local space of this sprite
-//	sf::Vector2f topLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top));
-//	sf::Vector2f topRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top));
-//	sf::Vector2f bottomLeft = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left, otherBounds.top + otherBounds.height));
-//	sf::Vector2f bottomRight = a.getSprite().getTransform().getInverse().transformPoint(sf::Vector2f(otherBounds.left + otherBounds.width, otherBounds.top + otherBounds.height));
-//
-//	// Check if any of the corners are within the local bounds of this sprite
-//	sf::FloatRect localBounds = a.getSprite().getLocalBounds();
-//	return localBounds.contains(topLeft) || localBounds.contains(topRight) ||
-//		localBounds.contains(bottomLeft) || localBounds.contains(bottomRight);
-//
-//}
-
 //=============================================== draw =======================================//
 
 // Method to draw all objects in the window
-void Board::draw(sf::RenderWindow& window) {
+void Board::draw(sf::RenderWindow& window) const{
 
 	//draw the back ground stadium and field
     window.draw(m_backGroundStadium);

@@ -1,9 +1,10 @@
 
 #pragma once
 #include "button/PlayButton.h"
+#include "memory.h"
 
-
-PlayButton::PlayButton(sf::Texture& texturs):m_playPressed(false)
+PlayButton::PlayButton(sf::Texture& texturs, Board* boardState):m_boardState(boardState),
+m_playPressed(false)
 {
 	m_play.setTexture(texturs);
 	m_play.setPosition(100, 100);
@@ -11,16 +12,8 @@ PlayButton::PlayButton(sf::Texture& texturs):m_playPressed(false)
 }
 
 // Method to simulate clicking the button
-bool PlayButton::click() {
-	
-	if (m_playPressed)
-	{
-		m_playPressed = false;
-	}
-	else {
-		m_playPressed = true;
-	}
-	return m_playPressed;
+GameState * PlayButton::click() {
+	return m_boardState;
 }
 
 // Method to display button information

@@ -3,14 +3,18 @@
 #include "button/BaseButton.h"
 #include <vector>
 #include <memory>
+#include "Board.h"
+#include "GameState.h"
 
-class Menu
+class Menu: public GameState
 {
 public:
-	Menu(std::vector<sf::Texture>& texturs);
+	Menu(Board * boardState, sf::RenderWindow * window);
 
-	void draw(sf::RenderWindow& window) const;
-	void respond(sf::Vector2f mousePressed);
+	virtual void draw(sf::RenderWindow & window) const override;
+	virtual void respond(sf::Vector2f mousePressed) override;
+	virtual GameState * handleEvents() override;
+
 	bool isOpen() const;
 
 	bool isExit() const;
@@ -23,7 +27,7 @@ private:
 
 	std::vector<std::unique_ptr<BaseButton>> m_buttons;
 	std::vector<bool> m_buttonPressed;
-
+	GameState * m_gameState;
 	sf::Sprite m_Stage;
 };
 

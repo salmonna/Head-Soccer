@@ -16,17 +16,8 @@ TutorialButton::TutorialButton(sf::Texture& texture):m_buttonPressed(false)
 }
 
 // Method to simulate clicking the button
-bool TutorialButton::click(){
-	if (m_buttonPressed)
-	{
-		m_buttonPressed = false;
-	}
-	else
-	{
-		m_buttonPressed = true;
-	}
-	
-	return true;
+GameState * TutorialButton::click(){
+	return NULL;
 }
 
 // Method to display button information

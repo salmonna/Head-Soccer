@@ -33,7 +33,7 @@ sf::Vector2f Ball::getPosition() const
 
 }
 
-void Ball::draw(sf::RenderWindow & window)
+void Ball::draw(sf::RenderWindow & window) const
 {
 	window.draw(m_ball);
 }
@@ -44,10 +44,7 @@ sf::Sprite & Ball::getSprite()
 {
     m_sprite.setOrigin(m_ball.getOrigin());
     m_sprite.setPosition(m_ball.getPosition());
-    //std::cout << m_sprite.getOrigin().x << ' ' << m_sprite.getOrigin().y << ' ' << std::endl;
-    //std::cout << m_ball.getOrigin().x << ' ' << m_ball.getOrigin().y << ' ' << std::endl;
-    //std::cout << m_sprite.getPosition().x << ' ' << m_sprite.getPosition().y << ' ' << std::endl;
-    //std::cout << m_ball.getPosition().x << ' ' << m_ball.getPosition().y << ' ' << std::endl;
+
     return m_sprite;
 }
 
@@ -58,7 +55,7 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 
 
 
-void  Ball::move(int keyPressed)
+void  Ball::move(sf::Vector2f pressed)
 {
 
     float deltaTime = m_clock.restart().asSeconds();

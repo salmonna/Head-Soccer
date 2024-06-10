@@ -10,7 +10,7 @@ public:
     TutorialButton(sf::Texture& texture);
 
     // Method to simulate clicking the button
-    virtual bool click() override;
+    virtual GameState * click() override;
 
     // Method to display button information
     virtual void draw(sf::RenderWindow& window) const override;

@@ -10,8 +10,8 @@ Setting::Setting(sf::Texture& texture)
 
 
 // Method to simulate clicking the button
-bool Setting::click() {
-	return true;
+GameState * Setting::click() {
+	return NULL;
 }
 
 // Method to display button information

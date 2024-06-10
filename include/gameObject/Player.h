@@ -11,8 +11,8 @@ class Player: public MovingObject
 public:
 	Player(bool right, Keyboard keys);
 
-	virtual void draw(sf::RenderWindow& window) override;
-	virtual void move(int keyPressed) override;
+	virtual void draw(sf::RenderWindow& window) const override;
+	virtual void move(sf::Vector2f pressed) override;
 
 	virtual  sf::Vector2f getPosition() const override;
 

@@ -31,7 +31,7 @@ Goal::Goal()
 }
 
 //---------------- draw the goal --------------------
-void Goal::draw(sf::RenderWindow& window) {
+void Goal::draw(sf::RenderWindow& window) const {
 
 	for (int i = 0; i < m_goalSprite.size(); i++)
 	{

@@ -8,7 +8,7 @@ class Goal : public StaticObject
 public:
 	Goal();
 	
-	virtual void draw(sf::RenderWindow& window) override;
+	virtual void draw(sf::RenderWindow& window) const override;
 	void setRightGoal();
 
 	virtual sf::Sprite& getSprite()override;
