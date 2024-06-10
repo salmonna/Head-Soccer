@@ -1,5 +1,5 @@
 #pragma once
-#include "MovingObject.h"
+#include "gameObject/MovingObject.h"
 
 class ComputerPlayer :public MovingObject 
 {

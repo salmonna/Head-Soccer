@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Goal.h"
+#include "gameObject/Goal.h"
 
 class GoalBack :public Goal
 {

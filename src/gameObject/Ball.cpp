@@ -3,7 +3,7 @@
 #include "Keyboard.h"
 #include <iostream>
 
-Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_keyPressed(-2)
+Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -83,14 +83,9 @@ void  Ball::move(int keyPressed)
         m_ballVelocity.y = -m_ballVelocity.y * restitution;
     }
 
-
-
     // בדיקת התנגשות עם הקירות והחלון
     sf::FloatRect ballBounds = m_ball.getGlobalBounds();
     sf::FloatRect windowBounds(0.0f, 0.0f, 1800.0f, 835.0f);
-
-    handleCollision(leftTopScoreBar);
-    handleCollision(rightTopScoreBar);
 
 
     if (ballBounds.left < windowBounds.left) {
