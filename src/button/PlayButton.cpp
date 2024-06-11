@@ -3,7 +3,7 @@
 #include "button/PlayButton.h"
 #include "memory.h"
 
-PlayButton::PlayButton(sf::Texture& texturs, Board* boardState):m_boardState(boardState),
+PlayButton::PlayButton(sf::Texture& texturs, GameModeSelection* GameModeSelectionState):m_gameModeState(GameModeSelectionState),
 m_playPressed(false)
 {
 	m_play.setTexture(texturs);
@@ -13,7 +13,7 @@ m_playPressed(false)
 
 // Method to simulate clicking the button
 GameState * PlayButton::click() {
-	return m_boardState;
+	return m_gameModeState;
 }
 
 // Method to display button information

@@ -2,8 +2,7 @@
 #pragma once
 #include "button/PlayerButton.h"
 
-
-PlayerButton::PlayerButton(sf::Texture& texture)
+PlayerButton::PlayerButton(sf::Texture& texture, Board* boardState) :m_boardState(boardState)
 {
 	m_player.setTexture(texture);
 	m_player.setPosition(900, 100);
@@ -11,7 +10,7 @@ PlayerButton::PlayerButton(sf::Texture& texture)
 
 // Method to simulate clicking the button
 GameState * PlayerButton::click() {
-	return NULL;
+	return m_boardState;
 }
 
 // Method to display button information

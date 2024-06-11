@@ -1,0 +1,40 @@
+
+#include "gameState/GameModeSelection.h"
+#include "Resources.h"
+#include "button/MultiplayerButton.h"
+#include "button/PlayerButton.h"
+
+GameModeSelection::GameModeSelection(Board* boardState):m_gameState(NULL)
+{
+	std::vector<sf::Texture>& texturs = Resources::getInstance().getGameModeTexture();
+	m_Stage.setTexture(texturs[0]);
+	m_buttons.push_back(std::make_unique<MultiplayerButton>(texturs[1], boardState));
+	m_buttons.push_back(std::make_unique<PlayerButton>(texturs[2], boardState));
+}
+
+void GameModeSelection::draw(sf::RenderWindow& window) const {
+	window.draw(m_Stage);
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		m_buttons[i]->draw(window);
+	}
+}
+
+void GameModeSelection::respond(sf::Vector2f mousePressed) {
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		if (m_buttons[i]->contains(mousePressed))
+		{
+			m_gameState = m_buttons[i]->click();
+			break;
+		}
+	}
+}
+
+GameState* GameModeSelection::handleEvents() {
+	return m_gameState;
+}
+
+GameModeSelection::~GameModeSelection()
+{
+}

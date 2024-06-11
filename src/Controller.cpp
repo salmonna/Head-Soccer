@@ -3,8 +3,8 @@
 #include "Resources.h"
 
 //controller constractor
-Controller::Controller(): m_menu(&m_gameBoard, &m_window.getWindow()), m_currentState(&m_menu)
-,m_gameResults(Resources::getInstance().gameResultsTexture())
+Controller::Controller(): m_menu(&m_gameMode, &m_window.getWindow()), m_currentState(&m_menu)
+,m_gameResults(Resources::getInstance().gameResultsTexture()), m_gameMode(&m_gameBoard)
 {
 	runTheGame();
 }
@@ -30,7 +30,6 @@ void Controller::runTheGame()
 
 		m_currentState->respond(m_window.getMousePressed());
 		m_currentState->draw(m_window.getWindow());
-
 	}
 
 }

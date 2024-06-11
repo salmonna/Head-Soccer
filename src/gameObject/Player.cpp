@@ -77,7 +77,6 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 		{
 			m_numOfJump = 0;
 			m_move = -2;
-			
 			return;
 		}
 		else

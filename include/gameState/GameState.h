@@ -9,7 +9,6 @@ public:
 	virtual void respond(sf::Vector2f Pressed) = 0;
 	virtual GameState * handleEvents() = 0;
 
-
 	virtual ~GameState() = default;
 private:
 

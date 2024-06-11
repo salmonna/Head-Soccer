@@ -3,15 +3,15 @@
 #include "button/MultiplayerButton.h"
 
 
-MultiplayerButton::MultiplayerButton(sf::Texture& texture)
+MultiplayerButton::MultiplayerButton(sf::Texture& texture, Board* boardState) :m_boardState(boardState)
 {
 	m_multiplayer.setTexture(texture);
 	m_multiplayer.setPosition(500, 100);
 }
 
 // Method to simulate clicking the button
-GameState *  MultiplayerButton::click() {
-	return NULL;
+GameState * MultiplayerButton::click() {
+	return m_boardState;
 }
 
 // Method to display button information

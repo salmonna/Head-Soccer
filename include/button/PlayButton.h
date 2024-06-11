@@ -4,12 +4,12 @@
 #include "BaseButton.h"
 #include <SFML/Graphics.hpp>
 #include "gameState/GameState.h"
-#include "gameState/Board.h"
+#include "gameState/GameModeSelection.h"
 
 class PlayButton:public BaseButton
 {
 public:
-	PlayButton(sf::Texture& texturs, Board * boardState);
+	PlayButton(sf::Texture& texturs, GameModeSelection* GameModeSelectionState);
 
     // Method to simulate clicking the button
     virtual GameState * click() override;
@@ -23,7 +23,7 @@ public:
 	~PlayButton() = default;
 
 private:
-    Board * m_boardState;
+    GameModeSelection* m_gameModeState;
 
     bool m_playPressed;
 
