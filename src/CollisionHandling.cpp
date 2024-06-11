@@ -28,10 +28,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player & playerObject = dynamic_cast<Player&>(player);
 
         float kickStrength = 500.0f; // עוצמת הבעיטה
-        //float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
-        float kickVerticalBoost = -1200.0f; // עוצמת הבעיטה האנכית
-
-
+        float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
 
 
         sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
