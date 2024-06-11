@@ -28,16 +28,13 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player & playerObject = dynamic_cast<Player&>(player);
 
         float kickStrength = 500.0f; // עוצמת הבעיטה
-        //float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
-        float kickVerticalBoost = -1200.0f; // עוצמת הבעיטה האנכית
+        float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
 
         sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
         float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         direction /= length; // נרמול הכיוון
        
         sf::Vector2f currVelocity = ballObject.getVelocity();
-
-
 
         if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
         {
@@ -119,6 +116,14 @@ namespace // anonymous namespace — the standard way to make function "static"
     }
 
     void ballCollidWithGoalBack(GameObject& ball , GameObject& goalBack) {
+
+        Ball& ballObject = dynamic_cast<Ball&>(ball);
+        GoalBack& goalObject = dynamic_cast<GoalBack&>(goalBack);
+
+        goalObject.setIfGoal(true);
+
+        ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+        ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 
         std::cout << "ball and GoalBack collision!\n";
     }

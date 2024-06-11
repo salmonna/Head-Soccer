@@ -2,7 +2,7 @@
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "GameState.h"
+#include "gameState/GameState.h"
 
 class BaseButton {
 

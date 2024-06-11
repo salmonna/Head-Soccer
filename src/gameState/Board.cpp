@@ -1,6 +1,6 @@
 
 #pragma once
-#include "Board.h"
+#include "gameState/Board.h"
 #include "Resources.h"
 #include <fstream>
 #include "FileException.h"
@@ -17,23 +17,10 @@
 // Constructor for the Board class
 Board::Board():m_boardOpen(true), m_scoreBoard(180)
 {
-
-
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
 	//update back gound stadium
     m_backGroundStadium.setTexture(texturs[0]);
-
-	//update left and right goals
-	
-	/*auto rGoal = std::make_shared<Goal>();
-	rGoal->setRightGoal();
-	auto leftGoalSide = std::make_shared<GoalSide>(32, 580, false);
-
-	m_staticObject.push_back(leftGoalSide);
-	m_staticObject.push_back(rGoal);
-	m_gameObject.push_back(leftGoalSide);
-	m_gameObject.push_back(rGoal);*/
 
 	auto leftInsideSide = std::make_shared<GoalSide>(32, 580, false);
 	auto leftBackSide = std::make_shared<GoalBack>(-15, 590, false);
@@ -65,7 +52,8 @@ Board::Board():m_boardOpen(true), m_scoreBoard(180)
 	m_movingObject.push_back(ball);
 	m_gameObject.push_back(ball);
 
-	
+	m_staticObject.push_back(leftBackSide);
+	m_staticObject.push_back(rightBackSide);
 	m_gameObject.push_back(leftOutsideSide);
 	m_gameObject.push_back(rightOutsideSide);
 
@@ -87,34 +75,35 @@ void Board::respond(sf::Vector2f pressed) {
 
 	}
 
-	for_each_pair(m_gameObject.begin()+2, m_gameObject.end()-2, [&](auto& a, auto& b) {
+	for_each_pair(m_gameObject.begin() + 2, m_gameObject.end() - 2, [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
 			processCollision(*a, *b);
-
-			if ((typeid(*a) == typeid(Goal) && typeid(*b) == typeid(Ball)))
-			{
-				Ball& ballObject = dynamic_cast<Ball&>(*b);
-
-				if (&(dynamic_cast<Goal&>(*a)) == &(dynamic_cast<Goal&>(*m_staticObject[0]))) //check was goal
-				{
-					m_scoreBoard.updateScore(0, 1);
-				}
-				else
-				{
-					m_scoreBoard.updateScore(1, 0);
-				}
-
-				
-				
-				//ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
-				//ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
-			}		
 		}
 	});
 
+	updateScoreBar();
+
 }
 
+//=============================================== update ScoreBar =======================================//
+void Board::updateScoreBar() {
+
+	GoalBack& leftGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[0]);
+	GoalBack& rightGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[1]);
+
+	if (leftGoalBack.getIfGoal()) {
+
+		m_scoreBoard.updateScore(0, 1);
+		leftGoalBack.setIfGoal(false);
+	}
+	else if (rightGoalBack.getIfGoal())
+	{
+		m_scoreBoard.updateScore(1, 0);
+		rightGoalBack.setIfGoal(false);
+	}
+
+}
 
 GameState* Board::handleEvents()
 {

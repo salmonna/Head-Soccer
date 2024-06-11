@@ -13,7 +13,7 @@ GoalTop::GoalTop(int x, int y, bool needScale)
 }
 
 
-void GoalTop::draw(sf::RenderWindow& window) {
+void GoalTop::draw(sf::RenderWindow& window)const {
 
 	window.draw(m_sprite);
 }

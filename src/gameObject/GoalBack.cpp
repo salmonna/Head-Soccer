@@ -1,6 +1,6 @@
 #include "gameObject/GoalBack.h"
 
-GoalBack::GoalBack(int x, int y, bool needScale)
+GoalBack::GoalBack(int x, int y, bool needScale):m_isGoal(false)
 {
 
 	m_sprite.setTexture(Resources::getInstance().getGoalTexture(1));
@@ -13,7 +13,7 @@ GoalBack::GoalBack(int x, int y, bool needScale)
 	}
 }
 
-void GoalBack::draw(sf::RenderWindow& window) {
+void GoalBack::draw(sf::RenderWindow& window)const {
 
 	window.draw(m_sprite);
 }
@@ -21,6 +21,15 @@ void GoalBack::draw(sf::RenderWindow& window) {
 sf::Sprite& GoalBack::getSprite() {
 
 	return m_sprite;
+}
+
+void GoalBack::setIfGoal(bool ballGetIn) {
+
+	m_isGoal = ballGetIn;
+}
+
+bool GoalBack::getIfGoal() const {
+	return m_isGoal;
 }
 
 GoalBack::~GoalBack()

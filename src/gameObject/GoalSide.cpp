@@ -13,7 +13,7 @@ GoalSide::GoalSide(int x , int y , bool needScale)
 }
 
 
-void GoalSide::draw(sf::RenderWindow& window) {
+void GoalSide::draw(sf::RenderWindow& window)const {
 
 	window.draw(m_sprite);
 }

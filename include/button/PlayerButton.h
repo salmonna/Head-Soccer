@@ -3,7 +3,7 @@
 #pragma once
 #include "BaseButton.h"
 #include <SFML/Graphics.hpp>
-#include "GameState.h"
+#include "gameState/GameState.h"
 
 
 class PlayerButton :public BaseButton
