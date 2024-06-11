@@ -7,7 +7,7 @@ class ScoreBoard : public StaticObject
 {
 public:
 	ScoreBoard(int gameTime);
-	virtual void draw(sf::RenderWindow& window) override;
+	virtual void draw(sf::RenderWindow& window) const override;
 
 	void timeCalculation();
 	void updateScore(int p1Points, int p2Points);

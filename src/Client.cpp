@@ -20,7 +20,7 @@ void Client::receiveData(MovingObject& otherPlayer) {
     if (m_socket.receive(packet) == sf::Socket::Done) {
         float key;
         packet >> key;
-        otherPlayer.move(key);
+      //  otherPlayer.move(key);
     }
     packet.clear();
 }

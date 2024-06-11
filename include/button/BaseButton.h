@@ -2,13 +2,14 @@
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "GameState.h"
 
 class BaseButton {
 
 public:
 
     // Method to simulate clicking the button
-    virtual bool click() = 0;
+    virtual GameState * click() = 0;
 
     // Method to display button information
     virtual void draw(sf::RenderWindow& window) const = 0;

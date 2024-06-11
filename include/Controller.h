@@ -4,6 +4,7 @@
 #include "Resources.h"
 #include "Board.h"
 #include "GameResults.h"
+#include "GameState.h"
 
 class Controller
 {
@@ -14,10 +15,11 @@ private:
 
 	void runTheGame();
 
-	Window m_window;
-	Menu m_menu;
-	Board m_gameBoard;
+	Window m_window;	
 	GameResults m_gameResults;
+	Board m_gameBoard;
+	Menu m_menu;
 
+	GameState * m_currentState;
 };
 

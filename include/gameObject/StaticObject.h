@@ -8,7 +8,7 @@ class StaticObject : public GameObject
 public:
 	StaticObject() {};
 
-	virtual void draw(sf::RenderWindow & window) = 0;
+	virtual void draw(sf::RenderWindow & window) const = 0;
 
 	////update score
 	//virtual void timeCalculation() = 0;

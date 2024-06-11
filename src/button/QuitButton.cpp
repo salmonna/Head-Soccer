@@ -1,7 +1,7 @@
 #pragma once
 #include "button/QuitButton.h"
 
-QuitButton::QuitButton(sf::Texture& texture)
+QuitButton::QuitButton(sf::Texture& texture, sf::RenderWindow * window):m_window(window)
 {
 	m_quit.setTexture(texture);
 	m_quit.setPosition(100, 200);
@@ -10,8 +10,9 @@ QuitButton::QuitButton(sf::Texture& texture)
 
 
 // Method to simulate clicking the button
-bool QuitButton::click() {
-	return true;
+GameState * QuitButton::click() {
+	m_window->close();
+	return NULL;
 }
 
 // Method to display button information

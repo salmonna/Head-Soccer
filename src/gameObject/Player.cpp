@@ -29,13 +29,13 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 
 
 //draw plater
-void Player::draw(sf::RenderWindow& window) {
+void Player::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_sprite);
 }
 
 //function that find where to move and  call to another function 
-void Player::move(int keyPressed) {
+void Player::move(sf::Vector2f pressed) {
 
 	if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
 		if (m_posY > -200)

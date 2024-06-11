@@ -15,8 +15,12 @@
 
 
 // Constructor for the Board class
-Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(180)
+Board::Board():m_boardOpen(true), m_scoreBoard(180)
 {
+
+
+	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
+
 	//update back gound stadium
     m_backGroundStadium.setTexture(texturs[0]);
 
@@ -70,7 +74,7 @@ Board::Board(std::vector<sf::Texture>& texturs):m_boardOpen(true), m_scoreBoard(
 //=============================================== respond =======================================//
 
 // Method to check if a given location corresponds to a stick
-void Board::respond(int keyPressed) {
+void Board::respond(sf::Vector2f pressed) {
 
 
 	timeCalculation();
@@ -79,12 +83,8 @@ void Board::respond(int keyPressed) {
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
-		m_movingObject[i]->move(keyPressed);
-	}
+		m_movingObject[i]->move(pressed);
 
-	for (int i = 0; i < m_gameObject.size(); i++)
-	{
-		//m_movingObject[i]->move(keyPressed);
 	}
 
 	for_each_pair(m_gameObject.begin()+2, m_gameObject.end()-2, [&](auto& a, auto& b) {
@@ -114,6 +114,14 @@ void Board::respond(int keyPressed) {
 	});
 
 }
+
+
+GameState* Board::handleEvents()
+{
+	return NULL;
+}
+
+
 //=============================================== for_each_pair =======================================//
 
 // STL-like algorithm to run over all pairs
@@ -127,16 +135,12 @@ void Board::for_each_pair(FwdIt begin, FwdIt end, Fn fn)
 //=============================================== collide =======================================//
 bool Board::collide(GameObject& a, GameObject& b)
 {
-
 	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
 }
-
-
-
 //=============================================== draw =======================================//
 
 // Method to draw all objects in the window
-void Board::draw(sf::RenderWindow& window) {
+void Board::draw(sf::RenderWindow& window) const{
 
 	//draw the back ground stadium and field
     window.draw(m_backGroundStadium);

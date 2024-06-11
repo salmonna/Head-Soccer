@@ -9,20 +9,22 @@
 #include "gameObject/MovingObject.h"
 #include "gameObject/Player.h"
 #include "Client.h"
+#include "GameState.h"
 
-class Board
+
+class Board : public GameState
 {
 public:
-	Board(std::vector<sf::Texture>& texturs);
-	void respond(int keyPressed);
-	void draw(sf::RenderWindow& window);
+	Board();
+	virtual void respond(sf::Vector2f pressed) override;
+	virtual void draw(sf::RenderWindow& window) const override;
 
 	template <typename FwdIt, typename Fn>
 	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
-
 	bool collide(GameObject& a, GameObject& b);
-
 	bool isOpen() const;
+
+	virtual GameState* handleEvents() override;
 
 	~Board() = default;
 

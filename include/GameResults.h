@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "GameState.h"
 
 
-class GameResults
+class GameResults 
 {
 public:
 	GameResults(std::vector<sf::Texture>& texturs);

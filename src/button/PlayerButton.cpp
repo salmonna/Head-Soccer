@@ -10,8 +10,8 @@ PlayerButton::PlayerButton(sf::Texture& texture)
 }
 
 // Method to simulate clicking the button
-bool PlayerButton::click() {
-	return false;
+GameState * PlayerButton::click() {
+	return NULL;
 }
 
 // Method to display button information
