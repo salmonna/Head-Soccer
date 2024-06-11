@@ -1,5 +1,5 @@
 
-#include "Menu.h"
+#include "gameState/Menu.h"
 #include <iostream>
 #include "Resources.h"
 #include "button/QuitButton.h"
@@ -15,8 +15,6 @@ m_menuOpen(true),m_exit(false),m_play(false)
 {
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getMenuTexture();
-
-
 
 	//put all the button into one vector
 	m_buttons.push_back(std::make_unique<PlayButton>(texturs[0], boardState));

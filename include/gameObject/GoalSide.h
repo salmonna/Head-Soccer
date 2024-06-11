@@ -8,7 +8,7 @@ class GoalSide : public Goal
 		GoalSide(int x, int y, bool needScale);
 		~GoalSide();
 
-		virtual void draw(sf::RenderWindow& window) override;
+		virtual void draw(sf::RenderWindow& window)const override;
 		virtual sf::Sprite& getSprite()override;
 
 	private:

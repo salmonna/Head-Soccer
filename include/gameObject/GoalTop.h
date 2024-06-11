@@ -8,7 +8,7 @@ public:
 	GoalTop(int x, int y, bool needScale);
 	~GoalTop();
 
-	virtual void draw(sf::RenderWindow& window) override;
+	virtual void draw(sf::RenderWindow& window)const override;
 	virtual sf::Sprite& getSprite()override;
 private:
 

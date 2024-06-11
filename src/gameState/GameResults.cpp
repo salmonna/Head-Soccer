@@ -1,4 +1,4 @@
-#include "GameResults.h"
+#include "gameState/GameResults.h"
 
 
 //gameResults constactor

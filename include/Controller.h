@@ -1,10 +1,10 @@
 #pragma once
 #include "Window.h"
-#include "Menu.h"
+#include "gameState/Menu.h"
 #include "Resources.h"
-#include "Board.h"
-#include "GameResults.h"
-#include "GameState.h"
+#include "gameState/Board.h"
+#include "gameState/GameResults.h"
+#include "gameState/GameState.h"
 
 class Controller
 {

@@ -3,8 +3,8 @@
 #pragma once
 #include "BaseButton.h"
 #include <SFML/Graphics.hpp>
-#include "GameState.h"
-#include "Board.h"
+#include "gameState/GameState.h"
+#include "gameState/Board.h"
 
 class PlayButton:public BaseButton
 {
