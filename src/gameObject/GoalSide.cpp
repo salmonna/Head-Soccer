@@ -1,4 +1,4 @@
-#include "GoalSide.h"
+#include "gameObject/GoalSide.h"
 
 GoalSide::GoalSide(int x , int y , bool needScale)
 {

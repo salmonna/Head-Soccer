@@ -9,9 +9,9 @@
 #include "Keyboard.h"
 #include "gameObject/Ball.h"
 #include "CollisionHandling.h"
-#include "GoalSide.h"
-#include "GoalBack.h"
-#include "GoalTop.h"
+#include "gameObject/GoalSide.h"
+#include "gameObject/GoalBack.h"
+#include "gameObject/GoalTop.h"
 
 
 // Constructor for the Board class

@@ -1,4 +1,4 @@
-#include "ComputerPlayer.h"
+#include "gameObject/ComputerPlayer.h"
 
 ComputerPlayer::ComputerPlayer()
 {
