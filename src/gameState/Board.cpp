@@ -57,6 +57,7 @@ Board::Board():m_boardOpen(true), m_scoreBoard(180)
 
 	m_staticObject.push_back(leftBackSide);
 	m_staticObject.push_back(rightBackSide);
+
 	m_gameObject.push_back(leftOutsideSide);
 	m_gameObject.push_back(rightOutsideSide);
 

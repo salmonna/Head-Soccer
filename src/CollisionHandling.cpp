@@ -58,13 +58,13 @@ namespace // anonymous namespace — the standard way to make function "static"
      
         ballObject.setBallVelocity(currVelocity);
 
-        std::cout << "player and ball collision!\n";
+        //std::cout << "player and ball collision!\n";
     }
 
     void playerCollidPlayer(GameObject& player1,
         GameObject& player2)
     {                                                              
-        std::cout << "Player1 and Player2 collision!\n";
+        //std::cout << "Player1 and Player2 collision!\n";
         //system("cls");
     }
 
@@ -112,7 +112,7 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         ballObject.setBallVelocity(ballVelocity);
 
-        std::cout << "Ball and Goal collision!\n";
+        //std::cout << "Ball and Goal collision!\n";
     }
 
     void ballCollidWithGoalBack(GameObject& ball , GameObject& goalBack) {
@@ -125,7 +125,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
         ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 
-        std::cout << "ball and GoalBack collision!\n";
+        //std::cout << "ball and GoalBack collision!\n";
     }
 
     void handleUnnecessaryCollision(GameObject& side, GameObject& back) {}
