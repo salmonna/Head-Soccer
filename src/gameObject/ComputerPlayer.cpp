@@ -4,6 +4,11 @@ ComputerPlayer::ComputerPlayer()
 {
 }
 
+
+
+bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
+    []() -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(); });
+
 // פונקציה לעדכון מיקום המחשב
 void ComputerPlayer::updateComputerPlayer(sf::RectangleShape& computer, sf::CircleShape& ball,
                                           sf::RectangleShape& computerGoal, float deltaTime) {

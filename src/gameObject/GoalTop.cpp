@@ -13,6 +13,14 @@ GoalTop::GoalTop(int x, int y, bool needScale)
 }
 
 
+
+bool GoalTop::m_registeritLeftGoalTop = StaticFactory::registeritStatic("LeftGoalTop",
+	[]() -> std::shared_ptr<StaticObject> { return std::make_shared<GoalTop>(40, 580, false); });
+
+
+bool GoalTop::m_registeritRightGoalTop = StaticFactory::registeritStatic("RightGoalTop",
+	[]() -> std::shared_ptr<StaticObject> { return std::make_shared<GoalTop>(1750, 580, true); });
+
 void GoalTop::draw(sf::RenderWindow& window)const {
 
 	window.draw(m_sprite);

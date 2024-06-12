@@ -1,6 +1,8 @@
 #pragma once
-
 #include "gameObject/Goal.h"
+#include "Factory/StaticFactory.h"
+
+
 
 class GoalBack :public Goal
 {
@@ -16,5 +18,8 @@ public:
 private:
 	sf::Sprite m_sprite;
 	bool m_isGoal;
+
+	static bool m_registeritLeftGoalBack;
+	static bool m_registeritRightGoalBack;
 };
 
