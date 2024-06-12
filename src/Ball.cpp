@@ -1,4 +1,4 @@
-#include "Ball.h"
+#include "gameObject/Ball.h"
 #include "Resources.h"
 #include "Keyboard.h"
 #include <iostream>
@@ -33,7 +33,7 @@ sf::Vector2f Ball::getPosition() const
 
 }
 
-void Ball::draw(sf::RenderWindow & window)
+void Ball::draw(sf::RenderWindow & window) const
 {
 	window.draw(m_ball);
 }
@@ -54,7 +54,7 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 
 
 
-void  Ball::move(int keyPressed)
+void  Ball::move(sf::Vector2f keyPressed)
 {
 
     float deltaTime = m_clock.restart().asSeconds();
