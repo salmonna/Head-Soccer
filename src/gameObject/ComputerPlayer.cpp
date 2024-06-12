@@ -6,7 +6,7 @@ ComputerPlayer::ComputerPlayer()
 
 // פונקציה לעדכון מיקום המחשב
 void ComputerPlayer::updateComputerPlayer(/*sf::RectangleShape& player, sf::Vector2f& ballvelocity, */ sf::CircleShape & ball,
-                                          sf::RectangleShape& userGoal,/* float deltaTime*/) {
+                                          sf::RectangleShape& userGoal/* float deltaTime*/) {
 
     const float speed = 200.0f;  // מהירות המחשב
     const float kickRange = 50.0f;  // טווח הבעיטה

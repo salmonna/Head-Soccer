@@ -26,7 +26,6 @@ public:
 
 	virtual GameState* handleEvents() override;
 
-	void updateScoreBar();
 
 	~Board() = default;
 
