@@ -33,10 +33,12 @@ private:
 	sf::Clock m_moveClock;
 
 	std::vector<sf::Vector2f> m_startSprite;
+	sf::Vector2f m_basePosition;
 
 	Keyboard m_keys;
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
 	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
 	void updateGravityAndCollision();
+	void moveWithRange(int x);
 };
