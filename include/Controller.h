@@ -1,9 +1,11 @@
 #pragma once
 #include "Window.h"
-#include "Menu.h"
+#include "gameState/Menu.h"
 #include "Resources.h"
-#include "Board.h"
-#include "GameResults.h"
+#include "gameState/Board.h"
+#include "gameState/GameResults.h"
+#include "gameState/GameState.h"
+#include "gameState/GameModeSelection.h"
 
 class Controller
 {
@@ -14,10 +16,13 @@ private:
 
 	void runTheGame();
 
-	Window m_window;
-	Menu m_menu;
-	Board m_gameBoard;
+	Window m_window;	
 	GameResults m_gameResults;
+	Board m_gameBoard;
+	GameModeSelection m_gameMode;
+	Menu m_menu;
+	
 
+	GameState * m_currentState;
 };
 

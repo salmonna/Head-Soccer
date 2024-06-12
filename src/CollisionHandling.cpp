@@ -6,18 +6,18 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include "Player.h"
-#include "Ball.h"
-#include "GoalSide.h"
-#include "GoalBack.h"
-#include "GoalTop.h"
+#include "gameObject/Player.h"
+#include "gameObject/Ball.h"
+#include "gameObject/Goal.h"
+
+#include "gameObject/GoalSide.h"
+#include "gameObject/GoalBack.h"
+#include "gameObject/GoalTop.h"
 #include "Keyboard.h"
 
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
-
-
 
     // primary collision-processing functions
     void playerCollidBall(GameObject& player,
@@ -30,14 +30,11 @@ namespace // anonymous namespace — the standard way to make function "static"
         float kickStrength = 500.0f; // עוצמת הבעיטה
         float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
 
-
         sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
         float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         direction /= length; // נרמול הכיוון
        
         sf::Vector2f currVelocity = ballObject.getVelocity();
-
-
 
         if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
         {

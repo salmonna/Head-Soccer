@@ -3,11 +3,12 @@
 #include "Resources.h"
 
 //controller constractor
-Controller::Controller():m_menu(Resources::getInstance().getMenuTexture()),
-m_gameBoard(Resources::getInstance().getBoardTexture()),m_gameResults(Resources::getInstance().gameResultsTexture())
+Controller::Controller(): m_menu(&m_gameMode, &m_window.getWindow()), m_currentState(&m_menu)
+,m_gameResults(Resources::getInstance().gameResultsTexture()), m_gameMode(&m_gameBoard)
 {
 	runTheGame();
 }
+
 
 //run the game function that mange the ehole game in loop
 void Controller::runTheGame()
@@ -21,29 +22,17 @@ void Controller::runTheGame()
 		m_window.display();
 		m_window.clear();
 
-		if (m_menu.isOpen())
+		GameState * nextState = m_currentState->handleEvents();
+		if (nextState)
 		{
-			m_menu.respond(m_window.getMousePressed());
-			m_menu.draw(m_window.getWindow());
-			if (m_menu.isExit())
-				m_window.close();
+			m_currentState = nextState;
+		}
 
-			continue;
-		}
-		else if (m_gameBoard.isOpen())
-		{
-			m_gameBoard.respond(m_window.getKeyPressed());
-			m_gameBoard.draw(m_window.getWindow());
-			continue;
-		}
-		else if (m_gameResults.isOpen() && false)
-		{
-			m_gameResults.respond(m_window.getMousePressed());
-			m_gameResults.draw(m_window.getWindow());
-			continue;
-		}
-		m_window.close();
+		m_currentState->respond(m_window.getMousePressed());
+		m_currentState->draw(m_window.getWindow());
 	}
-	
+
 }
+
+
 
