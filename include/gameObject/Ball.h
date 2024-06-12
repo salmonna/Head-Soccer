@@ -21,6 +21,9 @@ public:
 
 	virtual ~Ball() = default;
 
+	//just for chacking --------
+	sf::CircleShape& getCircle();
+	//--------------------------
 private:
 
 

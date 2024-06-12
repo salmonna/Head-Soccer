@@ -9,6 +9,7 @@
 #include "gameObject/Player.h"
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
+#include "gameObject/ComputerPlayer.h"
 
 #include "gameObject/GoalSide.h"
 #include "gameObject/GoalBack.h"
@@ -122,8 +123,8 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         goalObject.setIfGoal(true);
 
-        ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
-        ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
+        //ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+        //ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 
         //std::cout << "ball and GoalBack collision!\n";
     }
@@ -175,12 +176,14 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
         phm[Key(typeid(Ball), typeid(GoalTop))] = &ballCollidGoalTop;
         phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
+        phm[Key(typeid(ComputerPlayer), typeid(Player))] = &playerCollidPlayer;
 
 
         phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
         phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
         phm[Key(typeid(GoalTop), typeid(Ball))] = &GoalTopColliedBall;
         phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
+        phm[Key(typeid(Player), typeid(ComputerPlayer))] = &playerCollidPlayer;
 
         //collision player with goal back
         phm[Key(typeid(Player), typeid(GoalBack))] = &handleUnnecessaryCollision;

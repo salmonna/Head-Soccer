@@ -109,3 +109,8 @@ float Ball::getRadius() const {
 
     return m_ball.getRadius();
 }
+
+sf::CircleShape& Ball::getCircle() {
+
+    return m_ball;
+}

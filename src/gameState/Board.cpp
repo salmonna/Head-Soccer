@@ -45,8 +45,8 @@ Board::Board():m_boardOpen(true), m_scoreBoard(180)
 	Keyboard keyPlayer1(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up,sf::Keyboard::Down);
 	Keyboard keyPlayer2(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
 	m_movingObject.push_back(std::make_shared<Player>(true, keyPlayer1));
-	m_movingObject.push_back(std::make_shared<Player>(false, keyPlayer2));
-	//m_client.sendData(*m_movingObject[1]);
+	m_movingObject.push_back(std::make_shared<ComputerPlayer>());
+
 	m_gameObject.push_back(m_movingObject[0]);
 	m_gameObject.push_back(m_movingObject[1]);
 
@@ -72,13 +72,17 @@ void Board::respond(sf::Vector2f pressed) {
 	timeCalculation();
 	m_scoreBoard.updateScore(0, 0);
 
+	//------- just for run the computer player--------
+	pressed = m_movingObject[2]->getPosition();
+	//------------------------------------------------
+	
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
 		m_movingObject[i]->move(pressed);
 
 	}
-
+	
 	for_each_pair(m_gameObject.begin() + 2, m_gameObject.end() - 2, [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
@@ -143,7 +147,7 @@ void Board::draw(sf::RenderWindow& window) const{
 	{
 		m_gameObject[i]->draw(window);
 	}
-
+	 
 	//draw the score board
 	m_scoreBoard.draw(window);
 

@@ -1,12 +1,19 @@
 #include "gameObject/ComputerPlayer.h"
 #include "Resources.h"
 
-ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2)
+ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2), m_gravity(0)
 {
     std::vector<sf::Texture>& texture = Resources::getInstance().getCharactersTexture();
 	m_sprite.setTexture(texture[0]);
 
 	m_basePosition = sf::Vector2f(272, 750);
+
+	m_sprite.setPosition(m_basePosition);
+
+	m_startSprite.push_back(sf::Vector2f(160, 126));
+	m_startSprite.push_back(sf::Vector2f(160, 244));
+	m_startSprite.push_back(sf::Vector2f(160, 8));
+	m_startSprite.push_back(sf::Vector2f(160, 365));
 }
 
 
@@ -15,7 +22,7 @@ void ComputerPlayer::updateComputerPlayer(/*sf::RectangleShape& player, sf::Vect
     /*sf::RectangleShape& userGoal float deltaTime*/) {
 
     const float speed = 200.0f;  // מהירות המחשב
-    const float kickRange = 50.0f;  // טווח הבעיטה
+    const float kickRange = 100.0f;  // טווח הבעיטה
 
     // כיוון המחשב לכיוון הכדור
     sf::Vector2f direction = ball.getPosition() - m_sprite.getPosition();
@@ -26,14 +33,33 @@ void ComputerPlayer::updateComputerPlayer(/*sf::RectangleShape& player, sf::Vect
         direction *= speed;  // התאמת מהירות המחשב
 
         // עדכון מיקום המחשב
-        //player.move(direction * deltaTime);
+   
+		//Right Direction Test
+		if (ball.getPosition().x > m_sprite.getPosition().x ) {
 
-	
+			moveWithRange(5);
+			movePlayer(m_startSprite[1], 6, 10);
+		}
+		//Left Direction Test
+		else if (ball.getPosition().x < m_sprite.getPosition().x) {
 
+			moveWithRange(-5);
+			movePlayer(m_startSprite[1], 6, 10);
+		}
     }
     else {
+		//Upward Direction Test
+		if (ball.getPosition().y < 750) {
+			//so jump
+			if (m_posY > -180) {
+				m_posY -= 25;
+			}
+			movePlayer(m_startSprite[2], 7, 100);
+		}
         //handleKick(ball, player, velocity, userGoal.getPosition());
     }
+
+	updateGravityAndCollision();
 }
 
 
@@ -69,30 +95,38 @@ void ComputerPlayer::resetToPosition(sf::Vector2f startPos, int numOfJump, int p
 	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
 }
 
-//void ComputerPlayer::move(sf::Vector2f pressed) {
-//
-//    const float speed = 200.0f;  // מהירות המחשב
-//    const float kickRange = 50.0f;  // טווח הבעיטה
-//
-//    // כיוון המחשב לכיוון הכדור
-//    sf::Vector2f direction = ball.getPosition() - m_sprite.getPosition();
-//    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-//
-//    if (length > kickRange) {
-//        direction /= length; // נרמול הכיוון
-//        direction *= speed;  // התאמת מהירות המחשב
-//
-//        // עדכון מיקום המחשב
-//        //player.move(direction * deltaTime);
-//
-//
-//    }
-//    else {
-//        //handleKick(ball, player, velocity, userGoal.getPosition());
-//    }
-//
-//}
+// Handle gravity and ground collision
+void ComputerPlayer::updateGravityAndCollision() {
+	if (m_sprite.getPosition().y < 750)
+	{
+		m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + m_posY + m_gravity));
+		m_gravity += 5;
+	}
+	else
+	{
+		m_gravity = 0;
+		m_posY = 0;
+	}
+}
 
+void ComputerPlayer::moveWithRange(int x) {
+	
+	if (false)
+	{
+		if (m_posX + x > -1400 && m_posX + x < 220)
+			m_posX += x;
+	}
+	else
+	{
+		if (m_posX + x > -220 && m_posX + x < 1400)
+			m_posX += x;
+	}
+}
+
+void ComputerPlayer::draw(sf::RenderWindow& window)const {
+
+	window.draw(m_sprite);
+}
 ComputerPlayer::~ComputerPlayer()
 {
 }

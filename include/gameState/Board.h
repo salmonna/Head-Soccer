@@ -11,6 +11,7 @@
 #include "Client.h"
 #include "GameState.h"
 
+#include "gameObject/ComputerPlayer.h"
 
 class Board : public GameState
 {
