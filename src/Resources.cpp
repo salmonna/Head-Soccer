@@ -8,7 +8,7 @@
 //constractor of resources file are loading files
 Resources::Resources(){
 
-	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Multiplayer.png" ,"Player.png","Stage.png" };
+	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png" };
 	loadFromFile(fileNames,m_menuTexture);
 
 	std::vector<std::string> boardFileNames{ "Stadium.png"};
@@ -20,10 +20,11 @@ Resources::Resources(){
 	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png"};
 	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
 
+	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png" };
+	loadFromFile(gameMode, m_gameModeTexture);
 
 	std::vector<std::string> characters{ "ItalyPlayer.png" }; 
 	loadFromFile(characters, m_characters);
-
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
 	loadFromFile(balls, m_ballTexture);
@@ -89,6 +90,11 @@ std::vector<sf::Texture>& Resources::getBallTexture() {
 sf::Font & Resources::getFont() {
 
 	return m_font;
+}
+
+//get game mode selection
+std::vector<sf::Texture>& Resources::getGameModeTexture() {
+	return m_gameModeTexture;
 }
 
 //get characters

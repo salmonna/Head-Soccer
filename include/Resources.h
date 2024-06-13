@@ -24,6 +24,7 @@ public:
 	sf::Texture& getGoalTexture(int index);
 	std::vector<sf::Texture>& getBallTexture();
 	std::vector<sf::Texture>& getCharactersTexture();
+	std::vector<sf::Texture>& getGameModeTexture();
 
 	sf::Font & getFont();
 
@@ -36,6 +37,7 @@ private:
 	Resources();
 	
 	std::vector<sf::Texture> m_menuTexture;
+	std::vector<sf::Texture> m_gameModeTexture;
 	std::vector<sf::Texture> m_boardTexture;
 	std::vector<sf::Texture> m_gameResultsTexture;
 

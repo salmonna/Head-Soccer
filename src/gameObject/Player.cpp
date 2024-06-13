@@ -13,13 +13,14 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 	if (m_playerSide)
 	{
 		m_sprite.scale(-1, 1);
-		m_sprite.setPosition(1200, 750);
+		m_basePosition = sf::Vector2f(1520, 750);
 	}
 	else
 	{
-		m_sprite.setPosition(272, 750);
+		m_basePosition = sf::Vector2f(272, 750);
 	}
-	
+	m_sprite.setPosition(m_basePosition);
+
 	m_startSprite.push_back(sf::Vector2f(160, 126));
 	m_startSprite.push_back(sf::Vector2f(160, 244));
 	m_startSprite.push_back(sf::Vector2f(160, 8));
@@ -45,7 +46,7 @@ void Player::draw(sf::RenderWindow& window) const {
 void Player::move(sf::Vector2f pressed) {
 
 	if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
-		if (m_posY > -200)
+		if (m_posY > -180)
 			m_posY -= 15;
 		
 		movePlayer(m_startSprite[2], 7, 50);
@@ -58,16 +59,16 @@ void Player::move(sf::Vector2f pressed) {
 	if (sf::Keyboard::isKeyPressed(m_keys.SPACE))//kick
 		movePlayer(m_startSprite[0], 7, 10);
 	else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
-		m_posX -= 5;
+		moveWithRange(-5);
 		movePlayer(m_startSprite[1], 6, 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
-		m_posX += 5;
+		moveWithRange(5);
 		movePlayer(m_startSprite[1], 6, 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
 	    (m_playerSide) ? m_posX -= 5 : m_posX += 5;
-		movePlayer(m_startSprite[3], 6, 1);
+		movePlayer(m_startSprite[3], 6, 10);
 	}
 
 	// Handle gravity and ground collision
@@ -84,7 +85,6 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 		{
 			m_numOfJump = 0;
 			m_move = -2;
-			
 			return;
 		}
 		else
@@ -104,14 +104,14 @@ void Player::resetToPosition(sf::Vector2f startPos,int numOfJump ,int posX, int 
 	sf::IntRect characterRect(startPos.x+ numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
-	m_sprite.setPosition(float(272 + m_posX), float(750+ posY));
+	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition .y+ posY));
 }
 
 // Handle gravity and ground collision
 void Player::updateGravityAndCollision() {
 	if (m_sprite.getPosition().y < 750)
 	{
-		m_sprite.setPosition(float(272 + m_posX), float(750 + m_posY + m_gravity));
+		m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + m_posY + m_gravity));
 		m_gravity += 5;
 	}
 	else
@@ -121,6 +121,18 @@ void Player::updateGravityAndCollision() {
 	}
 }
 
+void Player::moveWithRange(int x) {
+	if (m_playerSide)
+	{
+		if (m_posX + x > -1400 && m_posX + x < 220)
+			m_posX += x;
+	}
+	else
+	{
+		if (m_posX + x> -220 && m_posX + x < 1400)
+			m_posX += x;
+	}
+}
 
 sf::Sprite& Player::getSprite() {
 	return m_sprite;
