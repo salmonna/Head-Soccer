@@ -17,7 +17,7 @@
 #include "gameState/GameResults.h"
 
 // Constructor for the Board class
-Board::Board() :m_boardOpen(true), m_scoreBoard(180)
+Board::Board() :m_boardOpen(true), m_scoreBoard(10)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -54,8 +54,6 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 		else
 			std::cout << "Class not found!\n";
 	}
-
-
 
 }
 void Board::createStaticObjects(const std::vector<std::string>& objectNames)

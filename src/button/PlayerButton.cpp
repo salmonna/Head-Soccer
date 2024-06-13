@@ -10,7 +10,8 @@ PlayerButton::PlayerButton(sf::Texture& texture, Board* boardState) :m_boardStat
 
 // Method to simulate clicking the button
 GameState * PlayerButton::click() {
-	return m_boardState;
+	auto m = Board();
+	return &m;
 }
 
 // Method to display button information
