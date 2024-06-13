@@ -13,6 +13,15 @@ GoalBack::GoalBack(int x, int y, bool needScale):m_isGoal(false)
 	}
 }
 
+
+bool GoalBack::m_registeritLeftGoalBack = StaticFactory::registeritStatic("LeftGoalBack",
+	[]() -> std::shared_ptr<StaticObject> { return std::make_shared<GoalBack>(-15, 590, false); });
+
+
+bool GoalBack::m_registeritRightGoalBack = StaticFactory::registeritStatic("RightGoalBack",
+	[]() -> std::shared_ptr<StaticObject> { return std::make_shared<GoalBack>(1805, 590, true); });
+
+
 void GoalBack::draw(sf::RenderWindow& window)const {
 
 	window.draw(m_sprite);

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Keyboard.h"
+#include "Factory/MovingFactory.h"
 
 
 class Player: public MovingObject
@@ -36,9 +37,18 @@ private:
 	sf::Vector2f m_basePosition;
 
 	Keyboard m_keys;
-
+  
+	static bool m_registeritRightPlayer;
+	static bool m_registeritLeftPlayer;
+  
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
 	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
 	void updateGravityAndCollision();
+
+
+
 	void moveWithRange(int x);
+
 };
+
+

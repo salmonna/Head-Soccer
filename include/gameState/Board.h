@@ -32,6 +32,8 @@ private:
 
 	void timeCalculation();
 	void updateScoreBar();
+	void createMovingObjects(const std::vector<std::string> & objectNames);
+	void createStaticObjects(const std::vector<std::string>& objectNames);
 
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 	std::vector<std::shared_ptr<GameObject>> m_gameObject;
@@ -48,6 +50,5 @@ private:
 	sf::Sprite m_backGroundStadium;
 	
 };
-
 
 

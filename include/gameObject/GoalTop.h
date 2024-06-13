@@ -1,6 +1,7 @@
 #pragma once
-
 #include "gameObject/Goal.h"
+#include "Factory/StaticFactory.h"
+
 
 class GoalTop : public Goal
 {
@@ -13,5 +14,8 @@ public:
 private:
 
 	sf::Sprite m_sprite;
+
+	static bool m_registeritLeftGoalTop;
+	static bool m_registeritRightGoalTop;
 };
 
