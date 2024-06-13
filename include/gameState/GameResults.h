@@ -3,18 +3,17 @@
 #include "GameState.h"
 
 
-class GameResults 
+class GameResults: public GameState
 {
 public:
-	GameResults(std::vector<sf::Texture>& texturs);
+	GameResults();
 
-	bool isOpen();
-	void draw(sf::RenderWindow& window);
-	void respond(sf::Vector2f mouseClick);
+	virtual void draw(sf::RenderWindow& window) const override;
+	virtual void respond(sf::Vector2f mousePressed) override;
+	virtual GameState* handleEvents() override;
 
 	~GameResults() = default;
 
 private:
-
-	bool m_gameResultsOpen;
+	sf::Sprite m_sprite;
 };

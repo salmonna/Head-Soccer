@@ -14,7 +14,7 @@
 #include "gameObject/GoalTop.h"
 #include "Factory/MovingFactory.h"
 #include "Factory/StaticFactory.h"
-
+#include "gameState/GameResults.h"
 
 // Constructor for the Board class
 Board::Board() :m_boardOpen(true), m_scoreBoard(180)
@@ -122,6 +122,11 @@ void Board::updateScoreBar() {
 
 GameState* Board::handleEvents()
 {
+	if (m_scoreBoard.timeIsOver())
+	{
+		auto resultsMode = GameResults();
+		return &resultsMode;
+	}
 	return NULL;
 }
 

@@ -29,6 +29,9 @@ Resources::Resources(){
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
 	loadFromFile(balls, m_ballTexture);
 
+	std::vector<std::string> gameResults{ "Ball 01.png","Ball 02.png" };
+	loadFromFile(gameResults, m_gameResultsTexture);
+
 	if (!m_font.loadFromFile("Font.otf"))
 	{
 		throw FileException("Font file not load!");

@@ -1,9 +1,12 @@
 #include "gameState/GameResults.h"
-
+#include "Resources.h"
 
 //gameResults constactor
-GameResults::GameResults(std::vector<sf::Texture>& texturs):m_gameResultsOpen(true)
+GameResults::GameResults()
 {
+	std::vector<sf::Texture>& texturs = Resources::getInstance().getGameModeTexture();
+
+	
 
 }
 
@@ -14,7 +17,7 @@ void GameResults::respond(sf::Vector2f mouseClick)
 }
 
 //draw function
-void GameResults::draw(sf::RenderWindow& window)
+void GameResults::draw(sf::RenderWindow& window) const
 {
 
 }
