@@ -29,8 +29,10 @@ Resources::Resources(){
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
 	loadFromFile(balls, m_ballTexture);
 
-	std::vector<std::string> gameResults{ "Ball 01.png","Ball 02.png" };
+	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
+	std::vector<std::string> gameResults{ "Replay.png"};
 	loadFromFile(gameResults, m_gameResultsTexture);
+	
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{

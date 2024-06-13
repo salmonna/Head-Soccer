@@ -10,12 +10,13 @@
 #include "gameObject/Player.h"
 #include "Client.h"
 #include "GameState.h"
+#include "gameState/GameResults.h"
 
 
 class Board : public GameState
 {
 public:
-	Board();
+	Board(GameResults * gameResults);
 	virtual void respond(sf::Vector2f pressed) override;
 	virtual void draw(sf::RenderWindow& window) const override;
 
@@ -23,6 +24,8 @@ public:
 	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
 	bool collide(GameObject& a, GameObject& b);
 	bool isOpen() const;
+	void createMovingObjects(const std::vector<std::string> & objectNames);
+	void createStaticObjects(const std::vector<std::string>& objectNames);
 
 	virtual GameState* handleEvents() override;
 
@@ -32,8 +35,8 @@ private:
 
 	void timeCalculation();
 	void updateScoreBar();
-	void createMovingObjects(const std::vector<std::string> & objectNames);
-	void createStaticObjects(const std::vector<std::string>& objectNames);
+
+	void reset();
 
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 	std::vector<std::shared_ptr<GameObject>> m_gameObject;
@@ -45,6 +48,8 @@ private:
 	//Client m_client;
 	//game objects vector
 
+	GameResults* m_gameResults;
+	GameState* m_gameState;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 
 	sf::Sprite m_backGroundStadium;

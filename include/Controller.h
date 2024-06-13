@@ -16,13 +16,12 @@ private:
 
 	void runTheGame();
 
-	Window m_window;	
-	GameResults m_gameResults;
-	Board m_gameBoard;
-	GameModeSelection m_gameMode;
-	Menu m_menu;
-	
-
+    Window m_window;
+    GameResults m_gameResults;
+    Board m_gameBoard;
+    GameModeSelection m_gameMode;
+    Menu m_menu;
+    
 	GameState * m_currentState;
 };
 

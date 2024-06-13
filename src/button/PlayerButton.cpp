@@ -10,8 +10,11 @@ PlayerButton::PlayerButton(sf::Texture& texture, Board* boardState) :m_boardStat
 
 // Method to simulate clicking the button
 GameState * PlayerButton::click() {
-	auto m = Board();
-	return &m;
+	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
+	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	m_boardState->createMovingObjects(movingObjectNames);
+	m_boardState->createStaticObjects(staticObjectNames);
+	return m_boardState;
 }
 
 // Method to display button information

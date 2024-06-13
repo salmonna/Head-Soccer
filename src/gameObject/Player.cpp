@@ -36,6 +36,8 @@ bool Player::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlaye
 	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<Player>(false,
 		Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S));  });
 
+
+
 //draw plater
 void Player::draw(sf::RenderWindow& window) const {
 

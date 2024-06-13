@@ -60,7 +60,7 @@ void ScoreBoard::timeCalculation()
 	float secondsForSec = timeForSec.asSeconds();
 
 
-	if (timeCounterSec == 0)
+	if (timeCounterSec == 0 && timeCounterMin > 0)
 	{
 		--timeCounterMin;
 		timeCounterSec = 59;
@@ -68,7 +68,7 @@ void ScoreBoard::timeCalculation()
 
 
 
-	if (secondsForSec >= 1)
+	if (secondsForSec >= 1 && timeCounterSec > 0)
 	{
 		std::string str = std::to_string(timeCounterMin) + ":" + std::to_string(timeCounterSec);
 		--timeCounterSec;
@@ -79,7 +79,13 @@ void ScoreBoard::timeCalculation()
 }
 bool ScoreBoard::timeIsOver()
 {
-	return timeCounterSec == 0 && timeCounterMin == 0;
+	if (timeCounterSec == 0 && timeCounterMin == 0) {
+
+		timeCounterMin = m_gameTime/60;
+		timeCounterMin = m_gameTime%60;
+		return true;
+	}
+	return false;
 }
 
 //=======================Points=======================

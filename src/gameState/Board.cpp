@@ -17,7 +17,7 @@
 #include "gameState/GameResults.h"
 
 // Constructor for the Board class
-Board::Board() :m_boardOpen(true), m_scoreBoard(10)
+Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(5),m_gameState(NULL), m_gameResults(gameResults)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -28,13 +28,12 @@ Board::Board() :m_boardOpen(true), m_scoreBoard(10)
 													"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
 
 
-	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
-
 	createStaticObjects(staticObjectNames);
+
+	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
 	createMovingObjects(movingObjectNames);
 
 	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
-
 	createStaticObjects(staticObjectNames);
 
 }
@@ -122,12 +121,27 @@ GameState* Board::handleEvents()
 {
 	if (m_scoreBoard.timeIsOver())
 	{
-		auto resultsMode = GameResults();
-		return &resultsMode;
+
+		reset();
+		return m_gameResults;
 	}
-	return NULL;
+	return m_gameState;
 }
 
+void Board::reset() {
+	for (int i = 0; i < 5; i++)
+	{
+		m_gameObject.pop_back();
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		m_movingObject.pop_back();
+	}	
+	for (int i = 0; i < 2; i++)
+	{
+		m_staticObject.pop_back();
+	}
+}
 
 //=============================================== for_each_pair =======================================//
 

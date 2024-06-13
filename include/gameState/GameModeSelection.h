@@ -6,6 +6,8 @@
 #include "button/BaseButton.h"
 #include "gameState/Board.h"
 
+//class Board;
+
 class GameModeSelection:public GameState
 {
 public:
