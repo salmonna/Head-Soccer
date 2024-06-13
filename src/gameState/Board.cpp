@@ -17,7 +17,7 @@
 #include "gameState/GameResults.h"
 
 // Constructor for the Board class
-Board::Board() :m_boardOpen(true), m_scoreBoard(180)
+Board::Board() :m_boardOpen(true), m_scoreBoard(3), m_gameResults()
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -124,8 +124,7 @@ GameState* Board::handleEvents()
 {
 	if (m_scoreBoard.timeIsOver())
 	{
-		auto resultsMode = GameResults();
-		return &resultsMode;
+		return &m_gameResults;
 	}
 	return NULL;
 }

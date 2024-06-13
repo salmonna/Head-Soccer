@@ -10,6 +10,7 @@
 #include "gameObject/Player.h"
 #include "Client.h"
 #include "GameState.h"
+#include "gameState/GameResults.h"
 
 
 class Board : public GameState
@@ -41,6 +42,7 @@ private:
 
 	bool m_boardOpen;
 	ScoreBoard m_scoreBoard;
+	GameResults m_gameResults;
 
 	//Client m_client;
 	//game objects vector

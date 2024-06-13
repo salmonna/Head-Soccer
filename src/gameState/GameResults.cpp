@@ -2,11 +2,8 @@
 #include "Resources.h"
 
 //gameResults constactor
-GameResults::GameResults()
+GameResults::GameResults():m_sprite(Resources::getInstance().getGameModeTexture()[0])
 {
-	std::vector<sf::Texture>& texturs = Resources::getInstance().getGameModeTexture();
-
-	
 
 }
 
@@ -19,12 +16,11 @@ void GameResults::respond(sf::Vector2f mouseClick)
 //draw function
 void GameResults::draw(sf::RenderWindow& window) const
 {
-
+	window.draw(m_sprite);
 }
 
-// check if game result is open
-bool GameResults::isOpen()
+
+GameState* GameResults::handleEvents() 
 {
-	return m_gameResultsOpen;
+	return NULL;
 }
-

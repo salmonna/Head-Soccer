@@ -2,6 +2,7 @@
 #include "Controller.h"
 #include "Resources.h"
 
+
 //controller constractor
 Controller::Controller(): m_menu(&m_gameMode, &m_window.getWindow()), m_currentState(&m_menu)
 ,m_gameResults(), m_gameMode(&m_gameBoard)
