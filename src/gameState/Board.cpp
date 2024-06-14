@@ -15,14 +15,17 @@
 #include "Factory/MovingFactory.h"
 #include "Factory/StaticFactory.h"
 #include "gameState/GameResults.h"
+//#include "gameState/Pause.h"
 
 // Constructor for the Board class
-Board::Board() :m_boardOpen(true), m_scoreBoard(3), m_gameResults()
+Board::Board(Menu* menu) :m_boardOpen(true), m_scoreBoard(30), m_gameResults(),
+m_pressedOnPause(false), m_menu(menu), m_pause(menu, this)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
 	//update back gound stadium
 	m_backGroundStadium.setTexture(texturs[0]);
+	m_pauseButton.setTexture(Resources::getInstance().getMenuTexture()[0]);
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
 													"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
@@ -98,6 +101,11 @@ void Board::respond(sf::Vector2f pressed) {
 
 	updateScoreBar();
 
+	if(m_pauseButton.getGlobalBounds().contains(pressed))
+	{
+		m_pressedOnPause = true;
+	}
+
 }
 
 //=============================================== update ScoreBar =======================================//
@@ -122,6 +130,11 @@ void Board::updateScoreBar() {
 
 GameState* Board::handleEvents()
 {
+	if (m_pressedOnPause)
+	{
+		m_pressedOnPause = false;
+		return &m_pause;
+	}
 	if (m_scoreBoard.timeIsOver())
 	{
 		return &m_gameResults;
@@ -152,6 +165,8 @@ void Board::draw(sf::RenderWindow& window) const{
 
 	//draw the back ground stadium and field
     window.draw(m_backGroundStadium);
+
+	window.draw(m_pauseButton);
 
 	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)

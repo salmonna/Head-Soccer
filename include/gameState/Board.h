@@ -11,12 +11,15 @@
 #include "Client.h"
 #include "GameState.h"
 #include "gameState/GameResults.h"
+#include "Menu.h"
+#include "Pause.h"
+//class Pause;
 
 
 class Board : public GameState
 {
 public:
-	Board();
+	Board(Menu * menu);
 	virtual void respond(sf::Vector2f pressed) override;
 	virtual void draw(sf::RenderWindow& window) const override;
 
@@ -41,8 +44,11 @@ private:
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	bool m_boardOpen;
+
 	ScoreBoard m_scoreBoard;
 	GameResults m_gameResults;
+	Pause  m_pause;
+	Menu* m_menu;
 
 	//Client m_client;
 	//game objects vector
@@ -50,7 +56,9 @@ private:
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 
 	sf::Sprite m_backGroundStadium;
-	
+	sf::Sprite m_pauseButton;
+	bool m_pressedOnPause;
+
 };
 
 

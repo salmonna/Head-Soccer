@@ -5,7 +5,7 @@
 
 //controller constractor
 Controller::Controller(): m_menu(&m_gameMode, &m_window.getWindow()), m_currentState(&m_menu)
-,m_gameResults(), m_gameMode(&m_gameBoard)
+,m_gameResults(), m_gameMode(&m_gameBoard), m_gameBoard(&m_menu)
 {
 	runTheGame();
 }

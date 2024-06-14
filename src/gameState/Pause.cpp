@@ -1,8 +1,15 @@
 #pragma once
 #include "GameState\Pause.h"
+#include "../../include/button/pauseButton/ResumeButton.h"
+#include "../../include/button/pauseButton/ExitButton.h"
 
-Pause::Pause()
+
+
+
+Pause::Pause(Menu * menuState, Board * boardState):m_gameState(NULL)
 {
+	m_buttons.push_back(std::make_unique<ResumeButton>(boardState));
+	m_buttons.push_back(std::make_unique<ExitButton>(menuState));
 }
 
 
@@ -31,7 +38,9 @@ void Pause::draw(sf::RenderWindow& window) const {
 }
 
 
-GameState* Pause::handleEvents()
+GameState * Pause::handleEvents()
 {
-	return m_gameState;
+	auto state = m_gameState;
+	m_gameState = NULL;
+	return state;
 }
