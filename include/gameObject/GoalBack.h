@@ -15,6 +15,8 @@ public:
 
 	void setIfGoal(bool ballGetIn);
 	bool getIfGoal() const;
+	//sf::Vector2f getPotision() const;
+
 private:
 	sf::Sprite m_sprite;
 	bool m_isGoal;

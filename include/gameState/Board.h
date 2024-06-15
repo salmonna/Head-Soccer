@@ -12,6 +12,7 @@
 #include "GameState.h"
 #include "gameState/GameResults.h"
 
+#include "gameObject/ComputerPlayer.h"
 
 class Board : public GameState
 {
@@ -28,6 +29,7 @@ public:
 	void createStaticObjects(const std::vector<std::string>& objectNames);
 
 	virtual GameState* handleEvents() override;
+
 
 	~Board() = default;
 

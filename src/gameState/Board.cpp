@@ -21,7 +21,6 @@ Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(5),m_gam
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
-	//update back gound stadium
 	m_backGroundStadium.setTexture(texturs[0]);
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
@@ -29,7 +28,6 @@ Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(5),m_gam
 
 	createStaticObjects(staticObjectNames);
 }
-
 
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 {
@@ -47,6 +45,7 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 	}
 
 }
+
 void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 {
 	for (const auto& name : objectNames) {
@@ -71,13 +70,17 @@ void Board::respond(sf::Vector2f pressed) {
 	timeCalculation();
 	m_scoreBoard.updateScore(0, 0);
 
+	//------- just for run the computer player--------
+	pressed = m_movingObject[2]->getPosition();
+	//------------------------------------------------
+	
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
 		m_movingObject[i]->move(pressed);
 
 	}
-
+	
 	for_each_pair(m_gameObject.begin() + 2, m_gameObject.end() - 2, [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
@@ -161,7 +164,7 @@ void Board::draw(sf::RenderWindow& window) const{
 	{
 		m_gameObject[i]->draw(window);
 	}
-
+	 
 	//draw the score board
 	m_scoreBoard.draw(window);
 

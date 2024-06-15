@@ -9,6 +9,7 @@
 #include "gameObject/Player.h"
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
+#include "gameObject/ComputerPlayer.h"
 
 #include "gameObject/GoalSide.h"
 #include "gameObject/GoalBack.h"
@@ -58,13 +59,13 @@ namespace // anonymous namespace — the standard way to make function "static"
      
         ballObject.setBallVelocity(currVelocity);
 
-        std::cout << "player and ball collision!\n";
+        //std::cout << "player and ball collision!\n";
     }
 
     void playerCollidPlayer(GameObject& player1,
         GameObject& player2)
     {                                                              
-        std::cout << "Player1 and Player2 collision!\n";
+        //std::cout << "Player1 and Player2 collision!\n";
         //system("cls");
     }
 
@@ -112,7 +113,7 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         ballObject.setBallVelocity(ballVelocity);
 
-        std::cout << "Ball and Goal collision!\n";
+        //std::cout << "Ball and Goal collision!\n";
     }
 
     void ballCollidWithGoalBack(GameObject& ball , GameObject& goalBack) {
@@ -122,10 +123,37 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         goalObject.setIfGoal(true);
 
-        ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
-        ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
+        //ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+        //ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 
-        std::cout << "ball and GoalBack collision!\n";
+        //std::cout << "ball and GoalBack collision!\n";
+    }
+
+    void computerPlayerCollidBall(GameObject& computerPlayer, GameObject& ball) {
+
+        
+        Ball& ballObject = dynamic_cast<Ball&>(ball);
+        ComputerPlayer& computerObject = dynamic_cast<ComputerPlayer&>(computerPlayer);
+
+        sf::Vector2 velocity = ballObject.getVelocity();
+
+        computerObject.movePlayer(sf::Vector2f(160, 126), 7,10);
+
+        const float kickStrength = 200.0f; // עוצמת הבעיטה
+        const float kickVerticalBoost = -100.0f; // עוצמת הבעיטה האנכית
+
+        
+        // כיוון הבעיטה (ממרכז השחקן למרכז הכדור)
+        sf::Vector2f direction = computerObject.getRivalGoal() - ballObject.getPosition();
+        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        direction /= length; // נרמול הכיוון
+
+        // עדכון מהירות הכדור בעקבות הבעיטה
+        velocity += direction * kickStrength;
+        velocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
+
+        ballObject.setBallVelocity(velocity);
+
     }
 
     void handleUnnecessaryCollision(GameObject& side, GameObject& back) {}
@@ -156,6 +184,12 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         ballCollidWithGoalBack(ball, goalBack);
     }
+
+    void BallCollidComputerPlayer(GameObject& ball, GameObject& computerPlayer) {
+
+        computerPlayerCollidBall(computerPlayer,ball);
+
+    }
     //void backCollidWithSide(GameObject& back, GameObject& side) {
 
     //    SideCollidWithBAck(side , back);
@@ -176,12 +210,25 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[Key(typeid(Ball), typeid(GoalTop))] = &ballCollidGoalTop;
         phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
 
+        //----------------------------------------------------------------------
+        phm[Key(typeid(ComputerPlayer), typeid(Player))] = &playerCollidPlayer;
+        phm[Key(typeid(ComputerPlayer), typeid(Ball))] = &computerPlayerCollidBall;
+        phm[Key(typeid(ComputerPlayer), typeid(GoalBack))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(ComputerPlayer), typeid(GoalTop))] = &handleUnnecessaryCollision;
+        //----------------------------------------------------------------------
 
         phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
         phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
         phm[Key(typeid(GoalTop), typeid(Ball))] = &GoalTopColliedBall;
         phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
 
+        //----------------------------------------------------------------------
+        phm[Key(typeid(Player), typeid(ComputerPlayer))] = &playerCollidPlayer;
+        phm[Key(typeid(Ball), typeid(ComputerPlayer))] = &BallCollidComputerPlayer;
+        phm[Key(typeid(GoalBack), typeid(ComputerPlayer))] = &handleUnnecessaryCollision;
+        phm[Key(typeid(GoalTop), typeid(ComputerPlayer))] = &handleUnnecessaryCollision;
+        //----------------------------------------------------------------------
+        
         //collision player with goal back
         phm[Key(typeid(Player), typeid(GoalBack))] = &handleUnnecessaryCollision;
         phm[Key(typeid(GoalBack), typeid(Player))] = &handleUnnecessaryCollision;
