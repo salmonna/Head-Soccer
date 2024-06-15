@@ -43,3 +43,11 @@ GameState* GameResults::handleEvents() {
 	return gameState;
 }
 
+
+
+
+
+GameState* GameResults::handleEvents() 
+{
+	return NULL;
+}
