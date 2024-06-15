@@ -4,8 +4,9 @@
 #pragma once 
 #include "GameState.h"
 #include "button/BaseButton.h"
-#include "gameState/SelectTeam.h"
+//#include "gameState/Board.h"
 
+class Board;
 
 
 class GameModeSelection:public GameState

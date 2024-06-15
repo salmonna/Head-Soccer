@@ -15,13 +15,16 @@
 #include "Factory/MovingFactory.h"
 #include "Factory/StaticFactory.h"
 #include "gameState/GameResults.h"
+//#include "gameState/Pause.h"
 
 // Constructor for the Board class
-Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(120),m_gameState(NULL), m_gameResults(gameResults)
+Board::Board(Menu* menu, GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(120),m_gameState(NULL), m_gameResults(gameResults)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
 	m_backGroundStadium.setTexture(texturs[0]);
+
+	m_buttons.push_back(std::make_unique<Pause>(menu, this));
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
 												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
@@ -90,6 +93,15 @@ void Board::respond(sf::Vector2f pressed) {
 
 	updateScoreBar();
 
+
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		if (m_buttons[i]->contains(pressed)) {
+
+			m_gameState = m_buttons[i]->click();
+			break;
+		}
+	}
 }
 
 //=============================================== update ScoreBar =======================================//
@@ -114,12 +126,15 @@ void Board::updateScoreBar() {
 
 GameState* Board::handleEvents()
 {
+
 	if (m_scoreBoard.timeIsOver())
 	{
 		reset();
 		return m_gameResults;
 	}
-	return m_gameState;
+	auto state = m_gameState;
+	m_gameState = NULL;
+	return state;
 }
 
 void Board::reset() {
@@ -156,8 +171,24 @@ bool Board::collide(GameObject& a, GameObject& b)
 // Method to draw all objects in the window
 void Board::draw(sf::RenderWindow& window) const{
 
+	//draw game objects
+	drawGameObjects(window);
+
+	//draw the score board
+	m_scoreBoard.draw(window);
+
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		m_buttons[i]->draw(window);
+	}
+
+}
+
+//draw game objects
+void  Board::drawGameObjects(sf::RenderWindow& window) const
+{
 	//draw the back ground stadium and field
-    window.draw(m_backGroundStadium);
+	window.draw(m_backGroundStadium);
 
 	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)
@@ -167,7 +198,6 @@ void Board::draw(sf::RenderWindow& window) const{
 	 
 	//draw the score board
 	m_scoreBoard.draw(window);
-
 }
 
 //check if board is open

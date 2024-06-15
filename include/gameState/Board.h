@@ -11,16 +11,19 @@
 #include "Client.h"
 #include "GameState.h"
 #include "gameState/GameResults.h"
+#include "Menu.h"
+#include "Pause.h"
+//class Pause;
 
 #include "gameObject/ComputerPlayer.h"
 
 class Board : public GameState
 {
 public:
-	Board(GameResults * gameResults);
+	Board(Menu * menu, GameResults * gameResults);
 	virtual void respond(sf::Vector2f pressed) override;
 	virtual void draw(sf::RenderWindow& window) const override;
-
+	void drawGameObjects(sf::RenderWindow& window) const;
 	template <typename FwdIt, typename Fn>
 	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
 	bool collide(GameObject& a, GameObject& b);
@@ -45,7 +48,11 @@ private:
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	bool m_boardOpen;
+
 	ScoreBoard m_scoreBoard;
+	GameResults m_gameResults;
+	//Pause  m_pause;
+	GameState * m_gameState;
 
 	//Client m_client;
 	//game objects vector
@@ -53,9 +60,12 @@ private:
 	GameResults* m_gameResults;
 	GameState* m_gameState;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
+	std::vector<std::unique_ptr<BaseButton>> m_buttons;
+
 
 	sf::Sprite m_backGroundStadium;
-	
+	bool m_pressedOnPause;
+
 };
 
 

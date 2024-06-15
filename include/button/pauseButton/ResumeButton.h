@@ -1,15 +1,16 @@
 #pragma once
-#include "BaseButton.h"
+#include "../BaseButton.h"
 #include <SFML/Graphics.hpp>
 #include "gameState/GameState.h"
+#include "gameState/Board.h"
 
-class QuitButton: public BaseButton
+class ResumeButton : public BaseButton
 {
 public:
-    QuitButton(sf::Texture& texture, sf::RenderWindow * window);
+    ResumeButton(Board * boardState);
 
     // Method to simulate clicking the button
-    virtual GameState * click() override;
+    virtual GameState* click() override;
 
     // Method to display button information
     virtual void draw(sf::RenderWindow& window) const override;
@@ -18,14 +19,11 @@ public:
     virtual bool contains(sf::Vector2f position) const override;
 
 
-	~QuitButton() = default;
+    ~ResumeButton() = default;
 
 private:
 
-    sf::Sprite m_quit;
-    sf::RenderWindow* m_window;
+    sf::Sprite m_sprite;
+    Board* m_boardState;
 
 };
-
-
-

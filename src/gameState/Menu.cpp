@@ -47,8 +47,8 @@ void Menu::draw(sf::RenderWindow& window) const{
 
 GameState * Menu::handleEvents()
 {
-	GameState* game = m_gameState;
+	auto state = m_gameState;
 	m_gameState = NULL;
-	return game;
+	return state;
 }
 
