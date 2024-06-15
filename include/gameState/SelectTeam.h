@@ -1,28 +1,24 @@
-
-
-
 #pragma once 
 #include "GameState.h"
+#include "gameState/Board.h"
 #include "button/BaseButton.h"
-#include "gameState/SelectTeam.h"
+#include "button/StartButton.h"
 
-
-
-class GameModeSelection:public GameState
+class SelectTeam : public GameState
 {
 public:
-	GameModeSelection(Board* boardState);
+	SelectTeam(Board* boardState);
+	virtual ~SelectTeam();
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
 	virtual GameState* handleEvents() override;
 
-	virtual ~GameModeSelection();
-
 private:
 
-	std::vector<std::unique_ptr<BaseButton>> m_buttons;
 	GameState* m_gameState;
-	sf::Sprite m_Stage;
+	sf::Sprite m_stage;
+	std::vector<std::unique_ptr<BaseButton>> m_buttons;
+	std::vector<sf::Sprite> m_charcters;
 };
 
