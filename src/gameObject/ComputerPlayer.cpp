@@ -3,8 +3,8 @@
 
 ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2), m_gravity(0)
 {
-    std::vector<sf::Texture>& texture = Resources::getInstance().getCharactersTexture();
-	m_sprite.setTexture(texture[0]);
+   
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 
 	m_basePosition = sf::Vector2f(272, 750);
 
@@ -14,42 +14,43 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2)
 	m_startSprite.push_back(sf::Vector2f(160, 244));
 	m_startSprite.push_back(sf::Vector2f(160, 8));
 	m_startSprite.push_back(sf::Vector2f(160, 365));
+
+	m_rivalGoal = sf::Vector2f(1680,800);
 }
 
 
  //פונקציה לעדכון מיקום המחשב
-void ComputerPlayer::updateComputerPlayer(/*sf::RectangleShape& player, sf::Vector2f& ballvelocity, */ sf::CircleShape& ball
-    /*sf::RectangleShape& userGoal float deltaTime*/) {
+void ComputerPlayer::move(sf::Vector2f ballPosition) {
 
     const float speed = 200.0f;  // מהירות המחשב
     const float kickRange = 100.0f;  // טווח הבעיטה
 
     // כיוון המחשב לכיוון הכדור
-    sf::Vector2f direction = ball.getPosition() - m_sprite.getPosition();
+    sf::Vector2f direction = ballPosition - m_sprite.getPosition();
     float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
     if (length > kickRange) {
-        direction /= length; // נרמול הכיוון
-        direction *= speed;  // התאמת מהירות המחשב
+        //direction /= length; // נרמול הכיוון
+       //direction *= speed;  // התאמת מהירות המחשב
 
         // עדכון מיקום המחשב
    
 		//Right Direction Test
-		if (ball.getPosition().x > m_sprite.getPosition().x ) {
+		if (ballPosition.x > m_sprite.getPosition().x ) {
 
-			moveWithRange(5);
+			moveWithRange(4);
 			movePlayer(m_startSprite[1], 6, 10);
 		}
 		//Left Direction Test
-		else if (ball.getPosition().x < m_sprite.getPosition().x) {
+		else if (ballPosition.x < m_sprite.getPosition().x) {
 
-			moveWithRange(-5);
+			moveWithRange(-4);
 			movePlayer(m_startSprite[1], 6, 10);
 		}
     }
     else {
 		//Upward Direction Test
-		if (ball.getPosition().y < 750) {
+		if (ballPosition.y < 750) {
 			//so jump
 			if (m_posY > -180) {
 				m_posY -= 25;
@@ -126,6 +127,11 @@ void ComputerPlayer::moveWithRange(int x) {
 void ComputerPlayer::draw(sf::RenderWindow& window)const {
 
 	window.draw(m_sprite);
+}
+
+sf::Vector2f ComputerPlayer::getRivalGoal()const {
+
+	return m_rivalGoal;
 }
 ComputerPlayer::~ComputerPlayer()
 {

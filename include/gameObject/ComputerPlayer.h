@@ -10,7 +10,7 @@ public:
 	ComputerPlayer();
 	
 	
-	virtual void move(sf::Vector2f pressed) override {};
+	virtual void move(sf::Vector2f pressed) override;
 	virtual void draw(sf::RenderWindow& window)const override;
 
 	virtual sf::Sprite& getSprite() override { return m_sprite; };
@@ -20,8 +20,8 @@ public:
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
 	void resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int posY);
 
-	void updateComputerPlayer(/*sf::RectangleShape& player, sf::Vector2f& ballvelocity,*/ sf::CircleShape& ball
-							 /*sf::RectangleShape& userGoal  float deltaTime*/);
+
+	sf::Vector2f getRivalGoal()const;
 
 	void updateGravityAndCollision();
 	void moveWithRange(int x);
@@ -44,6 +44,6 @@ private:
 	sf::Vector2f m_velocity;
 	sf::Sprite m_sprite;
 
-	
+	sf::Vector2f m_rivalGoal;
 };
 
