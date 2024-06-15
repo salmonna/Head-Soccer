@@ -72,11 +72,6 @@ void  Ball::move(sf::Vector2f pressed)
     // עדכון מיקום הכדור
     m_ball.move(m_ballVelocity * deltaTime);
 
-    //-----------------------------------------------------------------------------------------------
-    sf::FloatRect leftTopScoreBar(40.f, 580.f, 150.4f, 631.f);
-    sf::FloatRect rightTopScoreBar(1750.f, 580.f, 184.f, 85.f);
-
-
 
     // בדיקת התנגשות עם הקרקע
     if (m_ball.getPosition().y + m_ball.getRadius() >= 835.0f) {
@@ -112,4 +107,9 @@ void  Ball::move(sf::Vector2f pressed)
 float Ball::getRadius() const {
 
     return m_ball.getRadius();
+}
+
+sf::CircleShape& Ball::getCircle() {
+
+    return m_ball;
 }

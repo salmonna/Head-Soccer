@@ -15,11 +15,12 @@
 #include "Pause.h"
 //class Pause;
 
+#include "gameObject/ComputerPlayer.h"
 
 class Board : public GameState
 {
 public:
-	Board(Menu * menu);
+	Board(Menu * menu, GameResults * gameResults);
 	virtual void respond(sf::Vector2f pressed) override;
 	virtual void draw(sf::RenderWindow& window) const override;
 	void drawGameObjects(sf::RenderWindow& window) const;
@@ -27,8 +28,11 @@ public:
 	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
 	bool collide(GameObject& a, GameObject& b);
 	bool isOpen() const;
+	void createMovingObjects(const std::vector<std::string> & objectNames);
+	void createStaticObjects(const std::vector<std::string>& objectNames);
 
 	virtual GameState* handleEvents() override;
+
 
 	~Board() = default;
 
@@ -36,8 +40,8 @@ private:
 
 	void timeCalculation();
 	void updateScoreBar();
-	void createMovingObjects(const std::vector<std::string> & objectNames);
-	void createStaticObjects(const std::vector<std::string>& objectNames);
+
+	void reset();
 
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 	std::vector<std::shared_ptr<GameObject>> m_gameObject;
@@ -53,6 +57,8 @@ private:
 	//Client m_client;
 	//game objects vector
 
+	GameResults* m_gameResults;
+	GameState* m_gameState;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 	std::vector<std::unique_ptr<BaseButton>> m_buttons;
 

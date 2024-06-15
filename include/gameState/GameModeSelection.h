@@ -8,6 +8,8 @@
 
 class Board;
 
+//class Board;
+
 class GameModeSelection:public GameState
 {
 public:

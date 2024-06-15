@@ -3,6 +3,7 @@
 #include "Resources.h"
 #include "button/MultiplayerButton.h"
 #include "button/PlayerButton.h"
+#include "button/OnlineButton.h"
 
 GameModeSelection::GameModeSelection(Board* boardState):m_gameState(NULL)
 {
@@ -10,6 +11,7 @@ GameModeSelection::GameModeSelection(Board* boardState):m_gameState(NULL)
 	m_Stage.setTexture(texturs[0]);
 	m_buttons.push_back(std::make_unique<MultiplayerButton>(texturs[1], boardState));
 	m_buttons.push_back(std::make_unique<PlayerButton>(texturs[2], boardState));
+	m_buttons.push_back(std::make_unique<OnlineButton>(texturs[3], boardState));
 }
 
 void GameModeSelection::draw(sf::RenderWindow& window) const {
@@ -32,7 +34,9 @@ void GameModeSelection::respond(sf::Vector2f mousePressed) {
 }
 
 GameState* GameModeSelection::handleEvents() {
-	return m_gameState;
+	GameState* gameState = m_gameState;
+	m_gameState = NULL;
+	return gameState;
 }
 
 GameModeSelection::~GameModeSelection()

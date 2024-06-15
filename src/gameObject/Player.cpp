@@ -95,7 +95,6 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 			m_numOfJump += 115;
 			resetToPosition(startPos, m_numOfJump, m_posX, m_posY);
 		}
-
 	}
 }
 
