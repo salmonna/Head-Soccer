@@ -28,9 +28,8 @@ void Controller::runTheGame()
 		{
 			m_currentState = nextState;
 		}
-
-		m_currentState->respond(m_window.getMousePressed());
 		m_currentState->draw(m_window.getWindow());
+		m_currentState->respond(m_window.getMousePressed());
 	}
 
 }

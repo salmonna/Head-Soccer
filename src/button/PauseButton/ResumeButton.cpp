@@ -5,9 +5,9 @@
 
 ResumeButton::ResumeButton(Board * boardState) :m_boardState(boardState)
 {
-	sf::Texture& texture = Resources::getInstance().getMenuTexture()[0];
+	sf::Texture& texture = Resources::getInstance().getPauseTexture()[1];
 	m_sprite.setTexture(texture);
-	m_sprite.setPosition(1800/2- m_sprite.getPosition().x,  1013 / 2);
+	m_sprite.setPosition(1800/2- m_sprite.getLocalBounds().width/2,  1013 / 2- m_sprite.getLocalBounds().height/2-200);
 }
 
 // Method to simulate clicking the button

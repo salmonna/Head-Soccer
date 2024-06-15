@@ -6,10 +6,14 @@
 
 
 
-Pause::Pause(Menu * menuState, Board * boardState):m_gameState(NULL)
+Pause::Pause(Menu * menuState, Board * boardState):m_gameState(NULL), 
+m_boardState(boardState), m_pauseStateBool(false)
 {
+	m_sprite.setTexture(Resources::getInstance().getPauseTexture()[0]);
+
 	m_buttons.push_back(std::make_unique<ResumeButton>(boardState));
 	m_buttons.push_back(std::make_unique<ExitButton>(menuState));
+	
 }
 
 
@@ -19,9 +23,9 @@ void Pause::respond(sf::Vector2f pressed) {
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
 		if (m_buttons[i]->contains(pressed)) {
-
+			m_pauseStateBool = false;
 			m_gameState = m_buttons[i]->click();
-			break;
+			return;
 		}
 	}
 }
@@ -29,12 +33,32 @@ void Pause::respond(sf::Vector2f pressed) {
 //draw
 void Pause::draw(sf::RenderWindow& window) const {
 
-	//window.draw(m_Stage);
-
-	for (int i = 0; i < m_buttons.size(); i++)
+	if (m_pauseStateBool)
 	{
-		m_buttons[i]->draw(window);
+		m_boardState->drawGameObjects(window);
+
+		for (int i = 0; i < m_buttons.size(); i++)
+		{
+			m_buttons[i]->draw(window);
+		}
 	}
+	else
+	{
+		window.draw(m_sprite);
+	}
+}
+
+
+GameState* Pause::click() 
+{
+	m_pauseStateBool = true;
+	return this;
+}
+
+
+bool Pause::contains(sf::Vector2f position) const
+{
+	return m_sprite.getGlobalBounds().contains(position);
 }
 
 

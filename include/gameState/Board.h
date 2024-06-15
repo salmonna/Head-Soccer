@@ -22,7 +22,7 @@ public:
 	Board(Menu * menu);
 	virtual void respond(sf::Vector2f pressed) override;
 	virtual void draw(sf::RenderWindow& window) const override;
-
+	void drawGameObjects(sf::RenderWindow& window) const;
 	template <typename FwdIt, typename Fn>
 	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
 	bool collide(GameObject& a, GameObject& b);
@@ -47,16 +47,17 @@ private:
 
 	ScoreBoard m_scoreBoard;
 	GameResults m_gameResults;
-	Pause  m_pause;
-	Menu* m_menu;
+	//Pause  m_pause;
+	GameState * m_gameState;
 
 	//Client m_client;
 	//game objects vector
 
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
+	std::vector<std::unique_ptr<BaseButton>> m_buttons;
+
 
 	sf::Sprite m_backGroundStadium;
-	sf::Sprite m_pauseButton;
 	bool m_pressedOnPause;
 
 };

@@ -18,14 +18,15 @@
 //#include "gameState/Pause.h"
 
 // Constructor for the Board class
-Board::Board(Menu* menu) :m_boardOpen(true), m_scoreBoard(30), m_gameResults(),
-m_pressedOnPause(false), m_menu(menu), m_pause(menu, this)
+Board::Board(Menu* menu) :m_gameState(NULL), m_boardOpen(true), m_scoreBoard(30), m_gameResults(),
+m_pressedOnPause(false)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
 	//update back gound stadium
 	m_backGroundStadium.setTexture(texturs[0]);
-	m_pauseButton.setTexture(Resources::getInstance().getMenuTexture()[0]);
+
+	m_buttons.push_back(std::make_unique<Pause>(menu, this));
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
 													"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
@@ -101,11 +102,15 @@ void Board::respond(sf::Vector2f pressed) {
 
 	updateScoreBar();
 
-	if(m_pauseButton.getGlobalBounds().contains(pressed))
-	{
-		m_pressedOnPause = true;
-	}
 
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		if (m_buttons[i]->contains(pressed)) {
+
+			m_gameState = m_buttons[i]->click();
+			break;
+		}
+	}
 }
 
 //=============================================== update ScoreBar =======================================//
@@ -130,16 +135,15 @@ void Board::updateScoreBar() {
 
 GameState* Board::handleEvents()
 {
-	if (m_pressedOnPause)
-	{
-		m_pressedOnPause = false;
-		return &m_pause;
-	}
+
 	if (m_scoreBoard.timeIsOver())
 	{
 		return &m_gameResults;
 	}
-	return NULL;
+
+	auto state = m_gameState;
+	m_gameState = NULL;
+	return state;
 }
 
 
@@ -163,20 +167,30 @@ bool Board::collide(GameObject& a, GameObject& b)
 // Method to draw all objects in the window
 void Board::draw(sf::RenderWindow& window) const{
 
-	//draw the back ground stadium and field
-    window.draw(m_backGroundStadium);
+	//draw game objects
+	drawGameObjects(window);
 
-	window.draw(m_pauseButton);
+	//draw the score board
+	m_scoreBoard.draw(window);
+
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		m_buttons[i]->draw(window);
+	}
+
+}
+
+//draw game objects
+void  Board::drawGameObjects(sf::RenderWindow& window) const
+{
+	//draw the back ground stadium and field
+	window.draw(m_backGroundStadium);
 
 	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)
 	{
 		m_gameObject[i]->draw(window);
 	}
-
-	//draw the score board
-	m_scoreBoard.draw(window);
-
 }
 
 //check if board is open

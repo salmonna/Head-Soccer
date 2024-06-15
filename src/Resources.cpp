@@ -32,12 +32,21 @@ Resources::Resources(){
 	std::vector<std::string> gameResults{ "Ball 01.png","Ball 02.png" };
 	loadFromFile(gameResults, m_gameResultsTexture);
 
+
+	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
+	loadFromFile(gamePause, m_pauseTexture);
+
 	if (!m_font.loadFromFile("Font.otf"))
 	{
 		throw FileException("Font file not load!");
 	}
 
 }
+
+
+
+
+
 
 //loadFromFile file function
 void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf::Texture>& textures) {
@@ -53,6 +62,12 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 }
 
 //getGoalTexture
+
+
+std::vector<sf::Texture>& Resources::getPauseTexture()
+{
+	return m_pauseTexture;
+}
 
 sf::Texture& Resources::getGoalTexture(int index) {
 
