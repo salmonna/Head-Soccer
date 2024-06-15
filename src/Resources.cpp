@@ -20,7 +20,7 @@ Resources::Resources(){
 	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png"};
 	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
 
-	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png" };
+	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png", "Online.png"};
 	loadFromFile(gameMode, m_gameModeTexture);
 
 	std::vector<std::string> characters{ "ItalyPlayer.png" }; 
@@ -28,6 +28,11 @@ Resources::Resources(){
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
 	loadFromFile(balls, m_ballTexture);
+
+	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
+	std::vector<std::string> gameResults{ "Replay.png"};
+	loadFromFile(gameResults, m_gameResultsTexture);
+	
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{

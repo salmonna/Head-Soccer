@@ -18,22 +18,24 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2)
 	m_rivalGoal = sf::Vector2f(1680,800);
 }
 
+bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
+    []() -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(); });
 
- //ôåğ÷öéä ìòãëåï îé÷åí äîçùá
+ //Ã´Ã¥Ã°Ã·Ã¶Ã©Ã¤ Ã¬Ã²Ã£Ã«Ã¥Ã¯ Ã®Ã©Ã·Ã¥Ã­ Ã¤Ã®Ã§Ã¹Ã¡
 void ComputerPlayer::move(sf::Vector2f ballPosition) {
 
-    const float speed = 200.0f;  // îäéøåú äîçùá
-    const float kickRange = 100.0f;  // èååç äáòéèä
+    const float speed = 200.0f;  // Ã®Ã¤Ã©Ã¸Ã¥Ãº Ã¤Ã®Ã§Ã¹Ã¡
+    const float kickRange = 100.0f;  // Ã¨Ã¥Ã¥Ã§ Ã¤Ã¡Ã²Ã©Ã¨Ã¤
 
-    // ëéååï äîçùá ìëéååï äëãåø
+    // Ã«Ã©Ã¥Ã¥Ã¯ Ã¤Ã®Ã§Ã¹Ã¡ Ã¬Ã«Ã©Ã¥Ã¥Ã¯ Ã¤Ã«Ã£Ã¥Ã¸
     sf::Vector2f direction = ballPosition - m_sprite.getPosition();
     float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
     if (length > kickRange) {
-        //direction /= length; // ğøîåì äëéååï
-       //direction *= speed;  // äúàîú îäéøåú äîçùá
+        //direction /= length; // Ã°Ã¸Ã®Ã¥Ã¬ Ã¤Ã«Ã©Ã¥Ã¥Ã¯
+       //direction *= speed;  // Ã¤ÃºÃ Ã®Ãº Ã®Ã¤Ã©Ã¸Ã¥Ãº Ã¤Ã®Ã§Ã¹Ã¡
 
-        // òãëåï îé÷åí äîçùá
+        // Ã²Ã£Ã«Ã¥Ã¯ Ã®Ã©Ã·Ã¥Ã­ Ã¤Ã®Ã§Ã¹Ã¡
    
 		//Right Direction Test
 		if (ballPosition.x > m_sprite.getPosition().x ) {

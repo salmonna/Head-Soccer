@@ -1,9 +1,9 @@
 
-
 #pragma once
 #include "MovingObject.h"
 #include "Window.h"
 #include <SFML/Graphics.hpp>
+#include "Factory/MovingFactory.h"
 
 class Ball : public MovingObject
 {
@@ -33,5 +33,5 @@ private:
 	sf::Vector2f m_ballVelocity;
 
 	sf::Clock m_clock;
+	static bool m_registeritBall;
 };
-

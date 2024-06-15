@@ -28,6 +28,15 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 }
 
 
+bool Player::m_registeritRightPlayer = MovingFactory::registeritMoving("RightPlayer",
+	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<Player>(true,
+		Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down)); });
+
+bool Player::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlayer",
+	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<Player>(false,
+		Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S));  });
+
+
 
 //draw plater
 void Player::draw(sf::RenderWindow& window) const {
@@ -86,7 +95,6 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 			m_numOfJump += 115;
 			resetToPosition(startPos, m_numOfJump, m_posX, m_posY);
 		}
-		
 	}
 }
 

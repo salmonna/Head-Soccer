@@ -6,11 +6,15 @@
 MultiplayerButton::MultiplayerButton(sf::Texture& texture, Board* boardState) :m_boardState(boardState)
 {
 	m_multiplayer.setTexture(texture);
-	m_multiplayer.setPosition(500, 100);
+	m_multiplayer.setPosition(400, 100);
 }
 
 // Method to simulate clicking the button
 GameState * MultiplayerButton::click() {
+	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
+	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	m_boardState->createMovingObjects(movingObjectNames);
+	m_boardState->createStaticObjects(staticObjectNames);
 	return m_boardState;
 }
 

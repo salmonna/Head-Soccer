@@ -5,7 +5,7 @@
 PlayerButton::PlayerButton(sf::Texture& texture, Board* boardState) :m_boardState(boardState)
 {
 	m_player.setTexture(texture);
-	m_player.setPosition(900, 100);
+	m_player.setPosition(800, 100);
 }
 
 // Method to simulate clicking the button

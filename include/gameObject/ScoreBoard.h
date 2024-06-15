@@ -18,10 +18,6 @@ public:
 
 	virtual ~ScoreBoard() = default;
 
-
-
-
-
 private:
 
 	//time

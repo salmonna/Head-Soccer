@@ -12,55 +12,53 @@
 #include "gameObject/GoalSide.h"
 #include "gameObject/GoalBack.h"
 #include "gameObject/GoalTop.h"
-
+#include "Factory/MovingFactory.h"
+#include "Factory/StaticFactory.h"
+#include "gameState/GameResults.h"
 
 // Constructor for the Board class
-Board::Board():m_boardOpen(true), m_scoreBoard(180)
+Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(5),m_gameState(NULL), m_gameResults(gameResults)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
-	//update back gound stadium
-    m_backGroundStadium.setTexture(texturs[0]);
+	m_backGroundStadium.setTexture(texturs[0]);
 
-	auto leftInsideSide = std::make_shared<GoalSide>(32, 580, false);
-	auto leftBackSide = std::make_shared<GoalBack>(-15, 590, false);
-	auto rightInsideSide = std::make_shared<GoalSide>(1755, 580, true);
-	auto rightBackSide = std::make_shared<GoalBack>(1805, 590, true);
+	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
+												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
 
-	auto leftTopBar = std::make_shared<GoalTop>(40, 580, false);
-	auto leftOutsideSide = std::make_shared<GoalSide>(-20, 625, false);
-	auto rightTopBar = std::make_shared<GoalTop>(1750, 580, true);
-	auto rightOutsideSide = std::make_shared<GoalSide>(1810, 625, true);
+	createStaticObjects(staticObjectNames);
+}
 
-	m_staticObject.push_back(leftBackSide);
-	m_staticObject.push_back(rightBackSide);
+void Board::createMovingObjects(const std::vector<std::string>& objectNames)
+{
 
-	m_gameObject.push_back(leftInsideSide);
-	m_gameObject.push_back(rightInsideSide);
-	m_gameObject.push_back(leftBackSide);
-	m_gameObject.push_back(rightBackSide);
-	m_gameObject.push_back(leftTopBar);
-	m_gameObject.push_back(rightTopBar);
+	for (const auto& name : objectNames) {
+		auto object = MovingFactory::createMoving(name);
 
-	Keyboard keyPlayer1(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up,sf::Keyboard::Down);
-	Keyboard keyPlayer2(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
-	m_movingObject.push_back(std::make_shared<Player>(true, keyPlayer1));
-	m_movingObject.push_back(std::make_shared<ComputerPlayer>());
+		if (object)
+		{
+			m_movingObject.push_back(object);
+			m_gameObject.push_back(object);
+		}
+		else
+			std::cout << "Class not found!\n";
+	}
 
-	m_gameObject.push_back(m_movingObject[0]);
-	m_gameObject.push_back(m_movingObject[1]);
+}
 
-	//update ball
-	auto ball = std::make_shared<Ball>();
-	m_movingObject.push_back(ball);
-	m_gameObject.push_back(ball);
+void Board::createStaticObjects(const std::vector<std::string>& objectNames)
+{
+	for (const auto& name : objectNames) {
+		auto object = StaticFactory::createStatic(name);
 
-	m_staticObject.push_back(leftBackSide);
-	m_staticObject.push_back(rightBackSide);
-
-	m_gameObject.push_back(leftOutsideSide);
-	m_gameObject.push_back(rightOutsideSide);
-
+		if (object)
+		{
+			m_staticObject.push_back(object);
+			m_gameObject.push_back(object);
+		}
+		else
+			std::cout << "Class not found!\n";
+	}
 }
 
 //=============================================== respond =======================================//
@@ -97,8 +95,9 @@ void Board::respond(sf::Vector2f pressed) {
 //=============================================== update ScoreBar =======================================//
 void Board::updateScoreBar() {
 
-	GoalBack& leftGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[0]);
-	GoalBack& rightGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[1]);
+
+	GoalBack& leftGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[2]);
+	GoalBack& rightGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[3]);
 
 	if (leftGoalBack.getIfGoal()) {
 
@@ -115,9 +114,27 @@ void Board::updateScoreBar() {
 
 GameState* Board::handleEvents()
 {
-	return NULL;
+	if (m_scoreBoard.timeIsOver())
+	{
+		reset();
+		return m_gameResults;
+	}
+	return m_gameState;
 }
 
+void Board::reset() {
+	int size = m_gameObject.size() - 6;
+	for (int i = 0; i < size; i++)
+	{
+		m_gameObject.pop_back();
+	}
+	m_movingObject.clear();
+	size = m_staticObject.size() - 6;
+	for (int i = 0; i < size; i++)
+	{
+		m_staticObject.pop_back();
+	}
+}
 
 //=============================================== for_each_pair =======================================//
 
@@ -166,8 +183,8 @@ void Board::timeCalculation()
 	//game board = m_gameObjects[0];
 	m_scoreBoard.timeCalculation();
 
-	if (m_scoreBoard.timeIsOver())
-	{
-		m_boardOpen = false;
-	}
+	//if (m_scoreBoard.timeIsOver())
+	//{
+	//	m_boardOpen = false;
+	//}
 }

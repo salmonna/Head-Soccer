@@ -1,20 +1,24 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "GameState.h"
+#include "button/BaseButton.h"
 
+//forwaard declartion
+class Menu;
 
-class GameResults 
+class GameResults: public GameState
 {
 public:
-	GameResults(std::vector<sf::Texture>& texturs);
+	GameResults(Menu * menuState);
 
-	bool isOpen();
-	void draw(sf::RenderWindow& window);
-	void respond(sf::Vector2f mouseClick);
+	virtual void draw(sf::RenderWindow& window) const override;
+	virtual void respond(sf::Vector2f mousePressed) override;
+	virtual GameState * handleEvents() override;
 
 	~GameResults() = default;
 
 private:
-
-	bool m_gameResultsOpen;
+	std::vector<std::unique_ptr<BaseButton>> m_buttons;
+	sf::Sprite m_sprite;
+	GameState* m_gameState;
 };

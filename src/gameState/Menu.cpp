@@ -47,6 +47,8 @@ void Menu::draw(sf::RenderWindow& window) const{
 
 GameState * Menu::handleEvents()
 {
-	return m_gameState;
+	GameState* game = m_gameState;
+	m_gameState = NULL;
+	return game;
 }
 
