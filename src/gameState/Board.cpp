@@ -17,7 +17,7 @@
 #include "gameState/GameResults.h"
 
 // Constructor for the Board class
-Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(5),m_gameState(NULL), m_gameResults(gameResults)
+Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(120),m_gameState(NULL), m_gameResults(gameResults)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
