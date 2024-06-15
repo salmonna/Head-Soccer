@@ -20,7 +20,7 @@ Resources::Resources(){
 	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png"};
 	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
 
-	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png" };
+	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png", "Online.png"};
 	loadFromFile(gameMode, m_gameModeTexture);
 
 	std::vector<std::string> characters{ "ItalyPlayer.png" }; 

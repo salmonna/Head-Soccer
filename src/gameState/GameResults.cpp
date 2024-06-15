@@ -38,7 +38,8 @@ void GameResults::draw(sf::RenderWindow& window) const
 }
 
 GameState* GameResults::handleEvents() {
-
-	return m_gameState;
+	GameState* gameState = m_gameState;
+	m_gameState = NULL;
+	return gameState;
 }
 

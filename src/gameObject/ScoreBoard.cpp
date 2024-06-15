@@ -82,7 +82,7 @@ bool ScoreBoard::timeIsOver()
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
 
 		timeCounterMin = m_gameTime/60;
-		timeCounterMin = m_gameTime%60;
+		timeCounterSec = m_gameTime%60;
 		return true;
 	}
 	return false;

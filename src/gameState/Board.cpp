@@ -25,17 +25,9 @@ Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(5),m_gam
 	m_backGroundStadium.setTexture(texturs[0]);
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
-													"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
-
+												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
 
 	createStaticObjects(staticObjectNames);
-
-	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
-	createMovingObjects(movingObjectNames);
-
-	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
-	createStaticObjects(staticObjectNames);
-
 }
 
 
@@ -121,7 +113,6 @@ GameState* Board::handleEvents()
 {
 	if (m_scoreBoard.timeIsOver())
 	{
-
 		reset();
 		return m_gameResults;
 	}
@@ -129,15 +120,14 @@ GameState* Board::handleEvents()
 }
 
 void Board::reset() {
-	for (int i = 0; i < 5; i++)
+	int size = m_gameObject.size() - 6;
+	for (int i = 0; i < size; i++)
 	{
 		m_gameObject.pop_back();
 	}
-	for (int i = 0; i < 3; i++)
-	{
-		m_movingObject.pop_back();
-	}	
-	for (int i = 0; i < 2; i++)
+	m_movingObject.clear();
+	size = m_staticObject.size() - 6;
+	for (int i = 0; i < size; i++)
 	{
 		m_staticObject.pop_back();
 	}
@@ -190,8 +180,8 @@ void Board::timeCalculation()
 	//game board = m_gameObjects[0];
 	m_scoreBoard.timeCalculation();
 
-	if (m_scoreBoard.timeIsOver())
-	{
-		m_boardOpen = false;
-	}
+	//if (m_scoreBoard.timeIsOver())
+	//{
+	//	m_boardOpen = false;
+	//}
 }
