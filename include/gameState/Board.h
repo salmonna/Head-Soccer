@@ -27,7 +27,6 @@ public:
 	template <typename FwdIt, typename Fn>
 	void for_each_pair(FwdIt begin, FwdIt end, Fn fn);
 	bool collide(GameObject& a, GameObject& b);
-	bool isOpen() const;
 	void createMovingObjects(const std::vector<std::string> & objectNames);
 	void createStaticObjects(const std::vector<std::string>& objectNames);
 
@@ -38,7 +37,6 @@ public:
 
 private:
 
-	void timeCalculation();
 	void updateScoreBar();
 
 	void reset();
@@ -50,15 +48,13 @@ private:
 	bool m_boardOpen;
 
 	ScoreBoard m_scoreBoard;
-	GameResults m_gameResults;
+	GameResults * m_gameResults;
 	//Pause  m_pause;
 	GameState * m_gameState;
 
 	//Client m_client;
 	//game objects vector
 
-	GameResults* m_gameResults;
-	GameState* m_gameState;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 	std::vector<std::unique_ptr<BaseButton>> m_buttons;
 

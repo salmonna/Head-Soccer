@@ -25,5 +25,6 @@ void MultiplayerButton::draw(sf::RenderWindow& window) const {
 
 // Method to check button position
 bool MultiplayerButton::contains(sf::Vector2f position) const {
-	return m_multiplayer.getGlobalBounds().contains(position);
+	sf::Vector2f newPos = m_multiplayer.getTransform().getInverse().transformPoint(position);
+	return m_multiplayer.getLocalBounds().contains(newPos);
 }

@@ -18,7 +18,6 @@ public:
 	void setPosition(sf::Vector2f position);
 	void setBallVelocity(sf::Vector2f velocity);
 	float getRadius() const;
-
 	virtual ~Ball() = default;
 
 	//just for chacking --------

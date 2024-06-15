@@ -18,7 +18,7 @@
 //#include "gameState/Pause.h"
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(120),m_gameState(NULL), m_gameResults(gameResults)
+Board::Board(Menu* menu, GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(120),m_gameState(NULL)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -70,17 +70,18 @@ void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 void Board::respond(sf::Vector2f pressed) {
 
 
-	timeCalculation();
+	m_scoreBoard.timeCalculation();
 	m_scoreBoard.updateScore(0, 0);
 
 	//------- just for run the computer player--------
-	pressed = m_movingObject[2]->getPosition();
+	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
 	//------------------------------------------------
+
 	
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size(); i++)
 	{
-		m_movingObject[i]->move(pressed);
+		m_movingObject[i]->move(ballPosition);
 
 	}
 	
@@ -174,8 +175,6 @@ void Board::draw(sf::RenderWindow& window) const{
 	//draw game objects
 	drawGameObjects(window);
 
-	//draw the score board
-	m_scoreBoard.draw(window);
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
@@ -200,21 +199,4 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 	m_scoreBoard.draw(window);
 }
 
-//check if board is open
-bool Board::isOpen() const{
 
-    return m_boardOpen;
-}
-
-//=======================================Time==================================
-//time calculation
-void Board::timeCalculation()
-{
-	//game board = m_gameObjects[0];
-	m_scoreBoard.timeCalculation();
-
-	//if (m_scoreBoard.timeIsOver())
-	//{
-	//	m_boardOpen = false;
-	//}
-}
