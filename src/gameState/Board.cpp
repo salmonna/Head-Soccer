@@ -22,7 +22,14 @@ Board::Board(Menu* menu, GameResults* gameResults) :m_boardOpen(true), m_scoreBo
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
-	m_backGroundStadium.setTexture(texturs[0]);
+
+	for (size_t i = 0; i < texturs.size(); i++)
+	{
+		m_backGroundStadium.push_back(sf::Sprite());
+		m_backGroundStadium[i].setTexture(texturs[i]);
+
+	}
+	m_backGroundStadium[1].setPosition(0, 670);
 
 	m_buttons.push_back(std::make_unique<Pause>(menu, this));
 
@@ -76,6 +83,7 @@ void Board::respond(sf::Vector2f pressed) {
 	//------- just for run the computer player--------
 	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
 	//------------------------------------------------
+	moveAd();
 
 	
 	//move the players and the ball
@@ -102,6 +110,19 @@ void Board::respond(sf::Vector2f pressed) {
 			m_gameState = m_buttons[i]->click();
 			break;
 		}
+	}
+}
+
+void Board::moveAd()
+{
+
+	sf::Sprite& sprite = m_backGroundStadium[1];
+	sprite.move(1.5, 0);
+
+	if (sprite.getPosition().x >= 1800)
+	{
+
+		sprite.setPosition(-sprite.getGlobalBounds().width, 680);
 	}
 }
 
@@ -186,8 +207,12 @@ void Board::draw(sf::RenderWindow& window) const{
 //draw game objects
 void  Board::drawGameObjects(sf::RenderWindow& window) const
 {
+
 	//draw the back ground stadium and field
-	window.draw(m_backGroundStadium);
+	for (int i = 0; i < m_backGroundStadium.size(); i++)
+	{
+		window.draw(m_backGroundStadium[i]);
+	}
 
 	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)

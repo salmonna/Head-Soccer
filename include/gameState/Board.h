@@ -22,6 +22,7 @@ class Board : public GameState
 public:
 	Board(Menu * menu, GameResults * gameResults);
 	virtual void respond(sf::Vector2f pressed) override;
+	void moveAd();
 	virtual void draw(sf::RenderWindow& window) const override;
 	void drawGameObjects(sf::RenderWindow& window) const;
 	template <typename FwdIt, typename Fn>
@@ -31,15 +32,13 @@ public:
 	void createStaticObjects(const std::vector<std::string>& objectNames);
 
 	virtual GameState* handleEvents() override;
-
-
+	void reset();
 	~Board() = default;
 
 private:
 
 	void updateScoreBar();
 
-	void reset();
 
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 	std::vector<std::shared_ptr<GameObject>> m_gameObject;
@@ -51,7 +50,7 @@ private:
 	GameResults * m_gameResults;
 	//Pause  m_pause;
 	GameState * m_gameState;
-
+	
 	//Client m_client;
 	//game objects vector
 
@@ -59,7 +58,7 @@ private:
 	std::vector<std::unique_ptr<BaseButton>> m_buttons;
 
 
-	sf::Sprite m_backGroundStadium;
+	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
 
 };

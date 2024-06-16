@@ -23,6 +23,12 @@ void Pause::respond(sf::Vector2f pressed) {
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
 		if (m_buttons[i]->contains(pressed)) {
+
+			if (i == 1)
+			{
+				m_boardState->reset();
+			}
+
 			m_pauseStateBool = false;
 			m_gameState = m_buttons[i]->click();
 			return;

@@ -15,6 +15,12 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
     m_ball.setPosition(900.0f, 988.0f); 
 }
 
+void Ball::restartBall()
+{
+    m_clock.restart();
+}
+
+
 bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<Ball>(); });
 
@@ -60,6 +66,11 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 
 void  Ball::move(sf::Vector2f pressed)
 {
+
+    if (m_clock.getElapsedTime().asSeconds() >= 1)
+    {
+        m_clock.restart();
+    }
 
     float deltaTime = m_clock.restart().asSeconds();
 
