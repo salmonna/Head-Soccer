@@ -2,9 +2,10 @@
 #include "Controller.h"
 #include "Resources.h"
 
+
 //controller constractor
 Controller::Controller(): m_menu(&m_gameMode, &m_window.getWindow()), m_currentState(&m_menu)
-, m_gameMode(&m_gameBoard),m_gameBoard(&m_gameResults),m_gameResults(&m_menu)
+, m_gameMode(&m_gameBoard),m_gameBoard(&m_menu, &m_gameResults),m_gameResults(&m_menu)
 {
 	runTheGame();
 }
@@ -27,9 +28,8 @@ void Controller::runTheGame()
 		{
 			m_currentState = nextState;
 		}
-
-		m_currentState->respond(m_window.getMousePressed());
 		m_currentState->draw(m_window.getWindow());
+		m_currentState->respond(m_window.getMousePressed());
 	}
 
 }

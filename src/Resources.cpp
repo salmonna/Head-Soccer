@@ -11,7 +11,7 @@ Resources::Resources(){
 	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" };
 	loadFromFile(fileNames,m_menuTexture);
 
-	std::vector<std::string> boardFileNames{ "Stadium.png","Goal.png" };
+	std::vector<std::string> boardFileNames{ "Stadium.png", "Ad Board.png","Goal.png"};
 	loadFromFile(boardFileNames, m_boardTexture);
 
 	std::vector<std::string> goalFilenames{ "Goal - Side.png","Goal - Back.png","Goal - Top.png" };
@@ -34,12 +34,21 @@ Resources::Resources(){
 	loadFromFile(gameResults, m_gameResultsTexture);
 	
 
+
+	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
+	loadFromFile(gamePause, m_pauseTexture);
+
 	if (!m_font.loadFromFile("Font.otf"))
 	{
 		throw FileException("Font file not load!");
 	}
 
 }
+
+
+
+
+
 
 //loadFromFile file function
 void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf::Texture>& textures) {
@@ -55,6 +64,12 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 }
 
 //getGoalTexture
+
+
+std::vector<sf::Texture>& Resources::getPauseTexture()
+{
+	return m_pauseTexture;
+}
 
 sf::Texture& Resources::getGoalTexture(int index) {
 

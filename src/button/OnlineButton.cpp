@@ -20,5 +20,6 @@ void OnlineButton::draw(sf::RenderWindow& window) const {
 
 // Method to check button position
 bool OnlineButton::contains(sf::Vector2f position) const {
-	return m_online.getGlobalBounds().contains(position);
+	sf::Vector2f newPos = m_online.getTransform().getInverse().transformPoint(position);
+	return m_online.getLocalBounds().contains(newPos);
 }

@@ -35,7 +35,6 @@ timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0
 
 }
 
-
 void ScoreBoard::draw(sf::RenderWindow & window) const
 {
 	for (int i = 0; i < m_SpriteVec.size(); i++)
@@ -75,12 +74,19 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
-
-		timeCounterMin = m_gameTime/60;
-		timeCounterSec = m_gameTime%60;
+		reset();
 		return true;
 	}
 	return false;
+}
+
+
+
+void ScoreBoard::reset()
+{
+	timeCounterMin = m_gameTime / 60;
+	timeCounterSec = m_gameTime % 60;
+	m_p1Points = 0, m_p2Points = 0;
 }
 
 //=======================Points=======================

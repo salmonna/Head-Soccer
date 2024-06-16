@@ -5,11 +5,11 @@
 #include "Resources.h"
 
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),
-										 m_keys(keys), m_playerSide(right)
+m_keys(keys), m_playerSide(right)
 {
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 	resetToPosition();
-	
+
 	if (m_playerSide)
 	{
 		m_sprite.scale(-1, 1);
@@ -50,7 +50,7 @@ void Player::move(sf::Vector2f pressed) {
 	if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
 		if (m_posY > -180)
 			m_posY -= 15;
-		
+
 		movePlayer(m_startSprite[2], 7, 50);
 	}
 	else {
@@ -69,7 +69,7 @@ void Player::move(sf::Vector2f pressed) {
 		movePlayer(m_startSprite[1], 6, 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
-	    (m_playerSide) ? m_posX -= 5 : m_posX += 5;
+		(m_playerSide) ? m_posX -= 5 : m_posX += 5;
 		movePlayer(m_startSprite[3], 6, 10);
 	}
 
@@ -83,7 +83,7 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 	float sec = float(m_moveClock.getElapsedTime().asMilliseconds());
 	if (maxTime < sec)
 	{
-		if (m_numOfJump > 110* maxSprite)
+		if (m_numOfJump > 110 * maxSprite)
 		{
 			m_numOfJump = 0;
 			m_move = -2;
@@ -100,12 +100,12 @@ void Player::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 
 
 // Reset to default position if not jumping
-void Player::resetToPosition(sf::Vector2f startPos,int numOfJump ,int posX, int posY) {
+void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int posY) {
 
-	sf::IntRect characterRect(startPos.x+ numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
+	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
-	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition .y+ posY));
+	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
 }
 
 // Handle gravity and ground collision
@@ -130,7 +130,7 @@ void Player::moveWithRange(int x) {
 	}
 	else
 	{
-		if (m_posX + x> -220 && m_posX + x < 1400)
+		if (m_posX + x > -220 && m_posX + x < 1400)
 			m_posX += x;
 	}
 }
@@ -145,7 +145,7 @@ sf::Vector2f Player::getPosition() const {
 }
 
 //get keys
-Keyboard Player::getKey() const 
+Keyboard Player::getKey() const
 {
 	return m_keys;
 }

@@ -19,7 +19,10 @@ public:
 	void setBallVelocity(sf::Vector2f velocity);
 	float getRadius() const;
 
+	void restartBall();
+
 	virtual ~Ball() = default;
+
 
 	//just for chacking --------
 	sf::CircleShape& getCircle();

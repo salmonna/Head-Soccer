@@ -113,7 +113,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         ballObject.setBallVelocity(ballVelocity);
 
-        //std::cout << "Ball and Goal collision!\n";
     }
 
     void ballCollidWithGoalBack(GameObject& ball , GameObject& goalBack) {

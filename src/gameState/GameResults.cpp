@@ -42,4 +42,3 @@ GameState* GameResults::handleEvents() {
 	m_gameState = NULL;
 	return gameState;
 }
-

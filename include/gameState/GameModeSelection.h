@@ -4,7 +4,9 @@
 #pragma once 
 #include "GameState.h"
 #include "button/BaseButton.h"
-#include "gameState/Board.h"
+//#include "gameState/Board.h"
+
+class Board;
 
 //class Board;
 
