@@ -25,6 +25,7 @@ private:
 	int m_gameTime;
 	int timeCounterSec;
 	int timeCounterMin;
+
 	sf::Clock m_clockGameTime;
 	sf::Clock m_clockEverySec;
 

@@ -8,12 +8,13 @@
 #include "gameObject/Goal.h"
 #include "gameObject/MovingObject.h"
 #include "gameObject/Player.h"
-#include "Client.h"
+//#include "Client.h"
 #include "GameState.h"
 #include "gameState/GameResults.h"
 #include "Menu.h"
 #include "Pause.h"
 //class Pause;
+
 
 #include "gameObject/ComputerPlayer.h"
 
@@ -39,12 +40,11 @@ private:
 
 	void updateScoreBar();
 
-
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 	std::vector<std::shared_ptr<GameObject>> m_gameObject;
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
-	bool m_boardOpen;
+	bool m_goalSign;
 
 	ScoreBoard m_scoreBoard;
 	GameResults * m_gameResults;
@@ -54,12 +54,15 @@ private:
 	//Client m_client;
 	//game objects vector
 
+
+	sf::Clock m_clock;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 	std::vector<std::unique_ptr<BaseButton>> m_buttons;
 
 
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
+	sf::Sprite m_goalSprite;
 
 };
 
