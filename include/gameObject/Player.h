@@ -17,9 +17,9 @@ public:
 
 	virtual  sf::Vector2f getPosition() const override;
 	virtual sf::Sprite& getSprite() override;
-
+	virtual void reset()override;
 	Keyboard getKey() const;
-
+	
 	virtual ~Player() = default;
 private:
 

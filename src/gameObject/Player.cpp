@@ -139,6 +139,12 @@ sf::Sprite& Player::getSprite() {
 	return m_sprite;
 }
 
+void Player::reset() {
+	m_sprite.setPosition(m_basePosition);
+	m_posX = 0;
+	m_posY = 0;
+}
+
 sf::Vector2f Player::getPosition() const {
 
 	return m_sprite.getPosition();

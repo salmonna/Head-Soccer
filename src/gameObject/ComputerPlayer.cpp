@@ -65,6 +65,11 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
 	updateGravityAndCollision();
 }
 
+void ComputerPlayer::reset() {
+	m_sprite.setPosition(m_basePosition);
+	m_posX = 0;
+	m_posY = 0;
+}
 
 
 //function that move the player

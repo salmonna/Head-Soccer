@@ -33,7 +33,7 @@ Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(15),m_gameState
 	m_buttons.push_back(std::make_unique<Pause>(menu, this));
 
 	m_goalSprite.setTexture(texturs[2]);
-	m_goalSprite.setPosition(0, 200);
+	m_goalSprite.setPosition(50, 200);
 
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
@@ -104,7 +104,7 @@ void Board::respond(sf::Vector2f pressed) {
 	});
 	
 	updateScoreBar();
-    if (m_clock.getElapsedTime().asSeconds() > 3)
+    if (m_clock.getElapsedTime().asSeconds() > 2)
 	{
 		m_goalSign = false;
 		m_goalSprite.setPosition(0, 200);
@@ -148,6 +148,8 @@ void Board::updateScoreBar() {
 	if (leftGoalBack.getIfGoal()) {
 		m_clock.restart();
 		m_goalSign = true;
+		m_movingObject[0]->reset();
+		m_movingObject[1]->reset();
 		m_scoreBoard.updateScore(0, 1);
 		leftGoalBack.setIfGoal(false);
 	}
@@ -155,6 +157,8 @@ void Board::updateScoreBar() {
 	{
 		m_clock.restart();
 		m_goalSign = true;
+		m_movingObject[0]->reset();
+		m_movingObject[1]->reset();
 		m_scoreBoard.updateScore(1, 0);
 		rightGoalBack.setIfGoal(false);
 	}

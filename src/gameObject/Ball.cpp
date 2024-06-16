@@ -20,6 +20,9 @@ void Ball::restartBall()
     m_clock.restart();
 }
 
+void Ball::reset() {
+    //m_clock.restart();
+}
 
 bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<Ball>(); });
