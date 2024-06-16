@@ -38,6 +38,9 @@ Resources::Resources(){
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png" };
+	loadFromFile(power, m_powerTexture);
+
 	if (!m_font.loadFromFile("Font.otf"))
 	{
 		throw FileException("Font file not load!");
@@ -65,6 +68,10 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 
 //getGoalTexture
 
+std::vector<sf::Texture>& Resources::getPowerTexture()
+{
+	return m_powerTexture;
+}
 
 std::vector<sf::Texture>& Resources::getPauseTexture()
 {
