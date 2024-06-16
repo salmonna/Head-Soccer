@@ -32,11 +32,12 @@ Resources::Resources(){
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
 	std::vector<std::string> gameResults{ "Replay.png"};
 	loadFromFile(gameResults, m_gameResultsTexture);
-	
-
 
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
+
+	std::vector<std::string> power{ "Aura.png" };
+	loadFromFile(power, m_powerTexture);
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{
@@ -121,4 +122,10 @@ std::vector<sf::Texture>& Resources::getGameModeTexture() {
 std::vector<sf::Texture>& Resources::getCharactersTexture() {
 
 	return m_characters;
+}
+
+//get power
+std::vector<sf::Texture>& Resources::getPowerTexture() {
+
+	return m_powerTexture;
 }

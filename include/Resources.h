@@ -25,7 +25,7 @@ public:
 	std::vector<sf::Texture>& getBallTexture();
 	std::vector<sf::Texture>& getCharactersTexture();
 	std::vector<sf::Texture>& getGameModeTexture();
-
+	std::vector<sf::Texture>& getPowerTexture();
 	std::vector<sf::Texture>& getPauseTexture();
 
 	sf::Font & getFont();
@@ -50,7 +50,7 @@ private:
 	std::vector<sf::Texture> m_ballTexture;
 
 	std::vector<sf::Texture> m_pauseTexture;
-
+	std::vector<sf::Texture> m_powerTexture;
 
 	sf::Font m_font;
 

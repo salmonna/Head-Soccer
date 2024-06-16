@@ -5,7 +5,7 @@
 #include <vector>
 #include "Keyboard.h"
 #include "Factory/MovingFactory.h"
-
+#include "power/Power.h"
 
 class Player: public MovingObject
 {
@@ -29,9 +29,12 @@ private:
 	int m_move;
 	int m_gravity;
 	bool m_playerSide;
+	bool m_aura;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
+
+	std::unique_ptr<Power> m_power;
 
 	std::vector<sf::Vector2f> m_startSprite;
 	sf::Vector2f m_basePosition;
