@@ -123,10 +123,9 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         goalObject.setIfGoal(true);
 
-        //ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
-        //ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
+        ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+        ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 
-        //std::cout << "ball and GoalBack collision!\n";
     }
 
     void computerPlayerCollidBall(GameObject& computerPlayer, GameObject& ball) {

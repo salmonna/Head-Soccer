@@ -23,8 +23,6 @@ timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0
 		m_textVec[i].setFont(font);
 		m_textVec[i].setCharacterSize(70);
 		m_textVec[i].setFillColor(sf::Color::White);
-
-
 	}
 
 	//font time pos
@@ -59,14 +57,11 @@ void ScoreBoard::timeCalculation()
 	sf::Time timeForSec = m_clockEverySec.getElapsedTime();
 	float secondsForSec = timeForSec.asSeconds();
 
-
 	if (timeCounterSec == 0 && timeCounterMin > 0)
 	{
 		--timeCounterMin;
 		timeCounterSec = 59;
 	}
-
-
 
 	if (secondsForSec >= 1 && timeCounterSec > 0)
 	{
