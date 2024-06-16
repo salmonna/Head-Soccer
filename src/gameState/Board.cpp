@@ -18,7 +18,7 @@
 //#include "gameState/Pause.h"
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(2),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
+Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(15),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -104,7 +104,7 @@ void Board::respond(sf::Vector2f pressed) {
 	});
 	
 	updateScoreBar();
-  if (m_clock.getElapsedTime().asSeconds() > 2)
+    if (m_clock.getElapsedTime().asSeconds() > 3)
 	{
 		m_goalSign = false;
 		m_goalSprite.setPosition(0, 200);
