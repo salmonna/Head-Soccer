@@ -18,7 +18,7 @@
 //#include "gameState/Pause.h"
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(120),m_gameState(NULL)
+Board::Board(Menu* menu, GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(2),m_gameState(NULL)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -171,6 +171,7 @@ void Board::reset() {
 	{
 		m_staticObject.pop_back();
 	}
+	m_scoreBoard.reset();
 }
 
 //=============================================== for_each_pair =======================================//

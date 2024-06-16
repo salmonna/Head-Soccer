@@ -15,6 +15,7 @@ public:
 	virtual sf::Sprite& getSprite() { return m_SpriteVec[0]; };
 
 	bool timeIsOver();
+	void reset();
 
 	virtual ~ScoreBoard() = default;
 
