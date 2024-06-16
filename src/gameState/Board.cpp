@@ -23,7 +23,7 @@ Board::Board(GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(60),m_ga
 
 	m_backGroundStadium.setTexture(texturs[0]);
 	m_goalSprite.setTexture(texturs[1]);
-	m_goalSprite.setPosition(300, 200);
+	m_goalSprite.setPosition(0, 200);
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
 												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
@@ -89,13 +89,17 @@ void Board::respond(sf::Vector2f pressed) {
 			processCollision(*a, *b);
 		}
 	});
-
+	
 	updateScoreBar();
 
 	if (m_clock.getElapsedTime().asSeconds() > 2)
 	{
 		m_goalSign = false;
+		m_goalSprite.setPosition(0, 200);
 	}
+
+	if (m_goalSign)
+		m_goalSprite.move(10,0);
 }
 
 //=============================================== update ScoreBar =======================================//

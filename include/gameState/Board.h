@@ -8,10 +8,9 @@
 #include "gameObject/Goal.h"
 #include "gameObject/MovingObject.h"
 #include "gameObject/Player.h"
-#include "Client.h"
+//#include "Client.h"
 #include "GameState.h"
 #include "gameState/GameResults.h"
-
 #include "gameObject/ComputerPlayer.h"
 
 class Board : public GameState
