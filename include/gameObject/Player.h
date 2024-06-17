@@ -31,6 +31,8 @@ private:
 	bool m_playerSide;
 	bool m_aura;
 
+	std::unique_ptr<Power> m_power;
+
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
 

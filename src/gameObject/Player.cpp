@@ -8,7 +8,20 @@
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),
 m_keys(keys), m_playerSide(right), m_aura(false)
 {
-	m_power = std::make_unique<FirePower>();
+
+	sf::Vector2f pos;
+	if (right)
+	{
+		pos.x = 950;
+	}
+	else
+	{
+		pos.x = 550;
+	}
+	pos.y = 80;
+  
+	m_power = std::make_unique<FirePower>(pos);
+
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 	resetToPosition();
@@ -45,11 +58,15 @@ bool Player::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlaye
 //draw plater
 void Player::draw(sf::RenderWindow& window) const {
 
+
 	
 	if (m_aura)
 	{
 		m_power->drawAura(window,m_sprite.getPosition());
 	}
+  
+	m_power->drawProcess(window);
+
 	window.draw(m_sprite);
 	
 }

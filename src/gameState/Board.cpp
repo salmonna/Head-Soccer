@@ -18,7 +18,7 @@
 //#include "gameState/Pause.h"
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(30),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
+Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(90),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -239,13 +239,14 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 	if (m_goalSign)
 		window.draw(m_goalSprite);
 
+
+	//draw the score board
+	m_scoreBoard.draw(window);
+
 	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)
 	{
 		m_gameObject[i]->draw(window);
 	}
-	 
-	//draw the score board
-	m_scoreBoard.draw(window);
 }
 

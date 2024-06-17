@@ -2,7 +2,7 @@
 #include "gameObject/MovingObject.h"
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
-
+#include "power/Power.h"
 
 
 class ComputerPlayer :public MovingObject
@@ -36,7 +36,7 @@ private:
 	int m_move;
 	int m_gravity;
 	sf::Clock m_moveClock;
-
+	std::unique_ptr<Power> m_power;
 	std::vector<sf::Vector2f> m_startSprite;
 
 	sf::Vector2f m_basePosition;

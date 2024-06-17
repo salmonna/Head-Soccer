@@ -4,12 +4,15 @@
 class FirePower : public Power
 {
 public:
-	FirePower();
+
+	FirePower(sf::Vector2f pos);
 
 	void draw(sf::RenderWindow & window) const override;
 
 	~FirePower() = default;
 
 private:
+
+
 
 };
