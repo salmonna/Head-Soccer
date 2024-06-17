@@ -3,7 +3,7 @@
 #include "button/MultiplayerButton.h"
 
 
-MultiplayerButton::MultiplayerButton(sf::Texture& texture, Board* boardState) :m_boardState(boardState)
+MultiplayerButton::MultiplayerButton(sf::Texture& texture, Board* boardState, SelectTeam* selectTeam) :m_boardState(boardState),m_selectTeam(selectTeam)
 {
 	m_multiplayer.setTexture(texture);
 	m_multiplayer.setPosition(400, 100);
@@ -15,7 +15,7 @@ GameState * MultiplayerButton::click() {
 	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
 	m_boardState->createMovingObjects(movingObjectNames);
 	m_boardState->createStaticObjects(staticObjectNames);
-	return m_boardState;
+	return m_selectTeam;
 }
 
 // Method to display button information

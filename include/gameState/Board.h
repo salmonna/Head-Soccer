@@ -50,9 +50,7 @@ private:
 	bool m_boardOpen;
 
 	ScoreBoard m_scoreBoard;
-	GameResults m_gameResults;
 	//Pause  m_pause;
-	GameState * m_gameState;
 
 	//Client m_client;
 	//game objects vector

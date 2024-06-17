@@ -4,7 +4,7 @@
 StartButton::StartButton(Board* boardState) : m_boardState(boardState)
 {
 	m_start.setTexture(Resources::getInstance().getSelectTeam()[0]);
-	m_start.setPosition(890,790);
+	m_start.setPosition(550,790);
 }
 
 

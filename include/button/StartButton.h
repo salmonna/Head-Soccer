@@ -21,7 +21,7 @@ public:
 
 private:
 
-    Board* m_boardState;
+    GameState* m_boardState;
 
     sf::Sprite m_start;
 };
