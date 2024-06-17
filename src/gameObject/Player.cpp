@@ -10,16 +10,7 @@ m_keys(keys), m_playerSide(right), m_aura(false)
 {
 
 	sf::Vector2f pos;
-	if (right)
-	{
-		pos.x = 950;
-	}
-	else
-	{
-		pos.x = 550;
-	}
-	pos.y = 80;
-  
+	(m_playerSide) ? pos = sf::Vector2f(950, 80) : pos = sf::Vector2f(550, 80);
 	m_power = std::make_unique<FirePower>(pos);
 
 
@@ -29,7 +20,6 @@ m_keys(keys), m_playerSide(right), m_aura(false)
 	if (m_playerSide)
 	{
 		m_sprite.setScale(-1, 1);
-		//m_power->getSprite().scale(-1, 1);
 		m_basePosition = sf::Vector2f(1520, 750);
 	}
 	else

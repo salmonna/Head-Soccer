@@ -1,7 +1,7 @@
 
 #include "button/ReplayButton.h"
 
-ReplayButton::ReplayButton(sf::Texture& texture, Menu* menuState):m_menuState(menuState)
+ReplayButton::ReplayButton(sf::Texture& texture, GameModeSelection* menuState):m_menuState(menuState)
 {
 	m_replayButton.setTexture(texture);
 	m_replayButton.setPosition(100, 200);
