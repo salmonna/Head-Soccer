@@ -47,6 +47,7 @@ private:
 	bool m_goalSign;
 
 	ScoreBoard m_scoreBoard;
+
 	GameResults * m_gameResults;
 	//Pause  m_pause;
 	GameState * m_gameState;

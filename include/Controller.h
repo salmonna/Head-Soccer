@@ -6,6 +6,7 @@
 #include "gameState/GameResults.h"
 #include "gameState/GameState.h"
 #include "gameState/GameModeSelection.h"
+#include "gameState/SelectTeam.h"
 
 class Controller
 {
@@ -21,7 +22,8 @@ private:
     Board m_gameBoard;
     GameModeSelection m_gameMode;
     Menu m_menu;
-    
+    SelectTeam m_selectTeam;
+
 	GameState * m_currentState;
 };
 
