@@ -37,6 +37,10 @@ namespace // anonymous namespace — the standard way to make function "static"
        
         sf::Vector2f currVelocity = ballObject.getVelocity();
 
+        const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
+        const float restitution = 0.8f;  // מקדם ההתנגשות
+        float dotProduct = currVelocity.x * direction.x + currVelocity.y * direction.y;
+
         if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
         {
             // עדכון מהירות הכדור בעקבות הבעיטה
@@ -44,12 +48,18 @@ namespace // anonymous namespace — the standard way to make function "static"
             currVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
 
         }
+        else if (sf::Keyboard::isKeyPressed(playerObject.getKey().SLIDE)) //power
+        {
+            if (dotProduct < 0) { // Ensure the ball is moving towards the player
+                sf::Vector2f reflection = 2.0f * dotProduct * direction;
+                currVelocity -= reflection * restitution;
+            }
+
+            playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
+            playerObject.resetProgress();
+        }
         else
         {
-
-            const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
-            const float restitution = 0.8f;  // מקדם ההתנגשות
-            float dotProduct = currVelocity.x * direction.x + currVelocity.y * direction.y;
 
             if (dotProduct < 0) { // Ensure the ball is moving towards the player
                 sf::Vector2f reflection = 2.0f * dotProduct * direction;

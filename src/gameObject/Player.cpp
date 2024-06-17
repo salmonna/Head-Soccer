@@ -45,6 +45,11 @@ m_keys(keys), m_playerSide(right), m_aura(false)
 }
 
 
+void Player::activatePower(sf::Sprite& ball, sf::Sprite& player)
+{
+	m_power->activatePower(ball, player);
+}
+
 bool Player::m_registeritRightPlayer = MovingFactory::registeritMoving("RightPlayer",
 	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<Player>(true,
 		Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down)); });
@@ -133,6 +138,14 @@ void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
 	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
+}
+
+
+
+void Player::resetProgress()
+{
+	m_power->resetProgress();
+
 }
 
 // Handle gravity and ground collision

@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include <SFML/Graphics.hpp>
 
 class Power
 {
@@ -10,7 +11,9 @@ public:
 	void drawAura(sf::RenderWindow& window, sf::Vector2f position);
 	sf::Sprite& getSprite();
 	void drawProcess(sf::RenderWindow& window);
+	void resetProgress();
 
+	virtual void activatePower(sf::Sprite & ball, sf::Sprite & player) = 0;
 
 	~Power() = default;
 

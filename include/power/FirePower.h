@@ -9,6 +9,9 @@ public:
 
 	void draw(sf::RenderWindow & window) const override;
 
+	virtual void activatePower(sf::Sprite& ball, sf::Sprite& player) override;
+
+
 	~FirePower() = default;
 
 private:
