@@ -28,9 +28,9 @@ sf::Sprite& Power::getSprite() {
 
 void Power::drawProcess(sf::RenderWindow& window)
 {
-	int width = (m_progress + 1) * 5;
+	int width = (m_progress + 1) * 8;
 
-	if (m_clock.getElapsedTime().asSeconds() >= 0.1 && width < 481)
+	if (m_clock.getElapsedTime().asSeconds() >= 0.1 && width < 490)
 	{
 		m_progress++;
 		m_clock.restart();
