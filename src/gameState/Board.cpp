@@ -15,16 +15,26 @@
 #include "Factory/MovingFactory.h"
 #include "Factory/StaticFactory.h"
 #include "gameState/GameResults.h"
-//#include "gameState/Pause.h"
+
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_boardOpen(true), m_scoreBoard(120),m_gameState(NULL), m_gameResults(gameResults)
+Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(2),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
-	m_backGroundStadium.setTexture(texturs[0]);
+	for (size_t i = 0; i < texturs.size()-1; i++)
+	{
+		m_backGroundStadium.push_back(sf::Sprite());
+		m_backGroundStadium[i].setTexture(texturs[i]);
+
+	}
+	m_backGroundStadium[1].setPosition(0, 670);
 
 	m_buttons.push_back(std::make_unique<Pause>(menu, this));
+
+	m_goalSprite.setTexture(texturs[2]);
+	m_goalSprite.setPosition(50, 200);
+
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
 												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
@@ -70,17 +80,19 @@ void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 void Board::respond(sf::Vector2f pressed) {
 
 
-	timeCalculation();
+	m_scoreBoard.timeCalculation();
 	m_scoreBoard.updateScore(0, 0);
 
 	//------- just for run the computer player--------
-	pressed = m_movingObject[2]->getPosition();
+	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
 	//------------------------------------------------
+	moveAd();
+
 	
 	//move the players and the ball
-	for (int i = 0; i < m_movingObject.size(); i++)
+	for (int i = 0; i < m_movingObject.size() - m_goalSign; i++)
 	{
-		m_movingObject[i]->move(pressed);
+		m_movingObject[i]->move(ballPosition);
 
 	}
 	
@@ -90,9 +102,16 @@ void Board::respond(sf::Vector2f pressed) {
 			processCollision(*a, *b);
 		}
 	});
-
+	
 	updateScoreBar();
+    if (m_clock.getElapsedTime().asSeconds() > 2)
+	{
+		m_goalSign = false;
+		m_goalSprite.setPosition(0, 200);
+	}
 
+	if (m_goalSign)
+		m_goalSprite.move(10,0);
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
@@ -102,6 +121,21 @@ void Board::respond(sf::Vector2f pressed) {
 			break;
 		}
 	}
+  
+}
+
+void Board::moveAd()
+{
+
+	sf::Sprite& sprite = m_backGroundStadium[1];
+	sprite.move(1.5, 0);
+
+	if (sprite.getPosition().x >= 1800)
+	{
+
+		sprite.setPosition(-sprite.getGlobalBounds().width, 680);
+	}
+
 }
 
 //=============================================== update ScoreBar =======================================//
@@ -112,12 +146,19 @@ void Board::updateScoreBar() {
 	GoalBack& rightGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[3]);
 
 	if (leftGoalBack.getIfGoal()) {
-
+		m_clock.restart();
+		m_goalSign = true;
+		m_movingObject[0]->reset();
+		m_movingObject[1]->reset();
 		m_scoreBoard.updateScore(0, 1);
 		leftGoalBack.setIfGoal(false);
 	}
 	else if (rightGoalBack.getIfGoal())
 	{
+		m_clock.restart();
+		m_goalSign = true;
+		m_movingObject[0]->reset();
+		m_movingObject[1]->reset();
 		m_scoreBoard.updateScore(1, 0);
 		rightGoalBack.setIfGoal(false);
 	}
@@ -149,6 +190,7 @@ void Board::reset() {
 	{
 		m_staticObject.pop_back();
 	}
+	m_scoreBoard.reset();
 }
 
 //=============================================== for_each_pair =======================================//
@@ -174,8 +216,6 @@ void Board::draw(sf::RenderWindow& window) const{
 	//draw game objects
 	drawGameObjects(window);
 
-	//draw the score board
-	m_scoreBoard.draw(window);
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
@@ -187,34 +227,26 @@ void Board::draw(sf::RenderWindow& window) const{
 //draw game objects
 void  Board::drawGameObjects(sf::RenderWindow& window) const
 {
+
 	//draw the back ground stadium and field
-	window.draw(m_backGroundStadium);
+
+
+	for (int i = 0; i < m_backGroundStadium.size(); i++)
+	{
+		window.draw(m_backGroundStadium[i]);
+	}
+
+	if (m_goalSign)
+		window.draw(m_goalSprite);
+
+
+	//draw the score board
+	m_scoreBoard.draw(window);
 
 	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)
 	{
 		m_gameObject[i]->draw(window);
 	}
-	 
-	//draw the score board
-	m_scoreBoard.draw(window);
 }
 
-//check if board is open
-bool Board::isOpen() const{
-
-    return m_boardOpen;
-}
-
-//=======================================Time==================================
-//time calculation
-void Board::timeCalculation()
-{
-	//game board = m_gameObjects[0];
-	m_scoreBoard.timeCalculation();
-
-	//if (m_scoreBoard.timeIsOver())
-	//{
-	//	m_boardOpen = false;
-	//}
-}

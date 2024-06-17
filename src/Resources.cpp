@@ -8,10 +8,11 @@
 //constractor of resources file are loading files
 Resources::Resources(){
 
-	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png"};
+
+	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" };
 	loadFromFile(fileNames,m_menuTexture);
 
-	std::vector<std::string> boardFileNames{ "Stadium.png"};
+	std::vector<std::string> boardFileNames{ "Stadium.png", "Ad Board.png","Goal.png"};
 	loadFromFile(boardFileNames, m_boardTexture);
 
 	std::vector<std::string> goalFilenames{ "Goal - Side.png","Goal - Back.png","Goal - Top.png" };
@@ -36,11 +37,12 @@ Resources::Resources(){
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
 	std::vector<std::string> gameResults{ "Replay.png"};
 	loadFromFile(gameResults, m_gameResultsTexture);
-	
-
 
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
+
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" };
+	loadFromFile(power, m_powerTexture);
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{
@@ -66,8 +68,6 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 		textures.push_back(texture);
 	}
 }
-
-//getGoalTexture
 
 
 std::vector<sf::Texture>& Resources::getPauseTexture()
@@ -130,4 +130,10 @@ std::vector<sf::Texture>& Resources::getCharactersTexture() {
 std::vector<sf::Texture>& Resources::getSelectTeam() {
 
 	return m_selectTeam;
+}
+
+//get power
+std::vector<sf::Texture>& Resources::getPowerTexture() {
+
+	return m_powerTexture;
 }

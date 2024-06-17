@@ -3,16 +3,23 @@
 #include "gameObject/Player.h"
 #include <iostream>
 #include "Resources.h"
+#include "power/FirePower.h"
 
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),
-m_keys(keys), m_playerSide(right)
+m_keys(keys), m_playerSide(right), m_aura(false)
 {
+
+	sf::Vector2f pos;
+	(m_playerSide) ? pos = sf::Vector2f(950, 80) : pos = sf::Vector2f(550, 80);
+	m_power = std::make_unique<FirePower>(pos);
+
+
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 	resetToPosition();
 
 	if (m_playerSide)
 	{
-		m_sprite.scale(-1, 1);
+		m_sprite.setScale(-1, 1);
 		m_basePosition = sf::Vector2f(1520, 750);
 	}
 	else
@@ -28,6 +35,11 @@ m_keys(keys), m_playerSide(right)
 }
 
 
+void Player::activatePower(sf::Sprite& ball, sf::Sprite& player)
+{
+	m_power->activatePower(ball, player);
+}
+
 bool Player::m_registeritRightPlayer = MovingFactory::registeritMoving("RightPlayer",
 	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<Player>(true,
 		Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down)); });
@@ -41,7 +53,20 @@ bool Player::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlaye
 //draw plater
 void Player::draw(sf::RenderWindow& window) const {
 
+	if (m_aura)
+	{
+		if (!m_playerSide)
+			m_power->drawAura(window,m_sprite.getPosition());
+		else {
+			auto position = sf::Vector2f(m_sprite.getPosition().x - 70, m_sprite.getPosition().y);
+			m_power->drawAura(window, position);
+		}
+	}
+  
+	m_power->drawProcess(window);
+
 	window.draw(m_sprite);
+	
 }
 
 //function that find where to move and  call to another function 
@@ -68,9 +93,10 @@ void Player::move(sf::Vector2f pressed) {
 		moveWithRange(5);
 		movePlayer(m_startSprite[1], 6, 10);
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
-		(m_playerSide) ? m_posX -= 5 : m_posX += 5;
-		movePlayer(m_startSprite[3], 6, 10);
+	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && m_power->isProcessFull()) {//slide
+		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
+		resetProgress();
+		m_aura = true;
 	}
 
 	// Handle gravity and ground collision
@@ -108,6 +134,14 @@ void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int
 	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
 }
 
+
+
+void Player::resetProgress()
+{
+	m_power->resetProgress();
+
+}
+
 // Handle gravity and ground collision
 void Player::updateGravityAndCollision() {
 	if (m_sprite.getPosition().y < 750)
@@ -139,6 +173,12 @@ sf::Sprite& Player::getSprite() {
 	return m_sprite;
 }
 
+void Player::reset() {
+	m_sprite.setPosition(m_basePosition);
+	m_posX = 0;
+	m_posY = 0;
+}
+
 sf::Vector2f Player::getPosition() const {
 
 	return m_sprite.getPosition();
@@ -148,4 +188,12 @@ sf::Vector2f Player::getPosition() const {
 Keyboard Player::getKey() const
 {
 	return m_keys;
+}
+
+void Player::setAura(bool aura) {
+	m_aura = aura;
+}
+
+bool Player::getAura() const{
+	return m_aura;
 }

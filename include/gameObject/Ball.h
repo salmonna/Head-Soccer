@@ -14,12 +14,17 @@ public:
 	virtual void move(sf::Vector2f pressed) override;
 	virtual sf::Vector2f getPosition() const override;
 	virtual sf::Sprite& getSprite() override;
+	virtual void reset()override;
+
 	sf::Vector2f getVelocity() const;
 	void setPosition(sf::Vector2f position);
 	void setBallVelocity(sf::Vector2f velocity);
 	float getRadius() const;
 
+	void restartBall();
+
 	virtual ~Ball() = default;
+
 
 	//just for chacking --------
 	sf::CircleShape& getCircle();

@@ -15,6 +15,7 @@ public:
 	virtual sf::Sprite& getSprite() { return m_SpriteVec[0]; };
 
 	bool timeIsOver();
+	void reset();
 
 	virtual ~ScoreBoard() = default;
 
@@ -24,6 +25,7 @@ private:
 	int m_gameTime;
 	int timeCounterSec;
 	int timeCounterMin;
+
 	sf::Clock m_clockGameTime;
 	sf::Clock m_clockEverySec;
 

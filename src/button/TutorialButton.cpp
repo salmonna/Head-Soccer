@@ -12,11 +12,12 @@ TutorialButton::TutorialButton(sf::Texture& texture):m_buttonPressed(false)
 
 	m_tutorialText.setString(getText());
 	m_tutorialText.setCharacterSize(60);
-	m_tutorialText.setPosition(500, 100);
+	m_tutorialText.setPosition(400, 100);
 }
 
 // Method to simulate clicking the button
 GameState * TutorialButton::click(){
+	(m_buttonPressed) ? m_buttonPressed = false : m_buttonPressed = true;
 	return NULL;
 }
 
@@ -36,9 +37,11 @@ bool TutorialButton::contains(sf::Vector2f position) const {
 
 
 std::string TutorialButton::getText() const {
-
 	std::string text;
 
-	text = "Nice One";
+	text = "Controls: Use the left/right arrows to move, jump button to jump, and kick button to kick or charge a power shot.\n "
+		"Objective: Score more goals than your opponent within the time limit.\n "
+		"Strategy: Position yourself between the ball and your goal, use power shots strategically.";
+
 	return text;
 }

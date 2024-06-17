@@ -28,6 +28,8 @@ public:
 	std::vector<sf::Texture>& getSelectTeam();
 
 	std::vector<sf::Texture>& getPauseTexture();
+	std::vector<sf::Texture>& getPowerTexture();
+
 
 	sf::Font & getFont();
 
@@ -43,14 +45,13 @@ private:
 	std::vector<sf::Texture> m_gameModeTexture;
 	std::vector<sf::Texture> m_boardTexture;
 	std::vector<sf::Texture> m_gameResultsTexture;
-
 	std::vector<sf::Texture> m_scoreBoardTexture;
 	std::vector<sf::Texture> m_charactersSheet;
 
 	std::vector<sf::Texture> m_goalTexture;
 	std::vector<sf::Texture> m_ballTexture;
-
 	std::vector<sf::Texture> m_pauseTexture;
+	std::vector<sf::Texture> m_powerTexture;
 
 	std::vector<sf::Texture> m_selectTeam;
 

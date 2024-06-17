@@ -25,5 +25,6 @@ void PlayerButton::draw(sf::RenderWindow& window) const {
 
 // Method to check button position
 bool PlayerButton::contains(sf::Vector2f position) const {
-	return m_player.getGlobalBounds().contains(position);
+	sf::Vector2f newPos = m_player.getTransform().getInverse().transformPoint(position);
+	return m_player.getLocalBounds().contains(newPos);
 }
