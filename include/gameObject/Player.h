@@ -6,6 +6,8 @@
 #include "Keyboard.h"
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
+#include <SFML/Audio.hpp>
+
 
 class Player: public MovingObject
 {
@@ -46,6 +48,7 @@ private:
 	sf::Vector2f m_basePosition;
 
 	Keyboard m_keys;
+	sf::Sound m_sound;
   
 	static bool m_registeritRightPlayer;
 	static bool m_registeritLeftPlayer;

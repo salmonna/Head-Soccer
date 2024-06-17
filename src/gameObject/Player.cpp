@@ -9,6 +9,8 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 m_keys(keys), m_playerSide(right), m_aura(false)
 {
 
+	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
+
 	sf::Vector2f pos;
 	if (right)
 	{
@@ -107,7 +109,12 @@ void Player::move(sf::Vector2f pressed) {
 		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
 		resetProgress();
 		m_aura = true;
+		m_sound.play();
+		m_sound.setLoop(true);
 	}
+	
+	if (!m_aura)
+		m_sound.stop();
 
 	// Handle gravity and ground collision
 	updateGravityAndCollision();

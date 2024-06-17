@@ -27,6 +27,8 @@ public:
 	std::vector<sf::Texture>& getGameModeTexture();
 	std::vector<sf::Texture>& getPauseTexture();
 	std::vector<sf::Texture>& getPowerTexture();
+	std::vector<sf::SoundBuffer>& getBufferVec();
+
 
 
 	sf::Font & getFont();
@@ -53,4 +55,5 @@ private:
 
 	sf::Font m_font;
 
+	std::vector<sf::SoundBuffer> m_bufferVec;
 };
