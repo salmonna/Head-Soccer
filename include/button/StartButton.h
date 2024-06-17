@@ -2,11 +2,12 @@
 #include "BaseButton.h"
 #include "gameState/GameState.h"
 #include "gameState/Board.h"
+#include "gameState/SelectTeam.h"
 
 class StartButton : public BaseButton
 {
 public:
-	StartButton(Board* boardState);
+	StartButton(Board* boardState, SelectTeam* selectTeam);
 	virtual ~StartButton();
 
 
@@ -22,6 +23,7 @@ public:
 private:
 
     GameState* m_boardState;
+    SelectTeam* m_selectTeam;
 
     sf::Sprite m_start;
 };

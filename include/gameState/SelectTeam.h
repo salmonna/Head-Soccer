@@ -13,7 +13,7 @@ public:
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
 	virtual GameState* handleEvents() override;
-
+	void reset();
 	
 	void setNumberOfPlayers(int players);
 private:

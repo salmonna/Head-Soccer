@@ -1,7 +1,7 @@
 #include "button/StartButton.h"
 #include "Resources.h"
 
-StartButton::StartButton(Board* boardState) : m_boardState(boardState)
+StartButton::StartButton(Board* boardState, SelectTeam* selectTeam) : m_boardState(boardState), m_selectTeam(selectTeam)
 {
 	m_start.setTexture(Resources::getInstance().getSelectTeam()[0]);
 	m_start.setPosition(520,690);
@@ -9,7 +9,7 @@ StartButton::StartButton(Board* boardState) : m_boardState(boardState)
 
 
 GameState* StartButton::click() {
-
+	m_selectTeam->reset();
 	return m_boardState;
 }
 
