@@ -35,9 +35,6 @@ private:
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
-
-	std::unique_ptr<Power> m_power;
-
 	std::vector<sf::Vector2f> m_startSprite;
 	sf::Vector2f m_basePosition;
 
