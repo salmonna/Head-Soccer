@@ -104,7 +104,9 @@ void Player::move(sf::Vector2f pressed) {
 		movePlayer(m_startSprite[1], 6, 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && m_power->isProcessFull()) {//slide
-			m_aura = true;
+		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
+		resetProgress();
+		m_aura = true;
 	}
 
 	// Handle gravity and ground collision

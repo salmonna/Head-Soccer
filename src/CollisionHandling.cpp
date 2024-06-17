@@ -28,8 +28,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         Ball & ballObject = dynamic_cast<Ball&>(ball);
         Player & playerObject = dynamic_cast<Player&>(player);
 
-        if (playerObject.getAura())
-            playerObject.setAura(false);
+        if (playerObject.getAura()){
+
+            playerObject.setAura(false);            
+        }
 
         float kickStrength = 500.0f; // עוצמת הבעיטה
         float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
@@ -50,16 +52,6 @@ namespace // anonymous namespace — the standard way to make function "static"
             currVelocity += direction * kickStrength;
             currVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
 
-        }
-        else if (sf::Keyboard::isKeyPressed(playerObject.getKey().SLIDE)) //power
-        {
-            if (dotProduct < 0) { // Ensure the ball is moving towards the player
-                sf::Vector2f reflection = 2.0f * dotProduct * direction;
-                currVelocity -= reflection * restitution;
-            }
-
-            playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
-            playerObject.resetProgress();
         }
         else
         {
