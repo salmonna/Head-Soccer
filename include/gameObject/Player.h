@@ -19,7 +19,9 @@ public:
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset()override;
 	Keyboard getKey() const;
-	
+	void setAura(bool aura);
+	bool getAura() const;
+
 	virtual ~Player() = default;
 private:
 

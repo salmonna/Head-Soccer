@@ -10,9 +10,9 @@ public:
 	void drawAura(sf::RenderWindow& window, sf::Vector2f position);
 	sf::Sprite& getSprite();
 	void drawProcess(sf::RenderWindow& window);
+	bool isProcessFull();
 
-
-	~Power() = default;
+	virtual ~Power() = default;
 
 private:
 	sf::Sprite m_auraSprite;
