@@ -11,11 +11,15 @@ public:
 	void drawAura(sf::RenderWindow& window, sf::Vector2f position);
 	sf::Sprite& getSprite();
 	void drawProcess(sf::RenderWindow& window);
+
 	void resetProgress();
 
 	virtual void activatePower(sf::Sprite & ball, sf::Sprite & player) = 0;
 
-	~Power() = default;
+	bool isProcessFull();
+
+	virtual ~Power() = default;
+
 
 private:
 	sf::Sprite m_auraSprite;

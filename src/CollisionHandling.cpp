@@ -28,6 +28,9 @@ namespace // anonymous namespace — the standard way to make function "static"
         Ball & ballObject = dynamic_cast<Ball&>(ball);
         Player & playerObject = dynamic_cast<Player&>(player);
 
+        if (playerObject.getAura())
+            playerObject.setAura(false);
+
         float kickStrength = 500.0f; // עוצמת הבעיטה
         float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
 

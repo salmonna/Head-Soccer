@@ -29,7 +29,7 @@ m_keys(keys), m_playerSide(right), m_aura(false)
 	if (m_playerSide)
 	{
 		m_sprite.setScale(-1, 1);
-		m_power->getSprite().scale(-1, 1);
+		//m_power->getSprite().scale(-1, 1);
 		m_basePosition = sf::Vector2f(1520, 750);
 	}
 	else
@@ -63,11 +63,14 @@ bool Player::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlaye
 //draw plater
 void Player::draw(sf::RenderWindow& window) const {
 
-
-	
 	if (m_aura)
 	{
-		m_power->drawAura(window,m_sprite.getPosition());
+		if (!m_playerSide)
+			m_power->drawAura(window,m_sprite.getPosition());
+		else {
+			auto position = sf::Vector2f(m_sprite.getPosition().x - 70, m_sprite.getPosition().y);
+			m_power->drawAura(window, position);
+		}
 	}
   
 	m_power->drawProcess(window);
@@ -87,7 +90,6 @@ void Player::move(sf::Vector2f pressed) {
 	}
 	else {
 		// Reset to default position if not jumping
-		m_aura = false;
 		resetToPosition();
 	}
 
@@ -101,8 +103,8 @@ void Player::move(sf::Vector2f pressed) {
 		moveWithRange(5);
 		movePlayer(m_startSprite[1], 6, 10);
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
-		m_aura = true;
+	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && m_power->isProcessFull()) {//slide
+			m_aura = true;
 	}
 
 	// Handle gravity and ground collision
@@ -194,4 +196,12 @@ sf::Vector2f Player::getPosition() const {
 Keyboard Player::getKey() const
 {
 	return m_keys;
+}
+
+void Player::setAura(bool aura) {
+	m_aura = aura;
+}
+
+bool Player::getAura() const{
+	return m_aura;
 }

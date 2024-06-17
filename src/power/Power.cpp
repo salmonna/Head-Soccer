@@ -1,3 +1,4 @@
+
 #include "power/Power.h"
 #include "Resources.h"
 
@@ -6,7 +7,7 @@ Power::Power(sf::Vector2f pos):m_progress(0), m_clock()
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
 	m_auraSprite.setTexture(texture[2]);
-	sf::IntRect characterRect(35, 0, 120, 150); // Assuming each character is 32x32 pixels
+	sf::IntRect characterRect(10, 0, 110, 150); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_auraSprite.setTextureRect(characterRect);
 
@@ -20,8 +21,6 @@ Power::Power(sf::Vector2f pos):m_progress(0), m_clock()
 	}
 
 }
-
-
 
 
 
@@ -45,8 +44,13 @@ void Power::drawProcess(sf::RenderWindow& window)
 
 	window.draw(m_progressSprite[0]);
 	window.draw(m_progressSprite[1]);
-
 }
+
+
+bool Power::isProcessFull() {
+	return (m_progress + 1) * 8 > 490;
+}
+
 
 
 void Power::resetProgress()
@@ -54,7 +58,14 @@ void Power::resetProgress()
 	m_progress = 0;
 }
 
+
+
 void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position) {
-	m_auraSprite.setPosition(position.x - 5,position.y - 50);
+	m_auraSprite.setPosition(position.x - 25,position.y - 55);
 	window.draw(m_auraSprite);
+	int timeSec = m_clock.getElapsedTime().asSeconds() * 10;
+
+	sf::IntRect characterRect(10 + 140*(timeSec%3), 0, 110, 150); // Assuming each character is 32x32 pixels
+	// Set the texture rectangle to the character's position and size on the sprite sheet
+	m_auraSprite.setTextureRect(characterRect);
 }

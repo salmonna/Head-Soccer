@@ -19,9 +19,13 @@ public:
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset()override;
 	Keyboard getKey() const;
-
+  
 	void resetProgress();
 	void activatePower(sf::Sprite& ball, sf::Sprite& player);
+
+	void setAura(bool aura);
+	bool getAura() const;
+
 
 	virtual ~Player() = default;
 private:
