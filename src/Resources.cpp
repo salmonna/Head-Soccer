@@ -29,8 +29,9 @@ Resources::Resources(){
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
 	loadFromFile(balls, m_ballTexture);
 
-	std::vector<std::string> charcterPlayer{ "start.png","SelectTeam.png","brazilCharcter.png", "italyCharcter.png"};
-	loadFromFile(charcterPlayer, m_selectTeam);
+	std::vector<std::string> selectTeam{ "start.png","SelectTeam.png","frame.png","brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
+										"japanCharcter.png","spainCharcter.png","holandCharcter.png","portugalCharcter.png","germanyCharcter.png"};
+	loadFromFile(selectTeam, m_selectTeam);
 
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
 	std::vector<std::string> gameResults{ "Replay.png"};

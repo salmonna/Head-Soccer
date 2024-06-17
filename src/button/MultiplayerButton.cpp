@@ -15,6 +15,7 @@ GameState * MultiplayerButton::click() {
 	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
 	m_boardState->createMovingObjects(movingObjectNames);
 	m_boardState->createStaticObjects(staticObjectNames);
+	m_selectTeam->setNumberOfPlayers(2);
 	return m_selectTeam;
 }
 

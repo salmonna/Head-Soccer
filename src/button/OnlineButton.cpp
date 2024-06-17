@@ -2,7 +2,7 @@
 #pragma once
 #include "button/OnlineButton.h"
 
-OnlineButton::OnlineButton(sf::Texture& texture, Board* boardState) :m_boardState(boardState)
+OnlineButton::OnlineButton(sf::Texture& texture, SelectTeam* selectTeam) :m_selectTeam(selectTeam)
 {
 	m_online.setTexture(texture);
 	m_online.setPosition(1200, 100);
@@ -10,7 +10,9 @@ OnlineButton::OnlineButton(sf::Texture& texture, Board* boardState) :m_boardStat
 
 // Method to simulate clicking the button
 GameState* OnlineButton::click() {
-	return m_boardState;
+
+	m_selectTeam->setNumberOfPlayers(1);
+	return m_selectTeam;
 }
 
 // Method to display button information
