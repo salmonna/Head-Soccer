@@ -4,7 +4,7 @@
 SelectTeam::SelectTeam(Board* boardState) :m_gameState(NULL) ,m_numOfPlayers(0), m_playerSelected(0)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
-	m_buttons.push_back(std::make_unique<StartButton>(boardState));
+	m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 	
@@ -125,6 +125,15 @@ GameState* SelectTeam::handleEvents() {
 void SelectTeam::setNumberOfPlayers(int players) {
 
 	m_numOfPlayers = players;
+}
+
+void SelectTeam::reset() {
+
+	m_playerSelected = 0;
+	for (int i = 0; i < m_frames.size(); i++)
+	{
+		m_frames[i].setPosition(3 * 200 - 500, 270);
+	}
 }
 
 SelectTeam::~SelectTeam()

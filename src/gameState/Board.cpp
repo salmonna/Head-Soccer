@@ -18,7 +18,7 @@
 
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(2),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
+Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(90),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
