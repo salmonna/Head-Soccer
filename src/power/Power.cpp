@@ -4,7 +4,12 @@
 
 Power::Power(sf::Vector2f pos):m_progress(0), m_clock()
 {
-	std::vector<sf::Texture> & texture = Resources::getInstance().getPowerTexture();
+	std::vector<sf::Texture>& texturs = Resources::getInstance().getPowerTexture();
+	m_auraSprite.setTexture(texturs[2]);
+	sf::IntRect characterRect(35, 0, 120, 150); // Assuming each character is 32x32 pixels
+	// Set the texture rectangle to the character's position and size on the sprite sheet
+	m_auraSprite.setTextureRect(characterRect);
+
 
 	for (int i = 0; i < texture.size(); i++)
 	{
@@ -16,6 +21,10 @@ Power::Power(sf::Vector2f pos):m_progress(0), m_clock()
 
 }
 
+sf::Sprite& Power::getSprite() {
+
+	return m_auraSprite;
+}
 
 void Power::drawProcess(sf::RenderWindow& window) 
 {
@@ -36,4 +45,7 @@ void Power::drawProcess(sf::RenderWindow& window)
 	window.draw(m_progressSprite[0]);
 	window.draw(m_progressSprite[1]);
 
+void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position) {
+	m_auraSprite.setPosition(position.x - 5,position.y - 50);
+	window.draw(m_auraSprite);
 }

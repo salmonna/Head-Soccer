@@ -43,10 +43,8 @@ private:
 	std::vector<sf::Texture> m_gameModeTexture;
 	std::vector<sf::Texture> m_boardTexture;
 	std::vector<sf::Texture> m_gameResultsTexture;
-
 	std::vector<sf::Texture> m_scoreBoardTexture;
 	std::vector<sf::Texture> m_characters;
-
 	std::vector<sf::Texture> m_goalTexture;
 	std::vector<sf::Texture> m_ballTexture;
 	std::vector<sf::Texture> m_pauseTexture;

@@ -6,11 +6,10 @@
 #include "power/FirePower.h"
 
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),
-m_keys(keys), m_playerSide(right)
+m_keys(keys), m_playerSide(right), m_aura(false)
 {
 
 	sf::Vector2f pos;
-
 	if (right)
 	{
 		pos.x = 950;
@@ -20,17 +19,17 @@ m_keys(keys), m_playerSide(right)
 		pos.x = 550;
 	}
 	pos.y = 80;
-
-
+  
 	m_power = std::make_unique<FirePower>(pos);
-	
+
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 	resetToPosition();
 
 	if (m_playerSide)
 	{
-		m_sprite.scale(-1, 1);
+		m_sprite.setScale(-1, 1);
+		m_power->getSprite().scale(-1, 1);
 		m_basePosition = sf::Vector2f(1520, 750);
 	}
 	else
@@ -59,9 +58,17 @@ bool Player::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlaye
 //draw plater
 void Player::draw(sf::RenderWindow& window) const {
 
+
+	
+	if (m_aura)
+	{
+		m_power->drawAura(window,m_sprite.getPosition());
+	}
+  
 	m_power->drawProcess(window);
 
 	window.draw(m_sprite);
+	
 }
 
 //function that find where to move and  call to another function 
@@ -75,6 +82,7 @@ void Player::move(sf::Vector2f pressed) {
 	}
 	else {
 		// Reset to default position if not jumping
+		m_aura = false;
 		resetToPosition();
 	}
 
@@ -89,8 +97,7 @@ void Player::move(sf::Vector2f pressed) {
 		movePlayer(m_startSprite[1], 6, 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE)) {//slide
-		(m_playerSide) ? m_posX -= 5 : m_posX += 5;
-		movePlayer(m_startSprite[3], 6, 10);
+		m_aura = true;
 	}
 
 	// Handle gravity and ground collision
@@ -157,6 +164,12 @@ void Player::moveWithRange(int x) {
 
 sf::Sprite& Player::getSprite() {
 	return m_sprite;
+}
+
+void Player::reset() {
+	m_sprite.setPosition(m_basePosition);
+	m_posX = 0;
+	m_posY = 0;
 }
 
 sf::Vector2f Player::getPosition() const {
