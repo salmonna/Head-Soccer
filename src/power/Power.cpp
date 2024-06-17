@@ -22,6 +22,8 @@ Power::Power(sf::Vector2f pos):m_progress(0), m_clock()
 
 }
 
+
+
 sf::Sprite& Power::getSprite() {
 
 	return m_auraSprite;
@@ -48,6 +50,14 @@ void Power::drawProcess(sf::RenderWindow& window)
 bool Power::isProcessFull() {
 	return (m_progress + 1) * 8 > 490;
 }
+
+
+
+void Power::resetProgress()
+{
+	m_progress = 0;
+}
+
 
 
 void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position) {
