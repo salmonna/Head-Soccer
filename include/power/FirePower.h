@@ -12,6 +12,10 @@ public:
 	virtual void activatePower(sf::Sprite& ball, sf::Sprite& player) override;
 
 
+	//--------------After Create Behavior------------------------------
+	virtual void performMove(MovingObject* movingObject) override {};
+
+
 	~FirePower() = default;
 
 private:
