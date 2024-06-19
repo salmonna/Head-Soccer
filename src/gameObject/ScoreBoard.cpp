@@ -2,8 +2,8 @@
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 
-ScoreBoard::ScoreBoard(int gameTime) : timeCounterSec(gameTime % 60), 
-timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0)
+ScoreBoard::ScoreBoard() :m_gameTime(90), timeCounterSec(m_gameTime % 60),
+timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0)
 {
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getScoreBoardTexture();
@@ -31,11 +31,33 @@ timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0
 	//font points pos
 	m_textVec[1].setPosition(x+175, 50);
 	m_textVec[2].setPosition(x + 1200-175-20, 50);
+
+
+	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
+
+	sf::Vector2f pos = sf::Vector2f(550, 80);
+
+	for (int i = 0; i < texture.size(); i++)
+	{
+		m_progressP1.push_back(sf::Sprite());
+		m_progressP1[i].setTexture(texture[i]);
+		m_progressP1[i].scale(0.6, 1);
+		m_progressP1[i].setPosition(pos);
+	}
 	
+	pos = sf::Vector2f(950, 80);
+
+	for (int i = 0; i < texture.size(); i++)
+	{
+		m_progressP2.push_back(sf::Sprite());
+		m_progressP2[i].setTexture(texture[i]);
+		m_progressP2[i].scale(0.6, 1);
+		m_progressP2[i].setPosition(pos);
+	}
 
 }
 
-void ScoreBoard::draw(sf::RenderWindow & window) const
+void ScoreBoard::draw(sf::RenderWindow & window)
 {
 	for (int i = 0; i < m_SpriteVec.size(); i++)
 	{
@@ -47,7 +69,44 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 	{
 		window.draw(m_textVec[i]);
 	}
+
+
+	drawProgress(window, m_progressP1);
+	drawProgress(window, m_progressP2);
 }
+
+
+
+
+void ScoreBoard::drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite>& progress)
+{
+	int width = (m_progress + 1) * 8;
+
+	if (m_clock.getElapsedTime().asSeconds() >= 0.1 && width < 490)
+	{
+		m_progress++;
+		m_clock.restart();
+	}
+
+	sf::IntRect characterRect(0, 0, width, progress[1].getGlobalBounds().height);
+	progress[1].setTextureRect(characterRect);
+
+	window.draw(progress[0]);
+	window.draw(progress[1]);
+}
+
+
+bool ScoreBoard::isProcessFull() {
+	return (m_progress + 1) * 8 > 490;
+}
+
+
+
+void ScoreBoard::resetProgress()
+{
+	m_progress = 0;
+}
+
 
 
 //========================Time=======================

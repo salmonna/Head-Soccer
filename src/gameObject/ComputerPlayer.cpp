@@ -1,13 +1,14 @@
 #include "gameObject/ComputerPlayer.h"
 #include "Resources.h"
 #include "power/FirePower.h"
+#include "gameObject/scoreBoard.h"
 
 ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2), m_gravity(0)
 {
 
 	sf::Vector2f pos(550, 80);
 
-	m_power = std::make_unique<FirePower>(pos);
+	m_power = std::make_unique<FirePower>();
    
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 
@@ -20,7 +21,7 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2)
 	m_startSprite.push_back(sf::Vector2f(160, 8));
 	m_startSprite.push_back(sf::Vector2f(160, 365));
 
-	m_rivalGoal = sf::Vector2f(1680,800);
+	m_rivalGoal = sf::Vector2f(1680,700);
 }
 
 bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
@@ -137,7 +138,7 @@ void ComputerPlayer::moveWithRange(int x) {
 }
 
 void ComputerPlayer::draw(sf::RenderWindow& window)const {
-	m_power->drawProcess(window);
+	ScoreBoard::getInstance().draw(window);
 	window.draw(m_sprite);
 }
 

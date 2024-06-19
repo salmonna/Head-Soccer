@@ -26,7 +26,7 @@ Resources::Resources(){
 	std::vector<std::string> characters{ "ItalyPlayer.png" }; 
 	loadFromFile(characters, m_characters);
 
-	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
+	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png" };
 	loadFromFile(balls, m_ballTexture);
 
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);

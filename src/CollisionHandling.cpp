@@ -15,7 +15,7 @@
 #include "gameObject/GoalBack.h"
 #include "gameObject/GoalTop.h"
 #include "Keyboard.h"
-
+#include "Resources.h"
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
@@ -29,6 +29,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player & playerObject = dynamic_cast<Player&>(player);
 
         if (playerObject.getAura()){
+            
+           ballObject.getCircle().setTexture(&playerObject.getPower()->getTexture());
+           ballObject.setMoveBehavior(playerObject.getPower());
+           
 
             playerObject.setAura(false);            
         }

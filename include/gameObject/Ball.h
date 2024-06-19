@@ -26,7 +26,10 @@ public:
 	void restartBall();
 	sf::Clock& getClock();
 
-	virtual ~Ball() { m_moveBehavior.release(); };
+	void setMoveBehavior(std::shared_ptr<MoveBehavior> moveBehavior);
+	void setTexture(sf::Texture & texture);
+
+	virtual ~Ball() { };
 
 
 	//just for chacking --------
@@ -34,7 +37,7 @@ public:
 	//--------------------------
 private:
 
-	std::unique_ptr<MoveBehavior> m_moveBehavior;
+	std::shared_ptr<MoveBehavior> m_moveBehavior;
 
 	sf::Sprite m_sprite;
 	sf::CircleShape m_ball;

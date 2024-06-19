@@ -23,11 +23,12 @@ public:
 	Keyboard getKey() const;
   
 	void resetProgress();
-	void activatePower(sf::Sprite& ball, sf::Sprite& player);
+
+	std::shared_ptr<Power> getPower();
 
 	void setAura(bool aura);
 	bool getAura() const;
-
+	bool getSide() const;
 
 	virtual ~Player() = default;
 private:
@@ -40,7 +41,7 @@ private:
 	bool m_playerSide;
 	bool m_aura;
 
-	std::unique_ptr<Power> m_power;
+	std::shared_ptr<Power> m_power;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;

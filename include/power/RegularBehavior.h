@@ -15,5 +15,4 @@ private:
 	sf::Vector2f m_ballVelocity;
 	sf::Clock m_clock;
 
-
 };

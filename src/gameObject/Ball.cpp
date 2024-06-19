@@ -4,7 +4,7 @@
 #include <iostream>
 #include "power/RegularBehavior.h"
 
-Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_moveBehavior(std::make_unique<RegularBehavior>())
+Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_moveBehavior(std::make_shared<RegularBehavior>())
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -15,6 +15,7 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_moveBehavior(std::ma
     m_ball.setOrigin(m_ball.getRadius(), m_ball.getRadius());
     m_ball.setPosition(900.0f, 988.0f); 
 }
+
 
 void Ball::restartBall()
 {
@@ -72,6 +73,9 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
     m_ballVelocity = velocity;
 }
 
+void Ball::setTexture(sf::Texture& texture)
+{
+}
 
 
 void  Ball::move(sf::Vector2f pressed)
@@ -87,4 +91,9 @@ float Ball::getRadius() const {
 sf::CircleShape& Ball::getCircle() {
 
     return m_ball;
+}
+
+void Ball::setMoveBehavior(std::shared_ptr<MoveBehavior> moveBehavior)
+{
+    m_moveBehavior = moveBehavior;
 }
