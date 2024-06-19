@@ -159,7 +159,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     }
 
-    /*void handleUnnecessaryCollision(GameObject& side, GameObject& back) {}*/
 
     //...
 
