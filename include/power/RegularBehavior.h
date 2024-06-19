@@ -7,7 +7,7 @@ class RegularBehavior : public MoveBehavior
 public:
 	RegularBehavior();
 
-	virtual void performMove(MovingObject * ball) override ;
+	virtual void performMove(Ball * ball) override ;
 
 	~RegularBehavior() = default;
 

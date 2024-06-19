@@ -10,14 +10,10 @@ RegularBehavior::RegularBehavior(): m_ballVelocity(5.0f, -10.0f), m_clock()
 
 
 
-void RegularBehavior::performMove(MovingObject * ball)
+void RegularBehavior::performMove(Ball * ball)
 {
 
-	Ball & ballObject = static_cast<Ball&>(*ball);
-
-    m_ballVelocity = ballObject.getVelocity();
-
-    //sf::Clock& clock = ballObject.getClock();
+    m_ballVelocity = ball->getVelocity();
 
     if (m_clock.getElapsedTime().asSeconds() >= 1)
     {
@@ -32,7 +28,7 @@ void RegularBehavior::performMove(MovingObject * ball)
     // עדכון המהירות בעקבות כוח המשיכה
     m_ballVelocity.y += gravity * deltaTime;
 
-    sf::CircleShape & ballCircle = ballObject.getCircle();
+    sf::CircleShape& ballCircle = ball->getCircle();
 
     // עדכון מיקום הכדור
     ballCircle.move(m_ballVelocity * deltaTime);
@@ -66,5 +62,6 @@ void RegularBehavior::performMove(MovingObject * ball)
         m_ballVelocity.y = -m_ballVelocity.y * restitution;
     }
 
-    ballObject.setBallVelocity(m_ballVelocity);
+    ball->setBallVelocity(m_ballVelocity);
+
 }

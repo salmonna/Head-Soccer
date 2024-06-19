@@ -31,9 +31,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         if (playerObject.getAura()){
             
            ballObject.getCircle().setTexture(&playerObject.getPower()->getTexture());
-           ballObject.setMoveBehavior(playerObject.getPower());
-           
-
+          ballObject.setMoveBehavior(playerObject.getPower());
             playerObject.setAura(false);            
         }
 

@@ -73,9 +73,6 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
     m_ballVelocity = velocity;
 }
 
-void Ball::setTexture(sf::Texture& texture)
-{
-}
 
 
 void  Ball::move(sf::Vector2f pressed)

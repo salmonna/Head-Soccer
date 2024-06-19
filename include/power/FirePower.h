@@ -5,13 +5,12 @@ class FirePower : public Power
 {
 public:
 
-	FirePower():m_ballVelocity(), m_clock() 
-	{};
+	FirePower();
 
 	void draw(sf::RenderWindow & window) const override;
 
 	//--------------After Create Behavior------------------------------
-	virtual void performMove(MovingObject* ball) override ;
+	virtual void performMove(Ball * ball) override ;
 
 	virtual sf::Texture& getTexture() override;
 

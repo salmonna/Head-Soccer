@@ -2,11 +2,19 @@
 #include "gameObject/Ball.h"
 #include "Resources.h"
 
-void FirePower::performMove(MovingObject* ball)
-{
-    Ball& ballObject = static_cast<Ball&>(*ball);
 
-    m_ballVelocity = ballObject.getVelocity();
+FirePower::FirePower() :m_ballVelocity(), m_clock()
+{
+
+
+
+};
+
+
+void FirePower::performMove(Ball* ball)
+{
+
+    m_ballVelocity = ball->getVelocity();
 
     if (m_clock.getElapsedTime().asSeconds() >= 1)
     {
@@ -21,7 +29,7 @@ void FirePower::performMove(MovingObject* ball)
     // עדכון המהירות בעקבות כוח המשיכה
     m_ballVelocity.y += gravity * deltaTime;
 
-    sf::CircleShape& ballCircle = ballObject.getCircle();
+    sf::CircleShape& ballCircle = ball->getCircle();
 
     // עדכון מיקום הכדור
     ballCircle.move(m_ballVelocity * deltaTime);
@@ -55,7 +63,7 @@ void FirePower::performMove(MovingObject* ball)
         m_ballVelocity.y = -m_ballVelocity.y * restitution;
     }
 
-    ballObject.setBallVelocity(m_ballVelocity);
+    ball->setBallVelocity(m_ballVelocity);
 
 
 }
@@ -65,6 +73,7 @@ sf::Texture & FirePower::getTexture()
 {
 	return Resources::getInstance().getBallTexture()[2];
 }
+
 
 void FirePower::draw(sf::RenderWindow& window) const
 {

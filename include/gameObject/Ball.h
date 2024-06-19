@@ -27,7 +27,6 @@ public:
 	sf::Clock& getClock();
 
 	void setMoveBehavior(std::shared_ptr<MoveBehavior> moveBehavior);
-	void setTexture(sf::Texture & texture);
 
 	virtual ~Ball() { };
 
