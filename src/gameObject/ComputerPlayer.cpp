@@ -10,6 +10,7 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2)
 	m_power = std::make_unique<FirePower>(pos);
    
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
+	resetToPosition();
 
 	m_basePosition = sf::Vector2f(272, 750);
 
