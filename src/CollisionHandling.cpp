@@ -21,8 +21,7 @@ namespace // anonymous namespace — the standard way to make function "static"
 {
 
     // primary collision-processing functions
-    void playerCollidBall(GameObject& player,
-        GameObject& ball)
+    void playerCollidBall(GameObject& player, GameObject& ball)
     {
 
         Ball & ballObject = dynamic_cast<Ball&>(ball);
@@ -67,15 +66,9 @@ namespace // anonymous namespace — the standard way to make function "static"
         //std::cout << "player and ball collision!\n";
     }
 
-    void playerCollidPlayer(GameObject& player1,
-        GameObject& player2)
-    {                                                              
-        //std::cout << "Player1 and Player2 collision!\n";
-        //system("cls");
-    }
+    
 
-    void ballCollidGoalTop(GameObject& ball,
-        GameObject& goal)
+    void ballCollidGoalTop(GameObject& ball, GameObject& goal)
     {
 
         Ball& ballObject = dynamic_cast<Ball&>(ball);
@@ -159,6 +152,13 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     }
 
+    void playerCollidPlayer(GameObject& player1, GameObject& player2)
+    {       
+        
+        //std::cout << "Player1 and Player2 collision!\n";
+ 
+        //system("cls");
+    }
 
     //...
 
@@ -182,8 +182,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         ballCollidWithGoalBack(ball, goalBack);
     }
     
-
-   
     void BallCollidComputerPlayer(GameObject& ball, GameObject& computerPlayer) {
 
         computerPlayerCollidBall(computerPlayer,ball);
@@ -212,18 +210,13 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[Key(typeid(Ball), typeid(GoalTop))] = &ballCollidGoalTop;
         phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
 
-        //----------------------------------------------------------------------
-        phm[Key(typeid(ComputerPlayer), typeid(Player))] = &playerCollidPlayer;
-        phm[Key(typeid(ComputerPlayer), typeid(Ball))] = &computerPlayerCollidBall;
-        //----------------------------------------------------------------------
-
         phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
         phm[Key(typeid(GoalTop), typeid(Ball))] = &GoalTopColliedBall;
         phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
-        phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
        
-
-        //----------------------------------------------------------------------
+        //--------------------ComputerPlayer Collision--------------------------
+        phm[Key(typeid(ComputerPlayer), typeid(Player))] = &playerCollidPlayer;
+        phm[Key(typeid(ComputerPlayer), typeid(Ball))] = &computerPlayerCollidBall;
         phm[Key(typeid(Player), typeid(ComputerPlayer))] = &playerCollidPlayer;
         phm[Key(typeid(Ball), typeid(ComputerPlayer))] = &BallCollidComputerPlayer;
         //----------------------------------------------------------------------

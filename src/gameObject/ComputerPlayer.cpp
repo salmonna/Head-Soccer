@@ -27,33 +27,32 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2)
 bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(); });
 
- //ôåð÷öéä ìòãëåï îé÷åí äîçùá
+
 void ComputerPlayer::move(sf::Vector2f ballPosition) {
 
-    const float speed = 200.0f;  // îäéøåú äîçùá
-    const float kickRange = 100.0f;  // èååç äáòéèä
+    const float speed = 200.0f;  
+    const float kickRange = 100.0f;  
+	//const float halfFieldX = 850.0f; // Assuming the field width is 800 units
 
-    // ëéååï äîçùá ìëéååï äëãåø
+
     sf::Vector2f direction = ballPosition - m_sprite.getPosition();
     float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
     if (length > kickRange) {
-        //direction /= length; // ðøîåì äëéååï
-       //direction *= speed;  // äúàîú îäéøåú äîçùá
-
-        // òãëåï îé÷åí äîçùá
    
 		//Right Direction Test
 		if (ballPosition.x > m_sprite.getPosition().x ) {
 
 			moveWithRange(4);
 			movePlayer(m_startSprite[1], 6, 10);
+
 		}
 		//Left Direction Test
 		else if (ballPosition.x < m_sprite.getPosition().x) {
 
 			moveWithRange(-4);
 			movePlayer(m_startSprite[1], 6, 10);
+
 		}
     }
     else {
@@ -65,7 +64,6 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
 			}
 			movePlayer(m_startSprite[2], 7, 100);
 		}
-        //handleKick(ball, player, velocity, userGoal.getPosition());
     }
 
 	updateGravityAndCollision();
