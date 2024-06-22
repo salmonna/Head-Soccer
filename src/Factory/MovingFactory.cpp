@@ -1,6 +1,5 @@
 #include "Factory/MovingFactory.h"
 
-
 std::shared_ptr<MovingObject> MovingFactory::createMoving(const std::string& name) {
 	auto it = getMovingMap().find(name);
 	if (it == getMovingMap().end())
