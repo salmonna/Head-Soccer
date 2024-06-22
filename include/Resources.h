@@ -30,7 +30,6 @@ public:
 	std::vector<sf::Texture>& getPauseTexture();
 	std::vector<sf::Texture>& getPowerTexture();
 
-
 	sf::Font & getFont();
 
 private:

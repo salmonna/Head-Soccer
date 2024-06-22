@@ -6,7 +6,7 @@
 #include "Keyboard.h"
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
-
+#include "Box2d.h"
 //-------
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/StandPlayerState.h"
@@ -64,6 +64,9 @@ private:
 	StandPlayerState m_standMoveState;
 
 	BaseMovePlayerState* m_currentMoveState;
+
+	b2Body* m_body;
+
 };
 
 

@@ -8,7 +8,6 @@
 //constractor of resources file are loading files
 Resources::Resources(){
 
-
 	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" };
 	loadFromFile(fileNames,m_menuTexture);
 
@@ -50,11 +49,6 @@ Resources::Resources(){
 	}
 
 }
-
-
-
-
-
 
 //loadFromFile file function
 void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf::Texture>& textures) {
@@ -126,6 +120,7 @@ std::vector<sf::Texture>& Resources::getCharactersTexture() {
 
 	return m_charactersSheet;
 }
+
 //get select team textures
 std::vector<sf::Texture>& Resources::getSelectTeam() {
 

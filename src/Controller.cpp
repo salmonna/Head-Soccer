@@ -1,6 +1,5 @@
 #pragma once
 #include "Controller.h"
-#include "Resources.h"
 
 
 //controller constractor

@@ -15,6 +15,26 @@ m_currentMoveState(&m_standMoveState)
 	sf::Vector2f pos;
 	(m_playerSide) ? pos = sf::Vector2f(950, 80) : pos = sf::Vector2f(550, 80);
 	m_power = std::make_unique<FirePower>(pos);
+	
+	//----------------------box2d---------------------------//
+	auto world = Box2d::getInstance().getBox2dWorld();
+	// Create the player
+	b2BodyDef playerBodyDef;
+	playerBodyDef.type = b2_dynamicBody;
+	playerBodyDef.position.Set(400.f / SCALE, 500.f / SCALE);
+	m_body = world->CreateBody(&playerBodyDef);
+	b2PolygonShape playerBox;
+	playerBox.SetAsBox(40.f / SCALE, 45.f / SCALE);
+	b2FixtureDef playerFixtureDef;
+	playerFixtureDef.shape = &playerBox;
+	playerFixtureDef.density = 10.f;
+	playerFixtureDef.friction = 0.3f;
+	m_body->CreateFixture(&playerFixtureDef);
+
+	// Set the gravity scale for the player
+	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+
+
 
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
