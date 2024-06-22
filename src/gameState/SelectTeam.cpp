@@ -126,7 +126,7 @@ void SelectTeam::setNumberOfPlayers(int players) {
 
 	m_numOfPlayers = players;
 }
-
+//-----------------------------------------------------------------------------
 void SelectTeam::reset() {
 
 	m_playerSelected = 0;

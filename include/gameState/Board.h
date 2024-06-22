@@ -18,6 +18,11 @@
 
 #include "gameObject/ComputerPlayer.h"
 
+#include "MovePlayerState/BaseMovePlayerState.h"
+#include "MovePlayerState/LeftMoveState.h"
+#include "MovePlayerState/RightMoveState.h"
+#include "MovePlayerState/\StandPlayerState.h"
+
 class Board : public GameState
 {
 public:
@@ -64,7 +69,6 @@ private:
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
 	sf::Sprite m_goalSprite;
-
 };
 
 
