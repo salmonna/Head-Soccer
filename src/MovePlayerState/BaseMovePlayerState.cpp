@@ -59,20 +59,6 @@ void BaseMovePlayerState::moveWithRange(int x, sf::Vector2i & pos, bool playerSi
 	}
 }
 //-----------------------------------------------------------------------------------------------------
-void BaseMovePlayerState::updateGravityAndCollision(sf::Sprite& sprite ,sf::Vector2f basePos ,sf::Vector2i pos , int &gravity ) {
-
-	if (sprite.getPosition().y < 750)
-	{
-		sprite.setPosition(float(basePos.x + pos.x), float(basePos.y + pos.y + gravity));
-		gravity += 5;
-	}
-	else
-	{
-		gravity = 0;
-		pos.y = 0;
-	}
-}
-//-----------------------------------------------------------------------------------------------------
 BaseMovePlayerState::~BaseMovePlayerState()
 {
 

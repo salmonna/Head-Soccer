@@ -31,7 +31,6 @@ public:
 	void setAura(bool aura);
 	bool getAura() const;
 
-	virtual void setCurrentMoveState(BaseMovePlayerState* state) override;
 
 	virtual ~Player() = default;
 private:
@@ -56,14 +55,12 @@ private:
 	static bool m_registeritRightPlayer;
 	static bool m_registeritLeftPlayer;
   
-	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
 	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
-	void updateGravityAndCollision();
-
-	void moveWithRange(int x);
 
 	LeftMoveState m_leftMoveState;
 	RightMoveState m_rightMoveState;
+	JumpMoveState m_jumpMoveState;
+	KickMoveState m_kickMoveState;
 	StandPlayerState m_standMoveState;
 
 	BaseMovePlayerState* m_currentMoveState;

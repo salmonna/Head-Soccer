@@ -2,27 +2,29 @@
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/LeftMoveState.h"
 #include "MovePlayerState/RightMoveState.h"
-#include "MovePlayerState/JumpMoveState.h"
 #include "MovePlayerState/KickMoveState.h"
 #include "Keyboard.h"
 
-class StandPlayerState: public BaseMovePlayerState
+class StandPlayerState;
+
+class JumpMoveState : public BaseMovePlayerState
 {
 public:
-	StandPlayerState(LeftMoveState * leftMoveState , RightMoveState* rightMoveState , JumpMoveState* jumeMoveState ,KickMoveState * kickMoveState);
-	virtual ~StandPlayerState();
+	JumpMoveState(StandPlayerState* standState,KickMoveState* kickMoveState);
+	virtual ~JumpMoveState();
 
 	virtual BaseMovePlayerState* handleMoveStatus() override;
 	virtual void movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide)override;
-	void setKeyboard(bool playerSide);
 
 private:
 
-	BaseMovePlayerState * m_nextState;
-	LeftMoveState* m_leftMoveState;
-	RightMoveState* m_rightMoveState;
-	JumpMoveState* m_jumpMoveState;
+	void updateGravityAndCollision(sf::Sprite& sprite, sf::Vector2f basePos, sf::Vector2i& pos, int& gravity);
+	sf::Vector2f m_startPos;
+	StandPlayerState* m_standMoveState;
+	BaseMovePlayerState* m_currentState;
 	KickMoveState* m_kickMoveState;
+
 	Keyboard m_keys;
+
 };
 
