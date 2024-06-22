@@ -9,7 +9,6 @@ void RightMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2
 
 	moveWithRange(5,pos,playerSide);
 	movePlayer(m_startPos, 6, 10,sprite,pos, basePos);
-	updateGravityAndCollision(sprite, basePos, pos, gravity);
 
 
 	if (changeState(6)) {

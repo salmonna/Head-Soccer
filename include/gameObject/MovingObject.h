@@ -12,7 +12,6 @@ public:
 	virtual void draw(sf::RenderWindow& window) const = 0;
 	virtual sf::Vector2f getPosition() const = 0;
 	virtual void reset() = 0;
-	virtual void setCurrentMoveState(BaseMovePlayerState* state) {};
 	~MovingObject() = default;
 
 private:
