@@ -20,6 +20,11 @@ public:
 	sf::Vector2f getMousePressed();
 	int getKeyPressed();
 
+	~Window() {
+	
+	};
+
+
 private:
 	sf::RenderWindow m_window;
 	sf::Vector2f m_mousePressed;

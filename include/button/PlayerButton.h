@@ -5,11 +5,12 @@
 #include <SFML/Graphics.hpp>
 #include "gameState/GameState.h"
 #include "gameState/Board.h"
+#include "gameState/SelectTeam.h"
 
 class PlayerButton :public BaseButton
 {
 public:
-    PlayerButton(sf::Texture& texture, Board* boardState);
+    PlayerButton(sf::Texture& texture, Board* boardState, SelectTeam* selectTeam);
 
     // Method to simulate clicking the button
     virtual GameState * click() override;
@@ -25,6 +26,7 @@ public:
 private:
 
     Board* m_boardState;
+    SelectTeam* m_selectTeam;
     sf::Sprite m_player;
 };
 

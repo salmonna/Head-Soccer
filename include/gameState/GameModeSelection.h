@@ -4,14 +4,15 @@
 #pragma once 
 #include "GameState.h"
 #include "button/BaseButton.h"
-#include "gameState/Board.h"
+//#include "gameState/Board.h"
 
-//class Board;
+class Board;
+class SelectTeam;
 
 class GameModeSelection:public GameState
 {
 public:
-	GameModeSelection(Board* boardState);
+	GameModeSelection(Board* boardState, SelectTeam* selectTeam);
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;

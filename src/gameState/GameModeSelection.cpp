@@ -5,13 +5,13 @@
 #include "button/PlayerButton.h"
 #include "button/OnlineButton.h"
 
-GameModeSelection::GameModeSelection(Board* boardState):m_gameState(NULL)
+GameModeSelection::GameModeSelection(Board* boardState, SelectTeam* selectTeam):m_gameState(NULL)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getGameModeTexture();
 	m_Stage.setTexture(texturs[0]);
-	m_buttons.push_back(std::make_unique<MultiplayerButton>(texturs[1], boardState));
-	m_buttons.push_back(std::make_unique<PlayerButton>(texturs[2], boardState));
-	m_buttons.push_back(std::make_unique<OnlineButton>(texturs[3], boardState));
+	m_buttons.push_back(std::make_unique<MultiplayerButton>(texturs[1], boardState, selectTeam));
+	m_buttons.push_back(std::make_unique<PlayerButton>(texturs[2], boardState, selectTeam));
+	m_buttons.push_back(std::make_unique<OnlineButton>(texturs[3], selectTeam));
 }
 
 void GameModeSelection::draw(sf::RenderWindow& window) const {

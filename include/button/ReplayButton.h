@@ -5,12 +5,12 @@
 #include "BaseButton.h"
 #include <SFML/Graphics.hpp>
 #include "gameState/GameState.h"
-#include "gameState/Menu.h"
+#include "gameState/GameModeSelection.h"
 
 class ReplayButton :public BaseButton
 {
 public:
-    ReplayButton(sf::Texture& texture, Menu* menuState);
+    ReplayButton(sf::Texture& texture, GameModeSelection* menuState);
 
     // Method to simulate clicking the button
     virtual GameState* click() override;
@@ -25,7 +25,7 @@ public:
 
 private:
 
-    Menu* m_menuState;
+    GameModeSelection* m_menuState;
     sf::Sprite m_replayButton;
 };
 

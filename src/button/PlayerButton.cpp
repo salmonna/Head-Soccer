@@ -2,7 +2,7 @@
 #pragma once
 #include "button/PlayerButton.h"
 
-PlayerButton::PlayerButton(sf::Texture& texture, Board* boardState) :m_boardState(boardState)
+PlayerButton::PlayerButton(sf::Texture& texture, Board* boardState, SelectTeam* selectTeam) :m_boardState(boardState),m_selectTeam(selectTeam)
 {
 	m_player.setTexture(texture);
 	m_player.setPosition(800, 100);
@@ -14,7 +14,8 @@ GameState * PlayerButton::click() {
 	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
 	m_boardState->createMovingObjects(movingObjectNames);
 	m_boardState->createStaticObjects(staticObjectNames);
-	return m_boardState;
+	m_selectTeam->setNumberOfPlayers(1);
+	return m_selectTeam;
 }
 
 // Method to display button information
@@ -24,5 +25,6 @@ void PlayerButton::draw(sf::RenderWindow& window) const {
 
 // Method to check button position
 bool PlayerButton::contains(sf::Vector2f position) const {
-	return m_player.getGlobalBounds().contains(position);
+	sf::Vector2f newPos = m_player.getTransform().getInverse().transformPoint(position);
+	return m_player.getLocalBounds().contains(newPos);
 }

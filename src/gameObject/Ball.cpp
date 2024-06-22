@@ -15,6 +15,15 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
     m_ball.setPosition(900.0f, 988.0f); 
 }
 
+void Ball::restartBall()
+{
+    m_clock.restart();
+}
+
+void Ball::reset() {
+    //m_clock.restart();
+}
+
 bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<Ball>(); });
 
@@ -61,6 +70,11 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 void  Ball::move(sf::Vector2f pressed)
 {
 
+    if (m_clock.getElapsedTime().asSeconds() >= 1)
+    {
+        m_clock.restart();
+    }
+
     float deltaTime = m_clock.restart().asSeconds();
 
     const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
@@ -71,11 +85,6 @@ void  Ball::move(sf::Vector2f pressed)
 
     // עדכון מיקום הכדור
     m_ball.move(m_ballVelocity * deltaTime);
-
-    //-----------------------------------------------------------------------------------------------
-    sf::FloatRect leftTopScoreBar(40.f, 580.f, 150.4f, 631.f);
-    sf::FloatRect rightTopScoreBar(1750.f, 580.f, 184.f, 85.f);
-
 
 
     // בדיקת התנגשות עם הקרקע

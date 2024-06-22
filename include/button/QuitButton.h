@@ -1,5 +1,3 @@
-
-
 #pragma once
 #include "BaseButton.h"
 #include <SFML/Graphics.hpp>
@@ -8,7 +6,7 @@
 class QuitButton: public BaseButton
 {
 public:
-	QuitButton(sf::Texture& texture, sf::RenderWindow * window);
+    QuitButton(sf::Texture& texture, sf::RenderWindow * window);
 
     // Method to simulate clicking the button
     virtual GameState * click() override;

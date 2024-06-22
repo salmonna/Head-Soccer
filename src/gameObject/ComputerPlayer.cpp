@@ -1,8 +1,13 @@
 #include "gameObject/ComputerPlayer.h"
 #include "Resources.h"
+#include "power/FirePower.h"
 
 ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2), m_gravity(0)
 {
+
+	sf::Vector2f pos(550, 80);
+
+	m_power = std::make_unique<FirePower>(pos);
    
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 
@@ -65,6 +70,11 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
 	updateGravityAndCollision();
 }
 
+void ComputerPlayer::reset() {
+	m_sprite.setPosition(m_basePosition);
+	m_posX = 0;
+	m_posY = 0;
+}
 
 
 //function that move the player
@@ -127,7 +137,7 @@ void ComputerPlayer::moveWithRange(int x) {
 }
 
 void ComputerPlayer::draw(sf::RenderWindow& window)const {
-
+	m_power->drawProcess(window);
 	window.draw(m_sprite);
 }
 

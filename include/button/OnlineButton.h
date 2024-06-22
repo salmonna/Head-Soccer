@@ -4,11 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include "gameState/GameState.h"
 #include "gameState/Board.h"
+#include "gameState/SelectTeam.h"
 
 class OnlineButton :public BaseButton
 {
 public:
-    OnlineButton(sf::Texture& texture, Board* boardState);
+    OnlineButton(sf::Texture& texture, SelectTeam* selectTeam);
 
     // Method to simulate clicking the button
     virtual GameState* click() override;
@@ -23,7 +24,7 @@ public:
 
 private:
 
-    Board* m_boardState;
+    SelectTeam* m_selectTeam;
     sf::Sprite m_online;
 };
 

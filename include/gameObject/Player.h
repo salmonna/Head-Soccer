@@ -5,7 +5,7 @@
 #include <vector>
 #include "Keyboard.h"
 #include "Factory/MovingFactory.h"
-
+#include "power/Power.h"
 
 class Player: public MovingObject
 {
@@ -17,8 +17,15 @@ public:
 
 	virtual  sf::Vector2f getPosition() const override;
 	virtual sf::Sprite& getSprite() override;
-
+	virtual void reset()override;
 	Keyboard getKey() const;
+  
+	void resetProgress();
+	void activatePower(sf::Sprite& ball, sf::Sprite& player);
+
+	void setAura(bool aura);
+	bool getAura() const;
+
 
 	virtual ~Player() = default;
 private:
@@ -29,10 +36,12 @@ private:
 	int m_move;
 	int m_gravity;
 	bool m_playerSide;
+	bool m_aura;
+
+	std::unique_ptr<Power> m_power;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_moveClock;
-
 	std::vector<sf::Vector2f> m_startSprite;
 	sf::Vector2f m_basePosition;
 

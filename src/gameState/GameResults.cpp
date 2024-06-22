@@ -1,6 +1,6 @@
 #include "gameState/GameResults.h"
 #include "Resources.h"
-#include "button/ReplayButton.h"
+#include "button/pauseButton/ExitButton.h"
 
 //gameResults constactor
 GameResults::GameResults(Menu* menuState): m_gameState(NULL)
@@ -8,7 +8,7 @@ GameResults::GameResults(Menu* menuState): m_gameState(NULL)
 	std::vector<sf::Texture>& texturs = Resources::getInstance().gameResultsTexture();
 	m_sprite.setTexture(texturs[0]);
 	//put all the button into one vector
-	m_buttons.push_back(std::make_unique<ReplayButton>(texturs[1], menuState));
+	m_buttons.push_back(std::make_unique<ExitButton>(menuState));
 }
 
 //respond function check if there is a click on the exit button
@@ -42,4 +42,3 @@ GameState* GameResults::handleEvents() {
 	m_gameState = NULL;
 	return gameState;
 }
-
