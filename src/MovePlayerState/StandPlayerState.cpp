@@ -5,11 +5,18 @@
 StandPlayerState::StandPlayerState(LeftMoveState* leftMoveState, RightMoveState* rightMoveState)
 	:m_leftMoveState(leftMoveState), m_rightMoveState(rightMoveState),m_nextState(nullptr)
 {
-	m_keys = Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+	
 }
 
 //----------------------------------------------------------------------------------
-void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity) {
+void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide) {
+
+	if (playerSide) {
+		m_keys = Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+	}
+	else {
+		m_keys = Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+	}
 
 	resetToPosition(sprite,pos,basePos);
 	updateGravityAndCollision(sprite, basePos, pos, gravity);
@@ -33,9 +40,13 @@ void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vecto
 }
 //----------------------------------------------------------------------------------
 BaseMovePlayerState* StandPlayerState::handleMoveStatus() {
-
 	BaseMovePlayerState* temp = m_nextState;
-	m_nextState = nullptr;
+
+	if (m_nextState) {
+		m_nextState = nullptr;
+	}
+	
+	
 	return temp;
 }
 //----------------------------------------------------------------------------------

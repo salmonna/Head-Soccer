@@ -24,7 +24,7 @@ void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float 
 		{
 			m_moveClock.restart();
 			m_numOfJump += 115;
-			resetToPosition(sprite, pos,startPos, basePos,m_numOfJump);
+			resetToPosition(sprite, pos, basePos,startPos,m_numOfJump);
 		}
 	}
 
@@ -45,9 +45,9 @@ void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2i& pos,
 }
 
 //-----------------------------------------------------------------------------------------------------
-void BaseMovePlayerState::moveWithRange(int x, sf::Vector2i & pos) {
+void BaseMovePlayerState::moveWithRange(int x, sf::Vector2i & pos, bool playerSide) {
 
-	if (false/*m_playerSide*/)
+	if (m_playerSide)
 	{
 		if (pos.x + x > -1400 && pos.x + x < 220)
 			pos.x += x;
@@ -58,7 +58,7 @@ void BaseMovePlayerState::moveWithRange(int x, sf::Vector2i & pos) {
 			pos.x += x;
 	}
 }
-
+//-----------------------------------------------------------------------------------------------------
 void BaseMovePlayerState::updateGravityAndCollision(sf::Sprite& sprite ,sf::Vector2f basePos ,sf::Vector2i pos , int &gravity ) {
 
 	if (sprite.getPosition().y < 750)

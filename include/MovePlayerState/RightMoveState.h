@@ -9,7 +9,7 @@ public:
 	RightMoveState(StandPlayerState * standMoveState);
 	virtual ~RightMoveState();
 
-	virtual void movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity) override;
+	virtual void movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide) override;
 	virtual BaseMovePlayerState* handleMoveStatus() override;
 
 private:

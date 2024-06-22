@@ -11,7 +11,7 @@ public:
 	~StandPlayerState();
 
 	virtual BaseMovePlayerState* handleMoveStatus() override;
-	virtual void movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity) override;
+	virtual void movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide)override;
 
 private:
 

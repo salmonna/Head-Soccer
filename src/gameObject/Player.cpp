@@ -103,8 +103,10 @@ void Player::move(sf::Vector2f pressed) {
 		m_currentMoveState = nextState;
 	}
 	auto pos = sf::Vector2i(m_posX, m_posY);
-	m_currentMoveState->movement(m_sprite,pos, m_basePosition, m_gravity);
+	m_currentMoveState->movement(m_sprite,pos, m_basePosition, m_gravity,m_playerSide);
 	
+	m_posX = pos.x;
+	m_posY = pos.y;
 
 	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && m_power->isProcessFull()) {//slide
 		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
