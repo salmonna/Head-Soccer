@@ -80,7 +80,6 @@ void Board::respond(sf::Vector2f pressed) {
 	for (int i = 0; i < m_movingObject.size() - m_goalSign; i++)
 	{
 		m_movingObject[i]->move(pressed);
-
 	}
 	
 	for_each_pair(m_gameObject.begin() + 2, m_gameObject.end() - 2, [&](auto& a, auto& b) {
@@ -178,5 +177,4 @@ void Board::draw(sf::RenderWindow& window) const{
 	 
 	//draw the score board
 	m_scoreBoard.draw(window);
-
 }
