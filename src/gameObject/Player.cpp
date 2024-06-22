@@ -70,7 +70,7 @@ void Player::draw(sf::RenderWindow& window) const {
 //function that find where to move and  call to another function 
 void Player::move(sf::Vector2f pressed) {
 
-	
+	//--
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
 
 	if (nextState) {
