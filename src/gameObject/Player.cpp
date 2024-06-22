@@ -5,8 +5,9 @@
 #include "Resources.h"
 #include "power/FirePower.h"
 
-Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),
-m_keys(keys), m_playerSide(right), m_aura(false)
+Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
+, m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState), m_leftMoveState(&m_standMoveState)
+, m_rightMoveState(&m_standMoveState),m_currentMoveState(&m_standMoveState)
 {
 
 	sf::Vector2f pos;
@@ -66,13 +67,15 @@ void Player::draw(sf::RenderWindow& window) const {
 	m_power->drawProcess(window);
 
 	window.draw(m_sprite);
+
+	//m_currentMoveState->draw(window);
 	
 }
 
 //function that find where to move and  call to another function 
 void Player::move(sf::Vector2f pressed) {
 
-	if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
+	/*if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
 		if (m_posY > -180)
 			m_posY -= 15;
 
@@ -92,15 +95,28 @@ void Player::move(sf::Vector2f pressed) {
 	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
 		moveWithRange(5);
 		movePlayer(m_startSprite[1], 6, 10);
+	}*/
+
+	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
+
+	if (nextState) {
+
+		m_currentMoveState = nextState;
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && m_power->isProcessFull()) {//slide
+	auto pos = sf::Vector2i(m_posX, m_posY);
+	m_currentMoveState->movement(m_sprite,pos, m_basePosition, m_gravity,m_playerSide);
+	
+	m_posX = pos.x;
+	m_posY = pos.y;
+
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && m_power->isProcessFull()) {//slide
 		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
 		resetProgress();
 		m_aura = true;
 	}
 
 	// Handle gravity and ground collision
-	updateGravityAndCollision();
+	//updateGravityAndCollision();
 }
 
 //function that move the player
@@ -196,4 +212,8 @@ void Player::setAura(bool aura) {
 
 bool Player::getAura() const{
 	return m_aura;
+}
+void Player::setCurrentMoveState(BaseMovePlayerState* state) {
+
+	m_currentMoveState = state;
 }

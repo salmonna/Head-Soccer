@@ -7,6 +7,11 @@
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
 
+//-------
+#include "MovePlayerState/BaseMovePlayerState.h"
+#include "MovePlayerState/StandPlayerState.h"
+//-------
+
 class Player: public MovingObject
 {
 public:
@@ -26,6 +31,7 @@ public:
 	void setAura(bool aura);
 	bool getAura() const;
 
+	virtual void setCurrentMoveState(BaseMovePlayerState* state) override;
 
 	virtual ~Player() = default;
 private:
@@ -54,10 +60,13 @@ private:
 	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
 	void updateGravityAndCollision();
 
-
-
 	void moveWithRange(int x);
 
+	LeftMoveState m_leftMoveState;
+	RightMoveState m_rightMoveState;
+	StandPlayerState m_standMoveState;
+
+	BaseMovePlayerState* m_currentMoveState;
 };
 
 
