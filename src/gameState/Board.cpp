@@ -19,7 +19,6 @@
 
 // Constructor for the Board class
 Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(90),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
-,m_standMoveState(&m_leftMoveState,&m_rightMOveState),m_leftMoveState(&m_standMoveState),m_rightMOveState(&m_standMoveState)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
 
@@ -51,10 +50,6 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 
 		if (object)
 		{
-			if (name == "RightPlayer"|| name ==  "LeftPlayer") {
-
-				object->setCurrentMoveState(&m_standMoveState);
-			}
 			m_movingObject.push_back(object);
 			m_gameObject.push_back(object);
 		}

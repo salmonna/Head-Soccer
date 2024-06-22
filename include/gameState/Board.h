@@ -69,13 +69,6 @@ private:
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
 	sf::Sprite m_goalSprite;
-
-
-	LeftMoveState m_leftMoveState;
-	RightMoveState m_rightMOveState;
-	StandPlayerState m_standMoveState;
-	
-
 };
 
 

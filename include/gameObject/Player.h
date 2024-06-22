@@ -62,6 +62,10 @@ private:
 
 	void moveWithRange(int x);
 
+	LeftMoveState m_leftMoveState;
+	RightMoveState m_rightMoveState;
+	StandPlayerState m_standMoveState;
+
 	BaseMovePlayerState* m_currentMoveState;
 };
 

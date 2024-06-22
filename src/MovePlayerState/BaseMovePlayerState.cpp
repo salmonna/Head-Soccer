@@ -47,7 +47,7 @@ void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2i& pos,
 //-----------------------------------------------------------------------------------------------------
 void BaseMovePlayerState::moveWithRange(int x, sf::Vector2i & pos, bool playerSide) {
 
-	if (m_playerSide)
+	if (playerSide)
 	{
 		if (pos.x + x > -1400 && pos.x + x < 220)
 			pos.x += x;

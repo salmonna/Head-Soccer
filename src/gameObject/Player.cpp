@@ -5,8 +5,9 @@
 #include "Resources.h"
 #include "power/FirePower.h"
 
-Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),
-m_keys(keys), m_playerSide(right), m_aura(false)
+Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
+, m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState), m_leftMoveState(&m_standMoveState)
+, m_rightMoveState(&m_standMoveState),m_currentMoveState(&m_standMoveState)
 {
 
 	sf::Vector2f pos;

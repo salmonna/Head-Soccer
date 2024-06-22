@@ -19,10 +19,6 @@ public:
 
 private:
 
-	
-	bool m_playerSide;
-
-
 	sf::Clock m_moveClock;
 
 	int m_numOfJump; 
