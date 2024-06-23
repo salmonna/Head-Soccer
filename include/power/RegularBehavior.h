@@ -1,13 +1,17 @@
 #pragma once
-#include "MoveBehavior.h"
+#include "power/Power.h"
 
 
-class RegularBehavior : public MoveBehavior
+class RegularBehavior : public Power
 {
 public:
 	RegularBehavior();
 
-	virtual void performMove(Ball * ball) override ;
+	virtual void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) override
+	{
+
+
+	};
 
 	~RegularBehavior() = default;
 

@@ -3,8 +3,9 @@
 #include "gameObject/Player.h"
 #include <iostream>
 #include "Resources.h"
-#include "power/FirePower.h"
 #include "gameObject/scoreBoard.h"
+#include "power/FirePower.h"
+#include "power/InvisiblePower.h"
 
 
 //-----------------------------------------------------------------------------
@@ -14,7 +15,7 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 m_currentMoveState(&m_standMoveState)
 {
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<FirePower>();
+	m_power = std::make_shared<InvisiblePower>();
 
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
