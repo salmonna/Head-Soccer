@@ -20,25 +20,31 @@ void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f
 	//if (pos.y > -180)
 	//	pos.y -= 15;
 	b2Vec2 vel = m_body->GetLinearVelocity();
-	if (vel.y > -2) {  // Check if player is on the ground
+	if (vel.y == 0) {  // Check if player is on the ground
 		m_body->ApplyLinearImpulseToCenter(b2Vec2(0.f, -JUMP_FORCE), true);
 	}
-	//movePlayer(m_startPos, 7, 50, sprite, pos, basePos);
-	updateGravityAndCollision(sprite, basePos, pos, gravity);
+
+	movePlayer(m_startPos, 7, 272, sprite, pos, basePos);
+	//updateGravityAndCollision(sprite, basePos, pos, gravity);
 
 	if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
 
-		moveWithRange(-5, pos, playerSide);
+		m_body->SetLinearVelocity(b2Vec2(-5.f, m_body->GetLinearVelocity().y));
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
 
-		moveWithRange(5, pos, playerSide);
+		m_body->SetLinearVelocity(b2Vec2(5.f, m_body->GetLinearVelocity().y));
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//move right
 
 		m_currentState = m_kickMoveState;
 	}
 
+	if (changeState(7))
+	{
+		m_body->SetLinearVelocity(b2Vec2(m_body->GetLinearVelocity().x, 0.f));
+		m_currentState = (BaseMovePlayerState*)m_standMoveState;
+	}
 	
 }
 //----------------------------------------------------------------------------------

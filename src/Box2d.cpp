@@ -8,7 +8,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
 
     // Create the ground
     b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(900.f / SCALE, 720.f / SCALE);
+    groundBodyDef.position.Set(900.f / SCALE, 825.f / SCALE);
     b2Body* groundBody = m_world.CreateBody(&groundBodyDef);
     b2PolygonShape groundBox;
     groundBox.SetAsBox(900.f / SCALE, 10.f / SCALE);
@@ -18,7 +18,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
     sf::RectangleShape ground(sf::Vector2f(1800.f, 20.f));
     ground.setFillColor(sf::Color::Green);
     ground.setOrigin(900.f, 10.f);
-    ground.setPosition(900.f, 720.f);
+    ground.setPosition(900.f, 825.f);
     m_ground = ground;
 
     //-------------------------------------------ceiling---------------------------//

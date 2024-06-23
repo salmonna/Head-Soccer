@@ -16,27 +16,6 @@ m_currentMoveState(&m_standMoveState)
 	(m_playerSide) ? pos = sf::Vector2f(950, 80) : pos = sf::Vector2f(550, 80);
 	m_power = std::make_unique<FirePower>(pos);
 	
-	//----------------------box2d---------------------------//
-	auto world = Box2d::getInstance().getBox2dWorld();
-	// Create the player
-	b2BodyDef playerBodyDef;
-	playerBodyDef.type = b2_dynamicBody;
-	playerBodyDef.position.Set(400.f / SCALE, 500.f / SCALE);
-	m_body = world->CreateBody(&playerBodyDef);
-	b2PolygonShape playerBox;
-	playerBox.SetAsBox(40.f / SCALE, 45.f / SCALE);
-	b2FixtureDef playerFixtureDef;
-	playerFixtureDef.shape = &playerBox;
-	playerFixtureDef.density = 30.f;
-	playerFixtureDef.friction = 0.3f;
-	m_body->CreateFixture(&playerFixtureDef);
-
-	// Set the gravity scale for the player
-	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
-
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
-	resetToPosition();
-
 	if (m_playerSide)
 	{
 		m_sprite.setScale(-1, 1);
@@ -46,6 +25,29 @@ m_currentMoveState(&m_standMoveState)
 	{
 		m_basePosition = sf::Vector2f(272, 750);
 	}
+	//----------------------box2d---------------------------//
+	auto world = Box2d::getInstance().getBox2dWorld();
+	// Create the player
+	b2BodyDef playerBodyDef;
+	playerBodyDef.type = b2_dynamicBody;
+	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
+	m_body = world->CreateBody(&playerBodyDef);
+	b2PolygonShape playerBox;
+	playerBox.SetAsBox(40.f / SCALE, 40.f / SCALE);
+	b2FixtureDef playerFixtureDef;
+	playerFixtureDef.shape = &playerBox;
+	playerFixtureDef.density = 1.f;
+	playerFixtureDef.friction = 0.3f;
+	m_body->CreateFixture(&playerFixtureDef);
+
+	// Set the gravity scale for the player
+	//m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+
+	m_sprite.setOrigin(40.f, 40.f);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
+	//resetToPosition();
+
+
 	m_sprite.setPosition(m_basePosition);
 
 }
@@ -87,7 +89,6 @@ void Player::draw(sf::RenderWindow& window) const {
 //function that find where to move and  call to another function 
 void Player::move(sf::Vector2f pressed) {
 
-	//--
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
 
 	if (nextState) {
@@ -157,5 +158,4 @@ bool Player::getAura() const{
 void Player::update() {
 	b2Vec2 position1 = m_body->GetPosition();
 	m_sprite.setPosition(B2VecToSFVec(position1));
-	m_sprite.setRotation(m_body->GetAngle() * 180.f / b2_pi);
 }

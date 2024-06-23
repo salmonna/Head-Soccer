@@ -24,9 +24,10 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
 	
 
     m_sprite.setTexture(*texture);
+    m_sprite.setOrigin(25.0f, 25.0f);
     m_ball.setTexture(texture);
    // m_ball.set
-    m_ball.setOrigin(m_ball.getRadius(), m_ball.getRadius());
+    m_ball.setOrigin(25.0f, 25.0f);
     m_ball.setPosition(900.0f, 988.0f); 
 }
 
@@ -62,15 +63,15 @@ sf::Vector2f Ball::getPosition() const
 
 void Ball::draw(sf::RenderWindow & window) const
 {
-	window.draw(m_ball);
+	window.draw(m_sprite);
 }
 
 
 
 sf::Sprite & Ball::getSprite()
 {
-    m_sprite.setOrigin(m_ball.getOrigin());
-    m_sprite.setPosition(m_ball.getPosition());
+    //m_sprite.setOrigin(m_ball.getOrigin());
+    //m_sprite.setPosition(m_ball.getPosition());
 
     return m_sprite;
 }
