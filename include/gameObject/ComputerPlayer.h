@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
+#include "gameObject/Ball.h"
 
 
 class ComputerPlayer :public MovingObject
@@ -19,7 +20,7 @@ public:
 	virtual void reset()override;
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
-	void resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int posY);
+	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
 
 	sf::Vector2f getRivalGoal()const;
 
@@ -48,6 +49,7 @@ private:
 	sf::Vector2f m_rivalGoal;
 
 	static bool m_registeritComputerPlayer;
+
 
 };
 

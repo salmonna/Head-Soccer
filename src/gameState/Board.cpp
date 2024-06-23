@@ -15,7 +15,7 @@
 #include "Factory/MovingFactory.h"
 #include "Factory/StaticFactory.h"
 #include "gameState/GameResults.h"
-//#include "gameState/Pause.h"
+
 
 // Constructor for the Board class
 Board::Board(Menu* menu, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)

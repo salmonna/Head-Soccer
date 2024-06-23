@@ -9,6 +9,11 @@
 #include <SFML/Audio.hpp>
 
 
+//-------
+#include "MovePlayerState/BaseMovePlayerState.h"
+#include "MovePlayerState/StandPlayerState.h"
+//-------
+
 class Player: public MovingObject
 {
 public:
@@ -54,14 +59,15 @@ private:
 	static bool m_registeritRightPlayer;
 	static bool m_registeritLeftPlayer;
   
-	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
 	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
-	void updateGravityAndCollision();
 
+	LeftMoveState m_leftMoveState;
+	RightMoveState m_rightMoveState;
+	JumpMoveState m_jumpMoveState;
+	KickMoveState m_kickMoveState;
+	StandPlayerState m_standMoveState;
 
-
-	void moveWithRange(int x);
-
+	BaseMovePlayerState* m_currentMoveState;
 };
 
 

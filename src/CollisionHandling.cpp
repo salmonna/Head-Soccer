@@ -84,8 +84,7 @@ namespace // anonymous namespace — the standard way to make function "static"
 
 
     // primary collision-processing functions
-    void playerCollidBall(GameObject& player,
-        GameObject& ball)
+    void playerCollidBall(GameObject& player, GameObject& ball)
     {
 
         Ball & ballObject = static_cast<Ball&>(ball);
@@ -96,15 +95,9 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     }
 
-    void playerCollidPlayer(GameObject& player1,
-        GameObject& player2)
-    {                                                              
-        //std::cout << "Player1 and Player2 collision!\n";
-        //system("cls");
-    }
+    
 
-    void ballCollidGoalTop(GameObject& ball,
-        GameObject& goal)
+    void ballCollidGoalTop(GameObject& ball, GameObject& goal)
     {
 
         Ball& ballObject = static_cast<Ball&>(ball);
@@ -188,44 +181,48 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     }
 
-    void handleUnnecessaryCollision(GameObject& side, GameObject& back) {}
+    void playerCollidPlayer(GameObject& player1, GameObject& player2)
+    {       
+        
+        //std::cout << "Player1 and Player2 collision!\n";
+ 
+        //system("cls");
+    }
 
     //...
 
     // secondary collision-processing functions that just
     // implement symmetry: swap the parameters and call a
     // primary function
+
     void ballColliedPlayer(GameObject& ball,
         GameObject& player)
     {
         playerCollidBall(player, ball);
     }
-    void playerColliedPlayer(GameObject& player2,
-        GameObject& player1)
-    {
-        playerCollidPlayer(player1, player2);
-    }
+   
     void GoalTopColliedBall(GameObject& goal,
         GameObject& ball)
     {
         ballCollidGoalTop(ball, goal);
     }
-  
-
-    void GoalBackCollidWithBall(GameObject& goalBack , GameObject& ball) {
+    void GoalBackCollidWithBall(GameObject& goalBack, GameObject& ball) {
 
         ballCollidWithGoalBack(ball, goalBack);
     }
-
+    
     void BallCollidComputerPlayer(GameObject& ball, GameObject& computerPlayer) {
 
         computerPlayerCollidBall(computerPlayer,ball);
 
     }
-    //void backCollidWithSide(GameObject& back, GameObject& side) {
+    /*
+     void playerColliedPlayer(GameObject& player2,
+        GameObject& player1)
+    {
+        playerCollidPlayer(player1, player2);
+    }*/
 
-    //    SideCollidWithBAck(side , back);
-    //}
     //...
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
@@ -242,34 +239,16 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[Key(typeid(Ball), typeid(GoalTop))] = &ballCollidGoalTop;
         phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
 
-        //----------------------------------------------------------------------
-        phm[Key(typeid(ComputerPlayer), typeid(Player))] = &playerCollidPlayer;
-        phm[Key(typeid(ComputerPlayer), typeid(Ball))] = &computerPlayerCollidBall;
-        phm[Key(typeid(ComputerPlayer), typeid(GoalBack))] = &handleUnnecessaryCollision;
-        phm[Key(typeid(ComputerPlayer), typeid(GoalTop))] = &handleUnnecessaryCollision;
-        //----------------------------------------------------------------------
-
         phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
-        phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
         phm[Key(typeid(GoalTop), typeid(Ball))] = &GoalTopColliedBall;
         phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
-
-        //----------------------------------------------------------------------
+       
+        //--------------------ComputerPlayer Collision--------------------------
+        phm[Key(typeid(ComputerPlayer), typeid(Player))] = &playerCollidPlayer;
+        phm[Key(typeid(ComputerPlayer), typeid(Ball))] = &computerPlayerCollidBall;
         phm[Key(typeid(Player), typeid(ComputerPlayer))] = &playerCollidPlayer;
         phm[Key(typeid(Ball), typeid(ComputerPlayer))] = &BallCollidComputerPlayer;
-        phm[Key(typeid(GoalBack), typeid(ComputerPlayer))] = &handleUnnecessaryCollision;
-        phm[Key(typeid(GoalTop), typeid(ComputerPlayer))] = &handleUnnecessaryCollision;
         //----------------------------------------------------------------------
-        
-        //collision player with goal back
-        phm[Key(typeid(Player), typeid(GoalBack))] = &handleUnnecessaryCollision;
-        phm[Key(typeid(GoalBack), typeid(Player))] = &handleUnnecessaryCollision;
-        phm[Key(typeid(GoalTop), typeid(Player))] = &handleUnnecessaryCollision;
-        phm[Key(typeid(Player), typeid(GoalTop))] = &handleUnnecessaryCollision;
-
-        //collision by the goal sides
-        phm[Key(typeid(GoalBack), typeid(GoalTop))] = &handleUnnecessaryCollision;
-        phm[Key(typeid(GoalTop), typeid(GoalBack))] = &handleUnnecessaryCollision;
 
         //...
         return phm;
@@ -291,9 +270,9 @@ namespace // anonymous namespace — the standard way to make function "static"
 void processCollision(GameObject& object1, GameObject& object2)
 {
     auto phf = lookup(typeid(object1), typeid(object2));
-    if (!phf)
+    if (phf)
     {
-        throw UnknownCollision(object1, object2);
+        phf(object1, object2);
     }
-    phf(object1, object2);
+    
 }
