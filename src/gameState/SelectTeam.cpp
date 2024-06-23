@@ -35,7 +35,7 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
-		if (m_playerSelected == m_numOfPlayers) {
+		if (m_playerSelected >= m_numOfPlayers) {
 
 			m_buttons[i]->draw(window);
 		}

@@ -30,6 +30,7 @@ public:
 	bool istProgressP1Full();
 	bool istProgressP2Full();
 
+	bool isProgFull(bool playerSide);
 
 	~ScoreBoard() = default;
 

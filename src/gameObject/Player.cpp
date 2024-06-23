@@ -67,7 +67,6 @@ void Player::move(sf::Vector2f pressed) {
 
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
 
-
 	if (nextState) {
 
 		m_currentMoveState = nextState;
@@ -78,23 +77,14 @@ void Player::move(sf::Vector2f pressed) {
 	m_posX = pos.x;
 	m_posY = pos.y;
 
-	bool valid = false;
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
-		valid = true;
-	}
-
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
-		valid = true;
-	}
-
-	if (valid)
-	{
+	
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().isProgFull(m_playerSide)) {//power
 		resetProgress();
 		m_aura = true;
 		m_sound.play();
 		m_sound.setLoop(true);
-
 	}
+
 	
 	if (!m_aura)
 		m_sound.stop();

@@ -97,6 +97,16 @@ void ScoreBoard::drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite>&
 }
 
 
+bool ScoreBoard::isProgFull(bool playerSide) {
+
+	if (playerSide) {
+
+		return istProgressP2Full();
+	}
+
+	return istProgressP1Full();
+}
+
 bool ScoreBoard::istProgressP1Full() {
 	return (m_progressP1 + 1) * 8 > 490;
 }
