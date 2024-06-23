@@ -27,7 +27,7 @@ void Power::startTimer()
 
 bool Power::isTimeIsOver()
 {
-	return m_powerTimer.getElapsedTime().asSeconds() >= 1.5f;
+	return m_powerTimer.getElapsedTime().asSeconds() >= 2.f;
 }
 
 

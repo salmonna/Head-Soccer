@@ -4,7 +4,7 @@
 #include <iostream>
 #include "power/RegularBehavior.h"
 
-Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_moveBehavior(std::make_shared<RegularBehavior>())
+Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_power(std::make_shared<RegularBehavior>())
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -75,9 +75,68 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 
 
 
+void Ball::setRegular()
+{
+    m_power = std::make_shared<RegularBehavior>();
+    m_ball.setTexture(&Resources::getInstance().getBallTexture()[0]);
+    m_ball.setFillColor(sf::Color(255, 255, 255, 255));
+}
+
 void  Ball::move(sf::Vector2f pressed)
 {
-   m_moveBehavior->performMove(this);
+     //m_moveBehavior->performMove(this);
+
+    if (m_power->isTimeIsOver())
+    {
+        setRegular();
+    }
+     
+
+    if (m_clock.getElapsedTime().asSeconds() >= 1)
+    {
+        m_clock.restart();
+    }
+
+    float deltaTime = m_clock.restart().asSeconds();
+
+    const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
+    const float restitution = 0.8f;  // מקדם ההתנגשות
+
+    // עדכון המהירות בעקבות כוח המשיכה
+    m_ballVelocity.y += gravity * deltaTime;
+
+
+    // עדכון מיקום הכדור
+     m_ball.move(m_ballVelocity * deltaTime);
+
+
+    // בדיקת התנגשות עם הקרקע
+    if (m_ball.getPosition().y + m_ball.getRadius() >= 835.0f) {
+        m_ball.setPosition(m_ball.getPosition().x, 835.0f - m_ball.getRadius());
+        m_ballVelocity.y = -m_ballVelocity.y * restitution;
+    }
+
+    // בדיקת התנגשות עם הקירות והחלון
+    sf::FloatRect ballBounds = m_ball.getGlobalBounds();
+    sf::FloatRect windowBounds(0.0f, 0.0f, 1800.0f, 835.0f);
+
+
+    if (ballBounds.left < windowBounds.left) {
+        m_ball.setPosition(windowBounds.left + m_ball.getRadius(), m_ball.getPosition().y);
+        m_ballVelocity.x = -m_ballVelocity.x * restitution;
+    }
+    else if (ballBounds.left + ballBounds.width > windowBounds.left + windowBounds.width) {
+        m_ball.setPosition(windowBounds.left + windowBounds.width - m_ball.getRadius(), m_ball.getPosition().y);
+        m_ballVelocity.x = -m_ballVelocity.x * restitution;
+    }
+    if (ballBounds.top < windowBounds.top) {
+        m_ball.setPosition(m_ball.getPosition().x, windowBounds.top + m_ball.getRadius());
+        m_ballVelocity.y = -m_ballVelocity.y * restitution;
+    }
+    else if (ballBounds.top + ballBounds.height > windowBounds.top + windowBounds.height) {
+        m_ball.setPosition(m_ball.getPosition().x, windowBounds.top + windowBounds.height - m_ball.getRadius());
+        m_ballVelocity.y = -m_ballVelocity.y * restitution;
+    }
 };
 
 float Ball::getRadius() const {
@@ -90,13 +149,13 @@ sf::CircleShape& Ball::getCircle() {
     return m_ball;
 }
 
-void Ball::setMoveBehavior(std::shared_ptr<MoveBehavior> moveBehavior)
+void Ball::setMoveBehavior(std::shared_ptr<Power> power)
 {
-    m_moveBehavior = moveBehavior;
+    m_power = power;
 }
 
 
 bool Ball::isRegularBehavior()
 {
-    return typeid(RegularBehavior) == typeid(m_moveBehavior);
+    return typeid(RegularBehavior) == typeid(m_power);
 }

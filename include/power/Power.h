@@ -3,12 +3,11 @@
 #include "MoveBehavior.h"
 #include <SFML/Graphics.hpp>
 
-class Power : public MoveBehavior
+class Power 
 {
 public:
 	Power();
 	
-	virtual void draw(sf::RenderWindow& window) const = 0;
 	void drawAura(sf::RenderWindow& window, sf::Vector2f position);
 	sf::Sprite& getSprite();
 	virtual ~Power() = default;
