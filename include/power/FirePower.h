@@ -7,11 +7,6 @@ public:
 
 	FirePower();
 
-	void draw(sf::RenderWindow & window) const override;
-
-	//--------------After Create Behavior------------------------------
-	virtual void performMove(Ball * ball) override ;
-
 	void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction);
 
 	~FirePower() = default;
