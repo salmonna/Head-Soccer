@@ -50,9 +50,6 @@ private:
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	bool m_goalSign;
-
-	ScoreBoard m_scoreBoard;
-
 	GameResults * m_gameResults;
 	//Pause  m_pause;
 	GameState * m_gameState;

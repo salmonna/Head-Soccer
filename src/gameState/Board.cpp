@@ -18,10 +18,9 @@
 
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(90),m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
+Board::Board(Menu* menu, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
 {
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
-
 	for (size_t i = 0; i < texturs.size()-1; i++)
 	{
 		m_backGroundStadium.push_back(sf::Sprite());
@@ -79,9 +78,8 @@ void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 // Method to check if a given location corresponds to a stick
 void Board::respond(sf::Vector2f pressed) {
 
-
-	m_scoreBoard.timeCalculation();
-	m_scoreBoard.updateScore(0, 0);
+	ScoreBoard::getInstance().timeCalculation();
+	ScoreBoard::getInstance().updateScore(0, 0);
 
 	//------- just for run the computer player--------
 	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
@@ -132,7 +130,6 @@ void Board::moveAd()
 
 	if (sprite.getPosition().x >= 1800)
 	{
-
 		sprite.setPosition(-sprite.getGlobalBounds().width, 680);
 	}
 
@@ -150,7 +147,7 @@ void Board::updateScoreBar() {
 		m_goalSign = true;
 		m_movingObject[0]->reset();
 		m_movingObject[1]->reset();
-		m_scoreBoard.updateScore(0, 1);
+		ScoreBoard::getInstance().updateScore(0, 1);
 		leftGoalBack.setIfGoal(false);
 	}
 	else if (rightGoalBack.getIfGoal())
@@ -159,7 +156,7 @@ void Board::updateScoreBar() {
 		m_goalSign = true;
 		m_movingObject[0]->reset();
 		m_movingObject[1]->reset();
-		m_scoreBoard.updateScore(1, 0);
+		ScoreBoard::getInstance().updateScore(1, 0);
 		rightGoalBack.setIfGoal(false);
 	}
 
@@ -168,7 +165,7 @@ void Board::updateScoreBar() {
 GameState* Board::handleEvents()
 {
 
-	if (m_scoreBoard.timeIsOver())
+	if (ScoreBoard::getInstance().timeIsOver())
 	{
 		reset();
 		return m_gameResults;
@@ -190,7 +187,7 @@ void Board::reset() {
 	{
 		m_staticObject.pop_back();
 	}
-	m_scoreBoard.reset();
+	ScoreBoard::getInstance().reset();
 }
 
 //=============================================== for_each_pair =======================================//
@@ -241,7 +238,7 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 
 
 	//draw the score board
-	m_scoreBoard.draw(window);
+	ScoreBoard::getInstance().draw(window);
 
 	//draw the game objects
 	for (int i = 0; i < m_gameObject.size(); i++)

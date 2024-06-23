@@ -5,17 +5,20 @@ class FirePower : public Power
 {
 public:
 
-	FirePower(sf::Vector2f pos);
+	FirePower();
 
 	void draw(sf::RenderWindow & window) const override;
 
-	virtual void activatePower(sf::Sprite& ball, sf::Sprite& player) override;
+	//--------------After Create Behavior------------------------------
+	virtual void performMove(Ball * ball) override ;
 
+	void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction);
 
 	~FirePower() = default;
 
 private:
 
-
+	sf::Vector2f m_ballVelocity;
+	sf::Clock m_clock;
 
 };

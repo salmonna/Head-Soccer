@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Resources.h"
 #include "power/FirePower.h"
+#include "gameObject/scoreBoard.h"
+
 
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
@@ -11,10 +13,8 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 ,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState),
 m_currentMoveState(&m_standMoveState)
 {
-
-	sf::Vector2f pos;
-	(m_playerSide) ? pos = sf::Vector2f(950, 80) : pos = sf::Vector2f(550, 80);
-	m_power = std::make_unique<FirePower>(pos);
+	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
+	m_power = std::make_shared<FirePower>();
 
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
@@ -33,12 +33,6 @@ m_currentMoveState(&m_standMoveState)
 
 }
 
-//-----------------------------------------------------------------------------
-void Player::activatePower(sf::Sprite& ball, sf::Sprite& player)
-{
-	m_power->activatePower(ball, player);
-}
-//-----------------------------------------------------------------------------
 bool Player::m_registeritRightPlayer = MovingFactory::registeritMoving("RightPlayer",
 	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<Player>(true,
 		Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down)); });
@@ -61,7 +55,7 @@ void Player::draw(sf::RenderWindow& window) const {
 		}
 	}
   
-	m_power->drawProcess(window);
+	ScoreBoard::getInstance().draw(window);
 
 	window.draw(m_sprite);
 
@@ -70,8 +64,9 @@ void Player::draw(sf::RenderWindow& window) const {
 //function that find where to move and  call to another function 
 void Player::move(sf::Vector2f pressed) {
 
-	//--
+
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
+
 
 	if (nextState) {
 
@@ -83,11 +78,22 @@ void Player::move(sf::Vector2f pressed) {
 	m_posX = pos.x;
 	m_posY = pos.y;
 
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && m_power->isProcessFull()) {//slide
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
 		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
 		resetProgress();
 		m_aura = true;
+		m_sound.play();
+		m_sound.setLoop(true);
 	}
+	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
+		resetProgress();
+		m_aura = true;
+		m_sound.play();
+		m_sound.setLoop(true);
+	}
+	
+	if (!m_aura)
+		m_sound.stop();
 
 }
 //-----------------------------------------------------------------------------
@@ -102,7 +108,14 @@ void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int
 //-----------------------------------------------------------------------------
 void Player::resetProgress()
 {
-	m_power->resetProgress();
+	if (!m_playerSide)
+	{
+		ScoreBoard::getInstance().resetProgressP1();
+	}
+	else
+	{
+		ScoreBoard::getInstance().resetProgressP2();
+	}
 
 }
 //-----------------------------------------------------------------------------
@@ -127,10 +140,20 @@ Keyboard Player::getKey() const
 	return m_keys;
 }
 //-----------------------------------------------------------------------------
+std::shared_ptr<Power> Player::getPower()
+{
+	return m_power;
+}
+
 void Player::setAura(bool aura) {
 	m_aura = aura;
 }
 //-----------------------------------------------------------------------------
 bool Player::getAura() const{
 	return m_aura;
+}
+//-----------------------------------------------------------------------------
+bool Player::getSide() const
+{
+	return m_playerSide;
 }

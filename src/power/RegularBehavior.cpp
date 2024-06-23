@@ -1,17 +1,16 @@
-#include "power/FirePower.h"
+#include "power/RegularBehavior.h"
 #include "gameObject/Ball.h"
-#include "Resources.h"
 
 
-FirePower::FirePower() :m_ballVelocity(), m_clock()
+RegularBehavior::RegularBehavior(): m_ballVelocity(5.0f, -10.0f), m_clock()
 {
+}
 
 
 
-};
 
 
-void FirePower::performMove(Ball* ball)
+void RegularBehavior::performMove(Ball * ball)
 {
 
     m_ballVelocity = ball->getVelocity();
@@ -19,16 +18,10 @@ void FirePower::performMove(Ball* ball)
     if (m_clock.getElapsedTime().asSeconds() >= 1)
     {
         m_clock.restart();
-       
-    }
-
-    if (isTimeIsOver())
-    {
-        ball->setMoveBehavior(std::make_shared<RegularBehavior>());
-        ball->getCircle().setTexture(&Resources::getInstance().getBallTexture()[0]);
     }
 
     float deltaTime = m_clock.restart().asSeconds();
+
     const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
     const float restitution = 0.8f;  // מקדם ההתנגשות
 
@@ -70,25 +63,5 @@ void FirePower::performMove(Ball* ball)
     }
 
     ball->setBallVelocity(m_ballVelocity);
-
-}
-
-
-void FirePower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction)
-{
-    currVelocity = sf::Vector2f(1500.f, 0.f);
-    currVelocity.x *= direction.x;
-    sf::Vector2f currPos = ball.getPosition();
-    currPos.y -= 300.f;
-    ball.setPosition(currPos);
-    //ball.setFillColor(sf::Color(255, 255, 255, 64));
-    ball.setTexture(&Resources::getInstance().getBallTexture()[2]);
-}
-
-
-
-void FirePower::draw(sf::RenderWindow& window) const
-{
-
 
 }
