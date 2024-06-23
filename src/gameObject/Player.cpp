@@ -78,18 +78,22 @@ void Player::move(sf::Vector2f pressed) {
 	m_posX = pos.x;
 	m_posY = pos.y;
 
+	bool valid = false;
 	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
-		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
-		resetProgress();
-		m_aura = true;
-		m_sound.play();
-		m_sound.setLoop(true);
+		valid = true;
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
+
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
+		valid = true;
+	}
+
+	if (valid)
+	{
 		resetProgress();
 		m_aura = true;
 		m_sound.play();
 		m_sound.setLoop(true);
+
 	}
 	
 	if (!m_aura)

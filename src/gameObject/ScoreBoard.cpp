@@ -98,7 +98,7 @@ void ScoreBoard::drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite>&
 
 
 bool ScoreBoard::istProgressP1Full() {
-	return (m_progressP2 + 1) * 8 > 490;
+	return (m_progressP1 + 1) * 8 > 490;
 }
 
 bool ScoreBoard::istProgressP2Full() {
