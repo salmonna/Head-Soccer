@@ -3,7 +3,7 @@
 #include "Resources.h"
 
 
-Power::Power():m_progress(0), m_clock()
+Power::Power(): m_clock(), m_powerTimer()
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
 	m_auraSprite.setTexture(texture[2]);
@@ -20,7 +20,15 @@ sf::Sprite& Power::getSprite() {
 }
 
 
+void Power::startTimer()
+{
+	m_powerTimer.restart();
+}
 
+bool Power::isTimeIsOver()
+{
+	return m_powerTimer.getElapsedTime().asSeconds() >= 1.5f;
+}
 
 
 void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position) {
@@ -32,3 +40,5 @@ void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position) {
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_auraSprite.setTextureRect(characterRect);
 }
+
+

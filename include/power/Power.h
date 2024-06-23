@@ -14,11 +14,14 @@ public:
 	virtual sf::Texture& getTexture() = 0;
 	virtual ~Power() = default;
 
+	virtual void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) = 0;
+	virtual void startTimer();
+	virtual bool isTimeIsOver();
 
 private:
 	sf::Sprite m_auraSprite;
 	sf::Clock m_clock;
-	int m_progress;
+	sf::Clock m_powerTimer;
 };
 
 

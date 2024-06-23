@@ -38,23 +38,8 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
     float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
     if (length > kickRange) {
-        //direction /= length; // ðøîåì äëéååï
-       //direction *= speed;  // äúàîú îäéøåú äîçùá
 
-        // òãëåï îé÷åí äîçùá
-   
-		//Right Direction Test
-		if (ballPosition.x > m_sprite.getPosition().x ) {
-
-			moveWithRange(4);
-			movePlayer(m_startSprite[1], 6, 10);
-		}
-		//Left Direction Test
-		else if (ballPosition.x < m_sprite.getPosition().x) {
-
-			moveWithRange(-4);
-			movePlayer(m_startSprite[1], 6, 10);
-		}
+		checkBallPosition(ballPosition);
     }
     else {
 		//Upward Direction Test
@@ -69,6 +54,22 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
     }
 
 	updateGravityAndCollision();
+}
+
+void ComputerPlayer::checkBallPosition(sf::Vector2f& ballPosition)
+{
+	//Right Direction Test
+	if (ballPosition.x > m_sprite.getPosition().x) {
+
+		moveWithRange(4);
+		movePlayer(m_startSprite[1], 6, 10);
+	}
+	//Left Direction Test
+	else if (ballPosition.x < m_sprite.getPosition().x) {
+
+		moveWithRange(-4);
+		movePlayer(m_startSprite[1], 6, 10);
+	}
 }
 
 void ComputerPlayer::reset() {

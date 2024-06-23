@@ -70,6 +70,7 @@ void Player::draw(sf::RenderWindow& window) const {
 void Player::move(sf::Vector2f pressed) {
 
 
+
 	if (sf::Keyboard::isKeyPressed(m_keys.JUMP) || m_sprite.getPosition().y < 750) {//jump
 		if (m_posY > -180)
 			m_posY -= 15;
@@ -91,7 +92,14 @@ void Player::move(sf::Vector2f pressed) {
 		moveWithRange(5);
 		movePlayer(m_startSprite[1], 6, 10);
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().isProcessFull()) {//slide
+	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
+		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
+		resetProgress();
+		m_aura = true;
+		m_sound.play();
+		m_sound.setLoop(true);
+	}
+	else if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
 		//playerObject.activatePower(ballObject.getSprite(), playerObject.getSprite());
 		resetProgress();
 		m_aura = true;
@@ -141,7 +149,14 @@ void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int
 
 void Player::resetProgress()
 {
-	ScoreBoard::getInstance().resetProgress();
+	if (!m_playerSide)
+	{
+		ScoreBoard::getInstance().resetProgressP1();
+	}
+	else
+	{
+		ScoreBoard::getInstance().resetProgressP2();
+	}
 
 }
 

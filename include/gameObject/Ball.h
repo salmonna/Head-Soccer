@@ -6,6 +6,7 @@
 #include "Factory/MovingFactory.h"
 #include <memory>
 #include "power/MoveBehavior.h"
+#include "power/RegularBehavior.h"
 
 class Ball : public MovingObject
 {
@@ -27,6 +28,7 @@ public:
 	sf::Clock& getClock();
 
 	void setMoveBehavior(std::shared_ptr<MoveBehavior> moveBehavior);
+	bool isRegularBehavior();
 
 	virtual ~Ball() { };
 

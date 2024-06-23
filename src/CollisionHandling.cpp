@@ -1,5 +1,5 @@
-#include "CollisionHandling.h"
 
+#include "CollisionHandling.h"
 #include <iostream>
 #include <map>
 #include <string>
@@ -10,6 +10,7 @@
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
 #include "gameObject/ComputerPlayer.h"
+#include "power/RegularBehavior.h"
 
 #include "gameObject/GoalSide.h"
 #include "gameObject/GoalBack.h"
@@ -19,54 +20,82 @@
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
+    // standingCollideWithBall
+    void standingCollideWithBall(sf::Vector2f & currVelocity, sf::Vector2f& direction)
+    {
+        const float restitution = 0.8f;  // מקדם ההתנגשות
+
+        float dotProduct = currVelocity.x * direction.x + currVelocity.y * direction.y;
+
+        if (dotProduct < 0) { // Ensure the ball is moving towards the player
+            sf::Vector2f reflection = 2.0f * dotProduct * direction;
+            currVelocity -= reflection * restitution;
+        }
+    }
+
+    //handelKick
+    void handelKick(sf::Vector2f& currVelocity, sf::Vector2f& direction)
+    {
+        float kickStrength = 500.0f; // עוצמת הבעיטה
+        float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
+
+        // עדכון מהירות הכדור בעקבות הבעיטה
+        currVelocity += direction * kickStrength;
+        currVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
+
+    }
+
+
+
+    //=======================================UPDATE========================================\\ 
+
+    //update after collide
+    void updateBall(Ball& ballObject, Player& playerObject)
+    {
+
+        sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
+        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        direction /= length; // נרמול הכיוון
+        sf::Vector2f currVelocity = ballObject.getVelocity();
+        
+
+       // const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
+
+        if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
+        {
+            handelKick(currVelocity, direction);
+
+        }
+        else if (playerObject.getAura()) 
+        {
+
+            playerObject.getPower()->startTimer();
+            ballObject.getCircle().setTexture(&playerObject.getPower()->getTexture());
+            ballObject.setMoveBehavior(playerObject.getPower());
+            playerObject.setAura(false);
+            playerObject.getPower()->activatePower(ballObject.getCircle(), currVelocity, direction);
+        }
+        else
+        {
+            standingCollideWithBall(currVelocity, direction);
+
+        }
+
+        ballObject.setBallVelocity(currVelocity);
+    }
+
 
     // primary collision-processing functions
     void playerCollidBall(GameObject& player,
         GameObject& ball)
     {
 
-        Ball & ballObject = dynamic_cast<Ball&>(ball);
-        Player & playerObject = dynamic_cast<Player&>(player);
+        Ball & ballObject = static_cast<Ball&>(ball);
+        Player & playerObject = static_cast<Player&>(player);
 
-        if (playerObject.getAura()){
-            
-           ballObject.getCircle().setTexture(&playerObject.getPower()->getTexture());
-          ballObject.setMoveBehavior(playerObject.getPower());
-            playerObject.setAura(false);            
-        }
 
-        float kickStrength = 500.0f; // עוצמת הבעיטה
-        float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
+        updateBall(ballObject, playerObject);
 
-        sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
-        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-        direction /= length; // נרמול הכיוון
-       
-        sf::Vector2f currVelocity = ballObject.getVelocity();
-
-        const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
-        const float restitution = 0.8f;  // מקדם ההתנגשות
-        float dotProduct = currVelocity.x * direction.x + currVelocity.y * direction.y;
-
-        if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
-        {
-            // עדכון מהירות הכדור בעקבות הבעיטה
-            currVelocity += direction * kickStrength;
-            currVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
-
-        }
-        else
-        {
-
-            if (dotProduct < 0) { // Ensure the ball is moving towards the player
-                sf::Vector2f reflection = 2.0f * dotProduct * direction;
-                currVelocity -= reflection * restitution;
-            }
-        }        
-     
-        ballObject.setBallVelocity(currVelocity);
-
-        //std::cout << "player and ball collision!\n";
     }
 
     void playerCollidPlayer(GameObject& player1,
@@ -80,8 +109,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         GameObject& goal)
     {
 
-        Ball& ballObject = dynamic_cast<Ball&>(ball);
-        GoalTop& goalObject = dynamic_cast<GoalTop&>(goal);
+        Ball& ballObject = static_cast<Ball&>(ball);
+        GoalTop& goalObject = static_cast<GoalTop&>(goal);
 
         auto scoreBar = goalObject.getSprite().getGlobalBounds();
         auto ballVelocity = ballObject.getVelocity();;

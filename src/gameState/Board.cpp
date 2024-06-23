@@ -130,7 +130,6 @@ void Board::moveAd()
 
 	if (sprite.getPosition().x >= 1800)
 	{
-
 		sprite.setPosition(-sprite.getGlobalBounds().width, 680);
 	}
 

@@ -14,15 +14,23 @@ FirePower::FirePower() :m_ballVelocity(), m_clock()
 void FirePower::performMove(Ball* ball)
 {
 
+    
+
     m_ballVelocity = ball->getVelocity();
 
     if (m_clock.getElapsedTime().asSeconds() >= 1)
     {
         m_clock.restart();
+       
+    }
+
+    if (isTimeIsOver())
+    {
+        ball->setMoveBehavior(std::make_shared<RegularBehavior>());
+        ball->getCircle().setTexture(&Resources::getInstance().getBallTexture()[0]);
     }
 
     float deltaTime = m_clock.restart().asSeconds();
-
     const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
     const float restitution = 0.8f;  // מקדם ההתנגשות
 
@@ -68,6 +76,15 @@ void FirePower::performMove(Ball* ball)
 
 }
 
+
+void FirePower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction)
+{
+    currVelocity = sf::Vector2f(1500.f, 0.f);
+    currVelocity.x *= direction.x;
+    sf::Vector2f currPos = ball.getPosition();
+    currPos.y -= 300.f;
+    ball.setPosition(currPos);
+}
 
 sf::Texture & FirePower::getTexture()
 {

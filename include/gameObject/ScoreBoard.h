@@ -24,8 +24,12 @@ public:
 	void reset();
 
 	
-	void resetProgress();
-	bool isProcessFull();
+	void resetProgressP1();
+	void resetProgressP2();
+
+	bool istProgressP1Full();
+	bool istProgressP2Full();
+
 
 	~ScoreBoard() = default;
 
@@ -37,7 +41,7 @@ private:
 
 
 	//progress bar
-	void drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite> & progress);
+	void drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite> & progressSprite , int & progress, float seconds);
 
 	//time
 	int m_gameTime;
@@ -52,15 +56,16 @@ private:
 	//text & sprite
 	std::vector<sf::Text> m_textVec;
 	std::vector<sf::Sprite> m_SpriteVec;
-	std::vector<sf::Sprite> m_progressP1;
-	std::vector<sf::Sprite> m_progressP2;
+	std::vector<sf::Sprite> m_progressP1Sprite;
+	std::vector<sf::Sprite> m_progressP2Sprite;
 
 	//points
 	int m_p1Points;
 	int m_p2Points;
 
 	//progress
-	int m_progress;
+	int m_progressP1;
+	int m_progressP2;
 
 
 

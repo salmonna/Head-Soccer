@@ -94,3 +94,9 @@ void Ball::setMoveBehavior(std::shared_ptr<MoveBehavior> moveBehavior)
 {
     m_moveBehavior = moveBehavior;
 }
+
+
+bool Ball::isRegularBehavior()
+{
+    return typeid(RegularBehavior) == typeid(m_moveBehavior);
+}
