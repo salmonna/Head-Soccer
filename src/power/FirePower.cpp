@@ -14,8 +14,6 @@ FirePower::FirePower() :m_ballVelocity(), m_clock()
 void FirePower::performMove(Ball* ball)
 {
 
-    
-
     m_ballVelocity = ball->getVelocity();
 
     if (m_clock.getElapsedTime().asSeconds() >= 1)
@@ -73,7 +71,6 @@ void FirePower::performMove(Ball* ball)
 
     ball->setBallVelocity(m_ballVelocity);
 
-
 }
 
 
@@ -84,12 +81,10 @@ void FirePower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity,
     sf::Vector2f currPos = ball.getPosition();
     currPos.y -= 300.f;
     ball.setPosition(currPos);
+    //ball.setFillColor(sf::Color(255, 255, 255, 64));
+    ball.setTexture(&Resources::getInstance().getBallTexture()[2]);
 }
 
-sf::Texture & FirePower::getTexture()
-{
-	return Resources::getInstance().getBallTexture()[2];
-}
 
 
 void FirePower::draw(sf::RenderWindow& window) const

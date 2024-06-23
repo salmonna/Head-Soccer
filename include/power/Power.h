@@ -11,7 +11,6 @@ public:
 	virtual void draw(sf::RenderWindow& window) const = 0;
 	void drawAura(sf::RenderWindow& window, sf::Vector2f position);
 	sf::Sprite& getSprite();
-	virtual sf::Texture& getTexture() = 0;
 	virtual ~Power() = default;
 
 	virtual void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) = 0;

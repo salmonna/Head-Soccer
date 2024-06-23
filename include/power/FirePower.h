@@ -13,7 +13,6 @@ public:
 	virtual void performMove(Ball * ball) override ;
 
 	void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction);
-	virtual sf::Texture& getTexture() override;
 
 	~FirePower() = default;
 
