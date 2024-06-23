@@ -5,9 +5,10 @@ RightMoveState::RightMoveState(StandPlayerState* standMoveState):m_currentState(
 	m_startPos = sf::Vector2f(160, 244);
 }
 //---------------------------------------------------------
-void RightMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos , int& gravity, bool playerSide) {
+void RightMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos , int& gravity, bool playerSide, b2Body* m_body) {
 
-	moveWithRange(5,pos,playerSide);
+	//moveWithRange(5,pos,playerSide);
+	m_body->SetLinearVelocity(b2Vec2(5.f, m_body->GetLinearVelocity().y));
 	movePlayer(m_startPos, 6, 10,sprite,pos, basePos);
 
 

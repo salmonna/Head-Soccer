@@ -27,15 +27,12 @@ m_currentMoveState(&m_standMoveState)
 	playerBox.SetAsBox(40.f / SCALE, 45.f / SCALE);
 	b2FixtureDef playerFixtureDef;
 	playerFixtureDef.shape = &playerBox;
-	playerFixtureDef.density = 10.f;
+	playerFixtureDef.density = 30.f;
 	playerFixtureDef.friction = 0.3f;
 	m_body->CreateFixture(&playerFixtureDef);
 
 	// Set the gravity scale for the player
 	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
-
-
-
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 	resetToPosition();
@@ -98,8 +95,10 @@ void Player::move(sf::Vector2f pressed) {
 		m_currentMoveState = nextState;
 	}
 	auto pos = sf::Vector2i(m_posX, m_posY);
-	m_currentMoveState->movement(m_sprite,pos, m_basePosition, m_gravity,m_playerSide);
-	
+	m_currentMoveState->movement(m_sprite,pos, m_basePosition, m_gravity,m_playerSide, m_body);
+
+	update();
+
 	m_posX = pos.x;
 	m_posY = pos.y;
 
@@ -153,4 +152,10 @@ void Player::setAura(bool aura) {
 //-----------------------------------------------------------------------------
 bool Player::getAura() const{
 	return m_aura;
+}
+//-----------------------------------------------------------------------------
+void Player::update() {
+	b2Vec2 position1 = m_body->GetPosition();
+	m_sprite.setPosition(B2VecToSFVec(position1));
+	m_sprite.setRotation(m_body->GetAngle() * 180.f / b2_pi);
 }

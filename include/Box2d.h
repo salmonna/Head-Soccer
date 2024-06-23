@@ -25,7 +25,7 @@ private:
 	Box2d& operator=(const Box2d&) = delete;
 	Box2d();
 	~Box2d();
-	b2World* m_world;
+	b2World m_world;
 	sf::RectangleShape m_ground;
 	sf::RectangleShape m_ceiling;
 	sf::RectangleShape m_leftWall;

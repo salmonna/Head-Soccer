@@ -30,7 +30,7 @@ public:
 
 	void setAura(bool aura);
 	bool getAura() const;
-
+	void update();
 
 	virtual ~Player() = default;
 private:

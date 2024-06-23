@@ -40,6 +40,8 @@ Board::Board(Menu* menu, GameResults* gameResults) :m_scoreBoard(90),m_gameState
 												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
 
 	createStaticObjects(staticObjectNames);
+
+	m_box2dWorld = Box2d::getInstance().getBox2dWorld();
 }
 
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
@@ -87,8 +89,12 @@ void Board::respond(sf::Vector2f pressed) {
 	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
 	//------------------------------------------------
 	moveAd();
-
 	
+	float timeStep = 1.f / 60.f;
+	int32 velocityIterations = 6;
+	int32 positionIterations = 3;
+	m_box2dWorld->Step(timeStep, velocityIterations, positionIterations);
+
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size() - m_goalSign; i++)
 	{

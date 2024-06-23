@@ -8,7 +8,7 @@ m_standMoveState(standState),m_kickMoveState(kickMoveState)
 }
 
 //----------------------------------------------------------------------------------
-void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide) {
+void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide, b2Body* m_body) {
 
 	if (playerSide) {
 		m_keys = Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
@@ -17,10 +17,13 @@ void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f
 		m_keys = Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
 	}
 
-	if (pos.y > -180)
-		pos.y -= 15;
-
-	movePlayer(m_startPos, 7, 50, sprite, pos, basePos);
+	//if (pos.y > -180)
+	//	pos.y -= 15;
+	b2Vec2 vel = m_body->GetLinearVelocity();
+	if (vel.y > -2) {  // Check if player is on the ground
+		m_body->ApplyLinearImpulseToCenter(b2Vec2(0.f, -JUMP_FORCE), true);
+	}
+	//movePlayer(m_startPos, 7, 50, sprite, pos, basePos);
 	updateGravityAndCollision(sprite, basePos, pos, gravity);
 
 	if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left

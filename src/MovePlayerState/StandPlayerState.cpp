@@ -9,26 +9,24 @@ StandPlayerState::StandPlayerState(LeftMoveState* leftMoveState, RightMoveState*
 }
 
 //----------------------------------------------------------------------------------
-void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide) {
+void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide, b2Body* m_body) {
 
 	setKeyboard(playerSide);
-
+	
 	resetToPosition(sprite,pos,basePos);
+	m_body->SetLinearVelocity(b2Vec2(0.f, m_body->GetLinearVelocity().y));
 
 	if (sf::Keyboard::isKeyPressed(m_keys.JUMP)) {//jump
 		m_nextState = m_jumpMoveState;
 	}
-
 	else if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//kick
 
 		m_nextState = m_kickMoveState;
 	}
-
 	else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
 
 		m_nextState = m_leftMoveState;
 	}
-
 	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
 
 		m_nextState = m_rightMoveState;

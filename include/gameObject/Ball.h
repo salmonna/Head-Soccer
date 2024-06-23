@@ -4,6 +4,8 @@
 #include "Window.h"
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
+#include "Box2d.h"
+
 
 class Ball : public MovingObject
 {
@@ -22,9 +24,9 @@ public:
 	float getRadius() const;
 
 	void restartBall();
+	void update();
 
 	virtual ~Ball() = default;
-
 
 	//just for chacking --------
 	sf::CircleShape& getCircle();
@@ -39,4 +41,5 @@ private:
 
 	sf::Clock m_clock;
 	static bool m_registeritBall;
+	b2Body* m_body;
 };
