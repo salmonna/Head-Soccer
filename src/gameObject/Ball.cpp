@@ -90,6 +90,11 @@ void  Ball::move(sf::Vector2f pressed)
     {
         setRegular();
     }
+    else if (m_power->powerIsActive() && m_power->stayInTheAir())
+    {
+        return;
+    }
+
      
 
     if (m_clock.getElapsedTime().asSeconds() >= 1)

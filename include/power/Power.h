@@ -13,13 +13,18 @@ public:
 	virtual ~Power() = default;
 
 	virtual void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) = 0;
+	virtual bool powerIsActive();
 	virtual void startTimer();
 	virtual bool isTimeIsOver();
+	virtual bool stayInTheAir();
+
 
 private:
+	bool m_PowerIsActive;
 	sf::Sprite m_auraSprite;
 	sf::Clock m_clock;
 	sf::Clock m_powerTimer;
+	sf::Clock m_stayTimer;
 };
 
 
