@@ -32,36 +32,37 @@ namespace // anonymous namespace — the standard way to make function "static"
             playerObject.setAura(false);            
         }
 
-        float kickStrength = 500.0f; // עוצמת הבעיטה
-        float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
+        //float kickStrength = 500.0f; // עוצמת הבעיטה
+        //float kickVerticalBoost = -400.0f; // עוצמת הבעיטה האנכית
 
-        sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
-        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-        direction /= length; // נרמול הכיוון
+        //sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
+        //float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        //direction /= length; // נרמול הכיוון
        
-        sf::Vector2f currVelocity = ballObject.getVelocity();
+        //sf::Vector2f currVelocity = ballObject.getVelocity();
 
-        const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
-        const float restitution = 0.8f;  // מקדם ההתנגשות
-        float dotProduct = currVelocity.x * direction.x + currVelocity.y * direction.y;
+        //const float gravity = 980.0f;  // כוח המשיכה בפיקסלים לשנייה בריבוע
+        //const float restitution = 0.8f;  // מקדם ההתנגשות
+        //float dotProduct = currVelocity.x * direction.x + currVelocity.y * direction.y;
 
         if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
         {
-            // עדכון מהירות הכדור בעקבות הבעיטה
-            currVelocity += direction * kickStrength;
-            currVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
-
+            //// עדכון מהירות הכדור בעקבות הבעיטה
+            //currVelocity += direction * kickStrength;
+            //currVelocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
+            ballObject.kick(playerObject.getSideOfPlayer());
+            
         }
         else
         {
 
-            if (dotProduct < 0) { // Ensure the ball is moving towards the player
-                sf::Vector2f reflection = 2.0f * dotProduct * direction;
-                currVelocity -= reflection * restitution;
-            }
+            //if (dotProduct < 0) { // Ensure the ball is moving towards the player
+            //    sf::Vector2f reflection = 2.0f * dotProduct * direction;
+            //    currVelocity -= reflection * restitution;
+            //}
         }        
      
-        ballObject.setBallVelocity(currVelocity);
+        //ballObject.setBallVelocity(currVelocity);
 
         //std::cout << "player and ball collision!\n";
     }
@@ -120,8 +121,8 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         goalObject.setIfGoal(true);
 
-        ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
-        ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
+        //ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
+        ballObject.setPosition(sf::Vector2f(900.0f, 100.0f));
 
     }
 

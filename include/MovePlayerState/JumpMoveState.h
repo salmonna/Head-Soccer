@@ -26,5 +26,7 @@ private:
 
 	Keyboard m_keys;
 
+	bool m_jump;
+
 };
 

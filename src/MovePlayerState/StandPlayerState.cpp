@@ -1,5 +1,5 @@
 #include"MovePlayerState/StandPlayerState.h"
-
+#include <iostream>
 
 //----------------------------------------------------------------------------------
 StandPlayerState::StandPlayerState(LeftMoveState* leftMoveState, RightMoveState* rightMoveState, JumpMoveState* jumeMoveState, KickMoveState* kickMoveState)
@@ -31,6 +31,7 @@ void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vecto
 
 		m_nextState = m_rightMoveState;
 	}
+
 }
 //----------------------------------------------------------------------------------
 BaseMovePlayerState* StandPlayerState::handleMoveStatus() {

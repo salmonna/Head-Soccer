@@ -71,6 +71,45 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
     rightWall.setOrigin(10.f, 500.f);
     rightWall.setPosition(1800.f, 500.f);
     m_rightWall = rightWall;
+
+    //-------------------------------------------top goal left---------------------------//
+
+    // Create the top goal
+    b2BodyDef topGoalBodyDef;
+    topGoalBodyDef.position.Set(100.f / SCALE, 570.f / SCALE);
+    b2Body* topGoalBody = m_world.CreateBody(&topGoalBodyDef);
+    b2PolygonShape topGoalBox;
+    topGoalBox.SetAsBox(100.f / SCALE, 20.f / SCALE);
+    topGoalBody->CreateFixture(&topGoalBox, 0.f);
+
+    // Create the ceiling rectangle shape for rendering
+    sf::RectangleShape topGoal(sf::Vector2f(100.f, 40.f));
+    topGoal.setFillColor(sf::Color::Red);
+    topGoal.setOrigin(100.f, 20.f);
+    topGoal.setPosition(100.f, 570.f);
+    m_topGoalLeft = topGoal;
+
+    //-------------------------------------------top goal right---------------------------//
+
+    // Create the top goal on the right side
+    b2BodyDef topGoalBodyDef2;
+    topGoalBodyDef2.position.Set(1800.f / SCALE, 570.f / SCALE); // Position in Box2D world coordinates
+    b2Body* topGoalBody2 = m_world.CreateBody(&topGoalBodyDef2);
+
+    // Define the shape of the top goal (adjust dimensions as needed)
+    b2PolygonShape topGoalBox2;
+    topGoalBox2.SetAsBox(100.f / SCALE, 20.f / SCALE); // SetAsBox takes half-width and half-height
+
+    // Create fixture for the top goal body
+    topGoalBody2->CreateFixture(&topGoalBox2, 0.f); // Density set to 0 for static bodies
+
+    // Create the rectangle shape for rendering
+    sf::RectangleShape topGoal2(sf::Vector2f(100.f, 40.f)); // Adjust size as needed for rendering
+    topGoal2.setFillColor(sf::Color::Black);
+    topGoal2.setOrigin(100.f, 20.f); // Origin should match half-width and half-height for correct positioning
+    topGoal2.setPosition(1800.f, 570.f); // Position in screen coordinates
+    m_topGoalRight = topGoal2;
+
 }
 
 
@@ -86,6 +125,8 @@ void Box2d::draw(sf::RenderWindow& window)const {
     window.draw(m_ceiling);
     window.draw(m_leftWall);
     window.draw(m_rightWall);
+    window.draw(m_topGoalLeft); 
+    window.draw(m_topGoalRight);
 }
 
 Box2d::~Box2d()

@@ -7,8 +7,8 @@
 
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
-, m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState)
-,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState),
+, m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
+,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
 m_currentMoveState(&m_standMoveState)
 {
 
@@ -33,19 +33,19 @@ m_currentMoveState(&m_standMoveState)
 	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body = world->CreateBody(&playerBodyDef);
 	b2PolygonShape playerBox;
-	playerBox.SetAsBox(40.f / SCALE, 40.f / SCALE);
+	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
 	b2FixtureDef playerFixtureDef;
 	playerFixtureDef.shape = &playerBox;
 	playerFixtureDef.density = 1.f;
-	playerFixtureDef.friction = 0.3f;
+	playerFixtureDef.friction = 0.8f;
 	m_body->CreateFixture(&playerFixtureDef);
 
 	// Set the gravity scale for the player
 	//m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
-	m_sprite.setOrigin(40.f, 40.f);
+	m_sprite.setOrigin(30.f, 40.f);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
-	//resetToPosition();
+	resetToPosition();
 
 
 	m_sprite.setPosition(m_basePosition);
@@ -131,7 +131,7 @@ sf::Sprite& Player::getSprite() {
 }
 //-----------------------------------------------------------------------------
 void Player::reset() {
-	m_sprite.setPosition(m_basePosition);
+	//m_sprite.setPosition(m_basePosition);
 	m_posX = 0;
 	m_posY = 0;
 }
@@ -158,4 +158,8 @@ bool Player::getAura() const{
 void Player::update() {
 	b2Vec2 position1 = m_body->GetPosition();
 	m_sprite.setPosition(B2VecToSFVec(position1));
+}
+
+bool Player::getSideOfPlayer() {
+	return m_playerSide;
 }

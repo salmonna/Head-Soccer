@@ -6,7 +6,7 @@
 
 const float SCALE = 30.f;  // Scale factor for converting Box2D units to SFML pixels
 const float GRAVITY = 9.7f;
-const float JUMP_FORCE = 60.f;
+const float JUMP_FORCE = 45.f;
 const float PLAYER_GRAVITY_SCALE = 0.5f;  // Gravity scale for the player
 
 class Box2d
@@ -30,5 +30,7 @@ private:
 	sf::RectangleShape m_ceiling;
 	sf::RectangleShape m_leftWall;
 	sf::RectangleShape m_rightWall;
+	sf::RectangleShape m_topGoalLeft;
+	sf::RectangleShape m_topGoalRight;
 };
 

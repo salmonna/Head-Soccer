@@ -25,6 +25,7 @@ public:
 
 	void restartBall();
 	void update();
+	void kick(bool rigthSide);
 
 	virtual ~Ball() = default;
 

@@ -1,15 +1,27 @@
 #include "MovePlayerState/LeftMoveState.h"
 //----------------------------------------------------------
-LeftMoveState::LeftMoveState(StandPlayerState* standMoveState):m_standMoveState(standMoveState),m_currentState(nullptr)
+LeftMoveState::LeftMoveState(StandPlayerState* standMoveState, JumpMoveState* jumpMoveState):m_standMoveState(standMoveState),m_currentState(nullptr),m_jumpMoveState(jumpMoveState)
 {
 	m_startPos = sf::Vector2f(160, 244);
 }
 //----------------------------------------------------------
 void LeftMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide, b2Body* m_body) {
 
-	m_body->SetLinearVelocity(b2Vec2(-5.f, m_body->GetLinearVelocity().y));
+	if (playerSide) {
+		m_keys = Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+	}
+	else {
+		m_keys = Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+	}
+
+	m_body->SetLinearVelocity(b2Vec2(-10.f, m_body->GetLinearVelocity().y));
 	//moveWithRange(-5,pos, playerSide);
 	movePlayer(m_startPos, 6, 10,sprite,pos,basePos);
+
+	if (sf::Keyboard::isKeyPressed(m_keys.JUMP))
+	{
+		m_currentState = (BaseMovePlayerState*)m_jumpMoveState;
+	}
 
 	if (changeState(6)) {
 

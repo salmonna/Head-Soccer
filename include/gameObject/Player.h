@@ -31,6 +31,7 @@ public:
 	void setAura(bool aura);
 	bool getAura() const;
 	void update();
+	bool getSideOfPlayer();
 
 	virtual ~Player() = default;
 private:
