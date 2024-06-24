@@ -12,7 +12,6 @@ public:
 
 
 	};
-
 	~RegularBehavior() = default;
 
 private:

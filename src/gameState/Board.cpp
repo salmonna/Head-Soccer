@@ -39,6 +39,7 @@ Board::Board(Menu* menu, GameResults* gameResults) :m_gameState(NULL), m_gameRes
 												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
 
 	createStaticObjects(staticObjectNames);
+	
 }
 
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
@@ -121,6 +122,8 @@ void Board::respond(sf::Vector2f pressed) {
 	}
   
 }
+
+
 
 void Board::moveAd()
 {

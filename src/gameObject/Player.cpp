@@ -6,7 +6,7 @@
 #include "gameObject/scoreBoard.h"
 #include "power/FirePower.h"
 #include "power/InvisiblePower.h"
-
+#include "power/DragonPower.h"
 
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
@@ -15,7 +15,7 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 m_currentMoveState(&m_standMoveState)
 {
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<InvisiblePower>();
+	m_power = std::make_shared<DragonPower>();
 
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);

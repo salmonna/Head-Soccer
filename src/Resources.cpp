@@ -44,6 +44,8 @@ Resources::Resources(){
 	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" };
 	loadFromFile(power, m_powerTexture);
 
+	std::vector<std::string> powerOfPlayer{ "fireDragon.png"};
+	loadFromFile(powerOfPlayer, m_powerOfPlayer);
 
 	// Loading sound buffers.
 	std::vector<std::string> soundStr = {"super saiyan sound.wav" };
@@ -81,7 +83,10 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 	}
 }
 
+std::vector<sf::Texture>& Resources::getPlayerPower() {
 
+	return m_powerOfPlayer;
+}
 std::vector<sf::Texture>& Resources::getPauseTexture()
 {
 	return m_pauseTexture;

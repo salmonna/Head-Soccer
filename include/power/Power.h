@@ -15,6 +15,7 @@ public:
 	virtual void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) = 0;
 	virtual void startTimer();
 	virtual bool isTimeIsOver();
+	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) {};
 
 private:
 	sf::Sprite m_auraSprite;
