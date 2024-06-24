@@ -7,9 +7,9 @@ m_standMoveState(standState),m_jumpMoveState(jumpMoveState)
 	m_startPos = sf::Vector2f(160, 126);
 }
 //-------------------------------------------------------------------------
-void KickMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide, b2Body* m_body) {
+void KickMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) {
 
-	movePlayer(m_startPos, 7, 10, sprite, pos, basePos);
+	movePlayer(m_startPos, 7, 10, sprite);
 
 	if (changeState(7)) {
 

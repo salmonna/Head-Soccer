@@ -30,18 +30,19 @@ m_currentMoveState(&m_standMoveState)
 	// Create the player
 	b2BodyDef playerBodyDef;
 	playerBodyDef.type = b2_dynamicBody;
+	playerBodyDef.bullet = true;
 	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body = world->CreateBody(&playerBodyDef);
 	b2PolygonShape playerBox;
 	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
 	b2FixtureDef playerFixtureDef;
 	playerFixtureDef.shape = &playerBox;
-	playerFixtureDef.density = 1.5f;
-	playerFixtureDef.friction = 0.8f;
+	playerFixtureDef.density = 10.f;
+	playerFixtureDef.friction = 0.4f;
 	m_body->CreateFixture(&playerFixtureDef);
 
 	// Set the gravity scale for the player
-	//m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
 	m_sprite.setOrigin(30.f, 40.f);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
@@ -96,7 +97,7 @@ void Player::move(sf::Vector2f pressed) {
 		m_currentMoveState = nextState;
 	}
 	auto pos = sf::Vector2i(m_posX, m_posY);
-	m_currentMoveState->movement(m_sprite,pos, m_basePosition, m_gravity,m_playerSide, m_body);
+	m_currentMoveState->movement(m_sprite,m_playerSide, m_body);
 
 	update();
 

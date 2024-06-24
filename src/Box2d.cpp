@@ -42,7 +42,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
 
     // Create the left wall
     b2BodyDef leftWallBodyDef;
-    leftWallBodyDef.position.Set(30.f / SCALE, 500.f / SCALE);
+    leftWallBodyDef.position.Set(10.f / SCALE, 500.f / SCALE);
     b2Body* leftWallBody = m_world.CreateBody(&leftWallBodyDef);
     b2PolygonShape leftWallBox;
     leftWallBox.SetAsBox(10.f / SCALE, 500.f / SCALE);
@@ -52,14 +52,14 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
     sf::RectangleShape leftWall(sf::Vector2f(20.f, 1013.f));
     leftWall.setFillColor(sf::Color::Blue);
     leftWall.setOrigin(10.f, 500.f);
-    leftWall.setPosition(30.f, 500.f);
+    leftWall.setPosition(10.f, 500.f);
     m_leftWall = leftWall;
 
     //-------------------------------------------right Wall---------------------------//
 
     // Create the right wall
     b2BodyDef rightWallBodyDef;
-    rightWallBodyDef.position.Set(1800.f / SCALE, 500.f / SCALE);
+    rightWallBodyDef.position.Set(1790.f / SCALE, 500.f / SCALE);
     b2Body* rightWallBody = m_world.CreateBody(&rightWallBodyDef);
     b2PolygonShape rightWallBox;
     rightWallBox.SetAsBox(10.f / SCALE, 500.f / SCALE);
@@ -69,7 +69,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
     sf::RectangleShape rightWall(sf::Vector2f(20.f, 1013.f));
     rightWall.setFillColor(sf::Color::Yellow);
     rightWall.setOrigin(10.f, 500.f);
-    rightWall.setPosition(1800.f, 500.f);
+    rightWall.setPosition(1790.f, 500.f);
     m_rightWall = rightWall;
 
     //-------------------------------------------top goal left---------------------------//

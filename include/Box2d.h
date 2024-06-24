@@ -5,9 +5,9 @@
 #include <SFML/Graphics.hpp>
 
 const float SCALE = 30.f;  // Scale factor for converting Box2D units to SFML pixels
-const float GRAVITY = 9.7f;
-const float JUMP_FORCE = 45.f;
-const float PLAYER_GRAVITY_SCALE = 0.5f;  // Gravity scale for the player
+const float GRAVITY = 30.7f;
+const float JUMP_FORCE = 600.f;
+const float PLAYER_GRAVITY_SCALE = 0.7f;  // Gravity scale for the player
 
 class Box2d
 {

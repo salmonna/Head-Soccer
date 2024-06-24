@@ -9,17 +9,14 @@ StandPlayerState::StandPlayerState(LeftMoveState* leftMoveState, RightMoveState*
 }
 
 //----------------------------------------------------------------------------------
-void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide, b2Body* m_body) {
+void StandPlayerState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) {
 
 	setKeyboard(playerSide);
 	
-	resetToPosition(sprite,pos,basePos);
-	m_body->SetLinearVelocity(b2Vec2(0.f, m_body->GetLinearVelocity().y));
-
-	if (sf::Keyboard::isKeyPressed(m_keys.JUMP)) {//jump
-		m_nextState = m_jumpMoveState;
-	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//kick
+	resetToPosition(sprite);
+	body->SetLinearVelocity(b2Vec2(0.f, body->GetLinearVelocity().y));
+	
+	if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//kick
 
 		m_nextState = m_kickMoveState;
 	}
@@ -31,8 +28,12 @@ void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vecto
 
 		m_nextState = m_rightMoveState;
 	}
+	else if (sf::Keyboard::isKeyPressed(m_keys.JUMP)) {//jump
+		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 0.f));
+		m_nextState = m_jumpMoveState;
+	}
 	else {
-		m_body->SetLinearVelocity(b2Vec2(0.f, m_body->GetLinearVelocity().y));  // Stop horizontal movement when no key is pressed
+		body->SetLinearVelocity(b2Vec2(0.f, body->GetLinearVelocity().y));  // Stop horizontal movement when no key is pressed
 	}
 
 }
