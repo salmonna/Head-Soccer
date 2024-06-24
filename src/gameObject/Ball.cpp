@@ -48,11 +48,15 @@ void Ball::setPosition(sf::Vector2f position)
 {
     // Update the position of the Box2D body
     b2Vec2 newPosition(position.x / SCALE, position.y / SCALE);
-    //m_ball.setPosition(position);
-    m_body->SetTransform(newPosition, m_body->GetAngle());
-    update();
-    //m_sprite.setPosition(position);
+    m_body->SetTransform(newPosition, 0); // Set rotation to 0 degrees
+
+    // Ensure no horizontal movement
+    m_body->SetLinearVelocity(b2Vec2(0, m_body->GetLinearVelocity().y));
+
+    update(); // Assuming this function updates the sprite position
+    //m_sprite.setPosition(position); // Update the sprite position if needed
 }
+
 
 sf::Vector2f Ball::getVelocity() const
 {

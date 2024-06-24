@@ -19,11 +19,11 @@ m_currentMoveState(&m_standMoveState)
 	if (m_playerSide)
 	{
 		m_sprite.setScale(-1, 1);
-		m_basePosition = sf::Vector2f(1520, 750);
+		m_basePosition = sf::Vector2f(1520, 770);
 	}
 	else
 	{
-		m_basePosition = sf::Vector2f(272, 750);
+		m_basePosition = sf::Vector2f(272, 770);
 	}
 	//----------------------box2d---------------------------//
 	auto world = Box2d::getInstance().getBox2dWorld();
@@ -132,8 +132,11 @@ sf::Sprite& Player::getSprite() {
 //-----------------------------------------------------------------------------
 void Player::reset() {
 	//m_sprite.setPosition(m_basePosition);
-	m_posX = 0;
-	m_posY = 0;
+	// Update the position of the Box2D body
+	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
+	//m_ball.setPosition(position);
+	m_body->SetTransform(newPosition, m_body->GetAngle());
+	//update();
 }
 //-----------------------------------------------------------------------------
 sf::Vector2f Player::getPosition() const {

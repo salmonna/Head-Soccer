@@ -90,10 +90,7 @@ void Board::respond(sf::Vector2f pressed) {
 	//------------------------------------------------
 	moveAd();
 	
-	float timeStep = 1.f / 60.f;
-	int32 velocityIterations = 6;
-	int32 positionIterations = 3;
-	m_box2dWorld->Step(timeStep, velocityIterations, positionIterations);
+
 
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size() - m_goalSign; i++)
@@ -118,6 +115,12 @@ void Board::respond(sf::Vector2f pressed) {
 
 	if (m_goalSign)
 		m_goalSprite.move(10,0);
+	else {
+		float timeStep = 1.f / 60.f;
+		int32 velocityIterations = 6;
+		int32 positionIterations = 3;
+		m_box2dWorld->Step(timeStep, velocityIterations, positionIterations);
+	}
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
