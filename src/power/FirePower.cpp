@@ -12,6 +12,8 @@ FirePower::FirePower() :m_ballVelocity(), m_clock()
 
 void FirePower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction)
 {
+    setPowerIsActive(true);
+
     currVelocity = sf::Vector2f(1500.f, 0.f);
     currVelocity.x *= direction.x;
 
