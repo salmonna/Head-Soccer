@@ -55,6 +55,7 @@ sf::Vector2f Ball::getPosition() const
 void Ball::draw(sf::RenderWindow & window) const
 {
 	window.draw(m_ball);
+    m_power->draw(window, m_ball.getPosition());
 }
 
 

@@ -13,6 +13,7 @@ public:
 	virtual ~Power() = default;
 
 	virtual void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) = 0;
+	virtual void draw(sf::RenderWindow & window, sf::Vector2f position) {};
 
 	virtual bool powerIsActive();
 	virtual void startTimer();

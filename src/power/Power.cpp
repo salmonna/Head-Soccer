@@ -38,7 +38,7 @@ bool Power::isTimeIsOver()
 
 bool Power::stayInTheAir()
 {
-	return m_stayTimer.getElapsedTime().asMilliseconds() >= 1.f;
+	return m_stayTimer.getElapsedTime().asSeconds() >= 1.f;
 }
 
 
