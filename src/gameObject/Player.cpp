@@ -19,18 +19,17 @@ m_currentMoveState(&m_standMoveState)
 	if (m_playerSide)
 	{
 		m_sprite.setScale(-1, 1);
-		m_basePosition = sf::Vector2f(1520, 770);
+		m_basePosition = sf::Vector2f(1520, 775);
 	}
 	else
 	{
-		m_basePosition = sf::Vector2f(272, 770);
+		m_basePosition = sf::Vector2f(272, 775);
 	}
 	//----------------------box2d---------------------------//
 	auto world = Box2d::getInstance().getBox2dWorld();
 	// Create the player
 	b2BodyDef playerBodyDef;
 	playerBodyDef.type = b2_dynamicBody;
-	playerBodyDef.bullet = true;
 	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body = world->CreateBody(&playerBodyDef);
 	b2PolygonShape playerBox;
@@ -45,7 +44,7 @@ m_currentMoveState(&m_standMoveState)
 	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
 	m_sprite.setOrigin(30.f, 40.f);
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[2]);
 	resetToPosition();
 
 

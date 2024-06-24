@@ -91,7 +91,6 @@ void Board::respond(sf::Vector2f pressed) {
 	moveAd();
 	
 
-
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size() - m_goalSign; i++)
 	{
@@ -130,7 +129,6 @@ void Board::respond(sf::Vector2f pressed) {
 			break;
 		}
 	}
-  
 }
 
 void Board::moveAd()

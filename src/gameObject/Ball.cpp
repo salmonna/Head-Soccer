@@ -19,8 +19,8 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &circle;
     fixtureDef.density = 0.4f;
-    fixtureDef.friction = 0.7f;
-    fixtureDef.restitution = 0.8f;
+    fixtureDef.friction = 0.1f;
+    fixtureDef.restitution = 0.7f;
     m_body->CreateFixture(&fixtureDef);
 	
 

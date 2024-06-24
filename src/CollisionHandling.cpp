@@ -60,28 +60,10 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     void computerPlayerCollidBall(GameObject& computerPlayer, GameObject& ball) {
 
-        
         Ball& ballObject = dynamic_cast<Ball&>(ball);
         ComputerPlayer& computerObject = dynamic_cast<ComputerPlayer&>(computerPlayer);
 
-        sf::Vector2 velocity = ballObject.getVelocity();
-
-        computerObject.movePlayer(sf::Vector2f(160, 126), 7,10);
-
-        const float kickStrength = 200.0f; // עוצמת הבעיטה
-        const float kickVerticalBoost = -100.0f; // עוצמת הבעיטה האנכית
-
-        
-        // כיוון הבעיטה (ממרכז השחקן למרכז הכדור)
-        sf::Vector2f direction = computerObject.getRivalGoal() - ballObject.getPosition();
-        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-        direction /= length; // נרמול הכיוון
-
-        // עדכון מהירות הכדור בעקבות הבעיטה
-        velocity += direction * kickStrength;
-        velocity.y += kickVerticalBoost; // הוספת כוח בעיטה אנכי כדי לגרום לכדור לקפוץ
-
-        ballObject.setBallVelocity(velocity);
+        ballObject.kick(false);
 
     }
 

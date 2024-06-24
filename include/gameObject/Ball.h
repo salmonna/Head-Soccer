@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
 #include "Box2d.h"
-
+#include <iostream>
 
 class Ball : public MovingObject
 {
@@ -27,7 +27,13 @@ public:
 	void update();
 	void kick(bool rigthSide);
 
-	virtual ~Ball() = default;
+	virtual ~Ball() {
+		std::cout << " B-D" << std::endl;
+		m_body->DestroyFixture(m_body->GetFixtureList());
+		auto world = Box2d::getInstance().getBox2dWorld();
+		world->DestroyBody(m_body);
+		m_body = nullptr;
+	};
 
 	//just for chacking --------
 	sf::CircleShape& getCircle();

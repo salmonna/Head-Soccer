@@ -2,19 +2,35 @@
 #include "Resources.h"
 #include "power/FirePower.h"
 
-ComputerPlayer::ComputerPlayer():m_numOfJump(0),m_posX(0), m_posY(0), m_move(-2), m_gravity(0)
+ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 {
 
 	sf::Vector2f pos(550, 80);
-
 	m_power = std::make_unique<FirePower>(pos);
    
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 	resetToPosition();
+	m_basePosition = sf::Vector2f(272, 775);
 
-	m_basePosition = sf::Vector2f(272, 750);
 
-	m_sprite.setPosition(m_basePosition);
+	//----------------------box2d---------------------------//
+	auto world = Box2d::getInstance().getBox2dWorld();
+	// Create the player
+	b2BodyDef playerBodyDef;
+	playerBodyDef.type = b2_dynamicBody;
+	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
+	m_body = world->CreateBody(&playerBodyDef);
+	b2PolygonShape playerBox;
+	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
+	b2FixtureDef playerFixtureDef;
+	playerFixtureDef.shape = &playerBox;
+	playerFixtureDef.density = 10.f;
+	playerFixtureDef.friction = 0.4f;
+	m_body->CreateFixture(&playerFixtureDef);
+	// Set the gravity scale for the player
+	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+
+	m_sprite.setOrigin(30.f, 40.f);
 
 	m_startSprite.push_back(sf::Vector2f(160, 126));
 	m_startSprite.push_back(sf::Vector2f(160, 244));
@@ -37,42 +53,44 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
 
     sf::Vector2f direction = ballPosition - m_sprite.getPosition();
     float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+	if (m_jump)
+	{
+		movePlayer(m_startSprite[2], 7, 100);
+	}
+	update();
 
     if (length > kickRange) {
-   
+		
+		if (length > 600 && ballPosition.x > m_sprite.getPosition().x){
+			resetToPosition();
+			return;
+		}
+
 		//Right Direction Test
 		if (ballPosition.x > m_sprite.getPosition().x ) {
 
-			moveWithRange(4);
+			m_body->SetLinearVelocity(b2Vec2(7.f, m_body->GetLinearVelocity().y));
 			movePlayer(m_startSprite[1], 6, 10);
-
 		}
 		//Left Direction Test
 		else if (ballPosition.x < m_sprite.getPosition().x) {
 
-			moveWithRange(-4);
+			m_body->SetLinearVelocity(b2Vec2(-7.f, m_body->GetLinearVelocity().y));
 			movePlayer(m_startSprite[1], 6, 10);
-
 		}
     }
-    else {
-		//Upward Direction Test
-		if (ballPosition.y < 750) {
-			//so jump
-			if (m_posY > -180) {
-				m_posY -= 25;
-			}
-			movePlayer(m_startSprite[2], 7, 100);
-		}
+    else if(ballPosition.y < 750 && !m_jump) {
+		
+		m_jump = true;
+		m_body->ApplyLinearImpulseToCenter(b2Vec2(0.f, -JUMP_FORCE), true);
     }
 
-	updateGravityAndCollision();
 }
 
 void ComputerPlayer::reset() {
-	m_sprite.setPosition(m_basePosition);
-	m_posX = 0;
-	m_posY = 0;
+	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
+	m_body->SetTransform(newPosition, m_body->GetAngle());
+	
 }
 
 
@@ -85,54 +103,26 @@ void ComputerPlayer::movePlayer(sf::Vector2f startPos, int maxSprite, float maxT
 		if (m_numOfJump > 110 * maxSprite)
 		{
 			m_numOfJump = 0;
-			m_move = -2;
+			m_jump = false;
 			return;
 		}
 		else
 		{
 			m_moveClock.restart();
 			m_numOfJump += 115;
-			resetToPosition(startPos, m_numOfJump, m_posX, m_posY);
+			resetToPosition(startPos, m_numOfJump);
 		}
 
 	}
 }
 
 // Reset to default position if not jumping
-void ComputerPlayer::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int posY) {
+void ComputerPlayer::resetToPosition(sf::Vector2f startPos, int numOfJump) {
 
 	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
-	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
-}
-
-// Handle gravity and ground collision
-void ComputerPlayer::updateGravityAndCollision() {
-	if (m_sprite.getPosition().y < 750)
-	{
-		m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + m_posY + m_gravity));
-		m_gravity += 5;
-	}
-	else
-	{
-		m_gravity = 0;
-		m_posY = 0;
-	}
-}
-
-void ComputerPlayer::moveWithRange(int x) {
-	
-	if (false)
-	{
-		if (m_posX + x > -1400 && m_posX + x < 220)
-			m_posX += x;
-	}
-	else
-	{
-		if (m_posX + x > -220 && m_posX + x < 1400)
-			m_posX += x;
-	}
+	//m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
 }
 
 void ComputerPlayer::draw(sf::RenderWindow& window)const {
@@ -144,7 +134,19 @@ sf::Vector2f ComputerPlayer::getRivalGoal()const {
 
 	return m_rivalGoal;
 }
+
+//-----------------------------------------------------------------------------
+void ComputerPlayer::update() {
+	b2Vec2 position1 = m_body->GetPosition();
+	m_sprite.setPosition(B2VecToSFVec(position1));
+}
+
 ComputerPlayer::~ComputerPlayer()
 {
+	std::cout << " C-D" << std::endl;
+	m_body->DestroyFixture(m_body->GetFixtureList());
+	auto world = Box2d::getInstance().getBox2dWorld();
+	world->DestroyBody(m_body);
+	m_body = nullptr;
 }
 

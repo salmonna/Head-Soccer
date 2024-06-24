@@ -7,6 +7,7 @@
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
 #include "Box2d.h"
+#include <iostream>
 //-------
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/StandPlayerState.h"
@@ -33,7 +34,13 @@ public:
 	void update();
 	bool getSideOfPlayer();
 
-	virtual ~Player() = default;
+	virtual ~Player() {
+		std::cout << " P-D" << std::endl;
+		m_body->DestroyFixture(m_body->GetFixtureList());
+		auto world = Box2d::getInstance().getBox2dWorld();
+		world->DestroyBody(m_body);
+		m_body = nullptr;
+	};
 private:
 
 	int m_numOfJump;
