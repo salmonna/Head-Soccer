@@ -1,0 +1,6 @@
+configure_file ("Stadium.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Ad Board.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Goal - Back.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Goal - Side.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Goal - Top.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Goal.png" ${CMAKE_BINARY_DIR} COPYONLY)
