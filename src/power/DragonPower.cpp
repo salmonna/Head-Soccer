@@ -16,7 +16,7 @@ DragonPower::DragonPower():m_round(0),m_rightSide(false)
 //--------------------------------------------------------------
 void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
 
-	if (m_clockDragon.getElapsedTime().asMilliseconds() >= 100.f)
+	if (m_clockDragon.getElapsedTime().asMilliseconds() >= 150.f)
 	{
 		if (m_round == m_posDragon.size()) {
 
@@ -28,9 +28,17 @@ void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
 		m_clockDragon.restart();
 	}
 	
-	position.x -= (m_dragonSprite.getGlobalBounds().width*0.9);
-	position.y -= (m_dragonSprite.getGlobalBounds().height/2);
+	if (!m_rightSide) {
 
+		position.x -= (m_dragonSprite.getGlobalBounds().width * 0.9);
+		position.y -= (m_dragonSprite.getGlobalBounds().height / 2);
+	}
+	else
+	{
+		position.x += (m_dragonSprite.getGlobalBounds().width * 0.9);
+		position.y -= (m_dragonSprite.getGlobalBounds().height / 2);
+		
+	}
 	m_dragonSprite.setPosition(position);
 	window.draw(m_dragonSprite);
 }
@@ -50,19 +58,21 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 //--------------------------------------------------------------
 void DragonPower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) {
 
+	currVelocity = sf::Vector2f(1500.f, 0.f);
+	currVelocity.x *= direction.x;
+
+	sf::Vector2f currPos = ball.getPosition();
+	currPos.y  = 400.f;
 
 	if (direction.x < 0)
 	{
 		m_rightSide = true;
 	}
+	
 
-	currVelocity = sf::Vector2f(2500.f, 0.f);
-	currVelocity.x *= direction.x;
-
-	sf::Vector2f currPos = ball.getPosition();
-	currPos.y  = 600.f;
 	ball.setPosition(currPos);
 
+	m_round = 0;
 }
 //--------------------------------------------------------------
 DragonPower::~DragonPower()
