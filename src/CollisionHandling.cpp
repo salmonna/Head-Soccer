@@ -72,45 +72,45 @@ namespace // anonymous namespace — the standard way to make function "static"
     void ballCollidGoalTop(GameObject& ball, GameObject& goal)
     {
 
-        Ball& ballObject = dynamic_cast<Ball&>(ball);
-        GoalTop& goalObject = dynamic_cast<GoalTop&>(goal);
+        //Ball& ballObject = dynamic_cast<Ball&>(ball);
+        //GoalTop& goalObject = dynamic_cast<GoalTop&>(goal);
 
-        auto scoreBar = goalObject.getSprite().getGlobalBounds();
-        auto ballVelocity = ballObject.getVelocity();;
+        //auto scoreBar = goalObject.getSprite().getGlobalBounds();
+        //auto ballVelocity = ballObject.getVelocity();;
 
-        const float restitution = 0.8f;
+        //const float restitution = 0.8f;
 
-        float ballLeft = ballObject.getPosition().x - ballObject.getRadius();
-        float ballRight = ballObject.getPosition().x + ballObject.getRadius();
-        float ballTop = ballObject.getPosition().y - ballObject.getRadius();
-        float ballBottom = ballObject.getPosition().y + ballObject.getRadius();
+        //float ballLeft = ballObject.getPosition().x - ballObject.getRadius();
+        //float ballRight = ballObject.getPosition().x + ballObject.getRadius();
+        //float ballTop = ballObject.getPosition().y - ballObject.getRadius();
+        //float ballBottom = ballObject.getPosition().y + ballObject.getRadius();
 
-        if (ballRight >= scoreBar.left && ballLeft <= scoreBar.left + scoreBar.width &&
-            ballBottom >= scoreBar.top && ballTop <= scoreBar.top + scoreBar.height) {
+        //if (ballRight >= scoreBar.left && ballLeft <= scoreBar.left + scoreBar.width &&
+        //    ballBottom >= scoreBar.top && ballTop <= scoreBar.top + scoreBar.height) {
 
-            if (ballTop < scoreBar.top) {
-                // Ball hit the top
-                ballObject.setPosition(sf::Vector2f(ballObject.getPosition().x, scoreBar.top - ballObject.getRadius()));
-                ballVelocity.y = -ballObject.getVelocity().y * restitution;
-            }
-            else if (ballBottom > scoreBar.top + scoreBar.height) {
-                // Ball hit the bottom
-                ballObject.setPosition(sf::Vector2f(ballObject.getPosition().x, scoreBar.top + scoreBar.height + ballObject.getRadius()));
-                ballVelocity.y = -ballVelocity.y * restitution;
-            }
-            else if (ballLeft < scoreBar.left) {
-                // Ball hit the left side
-                ballObject.setPosition(sf::Vector2f(scoreBar.left - ballObject.getRadius(), ballObject.getPosition().y));
-                ballVelocity.x = -ballVelocity.x * restitution;
-            }
-            else if (ballRight > scoreBar.left + scoreBar.width) {
-                // Ball hit the right side
-                ballObject.setPosition(sf::Vector2f(scoreBar.left + scoreBar.width + ballObject.getRadius(), ballObject.getPosition().y));
-                ballVelocity.x = -ballVelocity.x * restitution;
-            }
-        }
+        //    if (ballTop < scoreBar.top) {
+        //        // Ball hit the top
+        //        ballObject.setPosition(sf::Vector2f(ballObject.getPosition().x, scoreBar.top - ballObject.getRadius()));
+        //        ballVelocity.y = -ballObject.getVelocity().y * restitution;
+        //    }
+        //    else if (ballBottom > scoreBar.top + scoreBar.height) {
+        //        // Ball hit the bottom
+        //        ballObject.setPosition(sf::Vector2f(ballObject.getPosition().x, scoreBar.top + scoreBar.height + ballObject.getRadius()));
+        //        ballVelocity.y = -ballVelocity.y * restitution;
+        //    }
+        //    else if (ballLeft < scoreBar.left) {
+        //        // Ball hit the left side
+        //        ballObject.setPosition(sf::Vector2f(scoreBar.left - ballObject.getRadius(), ballObject.getPosition().y));
+        //        ballVelocity.x = -ballVelocity.x * restitution;
+        //    }
+        //    else if (ballRight > scoreBar.left + scoreBar.width) {
+        //        // Ball hit the right side
+        //        ballObject.setPosition(sf::Vector2f(scoreBar.left + scoreBar.width + ballObject.getRadius(), ballObject.getPosition().y));
+        //        ballVelocity.x = -ballVelocity.x * restitution;
+        //    }
+        //}
 
-        ballObject.setBallVelocity(ballVelocity);
+        //ballObject.setBallVelocity(ballVelocity);
 
     }
 

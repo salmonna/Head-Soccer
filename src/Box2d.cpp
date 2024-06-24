@@ -76,38 +76,39 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
 
     // Create the top goal
     b2BodyDef topGoalBodyDef;
-    topGoalBodyDef.position.Set(100.f / SCALE, 570.f / SCALE);
+    topGoalBodyDef.position.Set(70.f / SCALE, 585.f / SCALE);
     b2Body* topGoalBody = m_world.CreateBody(&topGoalBodyDef);
     b2PolygonShape topGoalBox;
-    topGoalBox.SetAsBox(100.f / SCALE, 20.f / SCALE);
+    topGoalBox.SetAsBox(75.f / SCALE, 5.f / SCALE); // Box2D uses half-widths and half-heights
     topGoalBody->CreateFixture(&topGoalBox, 0.f);
 
     // Create the ceiling rectangle shape for rendering
-    sf::RectangleShape topGoal(sf::Vector2f(100.f, 40.f));
+    sf::RectangleShape topGoal(sf::Vector2f(150.f, 10.f)); // Full width = 2 * half-width
     topGoal.setFillColor(sf::Color::Red);
-    topGoal.setOrigin(100.f, 20.f);
-    topGoal.setPosition(100.f, 570.f);
+    topGoal.setOrigin(75.f, 5.f); // Origin at the center
+    topGoal.setPosition(70.f, 585.f); // Position using Box2D coordinates scaled to SFML
     m_topGoalLeft = topGoal;
+
 
     //-------------------------------------------top goal right---------------------------//
 
     // Create the top goal on the right side
     b2BodyDef topGoalBodyDef2;
-    topGoalBodyDef2.position.Set(1800.f / SCALE, 570.f / SCALE); // Position in Box2D world coordinates
+    topGoalBodyDef2.position.Set(1800.f / SCALE, 585.f / SCALE); // Position in Box2D world coordinates
     b2Body* topGoalBody2 = m_world.CreateBody(&topGoalBodyDef2);
 
     // Define the shape of the top goal (adjust dimensions as needed)
     b2PolygonShape topGoalBox2;
-    topGoalBox2.SetAsBox(100.f / SCALE, 20.f / SCALE); // SetAsBox takes half-width and half-height
+    topGoalBox2.SetAsBox(150.f / SCALE, 5.f / SCALE); // SetAsBox takes half-width and half-height
 
     // Create fixture for the top goal body
     topGoalBody2->CreateFixture(&topGoalBox2, 0.f); // Density set to 0 for static bodies
 
     // Create the rectangle shape for rendering
-    sf::RectangleShape topGoal2(sf::Vector2f(100.f, 40.f)); // Adjust size as needed for rendering
+    sf::RectangleShape topGoal2(sf::Vector2f(150.f, 10.f)); // Adjust size as needed for rendering
     topGoal2.setFillColor(sf::Color::Black);
-    topGoal2.setOrigin(100.f, 20.f); // Origin should match half-width and half-height for correct positioning
-    topGoal2.setPosition(1800.f, 570.f); // Position in screen coordinates
+    topGoal2.setOrigin(150.f, 5.f); // Origin should match half-width and half-height for correct positioning
+    topGoal2.setPosition(1800.f, 585.f); // Position in screen coordinates
     m_topGoalRight = topGoal2;
 
 }

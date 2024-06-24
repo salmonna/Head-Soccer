@@ -14,13 +14,15 @@ void LeftMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f
 		m_keys = Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
 	}
 
-	m_body->SetLinearVelocity(b2Vec2(-10.f, m_body->GetLinearVelocity().y));
-	//moveWithRange(-5,pos, playerSide);
-	movePlayer(m_startPos, 6, 10,sprite,pos,basePos);
 
 	if (sf::Keyboard::isKeyPressed(m_keys.JUMP))
 	{
 		m_currentState = (BaseMovePlayerState*)m_jumpMoveState;
+	}
+	else {
+		//moveWithRange(-10,pos,playerSide);
+		m_body->SetLinearVelocity(b2Vec2(-10.f, m_body->GetLinearVelocity().y));
+		movePlayer(m_startPos, 6, 10, sprite, pos, basePos);
 	}
 
 	if (changeState(6)) {

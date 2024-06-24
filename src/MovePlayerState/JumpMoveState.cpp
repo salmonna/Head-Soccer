@@ -30,9 +30,16 @@ void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f
 	else
 	{
 		m_currentState = (BaseMovePlayerState*)m_standMoveState;
+		return;
 	}
+
 	
-	//updateGravityAndCollision(sprite, basePos, pos, gravity);
+	if (changeState(7))
+	{
+		//m_body->SetLinearVelocity(b2Vec2(m_body->GetLinearVelocity().x, 0.f));
+		m_currentState = (BaseMovePlayerState*)m_standMoveState;
+		m_jump = false;
+	}
 
 	if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
 
@@ -46,14 +53,9 @@ void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f
 
 		m_currentState = m_kickMoveState;
 	}
-
-	if (changeState(7))
-	{
-		//m_body->SetLinearVelocity(b2Vec2(m_body->GetLinearVelocity().x, 0.f));
-		m_currentState = (BaseMovePlayerState*)m_standMoveState;
-		m_jump = false;
+	else {
+		m_body->SetLinearVelocity(b2Vec2(0.f, m_body->GetLinearVelocity().y));  // Stop horizontal movement when no key is pressed
 	}
-	
 }
 //----------------------------------------------------------------------------------
 void JumpMoveState::updateGravityAndCollision(sf::Sprite& sprite, sf::Vector2f basePos, sf::Vector2i& pos, int& gravity) {

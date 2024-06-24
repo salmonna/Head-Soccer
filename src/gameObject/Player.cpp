@@ -36,7 +36,7 @@ m_currentMoveState(&m_standMoveState)
 	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
 	b2FixtureDef playerFixtureDef;
 	playerFixtureDef.shape = &playerBox;
-	playerFixtureDef.density = 1.f;
+	playerFixtureDef.density = 1.5f;
 	playerFixtureDef.friction = 0.8f;
 	m_body->CreateFixture(&playerFixtureDef);
 
