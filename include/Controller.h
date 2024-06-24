@@ -16,6 +16,7 @@ public:
 private:
 
 	void runTheGame();
+    void setState(GameState* newState);
 
     Window m_window;
     GameResults m_gameResults;

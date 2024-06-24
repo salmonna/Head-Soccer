@@ -13,6 +13,7 @@ TutorialButton::TutorialButton(sf::Texture& texture):m_buttonPressed(false)
 	m_tutorialText.setString(getText());
 	m_tutorialText.setCharacterSize(60);
 	m_tutorialText.setPosition(400, 100);
+
 }
 
 // Method to simulate clicking the button
