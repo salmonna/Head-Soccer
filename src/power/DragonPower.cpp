@@ -47,7 +47,7 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 
 	sf::IntRect characterRect(it.first.x, it.first.y, it.second.x, it.second.y);
 	m_dragonSprite.setTextureRect(characterRect);
-	m_dragonSprite.setScale(3, 3);
+	m_dragonSprite.setScale(4, 4);
 
 	if (m_rightSide) {
 
