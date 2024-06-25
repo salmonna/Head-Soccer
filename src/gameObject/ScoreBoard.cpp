@@ -2,7 +2,7 @@
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 
-ScoreBoard::ScoreBoard() :m_gameTime(90), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(10), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
 {
 
@@ -57,7 +57,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 
 }
 
-void ScoreBoard::draw(sf::RenderWindow & window)
+void ScoreBoard::draw(sf::RenderWindow & window) const
 {
 	for (int i = 0; i < m_SpriteVec.size(); i++)
 	{
@@ -71,15 +71,25 @@ void ScoreBoard::draw(sf::RenderWindow & window)
 	}
 
 
+	for (int i = 0; i < 2; i++)
+	{
+		window.draw(m_progressP1Sprite[i]);
+		window.draw(m_progressP2Sprite[i]);
+	} 
+}
+
+
+void ScoreBoard::Progress()
+{
 	float seconds = m_clock.getElapsedTime().asSeconds();
-	drawProgress(window, m_progressP1Sprite, m_progressP1, seconds);
-	drawProgress(window, m_progressP2Sprite, m_progressP2, seconds);
+	ScoreBoard::getInstance().updateProgress(m_progressP1Sprite, m_progressP1, seconds);
+	ScoreBoard::getInstance().updateProgress(m_progressP2Sprite, m_progressP2, seconds);
+
 }
 
 
 
-
-void ScoreBoard::drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite>& progressSprite, int & progress, float seconds)
+void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & progress, float seconds)
 {
 	int width = (progress + 1) * 8;
 
@@ -91,9 +101,6 @@ void ScoreBoard::drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite>&
 
 	sf::IntRect characterRect(0, 0, width, progressSprite[1].getGlobalBounds().height);
 	progressSprite[1].setTextureRect(characterRect);
-
-	window.draw(progressSprite[0]);
-	window.draw(progressSprite[1]);
 }
 
 
@@ -155,6 +162,8 @@ void ScoreBoard::reset()
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
+	resetProgressP1();
+	resetProgressP2();
 }
 
 //=======================Points=======================
