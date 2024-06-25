@@ -19,9 +19,6 @@ m_currentMoveState(&m_standMoveState)
 	m_power = std::make_shared<DragonPower>();
 
 
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
-	resetToPosition();
-
 	if (m_playerSide)
 	{
 		m_sprite.setScale(-1, 1);
@@ -50,7 +47,7 @@ m_currentMoveState(&m_standMoveState)
 	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
 	m_sprite.setOrigin(30.f, 40.f);
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[2]);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[3]);
 	resetToPosition();
 
 

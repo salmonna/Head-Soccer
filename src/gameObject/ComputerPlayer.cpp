@@ -53,7 +53,6 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
     const float kickRange = 100.0f;  
 	//const float halfFieldX = 850.0f; // Assuming the field width is 800 units
 
-
     sf::Vector2f direction = ballPosition - m_sprite.getPosition();
     float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 	if (m_jump)
@@ -90,28 +89,12 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
 
 }
 
-void ComputerPlayer::checkBallPosition(sf::Vector2f& ballPosition)
-{
-	//Right Direction Test
-	if (ballPosition.x > m_sprite.getPosition().x) {
-
-		moveWithRange(4);
-		movePlayer(m_startSprite[1], 6, 10);
-	}
-	//Left Direction Test
-	else if (ballPosition.x < m_sprite.getPosition().x) {
-
-		moveWithRange(-4);
-		movePlayer(m_startSprite[1], 6, 10);
-	}
-}
 
 void ComputerPlayer::reset() {
 	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body->SetTransform(newPosition, m_body->GetAngle());
 	
 }
-
 
 //function that move the player
 void ComputerPlayer::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
