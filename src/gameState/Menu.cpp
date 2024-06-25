@@ -2,10 +2,6 @@
 #include "gameState/Menu.h"
 #include <iostream>
 #include "Resources.h"
-#include "button/QuitButton.h"
-#include "button/PlayButton.h"
-#include "button/Setting.h"
-#include "button/TutorialButton.h"
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 #include "Command/Quit.h"
