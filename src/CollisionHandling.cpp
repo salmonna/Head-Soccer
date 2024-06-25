@@ -1,5 +1,5 @@
-#include "CollisionHandling.h"
 
+#include "CollisionHandling.h"
 #include <iostream>
 #include <map>
 #include <string>
@@ -10,27 +10,30 @@
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
 #include "gameObject/ComputerPlayer.h"
+#include "power/RegularBehavior.h"
 
 #include "gameObject/GoalSide.h"
 #include "gameObject/GoalBack.h"
 #include "gameObject/GoalTop.h"
 #include "Keyboard.h"
+#include "Resources.h"
 
-
-namespace // anonymous namespace � the standard way to make function "static"
+namespace // anonymous namespace — the standard way to make function "static"
 {
 
-    // primary collision-processing functions
-    void playerCollidBall(GameObject& player, GameObject& ball)
+    //=======================================UPDATE========================================\\ 
+
+    //update after collide
+    void updateBall(Ball& ballObject, Player& playerObject)
     {
 
-        Ball & ballObject = dynamic_cast<Ball&>(ball);
-        Player & playerObject = dynamic_cast<Player&>(player);
+        sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
+        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        direction /= length; // ðøîåì äëéååï
+        sf::Vector2f currVelocity = ballObject.getVelocity();
+        
 
-        if (playerObject.getAura()){
-
-            playerObject.setAura(false);            
-        }
+       // const float gravity = 980.0f;  // ëåç äîùéëä áôé÷ñìéí ìùðééä áøéáåò
 
         if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
         {
@@ -38,7 +41,29 @@ namespace // anonymous namespace � the standard way to make function "static"
             ballObject.kick(playerObject.getSideOfPlayer());
             
         }
-       
+
+        else if (playerObject.getAura()) 
+        {
+            playerObject.getPower()->startTimer();
+            ballObject.setMoveBehavior(playerObject.getPower());
+            playerObject.setAura(false);
+            playerObject.getPower()->activatePower(ballObject.getCircle(), currVelocity, direction);
+        }
+
+    }
+
+
+    // primary collision-processing functions
+    void playerCollidBall(GameObject& player, GameObject& ball)
+    {
+
+        Ball & ballObject = static_cast<Ball&>(ball);
+        Player & playerObject = static_cast<Player&>(player);
+
+
+        updateBall(ballObject, playerObject);
+
+
     }
 
     void ballCollidGoalTop(GameObject& ball, GameObject& goal)

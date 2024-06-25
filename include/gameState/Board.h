@@ -50,9 +50,6 @@ private:
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	bool m_goalSign;
-
-	ScoreBoard m_scoreBoard;
-
 	GameResults * m_gameResults;
 	//Pause  m_pause;
 	GameState * m_gameState;
@@ -69,7 +66,6 @@ private:
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
 	sf::Sprite m_goalSprite;
-
 
 	b2World* m_box2dWorld;
 };

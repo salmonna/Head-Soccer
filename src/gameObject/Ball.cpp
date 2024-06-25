@@ -2,8 +2,9 @@
 #include "Resources.h"
 #include "Keyboard.h"
 #include <iostream>
+#include "power/RegularBehavior.h"
 
-Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
+Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_power(std::make_shared<RegularBehavior>())
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -32,14 +33,21 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f)
     m_ball.setPosition(900.0f, 988.0f); 
 }
 
+
 void Ball::restartBall()
 {
     m_clock.restart();
 }
 
 void Ball::reset() {
-    //m_clock.restart();
+    m_clock.restart();
 }
+
+sf::Clock & Ball::getClock()
+{
+    return m_clock;
+}
+
 
 bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<Ball>(); });
@@ -73,7 +81,9 @@ sf::Vector2f Ball::getPosition() const
 
 void Ball::draw(sf::RenderWindow & window) const
 {
-	window.draw(m_sprite);
+
+	 window.draw(m_sprite);
+   m_power->draw(window, m_ball.getPosition());
 }
 
 
@@ -93,11 +103,24 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 
 
 
+void Ball::setRegular()
+{
+    m_power = std::make_shared<RegularBehavior>();
+    m_ball.setTexture(&Resources::getInstance().getBallTexture()[0]);
+    m_ball.setFillColor(sf::Color(255, 255, 255, 255));
+}
+
 void  Ball::move(sf::Vector2f pressed)
 {
+
+    if (m_power->isTimeIsOver())
+    {
+        setRegular();
+    }
+
     update();
 
-};
+}
 
 float Ball::getRadius() const {
 
@@ -108,6 +131,19 @@ sf::CircleShape& Ball::getCircle() {
 
     return m_ball;
 }
+
+
+void Ball::setMoveBehavior(std::shared_ptr<Power> power)
+{
+    m_power = power;
+}
+
+
+bool Ball::isRegularBehavior()
+{
+    return typeid(RegularBehavior) == typeid(m_power);
+}
+
 //-----------------------------------------------------------------------------
 void Ball::update() {
     b2Vec2 position1 = m_body->GetPosition();
@@ -127,4 +163,5 @@ void Ball::kick(bool rigthSide) {
     b2Vec2 kickForce(kickForceX, kickForceY);
 
     m_body->ApplyForceToCenter(kickForce, true);
+
 }

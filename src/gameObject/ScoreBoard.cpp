@@ -2,8 +2,8 @@
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 
-ScoreBoard::ScoreBoard(int gameTime) : timeCounterSec(gameTime % 60), 
-timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0)
+ScoreBoard::ScoreBoard() :m_gameTime(90), timeCounterSec(m_gameTime % 60),
+timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
 {
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getScoreBoardTexture();
@@ -31,11 +31,33 @@ timeCounterMin(gameTime / 60), m_gameTime(gameTime), m_p1Points(0), m_p2Points(0
 	//font points pos
 	m_textVec[1].setPosition(x+175, 50);
 	m_textVec[2].setPosition(x + 1200-175-20, 50);
+
+
+	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
+
+	sf::Vector2f pos = sf::Vector2f(550, 80);
+
+	for (int i = 0; i < texture.size(); i++)
+	{
+		m_progressP1Sprite.push_back(sf::Sprite());
+		m_progressP1Sprite[i].setTexture(texture[i]);
+		m_progressP1Sprite[i].scale(0.6, 1);
+		m_progressP1Sprite[i].setPosition(pos);
+	}
 	
+	pos = sf::Vector2f(950, 80);
+
+	for (int i = 0; i < texture.size(); i++)
+	{
+		m_progressP2Sprite.push_back(sf::Sprite());
+		m_progressP2Sprite[i].setTexture(texture[i]);
+		m_progressP2Sprite[i].scale(0.6, 1);
+		m_progressP2Sprite[i].setPosition(pos);
+	}
 
 }
 
-void ScoreBoard::draw(sf::RenderWindow & window) const
+void ScoreBoard::draw(sf::RenderWindow & window)
 {
 	for (int i = 0; i < m_SpriteVec.size(); i++)
 	{
@@ -47,7 +69,63 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 	{
 		window.draw(m_textVec[i]);
 	}
+
+
+	float seconds = m_clock.getElapsedTime().asSeconds();
+	drawProgress(window, m_progressP1Sprite, m_progressP1, seconds);
+	drawProgress(window, m_progressP2Sprite, m_progressP2, seconds);
 }
+
+
+
+
+void ScoreBoard::drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite>& progressSprite, int & progress, float seconds)
+{
+	int width = (progress + 1) * 8;
+
+	if (seconds >= 0.1 && width < 490)
+	{
+		progress++;
+		m_clock.restart();
+	}
+
+	sf::IntRect characterRect(0, 0, width, progressSprite[1].getGlobalBounds().height);
+	progressSprite[1].setTextureRect(characterRect);
+
+	window.draw(progressSprite[0]);
+	window.draw(progressSprite[1]);
+}
+
+
+bool ScoreBoard::isProgFull(bool playerSide) {
+
+	if (playerSide) {
+
+		return istProgressP2Full();
+	}
+
+	return istProgressP1Full();
+}
+
+bool ScoreBoard::istProgressP1Full() {
+	return (m_progressP1 + 1) * 8 > 490;
+}
+
+bool ScoreBoard::istProgressP2Full() {
+	return (m_progressP2 + 1) * 8 > 490;
+}
+
+
+void ScoreBoard::resetProgressP1()
+{
+	m_progressP1 = 0;
+}
+
+void ScoreBoard::resetProgressP2()
+{
+	m_progressP2 = 0;
+}
+
 
 
 //========================Time=======================

@@ -1,12 +1,15 @@
 #include "gameObject/ComputerPlayer.h"
 #include "Resources.h"
 #include "power/FirePower.h"
+#include "gameObject/scoreBoard.h"
 
 ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 {
 
 	sf::Vector2f pos(550, 80);
-	m_power = std::make_unique<FirePower>(pos);
+
+	m_power = std::make_unique<FirePower>();
+
    
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
 	resetToPosition();
@@ -87,6 +90,22 @@ void ComputerPlayer::move(sf::Vector2f ballPosition) {
 
 }
 
+void ComputerPlayer::checkBallPosition(sf::Vector2f& ballPosition)
+{
+	//Right Direction Test
+	if (ballPosition.x > m_sprite.getPosition().x) {
+
+		moveWithRange(4);
+		movePlayer(m_startSprite[1], 6, 10);
+	}
+	//Left Direction Test
+	else if (ballPosition.x < m_sprite.getPosition().x) {
+
+		moveWithRange(-4);
+		movePlayer(m_startSprite[1], 6, 10);
+	}
+}
+
 void ComputerPlayer::reset() {
 	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body->SetTransform(newPosition, m_body->GetAngle());
@@ -126,7 +145,7 @@ void ComputerPlayer::resetToPosition(sf::Vector2f startPos, int numOfJump) {
 }
 
 void ComputerPlayer::draw(sf::RenderWindow& window)const {
-	m_power->drawProcess(window);
+	ScoreBoard::getInstance().draw(window);
 	window.draw(m_sprite);
 }
 

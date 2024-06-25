@@ -12,6 +12,7 @@ ExitButton::ExitButton(Menu* menuState) :m_menuState(menuState)
 
 // Method to simulate clicking the button
 GameState* ExitButton::click() {
+
 	return m_menuState;
 }
 

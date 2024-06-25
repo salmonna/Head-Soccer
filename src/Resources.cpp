@@ -26,7 +26,7 @@ Resources::Resources(){
 	std::vector<std::string> characters{ "ItalyPlayer.png", "BrazilianPlayer.png" , "PortugalPlayer.png" };
 	loadFromFile(characters, m_charactersSheet);
 
-	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"  };
+	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png" };
 	loadFromFile(balls, m_ballTexture);
 
 	std::vector<std::string> selectTeam{ "start.png","SelectTeam.png","frame.png","brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
@@ -42,6 +42,20 @@ Resources::Resources(){
 
 	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" };
 	loadFromFile(power, m_powerTexture);
+
+	std::vector<std::string> powerOfPlayer{ "fireDragon.png"};
+	loadFromFile(powerOfPlayer, m_powerOfPlayer);
+
+	// Loading sound buffers.
+	std::vector<std::string> soundStr = {"super saiyan sound.wav" };
+	for (int i = 0; i < soundStr.size(); i++) {
+		sf::SoundBuffer buffer;
+		if (!buffer.loadFromFile(soundStr[i])) {
+			throw FileException("sound file not load!");
+		}
+		m_bufferVec.push_back(buffer);
+	}
+
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{
@@ -63,7 +77,10 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 	}
 }
 
+std::vector<sf::Texture>& Resources::getPlayerPower() {
 
+	return m_powerOfPlayer;
+}
 std::vector<sf::Texture>& Resources::getPauseTexture()
 {
 	return m_pauseTexture;
@@ -89,7 +106,6 @@ std::vector<sf::Texture>& Resources::gameResultsTexture() {
 
 	return m_gameResultsTexture;
 }
-
 
 //gameResultsTexture
 std::vector<sf::Texture>& Resources::getScoreBoardTexture() {
@@ -131,4 +147,12 @@ std::vector<sf::Texture>& Resources::getSelectTeam() {
 std::vector<sf::Texture>& Resources::getPowerTexture() {
 
 	return m_powerTexture;
+
 }
+
+
+std::vector<sf::SoundBuffer>& Resources::getBufferVec()
+{
+	return m_bufferVec;
+}
+
