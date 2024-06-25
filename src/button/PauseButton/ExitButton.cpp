@@ -7,7 +7,8 @@ ExitButton::ExitButton(Menu* menuState) :m_menuState(menuState)
 {
 	sf::Texture& texture = Resources::getInstance().getPauseTexture()[2];
 	m_sprite.setTexture(texture);
-	m_sprite.setPosition(1800 / 2 - m_sprite.getLocalBounds().width/2, 1013 / 2- m_sprite.getLocalBounds().height/2);
+	//m_sprite.setPosition(1800 / 2 - m_sprite.getLocalBounds().width/2, 1013 / 2- m_sprite.getLocalBounds().height/2);
+	m_sprite.setPosition(300 , 10);
 }
 
 // Method to simulate clicking the button

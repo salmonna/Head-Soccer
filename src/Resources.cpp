@@ -35,7 +35,7 @@ Resources::Resources(){
 	loadFromFile(selectTeam, m_selectTeam);
 
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
-	std::vector<std::string> gameResults{ "Replay.png"};
+	std::vector<std::string> gameResults{ "Replay.png","Field.png"};
 	loadFromFile(gameResults, m_gameResultsTexture);
 
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};

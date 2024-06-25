@@ -17,6 +17,7 @@ public:
 	virtual bool isTimeIsOver();
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) {};
 
+
 private:
 	sf::Sprite m_auraSprite;
 	sf::Clock m_clock;

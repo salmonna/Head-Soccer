@@ -19,6 +19,6 @@ public:
 
 private:
 	std::vector<std::unique_ptr<BaseButton>> m_buttons;
-	sf::Sprite m_sprite;
+	std::vector<sf::Sprite> m_resultSprite;
 	GameState* m_gameState;
 };
