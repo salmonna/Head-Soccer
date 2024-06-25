@@ -1,7 +1,9 @@
 #pragma once
 #include "Command.h"
-#include "gameState/GameState.h"
+//#include "gameState/GameState.h"
 #include "Controller.h"
+
+class GameState;
 
 class SwichScreen : public Command
 {
@@ -20,19 +22,4 @@ private:
 };
 
 
-SwichScreen::SwichScreen(GameState* gameState, Controller* controller) :m_gameStatePtr(gameState),
-m_controllerPtr(controller)
-{
-
-
-}
-
-void SwichScreen::execute()
-{
-	m_controllerPtr->setState(m_gameStatePtr);
-}
-
-SwichScreen::~SwichScreen()
-{
-}
 

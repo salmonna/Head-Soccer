@@ -36,9 +36,3 @@ void GameResults::draw(sf::RenderWindow& window) const
 		m_buttons[i]->draw(window);
 	}
 }
-
-GameState* GameResults::handleEvents() {
-	GameState* gameState = m_gameState;
-	m_gameState = NULL;
-	return gameState;
-}

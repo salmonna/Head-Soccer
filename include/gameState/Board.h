@@ -37,7 +37,6 @@ public:
 	void createMovingObjects(const std::vector<std::string> & objectNames);
 	void createStaticObjects(const std::vector<std::string>& objectNames);
 
-	virtual GameState* handleEvents() override;
 	void reset();
 	~Board() = default;
 

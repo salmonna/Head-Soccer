@@ -14,7 +14,6 @@ public:
 
 	virtual void draw(sf::RenderWindow & window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
-	virtual GameState* handleEvents() override;
 	virtual bool contains(sf::Vector2f position) const override;
 	virtual GameState * click() override;
 	~Pause () = default;

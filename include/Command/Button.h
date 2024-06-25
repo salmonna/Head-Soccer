@@ -5,10 +5,12 @@
 class Button
 {
 public:
-	Button(Command * command, sf::Texture & texture);
+	Button(std::unique_ptr<Command> command, sf::Texture & texture, sf::Vector2f position);
 
 	void draw(sf::RenderWindow& window) const;
-	
+	bool contains(sf::Vector2f position) const;
+	void execute();
+
 	~Button();
 
 private:

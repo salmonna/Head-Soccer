@@ -4,21 +4,14 @@
 class Command
 {
 public:
-	Command();
+	Command() {};
 
 	virtual void execute() = 0;
 
 
-	virtual ~Command();
+	virtual ~Command() {};
 
 private:
 
 };
 
-Command::Command()
-{
-}
-
-Command::~Command()
-{
-}

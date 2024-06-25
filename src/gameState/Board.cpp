@@ -161,19 +161,19 @@ void Board::updateScoreBar() {
 	}
 
 }
-
-GameState* Board::handleEvents()
-{
-
-	if (ScoreBoard::getInstance().timeIsOver())
-	{
-		reset();
-		return m_gameResults;
-	}
-	auto state = m_gameState;
-	m_gameState = NULL;
-	return state;
-}
+//
+//GameState* Board::handleEvents()
+//{
+//
+//	if (ScoreBoard::getInstance().timeIsOver())
+//	{
+//		reset();
+//		return m_gameResults;
+//	}
+//	auto state = m_gameState;
+//	m_gameState = NULL;
+//	return state;
+//}
 
 void Board::reset() {
 	int size = m_gameObject.size() - 6;

@@ -67,11 +67,3 @@ bool Pause::contains(sf::Vector2f position) const
 	sf::Vector2f newPos = m_sprite.getTransform().getInverse().transformPoint(position);
 	return m_sprite.getLocalBounds().contains(newPos);
 }
-
-
-GameState * Pause::handleEvents()
-{
-	auto state = m_gameState;
-	m_gameState = NULL;
-	return state;
-}
