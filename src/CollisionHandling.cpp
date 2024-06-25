@@ -63,7 +63,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         updateBall(ballObject, playerObject);
 
-
     }
 
     void ballCollidGoalTop(GameObject& ball, GameObject& goal)

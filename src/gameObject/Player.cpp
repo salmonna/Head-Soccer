@@ -47,7 +47,7 @@ m_currentMoveState(&m_standMoveState)
 	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
 	m_sprite.setOrigin(30.f, 40.f);
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[3]);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[6]);
 	resetToPosition();
 
 

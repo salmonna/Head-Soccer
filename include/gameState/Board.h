@@ -21,7 +21,7 @@
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/LeftMoveState.h"
 #include "MovePlayerState/RightMoveState.h"
-#include "MovePlayerState/\StandPlayerState.h"
+#include "MovePlayerState/StandPlayerState.h"
 
 class Board : public GameState
 {

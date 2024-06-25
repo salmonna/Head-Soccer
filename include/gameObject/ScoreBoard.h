@@ -68,6 +68,4 @@ private:
 	int m_progressP1;
 	int m_progressP2;
 
-
-
 };
