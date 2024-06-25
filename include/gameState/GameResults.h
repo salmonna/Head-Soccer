@@ -1,15 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "GameState.h"
-#include "button/BaseButton.h"
+#include "Command/Button.h"
 
-//forwaard declartion
+
+//forward declartion
 class Menu;
+class Controller;
 
 class GameResults: public GameState
 {
 public:
-	GameResults(Menu * menuState);
+	GameResults(Controller * controller, Menu * menuState);
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
@@ -17,7 +19,7 @@ public:
 	~GameResults() = default;
 
 private:
-	std::vector<std::unique_ptr<BaseButton>> m_buttons;
+	std::vector<std::unique_ptr<Button>> m_buttons;
 	sf::Sprite m_sprite;
 	GameState* m_gameState;
 };

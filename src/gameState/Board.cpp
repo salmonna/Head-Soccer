@@ -15,29 +15,32 @@
 #include "Factory/MovingFactory.h"
 #include "Factory/StaticFactory.h"
 #include "gameState/GameResults.h"
+#include "Command/SwichScreen.h"
+#include "Command/Command.h"
 
 
 // Constructor for the Board class
-Board::Board(Menu* menu, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
+Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
+, m_controllerPtr(controller)
 {
-	std::vector<sf::Texture>& texturs = Resources::getInstance().getBoardTexture();
-	for (size_t i = 0; i < texturs.size()-1; i++)
+	std::vector<sf::Texture>& texture = Resources::getInstance().getBoardTexture();
+	for (size_t i = 0; i < texture.size()-1; i++)
 	{
 		m_backGroundStadium.push_back(sf::Sprite());
-		m_backGroundStadium[i].setTexture(texturs[i]);
+		m_backGroundStadium[i].setTexture(texture[i]);
 
 	}
 	m_backGroundStadium[1].setPosition(0, 670);
 
-	m_buttons.push_back(std::make_unique<Pause>(menu, this));
+	//m_buttons.push_back(std::make_unique<Pause>(menu, this));
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)), Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
 
-	m_goalSprite.setTexture(texturs[2]);
+	m_goalSprite.setTexture(texture[2]);
 	m_goalSprite.setPosition(50, 200);
 
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
 												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
-
 	createStaticObjects(staticObjectNames);
 }
 
@@ -115,9 +118,18 @@ void Board::respond(sf::Vector2f pressed) {
 	{
 		if (m_buttons[i]->contains(pressed)) {
 
-			m_gameState = m_buttons[i]->click();
+			m_buttons[i]->execute();
 			break;
 		}
+	}
+
+	ScoreBoard::getInstance().Progress();
+
+
+	if (ScoreBoard::getInstance().timeIsOver())
+	{
+		m_controllerPtr->setState(m_gameResults);
+		reset();
 	}
   
 }

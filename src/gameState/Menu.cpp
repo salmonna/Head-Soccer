@@ -8,6 +8,8 @@
 #include "button/TutorialButton.h"
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
+#include "Command/Quit.h"
+
 
 //menu constractor initilize his members
 Menu::Menu(Controller* controller, GameModeSelection * gameModeState, sf::RenderWindow * window)
@@ -15,15 +17,8 @@ Menu::Menu(Controller* controller, GameModeSelection * gameModeState, sf::Render
 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getMenuTexture();
 	m_Stage.setTexture(texture[4]);
-
-	////put all the button into one vector
-	//m_buttons.push_back(std::make_unique<PlayButton>(texturs[0], gameModeState));
-	//m_buttons.push_back(std::make_unique<QuitButton>(texturs[1], window));
-	//m_buttons.push_back(std::make_unique<Setting>(texturs[2]));
-	//m_buttons.push_back(std::make_unique<TutorialButton>(texturs[3]));
-	// 
-	//std::unique_ptr<Command> command = std::make_unique<SwichScreen>(gameModeState, controller);
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameModeState, controller)), texture[0], sf::Vector2f(100.f, 100.f))); //playButton
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Quit>(window)), texture[1], sf::Vector2f(100.f, 200.f))); //exit Button
 
 
 

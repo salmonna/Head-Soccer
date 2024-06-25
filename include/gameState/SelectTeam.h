@@ -15,15 +15,15 @@ public:
 	virtual ~SelectTeam();
 
 	virtual void draw(sf::RenderWindow& window) const override;
-	virtual void respond(sf::Vector2f mousePressed) override;
-	void reset();
-	
+	virtual void respond(sf::Vector2f mousePressed) override;	
 	void setNumberOfPlayers(int players);
 private:
 
 	void signOrPreedOnPlayers(sf::Vector2f mousePressed);
 	void isMouseOnPlayers(sf::Vector2f mousePressed, int index);
 	void checkToDraw(sf::RenderWindow& window) const;
+	void reset();
+
 
 	GameState* m_gameState;
 	sf::Sprite m_stage;

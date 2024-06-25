@@ -9,7 +9,7 @@ StartButton::StartButton(Board* boardState, SelectTeam* selectTeam) : m_boardSta
 
 
 GameState* StartButton::click() {
-	m_selectTeam->reset();
+	//m_selectTeam->reset();
 	return m_boardState;
 }
 

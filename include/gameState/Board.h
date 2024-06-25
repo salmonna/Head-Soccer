@@ -13,7 +13,6 @@
 #include "gameState/GameResults.h"
 #include "Menu.h"
 #include "Pause.h"
-//class Pause;
 
 
 #include "gameObject/ComputerPlayer.h"
@@ -21,12 +20,16 @@
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/LeftMoveState.h"
 #include "MovePlayerState/RightMoveState.h"
-#include "MovePlayerState/\StandPlayerState.h"
+#include "MovePlayerState/StandPlayerState.h"
+
+#include "Command/Button.h"
+
+class Controller;
 
 class Board : public GameState
 {
 public:
-	Board(Menu * menu, GameResults * gameResults);
+	Board(Controller * controller, Menu * menu, Pause * pause, GameResults * gameResults);
 	virtual void respond(sf::Vector2f pressed) override;
 	void moveAd();
 	virtual void draw(sf::RenderWindow& window) const override;
@@ -56,10 +59,12 @@ private:
 	//Client m_client;
 	//game objects vector
 
-
+	Controller* m_controllerPtr;
 	sf::Clock m_clock;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
-	std::vector<std::unique_ptr<BaseButton>> m_buttons;
+
+	//std::vector<std::unique_ptr<BaseButton>> m_buttons;
+	std::vector<std::unique_ptr<Button>> m_buttons;
 
 
 	std::vector<sf::Sprite> m_backGroundStadium;

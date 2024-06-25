@@ -74,6 +74,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
+			reset();
 			m_buttons[i]->execute();
 			break;
 		}
