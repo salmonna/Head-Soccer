@@ -1,7 +1,7 @@
 #include "Command/Button.h"
 
 
-Button::Button(std::unique_ptr<Command> command, sf::Texture& texture) :m_command(command)
+Button::Button(Command * command, sf::Texture& texture) :m_command(command)
 {
 	m_sprite.setTexture(texture);
 }

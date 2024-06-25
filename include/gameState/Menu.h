@@ -3,8 +3,11 @@
 #include <vector>
 #include <memory>
 #include "gameState/GameModeSelection.h"
-#include "GameState.h"
 #include "Command/Button.h"
+#include "GameState.h"
+
+//class Button;
+class Controller;
 
 class Menu: public GameState
 {
@@ -22,7 +25,8 @@ private:
 	GameState * m_gameState;
 	sf::Sprite m_Stage;
 
-	std::vector<Button> m_buttons;
+	std::vector<std::unique_ptr<Button>> m_buttons;
+	//Button * m_button;
 
 };
 

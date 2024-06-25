@@ -20,7 +20,8 @@ Menu::Menu(Controller* controller, GameModeSelection * gameModeState, sf::Render
 	//m_buttons.push_back(std::make_unique<TutorialButton>(texturs[3]));
 	//m_Stage.setTexture(texturs[4]);
 
-	m_buttons.push_back(Button(std::make_unique<SwichScreen>(gameModeState, controller), texturs[0]));
+
+	m_buttons.push_back(std::make_unique<Button>((std::make_unique<SwichScreen>(gameModeState, controller), texturs[0])));
 
 };
 
@@ -44,7 +45,7 @@ void Menu::draw(sf::RenderWindow& window) const{
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
-		m_buttons[i].draw(window);
+		m_buttons[i]->draw(window);
 	}
 }
 

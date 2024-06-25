@@ -15,8 +15,8 @@ public:
 
 private:
 
-	std::unique_ptr<GameState> m_gameStatePtr;
-	std::unique_ptr<Controller> m_controllerPtr;
+	GameState * m_gameStatePtr;
+	Controller * m_controllerPtr;
 
 };
 

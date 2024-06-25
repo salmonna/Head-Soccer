@@ -5,7 +5,7 @@
 class Button
 {
 public:
-	Button(std::unique_ptr<Command> command, sf::Texture & texture);
+	Button(Command * command, sf::Texture & texture);
 
 	void draw(sf::RenderWindow& window) const;
 	
