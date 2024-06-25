@@ -10,7 +10,7 @@ BaseMovePlayerState::BaseMovePlayerState() :m_numOfJump(0)
 	m_startSprite.push_back(sf::Vector2f(160, 365));*/
 }
 //-----------------------------------------------------------------------------------------------------
-void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float maxTime, sf::Sprite& sprite, sf::Vector2i& pos , sf::Vector2f basePos) {
+void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float maxTime, sf::Sprite& sprite) {
 
 	float sec = float(m_moveClock.getElapsedTime().asMilliseconds());
 	if (maxTime < sec)
@@ -24,7 +24,7 @@ void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float 
 		{
 			m_moveClock.restart();
 			m_numOfJump += 115;
-			resetToPosition(sprite, pos, basePos,startPos,m_numOfJump);
+			resetToPosition(sprite,startPos,m_numOfJump);
 		}
 	}
 
@@ -36,12 +36,12 @@ bool BaseMovePlayerState::changeState(int maxSprite) {
 }
 //-----------------------------------------------------------------------------------------------------
 // Reset to default position if not jumping
-void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2i& pos,sf::Vector2f basePos,sf::Vector2f startPos, int numOfJump) {
+void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2f startPos, int numOfJump) {
 
 	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	sprite.setTextureRect(characterRect);
-	sprite.setPosition(float(basePos.x + pos.x), float(basePos.y + pos.y));
+	//sprite.setPosition(float(basePos.x + pos.x), float(basePos.y + pos.y));
 }
 
 //-----------------------------------------------------------------------------------------------------

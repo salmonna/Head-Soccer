@@ -34,7 +34,6 @@ public:
 	std::vector<sf::Texture>& getPlayerPower();
 
 
-
 	sf::Font & getFont();
 
 private:

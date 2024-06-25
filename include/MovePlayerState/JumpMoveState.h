@@ -14,17 +14,18 @@ public:
 	virtual ~JumpMoveState();
 
 	virtual BaseMovePlayerState* handleMoveStatus() override;
-	virtual void movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide)override;
+	virtual void movement(sf::Sprite& sprite, bool playerSide, b2Body* body)override;
 
 private:
 
-	void updateGravityAndCollision(sf::Sprite& sprite, sf::Vector2f basePos, sf::Vector2i& pos, int& gravity);
 	sf::Vector2f m_startPos;
 	StandPlayerState* m_standMoveState;
 	BaseMovePlayerState* m_currentState;
 	KickMoveState* m_kickMoveState;
 
 	Keyboard m_keys;
+
+	bool m_jump;
 
 };
 

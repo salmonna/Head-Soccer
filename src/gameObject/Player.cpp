@@ -10,10 +10,11 @@
 
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
-, m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState)
-,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState),
+, m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
+,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
 m_currentMoveState(&m_standMoveState)
 {
+
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
 	m_power = std::make_shared<DragonPower>();
 
@@ -24,12 +25,35 @@ m_currentMoveState(&m_standMoveState)
 	if (m_playerSide)
 	{
 		m_sprite.setScale(-1, 1);
-		m_basePosition = sf::Vector2f(1520, 750);
+		m_basePosition = sf::Vector2f(1520, 775);
 	}
 	else
 	{
-		m_basePosition = sf::Vector2f(272, 750);
+		m_basePosition = sf::Vector2f(272, 775);
 	}
+	//----------------------box2d---------------------------//
+	auto world = Box2d::getInstance().getBox2dWorld();
+	// Create the player
+	b2BodyDef playerBodyDef;
+	playerBodyDef.type = b2_dynamicBody;
+	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
+	m_body = world->CreateBody(&playerBodyDef);
+	b2PolygonShape playerBox;
+	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
+	b2FixtureDef playerFixtureDef;
+	playerFixtureDef.shape = &playerBox;
+	playerFixtureDef.density = 10.f;
+	playerFixtureDef.friction = 0.4f;
+	m_body->CreateFixture(&playerFixtureDef);
+
+	// Set the gravity scale for the player
+	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+
+	m_sprite.setOrigin(30.f, 40.f);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[2]);
+	resetToPosition();
+
+
 	m_sprite.setPosition(m_basePosition);
 
 }
@@ -65,7 +89,6 @@ void Player::draw(sf::RenderWindow& window) const {
 //function that find where to move and  call to another function 
 void Player::move(sf::Vector2f pressed) {
 
-
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
 
 	if (nextState) {
@@ -73,8 +96,10 @@ void Player::move(sf::Vector2f pressed) {
 		m_currentMoveState = nextState;
 	}
 	auto pos = sf::Vector2i(m_posX, m_posY);
-	m_currentMoveState->movement(m_sprite,pos, m_basePosition, m_gravity,m_playerSide);
-	
+	m_currentMoveState->movement(m_sprite,m_playerSide, m_body);
+
+	update();
+
 	m_posX = pos.x;
 	m_posY = pos.y;
 
@@ -119,9 +144,12 @@ sf::Sprite& Player::getSprite() {
 }
 //-----------------------------------------------------------------------------
 void Player::reset() {
-	m_sprite.setPosition(m_basePosition);
-	m_posX = 0;
-	m_posY = 0;
+	//m_sprite.setPosition(m_basePosition);
+	// Update the position of the Box2D body
+	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
+	//m_ball.setPosition(position);
+	m_body->SetTransform(newPosition, m_body->GetAngle());
+	//update();
 }
 //-----------------------------------------------------------------------------
 sf::Vector2f Player::getPosition() const {
@@ -148,7 +176,13 @@ bool Player::getAura() const{
 	return m_aura;
 }
 //-----------------------------------------------------------------------------
-bool Player::getSide() const
-{
+
+void Player::update() {
+	b2Vec2 position1 = m_body->GetPosition();
+	m_sprite.setPosition(B2VecToSFVec(position1));
+}
+
+bool Player::getSideOfPlayer() {
 	return m_playerSide;
 }
+

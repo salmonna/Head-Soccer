@@ -4,10 +4,15 @@
 #include "Window.h"
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
+
 #include <memory>
 #include "power/MoveBehavior.h"
 #include "power/RegularBehavior.h"
 #include "power/Power.h"
+
+#include "Box2d.h"
+#include <iostream>
+
 
 class Ball : public MovingObject
 {
@@ -27,13 +32,22 @@ public:
 	float getRadius() const;
 
 	void restartBall();
+
 	sf::Clock& getClock();
 
 	void setMoveBehavior(std::shared_ptr<Power> power);
 	bool isRegularBehavior();
 
-	virtual ~Ball() { };
+	void update();
+	void kick(bool rigthSide);
 
+	virtual ~Ball() {
+		std::cout << " B-D" << std::endl;
+		m_body->DestroyFixture(m_body->GetFixtureList());
+		auto world = Box2d::getInstance().getBox2dWorld();
+		world->DestroyBody(m_body);
+		m_body = nullptr;
+	};
 
 	//just for chacking --------
 	sf::CircleShape& getCircle();
@@ -47,4 +61,5 @@ private:
 	sf::Vector2f m_ballVelocity;
 	sf::Clock m_clock;
 	static bool m_registeritBall;
+	b2Body* m_body;
 };

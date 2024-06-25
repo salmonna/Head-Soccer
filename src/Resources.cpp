@@ -8,7 +8,6 @@
 //constractor of resources file are loading files
 Resources::Resources(){
 
-
 	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" };
 	loadFromFile(fileNames,m_menuTexture);
 
@@ -24,7 +23,7 @@ Resources::Resources(){
 	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png", "Online.png"};
 	loadFromFile(gameMode, m_gameModeTexture);
 
-	std::vector<std::string> characters{ "ItalyPlayer.png" }; 
+	std::vector<std::string> characters{ "ItalyPlayer.png", "BrazilianPlayer.png" , "PortugalPlayer.png" };
 	loadFromFile(characters, m_charactersSheet);
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png" };
@@ -64,11 +63,6 @@ Resources::Resources(){
 	}
 
 }
-
-
-
-
-
 
 //loadFromFile file function
 void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf::Texture>& textures) {
@@ -142,6 +136,7 @@ std::vector<sf::Texture>& Resources::getCharactersTexture() {
 
 	return m_charactersSheet;
 }
+
 //get select team textures
 std::vector<sf::Texture>& Resources::getSelectTeam() {
 
@@ -152,6 +147,7 @@ std::vector<sf::Texture>& Resources::getSelectTeam() {
 std::vector<sf::Texture>& Resources::getPowerTexture() {
 
 	return m_powerTexture;
+
 }
 
 
@@ -159,3 +155,4 @@ std::vector<sf::SoundBuffer>& Resources::getBufferVec()
 {
 	return m_bufferVec;
 }
+

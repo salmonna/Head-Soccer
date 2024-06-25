@@ -6,9 +6,12 @@
 #include "Keyboard.h"
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
+
 #include <SFML/Audio.hpp>
 
 
+#include "Box2d.h"
+#include <iostream>
 //-------
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/StandPlayerState.h"
@@ -33,9 +36,20 @@ public:
 
 	void setAura(bool aura);
 	bool getAura() const;
-	bool getSide() const;
 
-	virtual ~Player() = default;
+	bool getSide() const;
+  
+	void update();
+	bool getSideOfPlayer();
+
+	virtual ~Player() {
+		std::cout << " P-D" << std::endl;
+		m_body->DestroyFixture(m_body->GetFixtureList());
+		auto world = Box2d::getInstance().getBox2dWorld();
+		world->DestroyBody(m_body);
+		m_body = nullptr;
+	};
+
 private:
 
 	int m_numOfJump;
@@ -68,6 +82,9 @@ private:
 	StandPlayerState m_standMoveState;
 
 	BaseMovePlayerState* m_currentMoveState;
+
+	b2Body* m_body;
+
 };
 
 

@@ -14,7 +14,7 @@
 #include "Menu.h"
 #include "Pause.h"
 //class Pause;
-
+#include "Box2d.h"
 
 #include "gameObject/ComputerPlayer.h"
 
@@ -67,6 +67,7 @@ private:
 	bool m_pressedOnPause;
 	sf::Sprite m_goalSprite;
 
+	b2World* m_box2dWorld;
 };
 
 
