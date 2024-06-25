@@ -1,8 +1,7 @@
 #pragma once
 #include "Command.h"
 #include "gameState/GameState.h"
-
-
+#include "Controller.h"
 
 class SwichScreen : public Command
 {
