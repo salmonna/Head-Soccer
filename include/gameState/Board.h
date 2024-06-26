@@ -70,7 +70,6 @@ private:
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
 	sf::Sprite m_goalSprite;
-
 };
 
 
