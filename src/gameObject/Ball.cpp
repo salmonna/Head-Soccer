@@ -50,7 +50,6 @@ sf::Vector2f Ball::getVelocity() const
 sf::Vector2f Ball::getPosition() const
 {
     return m_sprite.getPosition();
-
 }
 
 void Ball::draw(sf::RenderWindow & window) const
@@ -63,9 +62,9 @@ void Ball::draw(sf::RenderWindow & window) const
 
 sf::Sprite & Ball::getSprite()
 {
+    m_sprite.setTexture(*m_ball.getTexture());
     m_sprite.setOrigin(m_ball.getOrigin());
     m_sprite.setPosition(m_ball.getPosition());
-
     return m_sprite;
 }
 
@@ -81,17 +80,26 @@ void Ball::setRegular()
     m_power = std::make_shared<RegularBehavior>();
     m_ball.setTexture(&Resources::getInstance().getBallTexture()[0]);
     m_ball.setFillColor(sf::Color(255, 255, 255, 255));
+    m_ball.setTextureRect(sf::IntRect(0, 0, 50, 50));
+    m_ball.setRadius(25.f);
+    m_ball.setOrigin(25.f, 25.f);
+
 }
 
 void  Ball::move(sf::Vector2f pressed)
 {
-     //m_moveBehavior->performMove(this);
 
-    if (m_power->isTimeIsOver())
+    if (m_power->powerIsActive())
     {
-        setRegular();
+        if (m_power->isTimeIsOver())
+        {
+            setRegular();
+        }
+        else if(!m_power->stayInTheAir())
+        {
+            return;
+        }
     }
-     
 
     if (m_clock.getElapsedTime().asSeconds() >= 1)
     {

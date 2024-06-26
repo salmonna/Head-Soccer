@@ -9,6 +9,8 @@
 #include "power/DragonPower.h"
 #include "power/DuplicateBall.h"
 
+#include "power/BigBallPower.h"
+
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
 , m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState)
@@ -79,19 +81,28 @@ void Player::move(sf::Vector2f pressed) {
 	m_posX = pos.x;
 	m_posY = pos.y;
 
-	
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().isProgFull(m_playerSide)) {//power
+	bool valid = false;
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
+		valid = true;
+	}
+
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
+		valid = true;
+	}
+
+	if (valid)
+	{
 		resetProgress();
 		m_aura = true;
 		m_sound.play();
 		m_sound.setLoop(true);
 	}
-
 	
 	if (!m_aura)
 		m_sound.stop();
 
 }
+
 //-----------------------------------------------------------------------------
 // Reset to default position if not jumping
 void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int posY) {

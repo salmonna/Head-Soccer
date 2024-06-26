@@ -27,7 +27,7 @@ Resources::Resources(){
 	std::vector<std::string> characters{ "ItalyPlayer.png" }; 
 	loadFromFile(characters, m_charactersSheet);
 
-	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png" };
+	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png", "Ball 04.png" };
 	loadFromFile(balls, m_ballTexture);
 
 	std::vector<std::string> selectTeam{ "start.png","SelectTeam.png","frame.png","brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
