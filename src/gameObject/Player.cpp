@@ -96,12 +96,13 @@ void Player::move(sf::Vector2f pressed) {
 		m_aura = true;
 		m_sound.play();
 		m_sound.setLoop(true);
-
+	}
 	
 	if (!m_aura)
 		m_sound.stop();
 
 }
+
 //-----------------------------------------------------------------------------
 // Reset to default position if not jumping
 void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int posY) {
