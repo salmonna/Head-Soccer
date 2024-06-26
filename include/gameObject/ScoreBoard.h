@@ -32,7 +32,8 @@ public:
 
 	//progress bar
 	void Progress();
-
+	bool isGoal();
+	void setGoalSign();
 
 	~ScoreBoard() = default;
 
@@ -43,6 +44,8 @@ private:
 
 	void updateProgress(std::vector<sf::Sprite>& progressSprite, int& progress, float seconds);
 
+	//goalSign
+	bool m_goalSign;
 
 	//time
 	int m_gameTime;
@@ -53,13 +56,14 @@ private:
 	sf::Clock m_clockGameTime;
 	sf::Clock m_clockEverySec;
 	sf::Clock m_clock;
+	sf::Clock m_clockGoalSign;
 
 	//text & sprite
 	std::vector<sf::Text> m_textVec;
 	std::vector<sf::Sprite> m_SpriteVec;
 	std::vector<sf::Sprite> m_progressP1Sprite;
 	std::vector<sf::Sprite> m_progressP2Sprite;
-
+	sf::Sprite m_goalSprite;
 	//points
 	int m_p1Points;
 	int m_p2Points;

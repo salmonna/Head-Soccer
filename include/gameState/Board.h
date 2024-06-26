@@ -46,13 +46,12 @@ public:
 
 private:
 
-	void updateScoreBar();
+	void handleScoreBoard();
 
 	std::vector<std::shared_ptr<MovingObject>> m_movingObject;
 	std::vector<std::shared_ptr<GameObject>> m_gameObject;
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
-	bool m_goalSign;
 	GameResults * m_gameResults;
 	//Pause  m_pause;
 	GameState * m_gameState;
@@ -61,16 +60,13 @@ private:
 	//game objects vector
 
 	Controller* m_controllerPtr;
-	sf::Clock m_clock;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
 
 	//std::vector<std::unique_ptr<BaseButton>> m_buttons;
 	std::vector<std::unique_ptr<Button>> m_buttons;
 
-
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
-	sf::Sprite m_goalSprite;
 
 	b2World* m_box2dWorld;
 };

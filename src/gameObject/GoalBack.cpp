@@ -1,13 +1,13 @@
 #include "gameObject/GoalBack.h"
 
-GoalBack::GoalBack(int x, int y, bool needScale):m_isGoal(false)
+GoalBack::GoalBack(int x, int y, bool needScale):m_side(needScale)
 {
 
 	m_sprite.setTexture(Resources::getInstance().getGoalTexture(1));
 	m_sprite.setPosition(x, y);
 	m_sprite.scale(0.6f, 0.6f);
 
-	if (needScale) {
+	if (m_side) {
 
 		m_sprite.scale(-1, 1);
 	}
@@ -32,13 +32,8 @@ sf::Sprite& GoalBack::getSprite() {
 	return m_sprite;
 }
 
-void GoalBack::setIfGoal(bool ballGetIn) {
-
-	m_isGoal = ballGetIn;
-}
-
-bool GoalBack::getIfGoal() const {
-	return m_isGoal;
+bool GoalBack::getGoalSide() const {
+	return m_side;
 }
 
 GoalBack::~GoalBack()

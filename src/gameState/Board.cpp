@@ -20,11 +20,10 @@
 
 
 // Constructor for the Board class
-Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults), m_goalSign(false)
-, m_controllerPtr(controller)
+Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults),m_controllerPtr(controller)
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getBoardTexture();
-	for (size_t i = 0; i < texture.size()-1; i++)
+	for (size_t i = 0; i < texture.size(); i++)
 	{
 		m_backGroundStadium.push_back(sf::Sprite());
 		m_backGroundStadium[i].setTexture(texture[i]);
@@ -35,8 +34,8 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	//m_buttons.push_back(std::make_unique<Pause>(menu, this));
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)), Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
 
-	m_goalSprite.setTexture(texture[2]);
-	m_goalSprite.setPosition(50, 200);
+	//m_goalSprite.setTexture(texture[2]);
+	//m_goalSprite.setPosition(50, 200);
 
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
@@ -85,8 +84,7 @@ void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 // Method to check if a given location corresponds to a stick
 void Board::respond(sf::Vector2f pressed) {
 
-	ScoreBoard::getInstance().timeCalculation();
-	ScoreBoard::getInstance().updateScore(0, 0);
+	handleScoreBoard();
 
 	//------- just for run the computer player--------
 	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
@@ -95,7 +93,7 @@ void Board::respond(sf::Vector2f pressed) {
 	
 
 	//move the players and the ball
-	for (int i = 0; i < m_movingObject.size() - m_goalSign; i++)
+	for (int i = 0; i < m_movingObject.size() && !ScoreBoard::getInstance().isGoal(); i++)
 	{
 		m_movingObject[i]->move(ballPosition);
 
@@ -107,22 +105,6 @@ void Board::respond(sf::Vector2f pressed) {
 			processCollision(*a, *b);
 		}
 	});
-	
-	updateScoreBar();
-    if (m_clock.getElapsedTime().asSeconds() > 2)
-	{
-		m_goalSign = false;
-		m_goalSprite.setPosition(0, 200);
-	}
-
-	if (m_goalSign)
-		m_goalSprite.move(10,0);
-	else {
-		float timeStep = 1.f / 60.f;
-		int32 velocityIterations = 6;
-		int32 positionIterations = 3;
-		m_box2dWorld->Step(timeStep, velocityIterations, positionIterations);
-	}
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
@@ -133,16 +115,34 @@ void Board::respond(sf::Vector2f pressed) {
 		}
 	}
 
+
+}
+
+//----------------handle Score Board---------------//
+void Board::handleScoreBoard() {
+
+	ScoreBoard::getInstance().timeCalculation();
+	ScoreBoard::getInstance().updateScore(0, 0);
 	ScoreBoard::getInstance().Progress();
-
-
 	if (ScoreBoard::getInstance().timeIsOver())
 	{
 		m_controllerPtr->setState(m_gameResults);
 		reset();
 	}
-}
 
+	if (!ScoreBoard::getInstance().isGoal())
+	{
+		float timeStep = 1.f / 60.f;
+		int32 velocityIterations = 6;
+		int32 positionIterations = 3;
+		m_box2dWorld->Step(timeStep, velocityIterations, positionIterations);
+	}
+	else
+	{
+		m_movingObject[0]->reset();
+		m_movingObject[1]->reset();
+	}
+}
 
 
 void Board::moveAd()
@@ -157,46 +157,6 @@ void Board::moveAd()
 	}
 
 }
-
-//=============================================== update ScoreBar =======================================//
-void Board::updateScoreBar() {
-
-
-	GoalBack& leftGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[2]);
-	GoalBack& rightGoalBack = dynamic_cast<GoalBack&>(*m_staticObject[3]);
-
-	if (leftGoalBack.getIfGoal()) {
-		m_clock.restart();
-		m_goalSign = true;
-		m_movingObject[0]->reset();
-		m_movingObject[1]->reset();
-		ScoreBoard::getInstance().updateScore(0, 1);
-		leftGoalBack.setIfGoal(false);
-	}
-	else if (rightGoalBack.getIfGoal())
-	{
-		m_clock.restart();
-		m_goalSign = true;
-		m_movingObject[0]->reset();
-		m_movingObject[1]->reset();
-		ScoreBoard::getInstance().updateScore(1, 0);
-		rightGoalBack.setIfGoal(false);
-	}
-
-}
-//
-//GameState* Board::handleEvents()
-//{
-//
-//	if (ScoreBoard::getInstance().timeIsOver())
-//	{
-//		reset();
-//		return m_gameResults;
-//	}
-//	auto state = m_gameState;
-//	m_gameState = NULL;
-//	return state;
-//}
 
 void Board::reset() {
 	int size = m_gameObject.size() - 6;
@@ -256,8 +216,8 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 		window.draw(m_backGroundStadium[i]);
 	}
 
-	if (m_goalSign)
-		window.draw(m_goalSprite);
+	//if (m_goalSign)
+	//	window.draw(m_goalSprite);
 
 
 	//draw the score board

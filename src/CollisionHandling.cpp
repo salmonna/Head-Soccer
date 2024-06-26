@@ -11,7 +11,7 @@
 #include "gameObject/Goal.h"
 #include "gameObject/ComputerPlayer.h"
 #include "power/RegularBehavior.h"
-
+#include "gameObject/ScoreBoard.h"
 #include "gameObject/GoalSide.h"
 #include "gameObject/GoalBack.h"
 #include "gameObject/GoalTop.h"
@@ -75,9 +75,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         Ball& ballObject = dynamic_cast<Ball&>(ball);
         GoalBack& goalObject = dynamic_cast<GoalBack&>(goalBack);
 
-        goalObject.setIfGoal(true);
+        (goalObject.getGoalSide()) ? ScoreBoard::getInstance().updateScore(1, 0) : ScoreBoard::getInstance().updateScore(0, 1);
+        
+        ScoreBoard::getInstance().setGoalSign();
 
-        //ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
         ballObject.setPosition(sf::Vector2f(900.0f, 100.0f));
 
     }
