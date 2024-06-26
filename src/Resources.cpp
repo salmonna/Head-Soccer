@@ -41,7 +41,7 @@ Resources::Resources(){
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
-	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" };
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png" };
 	loadFromFile(power, m_powerTexture);
 
 	std::vector<std::string> powerOfPlayer{ "fireDragon.png"};

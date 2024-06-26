@@ -8,8 +8,8 @@
 #include "power/InvisiblePower.h"
 #include "power/DragonPower.h"
 #include "power/DuplicateBall.h"
-
 #include "power/BigBallPower.h"
+#include "power/TornadoPower.h"
 
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
@@ -18,7 +18,7 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 m_currentMoveState(&m_standMoveState)
 {
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<DuplicateBall>();
+	m_power = std::make_shared<TornadoPower>();
 
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
