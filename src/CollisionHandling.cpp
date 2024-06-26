@@ -33,8 +33,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         sf::Vector2f currVelocity = ballObject.getVelocity();
         
 
-       // const float gravity = 980.0f;  // ëåç äîùéëä áôé÷ñìéí ìùðééä áøéáåò
-
         if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
         {
 

@@ -44,6 +44,7 @@ m_currentMoveState(&m_standMoveState)
 	playerFixtureDef.shape = &playerBox;
 	playerFixtureDef.density = 10.f;
 	playerFixtureDef.friction = 3.9f;
+	playerFixtureDef.restitution = 0.0f; // Ensure there's no bounce
 	m_body->CreateFixture(&playerFixtureDef);
 
 	// Set the gravity scale for the player
@@ -91,17 +92,12 @@ void Player::move(sf::Vector2f pressed) {
 
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
 
-	if (nextState) {
-
+	if (nextState) 
 		m_currentMoveState = nextState;
-	}
-	auto pos = sf::Vector2i(m_posX, m_posY);
+
 	m_currentMoveState->movement(m_sprite,m_playerSide, m_body);
 
 	update();
-
-	m_posX = pos.x;
-	m_posY = pos.y;
 
 	bool valid = false;
 	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power

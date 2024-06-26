@@ -33,7 +33,7 @@ void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2f start
 	sprite.setTextureRect(characterRect);
 }
 //-----------------------------------------------------------------------------------------------------
-bool BaseMovePlayerState::changeState(int maxSprite) {
+bool BaseMovePlayerState::changeState(int maxSprite)const {
 
 	return m_numOfJump > 110 * maxSprite;
 }

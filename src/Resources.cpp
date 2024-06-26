@@ -63,8 +63,6 @@ Resources::Resources(){
 	{
 		throw FileException("Font file not load!");
 	}
-
-	m_selectedPlayer.assign(7, false);
 }
 
 //loadFromFile file function
@@ -137,15 +135,15 @@ std::vector<sf::Texture>& Resources::getGameModeTexture() {
 //get characters
 sf::Texture& Resources::getCharactersTexture() {
 
-	for (int i = 0; i < m_selectedPlayer.size(); i++)
-	{
-		if (m_selectedPlayer[i]) {
-			m_selectedPlayer[i] = false;
-			return m_charactersSheet[i];
-		}
-	}
+	if (m_selectedPlayer.size() < 1)
+		m_selectedPlayer.push_back(0);
+	
+	int temp = m_selectedPlayer[0];
+	m_selectedPlayer.erase(m_selectedPlayer.begin());
 
-	throw FileException("No available character found");
+	if (m_charactersSheet.size() < temp)
+		throw FileException("No available character found");
+	return m_charactersSheet[temp];
 }
 
 //get select team textures
@@ -158,7 +156,6 @@ std::vector<sf::Texture>& Resources::getSelectTeam() {
 std::vector<sf::Texture>& Resources::getPowerTexture() {
 
 	return m_powerTexture;
-
 }
 
 std::vector<sf::SoundBuffer>& Resources::getBufferVec()
@@ -169,6 +166,6 @@ std::vector<sf::SoundBuffer>& Resources::getBufferVec()
 // Selected Player
 void Resources::setSelectedPlayer(int index) {
 
-	m_selectedPlayer[index] = true;
+	m_selectedPlayer.push_back(index);
 }
 

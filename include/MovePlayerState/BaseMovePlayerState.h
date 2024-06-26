@@ -12,7 +12,7 @@ public:
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime, sf::Sprite& sprite);
 	void resetToPosition(sf::Sprite& sprite, sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0);
-	bool changeState(int maxSprite);
+	bool changeState(int maxSprite)const;
 	
 	virtual ~BaseMovePlayerState() ;
 private:
