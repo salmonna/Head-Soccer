@@ -33,6 +33,7 @@ public:
 	//progress bar
 	void Progress();
 
+	int getPoint(int num);
 
 	~ScoreBoard() = default;
 

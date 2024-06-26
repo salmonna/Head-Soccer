@@ -5,9 +5,9 @@
 SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
-	//m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), Resources::getInstance().getSelectTeam()[0], sf::Vector2f(520.f, 690.f))); //playButton
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),
+												Resources::getInstance().getSelectTeam()[0], sf::Vector2f(520.f, 690.f))); //playButton
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 	
@@ -118,7 +118,6 @@ void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
 	}
 }
 
-//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void SelectTeam::setNumberOfPlayers(int players) {
 

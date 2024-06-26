@@ -22,4 +22,6 @@ private:
 	std::vector<std::unique_ptr<Button>> m_buttons;
 	sf::Sprite m_sprite;
 	GameState* m_gameState;
+	
+	std::vector<sf::Text> m_resultText;
 };
