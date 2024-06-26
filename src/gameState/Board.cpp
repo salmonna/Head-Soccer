@@ -42,6 +42,7 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
 												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
 	createStaticObjects(staticObjectNames);
+	
 }
 
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
@@ -133,6 +134,8 @@ void Board::respond(sf::Vector2f pressed) {
 	}
   
 }
+
+
 
 void Board::moveAd()
 {

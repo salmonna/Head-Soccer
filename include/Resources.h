@@ -31,6 +31,8 @@ public:
 	std::vector<sf::Texture>& getPowerTexture();
 	std::vector<sf::SoundBuffer>& getBufferVec();
 
+	std::vector<sf::Texture>& getPlayerPower();
+
 
 
 	sf::Font & getFont();
@@ -54,6 +56,8 @@ private:
 	std::vector<sf::Texture> m_ballTexture;
 	std::vector<sf::Texture> m_pauseTexture;
 	std::vector<sf::Texture> m_powerTexture;
+
+	std::vector<sf::Texture> m_powerOfPlayer;
 
 	std::vector<sf::Texture> m_selectTeam;
 

@@ -6,6 +6,9 @@
 #include "gameObject/scoreBoard.h"
 #include "power/FirePower.h"
 #include "power/InvisiblePower.h"
+#include "power/DragonPower.h"
+#include "power/DuplicateBall.h"
+
 #include "power/BigBallPower.h"
 
 //-----------------------------------------------------------------------------
@@ -15,7 +18,7 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 m_currentMoveState(&m_standMoveState)
 {
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<FirePower>();
+	m_power = std::make_shared<DuplicateBall>();
 
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
@@ -68,7 +71,6 @@ void Player::move(sf::Vector2f pressed) {
 
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
 
-
 	if (nextState) {
 
 		m_currentMoveState = nextState;
@@ -95,7 +97,6 @@ void Player::move(sf::Vector2f pressed) {
 		m_sound.play();
 		m_sound.setLoop(true);
 
-	}
 	
 	if (!m_aura)
 		m_sound.stop();
