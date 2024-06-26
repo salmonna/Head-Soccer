@@ -29,7 +29,7 @@ public:
 	sf::Vector2f getVelocity() const;
 	void setPosition(sf::Vector2f position);
 	void setBallVelocity(sf::Vector2f velocity);
-	float getRadius() const;
+	//float getRadius() const;
 
 	void restartBall();
 

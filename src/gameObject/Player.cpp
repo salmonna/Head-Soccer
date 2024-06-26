@@ -19,7 +19,7 @@ m_currentMoveState(&m_standMoveState)
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<DuplicateBall>();
+	m_power = std::make_shared<InvisiblePower>();
 
 
 	if (m_playerSide)
@@ -43,14 +43,14 @@ m_currentMoveState(&m_standMoveState)
 	b2FixtureDef playerFixtureDef;
 	playerFixtureDef.shape = &playerBox;
 	playerFixtureDef.density = 10.f;
-	playerFixtureDef.friction = 0.4f;
+	playerFixtureDef.friction = 3.9f;
 	m_body->CreateFixture(&playerFixtureDef);
 
 	// Set the gravity scale for the player
 	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
 	m_sprite.setOrigin(30.f, 40.f);
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[6]);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	resetToPosition();
 
 

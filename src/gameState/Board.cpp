@@ -32,10 +32,8 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	m_backGroundStadium[1].setPosition(0, 670);
 
 	//m_buttons.push_back(std::make_unique<Pause>(menu, this));
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)), Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
-
-	//m_goalSprite.setTexture(texture[2]);
-	//m_goalSprite.setPosition(50, 200);
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)), Resources::getInstance().getPauseTexture()[0]
+													, sf::Vector2f(0.f,0.f))); //pause Button
 
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
@@ -84,11 +82,13 @@ void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 // Method to check if a given location corresponds to a stick
 void Board::respond(sf::Vector2f pressed) {
 
-	handleScoreBoard();
+	
 
 	//------- just for run the computer player--------
 	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
 	//------------------------------------------------
+	
+	handleScoreBoard();
 	moveAd();
 	
 

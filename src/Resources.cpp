@@ -5,6 +5,7 @@
 #include "FileException.h"
 #include <iostream>
 
+
 //constractor of resources file are loading files
 Resources::Resources(){
 
@@ -23,15 +24,15 @@ Resources::Resources(){
 	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png", "Online.png"};
 	loadFromFile(gameMode, m_gameModeTexture);
 
-	std::vector<std::string> characters{ "ItalyPlayer.png", "BrazilianPlayer.png", "PortugalPlayer.png", "EnglandPlayer.png",
-											"SpainPlayer.png", "GermanyPlayer.png","HolandPlayer.png" };
+	std::vector<std::string> characters{ "BrazilianPlayer.png", "ItalyPlayer.png", "EnglandPlayer.png", "SpainPlayer.png",
+											"HolandPlayer.png", "PortugalPlayer.png", "GermanyPlayer.png", };
 	loadFromFile(characters, m_charactersSheet);
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png", "Ball 04.png" };
 	loadFromFile(balls, m_ballTexture);
 
 	std::vector<std::string> selectTeam{ "start.png","SelectTeam.png","frame.png","brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
-										"japanCharcter.png","spainCharcter.png","holandCharcter.png","portugalCharcter.png","germanyCharcter.png"};
+										"spainCharcter.png","holandCharcter.png","portugalCharcter.png","germanyCharcter.png"};
 	loadFromFile(selectTeam, m_selectTeam);
 
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
@@ -63,6 +64,7 @@ Resources::Resources(){
 		throw FileException("Font file not load!");
 	}
 
+	m_selectedPlayer.assign(7, false);
 }
 
 //loadFromFile file function
@@ -133,9 +135,17 @@ std::vector<sf::Texture>& Resources::getGameModeTexture() {
 }
 
 //get characters
-std::vector<sf::Texture>& Resources::getCharactersTexture() {
+sf::Texture& Resources::getCharactersTexture() {
 
-	return m_charactersSheet;
+	for (int i = 0; i < m_selectedPlayer.size(); i++)
+	{
+		if (m_selectedPlayer[i]) {
+			m_selectedPlayer[i] = false;
+			return m_charactersSheet[i];
+		}
+	}
+
+	throw FileException("No available character found");
 }
 
 //get select team textures
@@ -151,9 +161,14 @@ std::vector<sf::Texture>& Resources::getPowerTexture() {
 
 }
 
-
 std::vector<sf::SoundBuffer>& Resources::getBufferVec()
 {
 	return m_bufferVec;
+}
+
+// Selected Player
+void Resources::setSelectedPlayer(int index) {
+
+	m_selectedPlayer[index] = true;
 }
 

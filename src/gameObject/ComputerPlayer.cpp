@@ -11,10 +11,9 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 	m_power = std::make_unique<FirePower>();
 
    
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	resetToPosition();
 	m_basePosition = sf::Vector2f(272, 775);
-
 
 	//----------------------box2d---------------------------//
 	auto world = Box2d::getInstance().getBox2dWorld();
