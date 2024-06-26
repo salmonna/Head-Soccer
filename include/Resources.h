@@ -33,9 +33,12 @@ public:
 
 	std::vector<sf::Texture>& getPlayerPower();
 
-
+	void setSelectedPlayer(int index);
 
 	sf::Font & getFont();
+
+	std::vector<int> getPlayerOrder();
+	void resetPlayerOrder();
 
 private:
 
@@ -64,4 +67,7 @@ private:
 	sf::Font m_font;
 
 	std::vector<sf::SoundBuffer> m_bufferVec;
+
+	std::vector<bool> m_selectedPlayer;
+	std::vector<int> m_playerOrder;
 };

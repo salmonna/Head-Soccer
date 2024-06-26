@@ -7,28 +7,27 @@ SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controller
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),
-												Resources::getInstance().getSelectTeam()[0], sf::Vector2f(520.f, 690.f))); //playButton
+												Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
-	
-	auto sprite = sf::Sprite(charctersTexture[1]);
-	sprite.setPosition(630, 50);
-	m_charcters.push_back(sprite);
 
-	auto frame = sf::Sprite(charctersTexture[2]);
+	auto frame = sf::Sprite(charctersTexture[9]);
 	frame.setPosition(3 * 200 - 500, 270);
 	m_frames.push_back(frame);
 	frame.setColor(sf::Color::Red);
 	m_frames.push_back(frame);
 
-	for (int i = 3; i < charctersTexture.size(); i++)
+	for (int i = 0; i < charctersTexture.size() - 3; i++)
 	{
 		auto sprite = sf::Sprite(charctersTexture[i]);
 		sprite.scale(0.6f,0.6f);
-		sprite.setPosition(i*200 - 500, 300);
+		sprite.setPosition((i+3)*200 - 400, 300);
 		m_charcters.push_back(sprite);
 	}
-	
+
+	auto sprite = sf::Sprite(charctersTexture[8]);
+	sprite.setPosition(630, 50);
+	m_charcters.push_back(sprite);
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::draw(sf::RenderWindow& window) const {
@@ -87,13 +86,15 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
 	
-	for (int i = 1; i < m_charcters.size(); i++)
+	for (int i = 0; i < m_charcters.size() - 1; i++)
 	{
 		isMouseOnPlayers(mousePressed, i);
 
 		if (m_charcters[i].getGlobalBounds().contains(mousePressed)) {
 
 			m_playerSelected++;
+
+			Resources::getInstance().setSelectedPlayer(i);
 		}
 	}
 }

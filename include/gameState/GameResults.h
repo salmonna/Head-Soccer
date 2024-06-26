@@ -13,6 +13,10 @@ class GameResults: public GameState
 public:
 	GameResults(Controller * controller, Menu * menuState);
 
+	void playerOrderAndSide();
+
+	void IntiliazTextResult();
+
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
 
@@ -24,4 +28,6 @@ private:
 	GameState* m_gameState;
 	
 	std::vector<sf::Text> m_resultText;
+	std::vector<sf::Sprite> m_gameResultSprite;
+	bool m_initilaze;
 };

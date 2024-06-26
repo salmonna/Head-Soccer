@@ -30,8 +30,8 @@ Resources::Resources(){
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png", "Ball 04.png" };
 	loadFromFile(balls, m_ballTexture);
 
-	std::vector<std::string> selectTeam{ "start.png","SelectTeam.png","frame.png","brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
-										"japanCharcter.png","spainCharcter.png","holandCharcter.png","portugalCharcter.png","germanyCharcter.png"};
+	std::vector<std::string> selectTeam{ "brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
+										"spainCharcter.png","holandCharcter.png","portugalCharcter.png","germanyCharcter.png","start.png","SelectTeam.png","frame.png" };
 	loadFromFile(selectTeam, m_selectTeam);
 
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
@@ -63,10 +63,8 @@ Resources::Resources(){
 		throw FileException("Font file not load!");
 	}
 
+	m_selectedPlayer.assign(7, false);
 }
-
-
-
 
 
 
@@ -158,4 +156,19 @@ std::vector<sf::Texture>& Resources::getPowerTexture() {
 std::vector<sf::SoundBuffer>& Resources::getBufferVec()
 {
 	return m_bufferVec;
+}
+
+void Resources::setSelectedPlayer(int index) {
+
+	m_selectedPlayer[index] = true;
+
+	m_playerOrder.push_back(index);
+}
+
+std::vector<int> Resources::getPlayerOrder() {
+	return m_playerOrder;
+}
+
+void Resources::resetPlayerOrder() {
+	m_playerOrder.clear();
 }
