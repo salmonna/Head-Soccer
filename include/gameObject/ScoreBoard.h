@@ -13,7 +13,7 @@ public:
 		return instance;
 	}
 
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window) const ;
 
 	void timeCalculation();
 	void updateScore(int p1Points, int p2Points);
@@ -30,19 +30,19 @@ public:
 	bool istProgressP1Full();
 	bool istProgressP2Full();
 
-	bool isProgFull(bool playerSide);
+	//progress bar
+	void Progress();
+
 
 	~ScoreBoard() = default;
 
 private:
-
 	ScoreBoard(const ScoreBoard&) = delete;
 	ScoreBoard& operator=(const ScoreBoard&) = delete;
 	ScoreBoard();
 
+	void updateProgress(std::vector<sf::Sprite>& progressSprite, int& progress, float seconds);
 
-	//progress bar
-	void drawProgress(sf::RenderWindow& window, std::vector<sf::Sprite> & progressSprite , int & progress, float seconds);
 
 	//time
 	int m_gameTime;

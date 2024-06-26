@@ -1,18 +1,19 @@
 #pragma once
 #include "GameState\Pause.h"
-#include "../../include/button/pauseButton/ResumeButton.h"
-#include "../../include/button/pauseButton/ExitButton.h"
+#include "Command/SwichScreen.h"
+#include "Command/Command.h"
+#include "Resources.h"
 
 
-
-
-Pause::Pause(Menu * menuState, Board * boardState):m_gameState(NULL), 
-m_boardState(boardState), m_pauseStateBool(false)
+Pause::Pause(Controller* controller, Menu * menuState, Board * boardState):
+m_boardState(boardState)
 {
-	m_sprite.setTexture(Resources::getInstance().getPauseTexture()[0]);
 
-	m_buttons.push_back(std::make_unique<ResumeButton>(boardState));
-	m_buttons.push_back(std::make_unique<ExitButton>(menuState));
+	std::vector<sf::Texture> & texture = Resources::getInstance().getPauseTexture();
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), texture[1], sf::Vector2f(845.f, 350.f))); //Resume Button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)), texture[2], sf::Vector2f(845.f, 500.f))); //exit to menu Button
+
+
 	
 }
 
@@ -24,13 +25,12 @@ void Pause::respond(sf::Vector2f pressed) {
 	{
 		if (m_buttons[i]->contains(pressed)) {
 
-			if (i == 1)
+			if (i == 1) //exit to menu
 			{
 				m_boardState->reset();
 			}
 
-			m_pauseStateBool = false;
-			m_gameState = m_buttons[i]->click();
+			m_buttons[i]->execute();
 			return;
 		}
 	}
@@ -39,39 +39,12 @@ void Pause::respond(sf::Vector2f pressed) {
 //draw
 void Pause::draw(sf::RenderWindow& window) const {
 
-	if (m_pauseStateBool)
-	{
-		m_boardState->drawGameObjects(window);
 
-		for (int i = 0; i < m_buttons.size(); i++)
-		{
-			m_buttons[i]->draw(window);
-		}
-	}
-	else
+	m_boardState->drawGameObjects(window);
+
+	for (int i = 0; i < m_buttons.size(); i++)
 	{
-		window.draw(m_sprite);
+		m_buttons[i]->draw(window);
 	}
 }
 
-
-GameState* Pause::click() 
-{
-	m_pauseStateBool = true;
-	return this;
-}
-
-
-bool Pause::contains(sf::Vector2f position) const
-{
-	sf::Vector2f newPos = m_sprite.getTransform().getInverse().transformPoint(position);
-	return m_sprite.getLocalBounds().contains(newPos);
-}
-
-
-GameState * Pause::handleEvents()
-{
-	auto state = m_gameState;
-	m_gameState = NULL;
-	return state;
-}

@@ -1,10 +1,13 @@
 #include "gameState/SelectTeam.h"
+#include "Command/SwichScreen.h"
+#include "Command/Command.h"
 
-
-SelectTeam::SelectTeam(Board* boardState) :m_gameState(NULL) ,m_numOfPlayers(0), m_playerSelected(0)
+SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
-	m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
+	//m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
+
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), Resources::getInstance().getSelectTeam()[0], sf::Vector2f(520.f, 690.f))); //playButton
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 	
@@ -71,7 +74,8 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
-			m_gameState = m_buttons[i]->click();
+			reset();
+			m_buttons[i]->execute();
 			break;
 		}
 	}
@@ -115,12 +119,6 @@ void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
 }
 
 //-----------------------------------------------------------------------------
-GameState* SelectTeam::handleEvents() {
-
-	GameState* gameState = m_gameState;
-	m_gameState = NULL;
-	return gameState;
-}
 //-----------------------------------------------------------------------------
 void SelectTeam::setNumberOfPlayers(int players) {
 
