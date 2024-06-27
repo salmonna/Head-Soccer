@@ -12,7 +12,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		auto sprite = sf::Sprite(texturs[i]);
 		m_SpriteVec.push_back(sprite);
 	}
-	float x = 1800 / 2 -1200/2;
+	float x = 300.f;
 	m_SpriteVec[0].setPosition(x, -500);
 
 
@@ -30,7 +30,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 
 	//font points pos
 	m_textVec[1].setPosition(x+175, 50);
-	m_textVec[2].setPosition(x + 1200-175-20, 50);
+	m_textVec[2].setPosition(x + 1005, 50);
 
 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
@@ -44,7 +44,11 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		m_progressP1Sprite[i].scale(0.6, 1);
 		m_progressP1Sprite[i].setPosition(pos);
 	}
-	
+
+	pos.y += 3.5;
+	pos.x += 2.8f;
+	m_progressP1Sprite[1].setPosition(pos);
+
 	pos = sf::Vector2f(950, 80);
 
 	for (int i = 0; i < texture.size(); i++)
@@ -54,6 +58,10 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		m_progressP2Sprite[i].scale(0.6, 1);
 		m_progressP2Sprite[i].setPosition(pos);
 	}
+	pos.y += 3.5;
+	pos.x += 2.8f;
+	m_progressP2Sprite[1].setPosition(pos);
+
 
 }
 
