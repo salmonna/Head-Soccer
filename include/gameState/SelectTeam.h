@@ -21,7 +21,7 @@ private:
 	void isMouseOnPlayers(sf::Vector2f mousePressed, int index);
 	void checkToDraw(sf::RenderWindow& window) const;
 	void reset();
-
+	void loadGameObject();
 
 	GameState* m_gameState;
 	sf::Sprite m_stage;
@@ -35,5 +35,6 @@ private:
 
 	int m_numOfPlayers;
 	int m_playerSelected;
+	Board* m_boardPtr;
 };
 

@@ -2,7 +2,7 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 
-SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
+SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0), m_boardPtr(boardState)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
 	//m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
@@ -74,6 +74,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
+			loadGameObject();
 			reset();
 			m_buttons[i]->execute();
 			break;
@@ -94,6 +95,7 @@ void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 		if (m_charcters[i].getGlobalBounds().contains(mousePressed)) {
 
 			m_playerSelected++;
+			Resources::getInstance().setSelectedPlayer(i - 1);
 		}
 	}
 }

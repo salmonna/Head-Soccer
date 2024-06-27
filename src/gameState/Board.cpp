@@ -84,13 +84,14 @@ void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 // Method to check if a given location corresponds to a stick
 void Board::respond(sf::Vector2f pressed) {
 
-	handleScoreBoard();
+
 
 	//------- just for run the computer player--------
 	sf::Vector2f ballPosition = m_movingObject[2]->getPosition();
 	//------------------------------------------------
-	moveAd();
 	
+	handleScoreBoard();
+	moveAd();
 
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size() && !ScoreBoard::getInstance().isGoal(); i++)

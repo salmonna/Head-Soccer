@@ -11,27 +11,13 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 	m_power = std::make_unique<FirePower>();
 
    
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	resetToPosition();
 	m_basePosition = sf::Vector2f(272, 775);
 
 
 	//----------------------box2d---------------------------//
-	auto world = Box2d::getInstance().getBox2dWorld();
-	// Create the player
-	b2BodyDef playerBodyDef;
-	playerBodyDef.type = b2_dynamicBody;
-	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
-	m_body = world->CreateBody(&playerBodyDef);
-	b2PolygonShape playerBox;
-	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
-	b2FixtureDef playerFixtureDef;
-	playerFixtureDef.shape = &playerBox;
-	playerFixtureDef.density = 10.f;
-	playerFixtureDef.friction = 0.4f;
-	m_body->CreateFixture(&playerFixtureDef);
-	// Set the gravity scale for the player
-	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+	m_body = Box2d::getInstance().createPlayer(m_basePosition);
 
 	m_sprite.setOrigin(30.f, 40.f);
 

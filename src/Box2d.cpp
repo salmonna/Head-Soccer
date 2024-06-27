@@ -76,7 +76,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
 
     // Create the top goal
     b2BodyDef topGoalBodyDef;
-    topGoalBodyDef.position.Set(70.f / SCALE, 585.f / SCALE);
+    topGoalBodyDef.position.Set(70.f / SCALE, 580.f / SCALE);
     b2Body* topGoalBody = m_world.CreateBody(&topGoalBodyDef);
     b2PolygonShape topGoalBox;
     topGoalBox.SetAsBox(75.f / SCALE, 5.f / SCALE); // Box2D uses half-widths and half-heights
@@ -86,7 +86,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
     sf::RectangleShape topGoal(sf::Vector2f(150.f, 10.f)); // Full width = 2 * half-width
     topGoal.setFillColor(sf::Color::Red);
     topGoal.setOrigin(75.f, 5.f); // Origin at the center
-    topGoal.setPosition(70.f, 585.f); // Position using Box2D coordinates scaled to SFML
+    topGoal.setPosition(70.f, 580.f); // Position using Box2D coordinates scaled to SFML
     m_topGoalLeft = topGoal;
 
 
@@ -94,7 +94,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
 
     // Create the top goal on the right side
     b2BodyDef topGoalBodyDef2;
-    topGoalBodyDef2.position.Set(1800.f / SCALE, 585.f / SCALE); // Position in Box2D world coordinates
+    topGoalBodyDef2.position.Set(1800.f / SCALE, 580.f / SCALE); // Position in Box2D world coordinates
     b2Body* topGoalBody2 = m_world.CreateBody(&topGoalBodyDef2);
 
     // Define the shape of the top goal (adjust dimensions as needed)
@@ -108,7 +108,7 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
     sf::RectangleShape topGoal2(sf::Vector2f(150.f, 10.f)); // Adjust size as needed for rendering
     topGoal2.setFillColor(sf::Color::Black);
     topGoal2.setOrigin(150.f, 5.f); // Origin should match half-width and half-height for correct positioning
-    topGoal2.setPosition(1800.f, 585.f); // Position in screen coordinates
+    topGoal2.setPosition(1800.f, 580.f); // Position in screen coordinates
     m_topGoalRight = topGoal2;
 
 }
@@ -128,6 +128,54 @@ void Box2d::draw(sf::RenderWindow& window)const {
     window.draw(m_rightWall);
     window.draw(m_topGoalLeft); 
     window.draw(m_topGoalRight);
+}
+
+//create player in box3d
+b2Body* Box2d::createPlayer(sf::Vector2f basePosition) {
+
+    // Create the player
+    b2BodyDef playerBodyDef;
+    playerBodyDef.type = b2_dynamicBody;
+    playerBodyDef.position.Set(basePosition.x / SCALE, basePosition.y / SCALE);
+    b2Body* body = m_world.CreateBody(&playerBodyDef);
+
+    // Prevent the player from rotating
+    body->SetFixedRotation(true);
+
+    b2PolygonShape playerBox;
+    playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
+    b2FixtureDef playerFixtureDef;
+    playerFixtureDef.shape = &playerBox;
+    playerFixtureDef.density = 10.f;
+    playerFixtureDef.friction = 3.9f;
+    playerFixtureDef.restitution = 0.0f; // Ensure there's no bounce
+    body->CreateFixture(&playerFixtureDef);
+
+    // Set the gravity scale for the player
+    body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+
+    return body;
+}
+
+//create ball in box3d
+b2Body* Box2d::createBall(sf::Vector2f basePosition) {
+
+    // Create the ball
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(basePosition.x / SCALE, basePosition.y / SCALE);
+    b2Body* body = m_world.CreateBody(&bodyDef);
+
+    b2CircleShape circle;
+    circle.m_radius = 25.0f / SCALE;
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &circle;
+    fixtureDef.density = 0.4f;
+    fixtureDef.friction = 0.1f;
+    fixtureDef.restitution = 0.7f;
+    body->CreateFixture(&fixtureDef);
+
+    return body;
 }
 
 Box2d::~Box2d()

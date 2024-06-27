@@ -9,20 +9,7 @@ Ball::Ball():m_ballVelocity(5.0f, -10.0f), m_ball(25.0f), m_power(std::make_shar
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
     //----------------------box2d---------------------------//
-    auto world = Box2d::getInstance().getBox2dWorld();
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(900.f / SCALE, 100.f / SCALE);
-    m_body = world->CreateBody(&bodyDef);
-
-    b2CircleShape circle;
-    circle.m_radius = 25.0f / SCALE;
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &circle;
-    fixtureDef.density = 0.4f;
-    fixtureDef.friction = 0.1f;
-    fixtureDef.restitution = 0.7f;
-    m_body->CreateFixture(&fixtureDef);
+    m_body = Box2d::getInstance().createBall(sf::Vector2f(900.f,100.f));
 	
 
     m_sprite.setTexture(*texture);
@@ -81,8 +68,8 @@ sf::Vector2f Ball::getPosition() const
 void Ball::draw(sf::RenderWindow & window) const
 {
 
-	 window.draw(m_sprite);
-   m_power->draw(window, m_ball.getPosition());
+	window.draw(m_sprite);
+    m_power->draw(window, m_ball.getPosition());
 }
 
 

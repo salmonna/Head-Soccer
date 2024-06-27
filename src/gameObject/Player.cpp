@@ -32,27 +32,8 @@ m_currentMoveState(&m_standMoveState)
 		m_basePosition = sf::Vector2f(272, 775);
 	}
 	//----------------------box2d---------------------------//
-	auto world = Box2d::getInstance().getBox2dWorld();
-	// Create the player
-	b2BodyDef playerBodyDef;
-	playerBodyDef.type = b2_dynamicBody;
-	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
-	m_body = world->CreateBody(&playerBodyDef);
+	m_body = Box2d::getInstance().createPlayer(m_basePosition);
 
-	// Prevent the player from rotating
-	m_body->SetFixedRotation(true);
-
-	b2PolygonShape playerBox;
-	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
-	b2FixtureDef playerFixtureDef;
-	playerFixtureDef.shape = &playerBox;
-	playerFixtureDef.density = 10.f;
-	playerFixtureDef.friction = 3.9f;
-	playerFixtureDef.restitution = 0.0f; // Ensure there's no bounce
-	m_body->CreateFixture(&playerFixtureDef);
-
-	// Set the gravity scale for the player
-	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
 	m_sprite.setOrigin(40.f, 40.f);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());

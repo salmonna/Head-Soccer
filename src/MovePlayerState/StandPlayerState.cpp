@@ -15,7 +15,6 @@ void StandPlayerState::movement(sf::Sprite& sprite, bool playerSide, b2Body* bod
 	
 	resetToPosition(sprite);
 	body->SetLinearVelocity(b2Vec2(0.f, body->GetLinearVelocity().y));
-	std::cout << sprite.getPosition().y << std::endl;
 
 	if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//kick
 

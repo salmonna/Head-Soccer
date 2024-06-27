@@ -19,6 +19,8 @@ public:
 	}
 	void draw(sf::RenderWindow& window)const;
 	b2World* getBox2dWorld();
+	b2Body* createPlayer(sf::Vector2f basePosition);
+	b2Body* createBall(sf::Vector2f basePosition);
 
 private:	
 	Box2d(const Box2d&) = default;
