@@ -11,6 +11,8 @@
 #include "power/BigBallPower.h"
 #include "power/TornadoPower.h"
 #include "power/KameHameHaPower.h"
+#include "power/ElectricPower.h"
+
 
 
 //-----------------------------------------------------------------------------
@@ -20,7 +22,7 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 m_currentMoveState(&m_standMoveState)
 {
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<KameHameHaPower>();
+	m_power = std::make_shared<ElectricPower>();
 
 
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
