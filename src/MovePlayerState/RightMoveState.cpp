@@ -23,7 +23,7 @@ void RightMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body)
 	else {
 	
 		body->SetLinearVelocity(b2Vec2(10.f, body->GetLinearVelocity().y));
-		movePlayer(m_startPos, 6, 10,sprite);
+		movePlayer(m_startPos, 6, 10,sprite, sf::Vector2f(80, 95));
 	}
 
 	if (changeState(6)) {

@@ -23,7 +23,7 @@ void JumpMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) 
 		m_jump = true;
 	}
 
-	movePlayer(m_startPos, 7, 160, sprite);
+	movePlayer(m_startPos, 7, 160, sprite, sf::Vector2f(80, 95));
 
 	if (changeState(7))
 	{
