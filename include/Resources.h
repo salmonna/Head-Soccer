@@ -65,6 +65,6 @@ private:
 	std::vector<int> m_selectedPlayer;
 
 	sf::Font m_font;
-
+	int m_selectedIndex;
 	
 };

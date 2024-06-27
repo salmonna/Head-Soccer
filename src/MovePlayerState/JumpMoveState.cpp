@@ -25,7 +25,7 @@ void JumpMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) 
 
 	movePlayer(m_startPos, 7, 160, sprite, sf::Vector2f(70, 95));
 
-	if (sprite.getPosition().y >= 825.f && changeState(7))
+	if (changeState(7))
 	{
 		//m_body->SetLinearVelocity(b2Vec2(m_body->GetLinearVelocity().x, 0.f));
 		m_currentState = (BaseMovePlayerState*)m_standMoveState;

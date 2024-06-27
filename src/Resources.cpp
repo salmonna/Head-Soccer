@@ -7,7 +7,7 @@
 
 
 //constractor of resources file are loading files
-Resources::Resources(){
+Resources::Resources():m_selectedIndex(0){
 
 	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" };
 	loadFromFile(fileNames,m_menuTexture);
@@ -135,14 +135,15 @@ std::vector<sf::Texture>& Resources::getGameModeTexture() {
 //get characters
 sf::Texture& Resources::getCharactersTexture() {
 
-	if (m_selectedPlayer.size() < 1)
+	if (m_selectedPlayer.size() < m_selectedIndex)
 		m_selectedPlayer.push_back(0);
 	
-	int temp = m_selectedPlayer[0];
-	m_selectedPlayer.erase(m_selectedPlayer.begin());
+	int temp = m_selectedPlayer[m_selectedIndex];
+	m_selectedIndex++;
 
 	if (m_charactersSheet.size() < temp)
 		throw FileException("No available character found");
+
 	return m_charactersSheet[temp];
 }
 

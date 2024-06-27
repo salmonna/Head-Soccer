@@ -38,6 +38,10 @@ m_currentMoveState(&m_standMoveState)
 	playerBodyDef.type = b2_dynamicBody;
 	playerBodyDef.position.Set(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body = world->CreateBody(&playerBodyDef);
+
+	// Prevent the player from rotating
+	m_body->SetFixedRotation(true);
+
 	b2PolygonShape playerBox;
 	playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
 	b2FixtureDef playerFixtureDef;
@@ -50,7 +54,7 @@ m_currentMoveState(&m_standMoveState)
 	// Set the gravity scale for the player
 	m_body->SetGravityScale(PLAYER_GRAVITY_SCALE);
 
-	m_sprite.setOrigin(30.f, 40.f);
+	m_sprite.setOrigin(40.f, 40.f);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	resetToPosition();
 
