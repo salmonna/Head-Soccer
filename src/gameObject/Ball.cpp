@@ -167,3 +167,4 @@ void Ball::kick(bool rigthSide) {
     m_body->ApplyForceToCenter(kickForce, true);
 
 }
+

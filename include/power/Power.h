@@ -8,7 +8,7 @@ class Power
 public:
 	Power();
 	
-	void drawAura(sf::RenderWindow& window, sf::Vector2f position);
+	void drawAura(sf::RenderWindow& window, sf::Vector2f position, sf::Vector2f origin);
 	sf::Sprite& getSprite();
 	virtual ~Power() = default;
 

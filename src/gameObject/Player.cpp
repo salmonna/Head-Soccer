@@ -8,7 +8,6 @@
 #include "power/InvisiblePower.h"
 #include "power/DragonPower.h"
 #include "power/DuplicateBall.h"
-
 #include "power/BigBallPower.h"
 
 //-----------------------------------------------------------------------------
@@ -19,7 +18,7 @@ m_currentMoveState(&m_standMoveState)
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<DuplicateBall>();
+	m_power = std::make_shared<FirePower>();
 
 
 	if (m_playerSide)
@@ -59,10 +58,10 @@ void Player::draw(sf::RenderWindow& window) const {
 	if (m_aura)
 	{
 		if (!m_playerSide)
-			m_power->drawAura(window,m_sprite.getPosition());
+			m_power->drawAura(window,m_sprite.getPosition(),m_sprite.getOrigin());
 		else {
-			auto position = sf::Vector2f(m_sprite.getPosition().x - 70, m_sprite.getPosition().y);
-			m_power->drawAura(window, position);
+			auto position = sf::Vector2f(m_sprite.getPosition().x + 10, m_sprite.getPosition().y);
+			m_power->drawAura(window, position, m_sprite.getOrigin());
 		}
 	}
   

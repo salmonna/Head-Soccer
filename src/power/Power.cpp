@@ -13,7 +13,6 @@ Power::Power(): m_clock(), m_powerTimer(), m_stayTimer(), m_powerIsActive(false)
 }
 
 
-
 sf::Sprite& Power::getSprite() {
 
 	return m_auraSprite;
@@ -42,8 +41,9 @@ bool Power::stayInTheAir()
 }
 
 
-void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position) {
+void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position, sf::Vector2f origin) {
 	m_auraSprite.setPosition(position.x - 25,position.y - 55);
+	m_auraSprite.setOrigin(origin);
 	window.draw(m_auraSprite);
 	int timeSec = m_clock.getElapsedTime().asSeconds() * 10;
 
