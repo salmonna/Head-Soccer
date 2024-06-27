@@ -62,7 +62,7 @@ private:
 	std::vector<sf::SoundBuffer> m_bufferVec;
 	std::vector<sf::Texture> m_selectTeam;
 
-	std::vector<bool> m_selectedPlayer;
+	std::vector<int> m_selectedPlayer;
 
 	sf::Font m_font;
 

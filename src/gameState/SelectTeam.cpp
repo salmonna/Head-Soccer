@@ -121,7 +121,7 @@ void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
 }
 
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+
 void SelectTeam::setNumberOfPlayers(int players) {
 
 	m_numOfPlayers = players;
@@ -135,7 +135,7 @@ void SelectTeam::reset() {
 		m_frames[i].setPosition(3 * 200 - 500, 270);
 	}
 }
-
+//-----------------------------------------------------------------------------
 void SelectTeam::loadGameObject()
 {
 	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
