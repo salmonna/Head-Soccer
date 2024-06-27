@@ -161,7 +161,7 @@ void ScoreBoard::reset()
 {
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
-	m_p1Points = 1, m_p2Points = 0;
+	m_p1Points = 2, m_p2Points = 0;
 	resetProgressP1();
 	resetProgressP2();
 }

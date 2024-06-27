@@ -2,7 +2,7 @@
 #include "Resources.h"
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
-
+#include "gameObject/ScoreBoard.h"
 //gameResults constactor
 GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(NULL),m_initilaze(false)
 {
@@ -12,7 +12,7 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 
 	std::vector<sf::Texture>& texture2 = Resources::getInstance().getPauseTexture();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)),
-															texture2[2], sf::Vector2f(845.f, 900.f))); //exit to menu Button
+															texture2[2], sf::Vector2f(845.f, 750.f))); //exit to menu Button
 
 	IntiliazTextResult();
 
@@ -35,7 +35,7 @@ void GameResults::IntiliazTextResult()
 			m_resultText[i].setOutlineColor(sf::Color::Black);
 			m_resultText[i].setOutlineThickness(10.f);
 			m_resultText[i].setCharacterSize(200);
-			m_resultText[i].setPosition(750, 10);
+			m_resultText[i].setPosition(750, 0);
 
 			continue;
 		}
@@ -58,6 +58,7 @@ void GameResults::respond(sf::Vector2f mousePressed)
 
 			m_initilaze = false;
 			m_charcters.clear();
+			ScoreBoard::getInstance().reset();
 			return;
 		}
 	}
@@ -83,7 +84,6 @@ void GameResults::playerOrderAndSide()
 
 	m_charcters[0].setPosition(1320, 350);
 	m_charcters[0].scale(-1, 1);
-
 	m_charcters[1].setPosition(400, 350);
 
 	Resources::getInstance().resetPlayerOrder();
@@ -106,7 +106,7 @@ void GameResults::updateWinnerMatch(int leftPlayerPoint, int rightPlayerPoint)
 {
 	auto sprite = sf::Sprite();
 
-	if (leftPlayerPoint > 0 || rightPlayerPoint > 0) {
+	if (leftPlayerPoint != rightPlayerPoint) {
 		sprite.setTexture(Resources::getInstance().gameResultsTexture()[2]);
 		sprite.scale(0.2f, 0.2f);
 		m_gameResultSprite.push_back(sprite);
@@ -124,9 +124,9 @@ void GameResults::updateWinnerMatch(int leftPlayerPoint, int rightPlayerPoint)
 	}
 	else {
 		sprite.setTexture(Resources::getInstance().gameResultsTexture()[3]);
-		sprite.scale(0.2f, 0.2f);
+		sprite.scale(0.15f, 0.15f);
 		m_gameResultSprite.push_back(sprite);
-		m_gameResultSprite[1].setPosition(750, 200);
+		m_gameResultSprite[1].setPosition(770, 220);
 	}
 }
 //----------------------------------------------------------------------------------

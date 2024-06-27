@@ -39,6 +39,9 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gameResults{ "Replay.png","winner.png","draw.png"};
 	loadFromFile(gameResults, m_gameResultsTexture);
 
+	//std::vector<std::string> flags{"Brazil.png","Italy.png","England.png","Spain.png","Holand.png","Portugal.png","Germany.png"};
+	//loadFromFile(flags, m_countryFlags);
+
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
@@ -179,3 +182,8 @@ void Resources::resetPlayerOrder() {
 	m_selectedPlayer.clear();
 	m_selectedIndex = 0;
 }
+
+//std::vector<sf::Texture>& Resources::getCountriesFlags() {
+//
+//	return m_countryFlags;
+//}
