@@ -38,26 +38,14 @@ void GameModeSelection::respond(sf::Vector2f mousePressed) {
 
 void GameModeSelection::loadGameMode(int gameMode)
 {
-	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
-	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
-	switch (gameMode)
-	{
-	case 0:
 
+	if (gameMode == 0) {
 		m_selectTeamPtr->setNumberOfPlayers(2);
-		break;
-	case 1:
-		movingObjectNames[1] = "ComputerPlayer";
-		m_selectTeamPtr->setNumberOfPlayers(1);
-		break;
-	case 2:
-		break;
-	default:
-		break;
 	}
-	m_boardPtr->createMovingObjects(movingObjectNames);
-	m_boardPtr->createStaticObjects(staticObjectNames);
-
+	else if(gameMode == 1)
+	{
+		m_selectTeamPtr->setNumberOfPlayers(1);
+	}
 }
 
 

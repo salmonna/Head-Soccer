@@ -2,7 +2,7 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 
-SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
+SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0),m_boardPtr(boardState)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
 
@@ -73,6 +73,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
+			loadGameObject();
 			reset();
 			m_buttons[i]->execute();
 			break;
@@ -133,7 +134,24 @@ void SelectTeam::reset() {
 		m_frames[i].setPosition(3 * 200 - 500, 270);
 	}
 }
-
+//-----------------------------------------------------------------------------
+void SelectTeam::loadGameObject()
+{
+	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
+	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	switch (m_numOfPlayers)
+	{
+	case 1:
+		movingObjectNames[1] = "ComputerPlayer";
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
+	m_boardPtr->createMovingObjects(movingObjectNames);
+	m_boardPtr->createStaticObjects(staticObjectNames);
+}
 SelectTeam::~SelectTeam()
 {
 }

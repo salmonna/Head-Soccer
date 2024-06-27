@@ -6,8 +6,9 @@
 //gameResults constactor
 GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(NULL),m_initilaze(false)
 {
-	std::vector<sf::Texture>& texture = Resources::getInstance().getGameModeTexture();
-	m_sprite.setTexture(texture[0]);
+	auto sprite = sf::Sprite(Resources::getInstance().getGameModeTexture()[0]);
+	m_gameResultSprite.push_back(sprite);
+	
 
 	std::vector<sf::Texture>& texture2 = Resources::getInstance().getPauseTexture();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)),
@@ -15,13 +16,8 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 
 	IntiliazTextResult();
 
-	int leftPlayerPoint = ScoreBoard::getInstance().getPoint(1);
-	int rightPlayerPoint = ScoreBoard::getInstance().getPoint(0);
-
-	std::string score = std::to_string(leftPlayerPoint) + "     -     " + std::to_string(rightPlayerPoint);
-	m_resultText[1].setString(score);
-	
 }
+
 
 //----------------------------------------------------------------------------------
 void GameResults::IntiliazTextResult()
@@ -61,13 +57,14 @@ void GameResults::respond(sf::Vector2f mousePressed)
 			m_buttons[i]->execute();
 
 			m_initilaze = false;
-			m_gameResultSprite.clear();
+			m_charcters.clear();
 			return;
 		}
 	}
 
 	if (!m_initilaze) {
 		playerOrderAndSide();
+		finalScoreResult();
 	}
 }
 //----------------------------------------------------------------------------------
@@ -81,27 +78,67 @@ void GameResults::playerOrderAndSide()
 	{
 		int index = playerOrder[i];
 		sprite.setTexture(Resources::getInstance().getSelectTeam()[index]);
-		m_gameResultSprite.push_back(sprite);
+		m_charcters.push_back(sprite);
 	}
 
-	m_gameResultSprite[0].setPosition(1320, 350);
-	m_gameResultSprite[0].scale(-1, 1);
+	m_charcters[0].setPosition(1320, 350);
+	m_charcters[0].scale(-1, 1);
 
-	if (playerOrder.size() == 2) {
-
-		m_gameResultSprite[1].setPosition(400, 350);
-
-	}
+	m_charcters[1].setPosition(400, 350);
 
 	Resources::getInstance().resetPlayerOrder();
 	m_initilaze = true;
+}
+//----------------------------------------------------------------------------------
+void GameResults::finalScoreResult()
+{
+	int leftPlayerPoint = ScoreBoard::getInstance().getPoint(1);
+	int rightPlayerPoint = ScoreBoard::getInstance().getPoint(0);
+
+	std::string score = std::to_string(leftPlayerPoint) + "     -     " + std::to_string(rightPlayerPoint);
+	m_resultText[1].setString(score);
+
+	updateWinnerMatch(leftPlayerPoint, rightPlayerPoint);
+	
+}
+//----------------------------------------------------------------------------------
+void GameResults::updateWinnerMatch(int leftPlayerPoint, int rightPlayerPoint)
+{
+	auto sprite = sf::Sprite();
+
+	if (leftPlayerPoint > 0 || rightPlayerPoint > 0) {
+		sprite.setTexture(Resources::getInstance().gameResultsTexture()[2]);
+		sprite.scale(0.2f, 0.2f);
+		m_gameResultSprite.push_back(sprite);
+
+		if (leftPlayerPoint > rightPlayerPoint) {
+
+			m_charcters[0].setColor(sf::Color(128, 128, 128));
+			m_gameResultSprite[1].setPosition(450, 200);
+		}
+		else if (rightPlayerPoint > leftPlayerPoint) {
+
+			m_charcters[1].setColor(sf::Color(128, 128, 128));
+			m_gameResultSprite[1].setPosition(1020, 200);
+		}
+	}
+	else {
+		sprite.setTexture(Resources::getInstance().gameResultsTexture()[3]);
+		sprite.scale(0.2f, 0.2f);
+		m_gameResultSprite.push_back(sprite);
+		m_gameResultSprite[1].setPosition(750, 200);
+	}
 }
 //----------------------------------------------------------------------------------
 //draw function
 void GameResults::draw(sf::RenderWindow& window) const
 {
 
-	window.draw(m_sprite);
+	//window.draw(m_sprite);
+	for (int i = 0; i < m_gameResultSprite.size(); i++)
+	{
+		window.draw(m_gameResultSprite[i]);
+	}
 	
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
@@ -109,13 +146,18 @@ void GameResults::draw(sf::RenderWindow& window) const
 		m_buttons[i]->draw(window);
 	}
 
+	drawFinalResult(window);
+}
+//----------------------------------------------------------------------------------
+void GameResults::drawFinalResult(sf::RenderWindow& window) const
+{
 	for (int i = 0; i < m_resultText.size(); i++)
 	{
 		window.draw(m_resultText[i]);
 	}
 
-	for (int i = 0; i < m_gameResultSprite.size(); i++)
+	for (int i = 0; i < m_charcters.size(); i++)
 	{
-		window.draw(m_gameResultSprite[i]);
+		window.draw(m_charcters[i]);
 	}
 }

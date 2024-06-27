@@ -15,6 +15,7 @@ public:
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;	
 	void setNumberOfPlayers(int players);
+	void loadGameObject();
 private:
 
 	void signOrPreedOnPlayers(sf::Vector2f mousePressed);
@@ -24,6 +25,7 @@ private:
 
 
 	GameState* m_gameState;
+	Board* m_boardPtr;
 	sf::Sprite m_stage;
 	std::vector<sf::Sprite> m_frames;
 	Controller* m_controllerPtr;
