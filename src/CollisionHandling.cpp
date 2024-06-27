@@ -45,7 +45,8 @@ namespace // anonymous namespace — the standard way to make function "static"
             playerObject.getPower()->startTimer();
             ballObject.setMoveBehavior(playerObject.getPower());
             playerObject.setAura(false);
-            playerObject.getPower()->activatePower(ballObject.getCircle(), currVelocity, direction);
+            playerObject.getPower()->activatePowerOnBall(ballObject.getBody());
+            //ballObject.setPosition(sf::Vector2f(900.0f, 100.0f));
         }
 
     }

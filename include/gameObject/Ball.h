@@ -49,6 +49,8 @@ public:
 		m_body = nullptr;
 	};
 
+	b2Body* getBody();
+
 	//just for chacking --------
 	sf::CircleShape& getCircle();
 	//--------------------------

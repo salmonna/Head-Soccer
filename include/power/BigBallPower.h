@@ -7,7 +7,7 @@ public:
 
 	BigBallPower();
 
-	void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction);
+	virtual void activatePowerOnBall(b2Body* ballBody)override;
 
 	~BigBallPower() = default;
 

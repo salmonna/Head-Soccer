@@ -69,7 +69,7 @@ void Ball::draw(sf::RenderWindow & window) const
 {
 
 	window.draw(m_sprite);
-    m_power->draw(window, m_ball.getPosition());
+    m_power->draw(window, m_sprite.getPosition());
 }
 
 
@@ -108,10 +108,12 @@ void  Ball::move(sf::Vector2f pressed)
         if (m_power->isTimeIsOver())
         {
             setRegular();
+            // Set awake state to false to "pause" the body
+            m_body->SetAwake(true);
         }
         else if(!m_power->stayInTheAir())
         {
-            return;
+            //return;
         }
     }
 
@@ -155,16 +157,15 @@ void Ball::update() {
 //-----------------------------------------------------------------------------
 void Ball::kick(bool rigthSide) {
 
-    
-        
     float kickForceX;  // Horizontal kick force
     float kickForceY = -400.2f;  // Vertical kick force (negative for upward)
     
     (rigthSide) ? kickForceX = -500.5f : kickForceX = 500.5f;
-    
     b2Vec2 kickForce(kickForceX, kickForceY);
-
     m_body->ApplyForceToCenter(kickForce, true);
 
 }
-
+//-----------------------------------------------------------------------------
+b2Body* Ball::getBody() {
+    return m_body;
+}

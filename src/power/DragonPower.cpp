@@ -56,23 +56,23 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 
 }
 //--------------------------------------------------------------
-void DragonPower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) {
+void DragonPower::activatePowerOnBall(b2Body* ballBody) {
 
-	currVelocity = sf::Vector2f(1500.f, 0.f);
-	currVelocity.x *= direction.x;
+	//currVelocity = sf::Vector2f(1500.f, 0.f);
+	//currVelocity.x *= direction.x;
 
-	sf::Vector2f currPos = ball.getPosition();
-	currPos.y  = 400.f;
+	//sf::Vector2f currPos = ball.getPosition();
+	//currPos.y  = 400.f;
 
-	if (direction.x < 0)
-	{
-		m_rightSide = true;
-	}
-	
+	//if (direction.x < 0)
+	//{
+	//	m_rightSide = true;
+	//}
+	//
 
-	ball.setPosition(currPos);
+	//ball.setPosition(currPos);
 
-	m_round = 0;
+	//m_round = 0;
 }
 //--------------------------------------------------------------
 DragonPower::~DragonPower()

@@ -25,21 +25,24 @@ FirePower::FirePower() :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_ind
 
 };
 
-void FirePower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction)
+void FirePower::activatePowerOnBall(b2Body* ballBody)
 {
+
     setPowerIsActive(true);
 
-    currVelocity = sf::Vector2f(1500.f, 0.f);
-    currVelocity.x *= direction.x;
+    // Adjust position if necessary
+    b2Vec2 currentPosition = ballBody->GetPosition();
+    currentPosition.y -= 8.f; // Move the body 200 pixels higher (adjust as needed)
 
-    sf::Vector2f currPos = ball.getPosition();
-    currPos.y -= 300.f;
-    ball.setPosition(currPos);
+    ballBody->SetTransform(currentPosition, ballBody->GetAngle());
 
-    if (m_index1 == m_spriteSheet.size())
-    {
-        m_index1 = 0;
-    }
+    // Set new velocity for the ball
+    b2Vec2 newVelocity(50.f * -1.f, ballBody->GetLinearVelocity().y); // Assuming direction is a float
+
+    ballBody->SetLinearVelocity(newVelocity);
+
+    // Set awake state to false to "pause" the body
+    ballBody->SetAwake(false);
 }
 
 
