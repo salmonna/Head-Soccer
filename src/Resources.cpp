@@ -5,7 +5,6 @@
 #include "FileException.h"
 #include <iostream>
 
-
 //constractor of resources file are loading files
 Resources::Resources():m_selectedIndex(0){
 
@@ -24,15 +23,15 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png", "Online.png"};
 	loadFromFile(gameMode, m_gameModeTexture);
 
-	std::vector<std::string> characters{ "BrazilianPlayer.png", "ItalyPlayer.png", "EnglandPlayer.png", "SpainPlayer.png",
-											"HolandPlayer.png", "PortugalPlayer.png", "GermanyPlayer.png", };
+	std::vector<std::string> characters{ "ItalyPlayer.png", "BrazilianPlayer.png", "PortugalPlayer.png", "EnglandPlayer.png",
+											"SpainPlayer.png", "GermanyPlayer.png","HolandPlayer.png" };
 	loadFromFile(characters, m_charactersSheet);
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png", "Ball 04.png" };
 	loadFromFile(balls, m_ballTexture);
 
 	std::vector<std::string> selectTeam{ "start.png","SelectTeam.png","frame.png","brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
-										"spainCharcter.png","holandCharcter.png","portugalCharcter.png","germanyCharcter.png"};
+										"japanCharcter.png","spainCharcter.png","holandCharcter.png","portugalCharcter.png","germanyCharcter.png"};
 	loadFromFile(selectTeam, m_selectTeam);
 
 	m_gameResultsTexture.push_back(m_gameModeTexture[0]);
@@ -133,7 +132,7 @@ std::vector<sf::Texture>& Resources::getGameModeTexture() {
 }
 
 //get characters
-sf::Texture& Resources::getCharactersTexture() {
+std::vector<sf::Texture>& Resources::getCharactersTexture() {
 
 	if (m_selectedPlayer.size() < m_selectedIndex)
 		m_selectedPlayer.push_back(0);
@@ -158,6 +157,7 @@ std::vector<sf::Texture>& Resources::getPowerTexture() {
 
 	return m_powerTexture;
 }
+
 
 std::vector<sf::SoundBuffer>& Resources::getBufferVec()
 {

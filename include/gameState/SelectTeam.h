@@ -21,13 +21,12 @@ private:
 	void isMouseOnPlayers(sf::Vector2f mousePressed, int index);
 	void checkToDraw(sf::RenderWindow& window) const;
 	void reset();
-	void loadGameObject();
+
 
 	GameState* m_gameState;
 	sf::Sprite m_stage;
 	std::vector<sf::Sprite> m_frames;
 	Controller* m_controllerPtr;
-	Board* m_boardPtr;
 	//std::vector<std::unique_ptr<BaseButton>> m_buttons;
 
 	std::vector<std::unique_ptr<Button>> m_buttons;

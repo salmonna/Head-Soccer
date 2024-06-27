@@ -23,7 +23,7 @@ public:
 
 	sf::Texture& getGoalTexture(int index);
 	std::vector<sf::Texture>& getBallTexture();
-	sf::Texture& getCharactersTexture();
+	std::vector<sf::Texture>& getCharactersTexture();
 	std::vector<sf::Texture>& getGameModeTexture();
 	std::vector<sf::Texture>& getSelectTeam();
 
@@ -33,8 +33,6 @@ public:
 
 	std::vector<sf::Texture>& getPlayerPower();
 
-	void setSelectedPlayer(int index);
-	int getSelectedPlayer();
 
 	sf::Font & getFont();
 
@@ -59,7 +57,7 @@ private:
 	std::vector<sf::Texture> m_powerTexture;
 
 	std::vector<sf::Texture> m_powerOfPlayer;
-	std::vector<sf::SoundBuffer> m_bufferVec;
+
 	std::vector<sf::Texture> m_selectTeam;
 
 	std::vector<int> m_selectedPlayer;
@@ -67,4 +65,6 @@ private:
 	sf::Font m_font;
 	int m_selectedIndex;
 	
+
+	std::vector<sf::SoundBuffer> m_bufferVec;
 };

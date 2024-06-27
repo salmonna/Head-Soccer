@@ -128,19 +128,19 @@ void  Ball::move(sf::Vector2f pressed)
         }
     }
 
-    /*if (m_clock.getElapsedTime().asSeconds() >= 1)
+    if (m_clock.getElapsedTime().asSeconds() >= 1)
     {
         m_clock.restart();
-    }*/
+    }
 
     update();
 
 }
 
-//float Ball::getRadius() const {
-//
-//    return m_ball.getRadius();
-//}
+float Ball::getRadius() const {
+
+    return m_ball.getRadius();
+}
 
 sf::CircleShape& Ball::getCircle() {
 
