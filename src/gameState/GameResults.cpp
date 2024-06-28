@@ -12,7 +12,7 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 
 	std::vector<sf::Texture>& texture2 = Resources::getInstance().getPauseTexture();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)),
-															texture2[2], sf::Vector2f(845.f, 750.f))); //exit to menu Button
+															texture2[2], sf::Vector2f(750.f, 750.f))); //exit to menu Button
 
 	IntiliazTextResult();
 
@@ -145,7 +145,7 @@ void GameResults::draw(sf::RenderWindow& window) const
 	{
 		window.draw(m_gameResultSprite[i]);
 	}
-	
+
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
 	{

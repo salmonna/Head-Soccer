@@ -2,7 +2,7 @@
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 
-ScoreBoard::ScoreBoard() :m_gameTime(1), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(20), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
 {
 
@@ -149,7 +149,6 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
-		reset();
 		return true;
 	}
 	return false;
@@ -161,7 +160,7 @@ void ScoreBoard::reset()
 {
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
-	m_p1Points = 2, m_p2Points = 0;
+	m_p1Points = 0, m_p2Points = 0;
 	resetProgressP1();
 	resetProgressP2();
 }

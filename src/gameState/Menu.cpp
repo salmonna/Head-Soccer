@@ -13,8 +13,8 @@ Menu::Menu(Controller* controller, GameModeSelection * gameModeState, sf::Render
 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getMenuTexture();
 	m_Stage.setTexture(texture[4]);
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameModeState, controller)), texture[0], sf::Vector2f(100.f, 100.f))); //playButton
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Quit>(window)), texture[1], sf::Vector2f(100.f, 200.f))); //exit Button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameModeState, controller)), texture[0], sf::Vector2f(750.f, 300.f))); //playButton
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Quit>(window)), texture[1], sf::Vector2f(750.f, 450.f))); //exit Button
 
 
 

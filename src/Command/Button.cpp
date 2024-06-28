@@ -10,8 +10,21 @@ Button::Button(std::unique_ptr<Command> command, sf::Texture& texture, sf::Vecto
 }
 
 
-void Button::draw(sf::RenderWindow& window) const
+void Button::draw(sf::RenderWindow& window) 
 {
+	sf::Vector2i mouseMove = sf::Mouse::getPosition(window);
+
+	if (contains(sf::Vector2f(float(mouseMove.x), float(mouseMove.y)))) {
+
+		if (!isScaled()) {
+			scale(sf::Vector2f(1.15f, 1.15f));
+		}
+	}
+	else if (isScaled()) {
+
+		scale(getOrignalSize());
+	}
+
 	window.draw(m_sprite);
 }
 

@@ -12,6 +12,12 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 150.f))); //Button 2
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 150.f))); //Button 3
 
+	textModeSelection();
+
+}
+//-------------------------------------------------------------
+void GameModeSelection::textModeSelection()
+{
 	sf::Font& font = Resources::getInstance().getFont();
 
 	for (int i = 0; i < 3; i++)
@@ -26,6 +32,7 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 		// Adding an outline to the text
 		m_modeText[i].setOutlineColor(sf::Color(135, 206, 250));
 		m_modeText[i].setOutlineThickness(3);
+
 	}
 	m_modeText[0].setString("Multiplayer Mode");
 	m_modeText[1].setString("Single player Mode");
@@ -39,7 +46,7 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 		m_shadowText.push_back(shadow);
 	}
 }
-
+//-------------------------------------------------------------
 void GameModeSelection::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_Stage);
@@ -54,20 +61,12 @@ void GameModeSelection::draw(sf::RenderWindow& window) const {
 
 			window.draw(m_shadowText[i]);
 			window.draw(m_modeText[i]);
-
-			if (!m_buttons[i]->isScaled()) {
-				m_buttons[i]->scale(sf::Vector2f(1.2f, 1.2f));
-			}
-		}
-		else if (m_buttons[i]->isScaled()) {
-
-			m_buttons[i]->scale(m_buttons[i]->getOrignalSize());
 		}
 	}
 
 	
 }
-
+//-------------------------------------------------------------
 void GameModeSelection::respond(sf::Vector2f mousePressed) {
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
@@ -80,7 +79,7 @@ void GameModeSelection::respond(sf::Vector2f mousePressed) {
 	}
 }
 
-
+//-------------------------------------------------------------
 void GameModeSelection::loadGameMode(int gameMode)
 {
 
@@ -92,8 +91,7 @@ void GameModeSelection::loadGameMode(int gameMode)
 		m_selectTeamPtr->setNumberOfPlayers(1);
 	}
 }
-
-
+//-------------------------------------------------------------
 GameModeSelection::~GameModeSelection()
 {
 }
