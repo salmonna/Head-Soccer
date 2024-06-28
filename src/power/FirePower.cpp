@@ -3,11 +3,11 @@
 #include "Resources.h"
 
 
-FirePower::FirePower() :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0)
+FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getBallTexture()[2]);
 
-   
+    
     m_spriteSheet.push_back(std::pair(sf::Vector2i(9,81), sf::Vector2i(15,15)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(38, 75), sf::Vector2i(30, 30)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(80, 69), sf::Vector2i(45, 45)));
@@ -21,8 +21,6 @@ FirePower::FirePower() :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_ind
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(219, 195), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(443, 195), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(653, 194), sf::Vector2i(200, 200)));
-
-
 };
 
 void FirePower::activatePowerOnBall(b2Body* ballBody)
@@ -76,3 +74,6 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
 
 }
 
+bool FirePower::getSideOfPlayer()const {
+    return m_playerSide;
+}

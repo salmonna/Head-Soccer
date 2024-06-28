@@ -35,8 +35,7 @@ public:
 
 	sf::Clock& getClock();
 
-	void setMoveBehavior(std::shared_ptr<Power> power);
-	bool isRegularBehavior();
+	void setPower(std::shared_ptr<Power> power);
 
 	void update();
 	void kick(bool rigthSide);

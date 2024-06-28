@@ -18,7 +18,7 @@ m_currentMoveState(&m_standMoveState)
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<FirePower>();
+	m_power = std::make_shared<FirePower>(m_playerSide);
 
 
 	if (m_playerSide)
@@ -175,3 +175,6 @@ bool Player::getSideOfPlayer() {
 	return m_playerSide;
 }
 
+bool Player::getSide() const {
+	return m_playerSide;
+}

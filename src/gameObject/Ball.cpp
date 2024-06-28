@@ -69,7 +69,9 @@ void Ball::draw(sf::RenderWindow & window) const
 {
 
 	window.draw(m_sprite);
-    m_power->draw(window, m_sprite.getPosition());
+
+    if (m_power->powerIsActive())
+        m_power->draw(window, m_sprite.getPosition());
 }
 
 
@@ -92,12 +94,6 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 void Ball::setRegular()
 {
     m_power = std::make_shared<RegularBehavior>();
-    //m_ball.setTexture(&Resources::getInstance().getBallTexture()[0]);
-    //m_ball.setFillColor(sf::Color(255, 255, 255, 255));
-    //m_ball.setTextureRect(sf::IntRect(0, 0, 50, 50));
-    //m_ball.setRadius(25.f);
-    //m_ball.setOrigin(25.f, 25.f);
-
 }
 
 void  Ball::move(sf::Vector2f pressed)
@@ -105,27 +101,27 @@ void  Ball::move(sf::Vector2f pressed)
 
     if (m_power->powerIsActive())
     {
-        if (m_power->isTimeIsOver())
-        {
-            setRegular();
-            // Set awake state to false to "pause" the body
-            
-        }
-        else if(m_power->stayInTheAir())
+        m_power->checkTimeIsOver();
+       
+        if(m_power->stayInTheAir())
         {
             m_body->SetAwake(true);
+
+            float side;
+            (m_power->getSideOfPlayer()) ? side = -1.f : side = 1.f;
+
             // Set new velocity for the ball
-            b2Vec2 newVelocity(50.f * -1.f, m_body->GetLinearVelocity().y); // Assuming direction is a float
+            b2Vec2 newVelocity(50.f * side, m_body->GetLinearVelocity().y); // Assuming direction is a float
 
             m_body->SetLinearVelocity(newVelocity);
             //return;
         }
     }
 
-    if (m_clock.getElapsedTime().asSeconds() >= 1)
-    {
-        m_clock.restart();
-    }
+    //if (m_clock.getElapsedTime().asSeconds() >= 1)
+    //{
+    //    m_clock.restart();
+    //}
 
     update();
 
@@ -142,16 +138,11 @@ sf::CircleShape& Ball::getCircle() {
 }
 
 
-void Ball::setMoveBehavior(std::shared_ptr<Power> power)
+void Ball::setPower(std::shared_ptr<Power> power)
 {
     m_power = power;
 }
 
-
-bool Ball::isRegularBehavior()
-{
-    return typeid(RegularBehavior) == typeid(m_power);
-}
 
 //-----------------------------------------------------------------------------
 void Ball::update() {

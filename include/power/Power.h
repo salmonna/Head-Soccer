@@ -18,8 +18,9 @@ public:
 
 	virtual bool powerIsActive();
 	virtual void startTimer();
-	virtual bool isTimeIsOver();
+	virtual void checkTimeIsOver();
 	virtual bool stayInTheAir();
+	virtual bool getSideOfPlayer() const { return true; };
 
 	void setPowerIsActive(bool powerIsActive);
 private:

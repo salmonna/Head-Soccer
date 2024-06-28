@@ -27,26 +27,14 @@ namespace // anonymous namespace — the standard way to make function "static"
     void updateBall(Ball& ballObject, Player& playerObject)
     {
 
-        sf::Vector2f direction = ballObject.getPosition() - playerObject.getPosition();
-        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-        direction /= length; // ðøîåì äëéååï
-        sf::Vector2f currVelocity = ballObject.getVelocity();
-        
-
         if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
-        {
-
             ballObject.kick(playerObject.getSideOfPlayer());
-            
-        }
-
         else if (playerObject.getAura()) 
         {
             playerObject.getPower()->startTimer();
-            ballObject.setMoveBehavior(playerObject.getPower());
-            playerObject.setAura(false);
+            ballObject.setPower(playerObject.getPower());
             playerObject.getPower()->activatePowerOnBall(ballObject.getBody());
-            //ballObject.setPosition(sf::Vector2f(900.0f, 100.0f));
+            playerObject.setAura(false);
         }
 
     }

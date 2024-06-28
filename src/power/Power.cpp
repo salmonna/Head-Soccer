@@ -25,14 +25,10 @@ void Power::startTimer()
 	m_stayTimer.restart();
 }
 
-bool Power::isTimeIsOver()
+void Power::checkTimeIsOver()
 {
-	if (m_powerTimer.getElapsedTime().asSeconds() >= 3.f)
-	{
+	if (m_powerTimer.getElapsedTime().asSeconds() >= 2.5f)
 		m_powerIsActive = false;
-		return true;
-	}
-	return false;
 }
 
 bool Power::stayInTheAir()
