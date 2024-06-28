@@ -29,5 +29,7 @@ private:
 	sf::Sprite m_Stage;
 	Board* m_boardPtr;
 	SelectTeam* m_selectTeamPtr;
+	std::vector<sf::Text> m_modeText;
+	std::vector<sf::Text> m_shadowText;
 };
 

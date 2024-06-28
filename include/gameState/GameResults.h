@@ -25,6 +25,8 @@ public:
 	void drawFinalResult(sf::RenderWindow& window) const;
 	virtual void respond(sf::Vector2f mousePressed) override;
 
+	void resetGameResult();
+
 	~GameResults() = default;
 
 private:

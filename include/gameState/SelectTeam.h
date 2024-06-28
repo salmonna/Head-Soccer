@@ -10,6 +10,7 @@ class SelectTeam : public GameState
 {
 public:
 	SelectTeam(Controller* controller, Board* boardState);
+	void selectTextPlayer();
 	virtual ~SelectTeam();
 
 	virtual void draw(sf::RenderWindow& window) const override;
@@ -34,7 +35,7 @@ private:
 	std::vector<std::unique_ptr<Button>> m_buttons;
 
 	std::vector<sf::Sprite> m_charcters;
-
+	std::vector<sf::Text> m_selectText;
 	int m_numOfPlayers;
 	int m_playerSelected;
 };

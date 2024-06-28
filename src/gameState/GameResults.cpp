@@ -6,7 +6,7 @@
 //gameResults constactor
 GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(NULL),m_initilaze(false)
 {
-	auto sprite = sf::Sprite(Resources::getInstance().getGameModeTexture()[0]);
+	auto sprite = sf::Sprite(Resources::getInstance().getGameModeTexture()[4]);
 	m_gameResultSprite.push_back(sprite);
 	
 
@@ -56,9 +56,7 @@ void GameResults::respond(sf::Vector2f mousePressed)
 
 			m_buttons[i]->execute();
 
-			m_initilaze = false;
-			m_charcters.clear();
-			ScoreBoard::getInstance().reset();
+			resetGameResult();
 			return;
 		}
 	}
@@ -67,6 +65,14 @@ void GameResults::respond(sf::Vector2f mousePressed)
 		playerOrderAndSide();
 		finalScoreResult();
 	}
+}
+//----------------------------------------------------------------------------------
+void GameResults::resetGameResult()
+{	
+	m_initilaze = false;
+	m_charcters.clear();
+	ScoreBoard::getInstance().reset();
+	m_gameResultSprite.erase(m_gameResultSprite.begin() + 1 , m_gameResultSprite.end());
 }
 //----------------------------------------------------------------------------------
 void GameResults::playerOrderAndSide()
