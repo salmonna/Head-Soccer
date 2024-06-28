@@ -2,15 +2,19 @@
 #include "gameState/GameModeSelection.h"
 #include "Resources.h"
 #include "Command/SwichScreen.h"
+#include "Command/Undo.h"
 #include "Command/Command.h"
 
-GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, SelectTeam* selectTeam):m_boardPtr(boardState), m_selectTeamPtr(selectTeam)
+GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, Menu* menu, SelectTeam* selectTeam):m_boardPtr(boardState), m_selectTeamPtr(selectTeam)
+, m_prevState(menu)
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getGameModeTexture();
 	m_Stage.setTexture(texture[0]);
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(400.f, 100.f))); //Button 1
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 100.f))); //Button 2
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1200.f, 100.f))); //Button 3
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Undo>(controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+
 
 
 }
@@ -60,6 +64,11 @@ void GameModeSelection::loadGameMode(int gameMode)
 
 }
 
+
+GameState * GameModeSelection::prevState()
+{
+	return m_prevState;
+}
 
 GameModeSelection::~GameModeSelection()
 {

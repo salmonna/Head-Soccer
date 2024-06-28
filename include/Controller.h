@@ -8,12 +8,14 @@
 #include "gameState/GameModeSelection.h"
 #include "gameState/SelectTeam.h"
 #include "gameState/Pause.h"
+#include "gameState/Tutorial.h"
 
 class Controller
 {
 public:
 	Controller();
     void setState(GameState* gameState);
+    void undoState();
 
 private:
 	void runTheGame();
@@ -22,6 +24,7 @@ private:
     GameResults m_gameResults;
     Board m_gameBoard;
     GameModeSelection m_gameMode;
+    Tutorial m_tutorial;
     Menu m_menu;
     Pause m_pause;
     SelectTeam m_selectTeam;

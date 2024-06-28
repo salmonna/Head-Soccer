@@ -1,13 +1,19 @@
 #include "gameState/SelectTeam.h"
 #include "Command/SwichScreen.h"
+#include "Command/Undo.h"
 #include "Command/Command.h"
 
-SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
+
+class GameModeSelection;
+
+SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
+, m_prevState(gameMode)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
 	//m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), Resources::getInstance().getSelectTeam()[0], sf::Vector2f(520.f, 690.f))); //playButton
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Undo>(controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 	
@@ -133,6 +139,13 @@ void SelectTeam::reset() {
 		m_frames[i].setPosition(3 * 200 - 500, 270);
 	}
 }
+
+
+GameState* SelectTeam::prevState()
+{
+	return m_prevState;
+}
+
 
 SelectTeam::~SelectTeam()
 {

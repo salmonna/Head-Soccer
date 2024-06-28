@@ -4,17 +4,20 @@
 #include "Command/Button.h"
 
 class Controller;
+class GameModeSelection;
 
 
 class SelectTeam : public GameState
 {
 public:
-	SelectTeam(Controller* controller, Board* boardState);
+	SelectTeam(Controller* controller, GameModeSelection * gameMode, Board* boardState);
 	virtual ~SelectTeam();
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;	
 	void setNumberOfPlayers(int players);
+	virtual GameState* prevState() override;
+
 private:
 
 	void signOrPreedOnPlayers(sf::Vector2f mousePressed);
@@ -23,7 +26,8 @@ private:
 	void reset();
 
 
-	GameState* m_gameState;
+	GameModeSelection * m_prevState;
+
 	sf::Sprite m_stage;
 	std::vector<sf::Sprite> m_frames;
 	Controller* m_controllerPtr;
