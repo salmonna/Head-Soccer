@@ -36,11 +36,6 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
 
     ballBody->SetTransform(currentPosition, ballBody->GetAngle());
 
-    // Set new velocity for the ball
-    b2Vec2 newVelocity(50.f * -1.f, ballBody->GetLinearVelocity().y); // Assuming direction is a float
-
-    ballBody->SetLinearVelocity(newVelocity);
-
     // Set awake state to false to "pause" the body
     ballBody->SetAwake(false);
 }

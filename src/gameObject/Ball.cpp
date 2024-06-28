@@ -92,11 +92,11 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 void Ball::setRegular()
 {
     m_power = std::make_shared<RegularBehavior>();
-    m_ball.setTexture(&Resources::getInstance().getBallTexture()[0]);
-    m_ball.setFillColor(sf::Color(255, 255, 255, 255));
-    m_ball.setTextureRect(sf::IntRect(0, 0, 50, 50));
-    m_ball.setRadius(25.f);
-    m_ball.setOrigin(25.f, 25.f);
+    //m_ball.setTexture(&Resources::getInstance().getBallTexture()[0]);
+    //m_ball.setFillColor(sf::Color(255, 255, 255, 255));
+    //m_ball.setTextureRect(sf::IntRect(0, 0, 50, 50));
+    //m_ball.setRadius(25.f);
+    //m_ball.setOrigin(25.f, 25.f);
 
 }
 
@@ -109,10 +109,15 @@ void  Ball::move(sf::Vector2f pressed)
         {
             setRegular();
             // Set awake state to false to "pause" the body
-            m_body->SetAwake(true);
+            
         }
-        else if(!m_power->stayInTheAir())
+        else if(m_power->stayInTheAir())
         {
+            m_body->SetAwake(true);
+            // Set new velocity for the ball
+            b2Vec2 newVelocity(50.f * -1.f, m_body->GetLinearVelocity().y); // Assuming direction is a float
+
+            m_body->SetLinearVelocity(newVelocity);
             //return;
         }
     }
