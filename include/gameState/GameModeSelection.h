@@ -3,8 +3,6 @@
 
 #pragma once 
 #include "GameState.h"
-//#include "button/BaseButton.h"
-//#include "gameState/Board.h"
 #include "Command/Button.h"
 
 class Board;
@@ -19,8 +17,6 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
-	virtual GameState * prevState() override;
-
 	virtual ~GameModeSelection();
 
 private:
@@ -29,7 +25,6 @@ private:
 
 	std::vector<std::unique_ptr<Button>> m_buttons;
 	sf::Sprite m_Stage;
-	Menu* m_prevState;
 	Board* m_boardPtr;
 	SelectTeam* m_selectTeamPtr;
 };

@@ -1,19 +1,18 @@
 #include "gameState/SelectTeam.h"
 #include "Command/SwichScreen.h"
-#include "Command/Undo.h"
 #include "Command/Command.h"
 
 
 class GameModeSelection;
 
 SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
-, m_prevState(gameMode)
+, m_BoardPtr(boardState)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
 	//m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), Resources::getInstance().getSelectTeam()[0], sf::Vector2f(520.f, 690.f))); //playButton
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Undo>(controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 	
@@ -80,6 +79,11 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
+			if (i == 1)
+			{
+				m_BoardPtr->reset();
+			}
+
 			reset();
 			m_buttons[i]->execute();
 			break;
@@ -141,10 +145,7 @@ void SelectTeam::reset() {
 }
 
 
-GameState* SelectTeam::prevState()
-{
-	return m_prevState;
-}
+
 
 
 SelectTeam::~SelectTeam()

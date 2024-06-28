@@ -36,8 +36,3 @@ void Controller::setState(GameState * newState)
 	m_currentState = newState;
 }
 
-void Controller::undoState()
-{
-	m_currentState = m_currentState->prevState();
-}
-

@@ -16,7 +16,6 @@ public:
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;	
 	void setNumberOfPlayers(int players);
-	virtual GameState* prevState() override;
 
 private:
 
@@ -25,17 +24,13 @@ private:
 	void checkToDraw(sf::RenderWindow& window) const;
 	void reset();
 
-
-	GameModeSelection * m_prevState;
-
 	sf::Sprite m_stage;
 	std::vector<sf::Sprite> m_frames;
 	Controller* m_controllerPtr;
-	//std::vector<std::unique_ptr<BaseButton>> m_buttons;
-
 	std::vector<std::unique_ptr<Button>> m_buttons;
-
 	std::vector<sf::Sprite> m_charcters;
+
+	Board* m_BoardPtr;
 
 	int m_numOfPlayers;
 	int m_playerSelected;

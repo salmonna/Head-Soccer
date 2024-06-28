@@ -14,8 +14,7 @@ class Controller
 {
 public:
 	Controller();
-    void setState(GameState* gameState);
-    void undoState();
+    void setState(GameState* gameState );
 
 private:
 	void runTheGame();

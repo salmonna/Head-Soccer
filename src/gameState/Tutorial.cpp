@@ -1,17 +1,17 @@
 #pragma once
 #include "gameState/Tutorial.h"
-#include "Command/Undo.h"
+#include "Command/SwichScreen.h"
 #include "Command/Command.h"
 #include "Resources.h"
 
 
-Tutorial::Tutorial(Controller* controller, Menu* prevState) : m_prevState(prevState)
+Tutorial::Tutorial(Controller* controller, Menu* prevState)
 {
 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getMenuTexture();
 
 	m_sprite.setTexture(texture[8]);
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Undo>(controller)), texture[7], sf::Vector2f(0, 0))); //Button 4
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(prevState, controller)), texture[7], sf::Vector2f(0, 0))); //Button 4
 
 }
 
@@ -41,8 +41,3 @@ void Tutorial::draw(sf::RenderWindow& window) const {
 	}
 }
 
-
-GameState* Tutorial::prevState()
-{
-	return m_prevState;
-}
