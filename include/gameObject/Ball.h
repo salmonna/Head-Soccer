@@ -4,12 +4,10 @@
 #include "Window.h"
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
-
 #include <memory>
 #include "power/MoveBehavior.h"
 #include "power/RegularBehavior.h"
 #include "power/Power.h"
-
 #include "Box2d.h"
 #include <iostream>
 
@@ -20,25 +18,16 @@ public:
 	Ball();
 
 	virtual void draw(sf::RenderWindow& window) const override;
-	void setRegular();
 	virtual void move(sf::Vector2f pressed) override;
-	virtual sf::Vector2f getPosition() const override;
 	virtual sf::Sprite& getSprite() override;
-	virtual void reset() override;
+	virtual void reset() override{};
 
-	sf::Vector2f getVelocity() const;
 	void setPosition(sf::Vector2f position);
-	void setBallVelocity(sf::Vector2f velocity);
-	float getRadius() const;
-
-	void restartBall();
-
-	sf::Clock& getClock();
-
 	void setPower(std::shared_ptr<Power> power);
-
 	void update();
 	void kick(bool rigthSide);
+	b2Body* getBody();
+
 
 	virtual ~Ball() {
 		std::cout << " B-D" << std::endl;
@@ -47,20 +36,10 @@ public:
 		world->DestroyBody(m_body);
 		m_body = nullptr;
 	};
-
-	b2Body* getBody();
-
-	//just for chacking --------
-	sf::CircleShape& getCircle();
-	//--------------------------
 private:
 
 	std::shared_ptr<Power> m_power;
-
 	sf::Sprite m_sprite;
-	sf::CircleShape m_ball;
-	sf::Vector2f m_ballVelocity;
-	sf::Clock m_clock;
 	static bool m_registeritBall;
 	b2Body* m_body;
 };

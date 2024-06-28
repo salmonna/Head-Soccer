@@ -24,8 +24,6 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void move(sf::Vector2f pressed) override;
-
-	virtual  sf::Vector2f getPosition() const override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset()override;
 	Keyboard getKey() const;
@@ -36,10 +34,9 @@ public:
 
 	void setAura(bool aura);
 	bool getAura() const;
-
 	bool getSide() const;
-  
 	void update();
+	b2Body* getBody();
 	bool getSideOfPlayer();
 
 	virtual ~Player() {

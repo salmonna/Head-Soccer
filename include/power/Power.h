@@ -13,6 +13,7 @@ public:
 	sf::Sprite& getSprite();
 	virtual ~Power() = default;
 
+	virtual void activatePowerOnPlayer(b2Body* playerBody) {};
 	virtual void activatePowerOnBall(b2Body* ballBody) = 0;
 	virtual void draw(sf::RenderWindow & window, sf::Vector2f position) {};
 

@@ -36,6 +36,10 @@ namespace // anonymous namespace — the standard way to make function "static"
             playerObject.getPower()->activatePowerOnBall(ballObject.getBody());
             playerObject.setAura(false);
         }
+        else if(playerObject.getPower()->powerIsActive())
+        {
+            playerObject.getPower()->activatePowerOnPlayer(playerObject.getBody());
+        }
 
     }
 

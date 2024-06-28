@@ -17,7 +17,6 @@ public:
 	void checkBallPosition(sf::Vector2f& ballPosition);
 	virtual void draw(sf::RenderWindow& window)const override;
 	virtual sf::Sprite& getSprite() override { return m_sprite; };
-	virtual sf::Vector2f getPosition() const { return m_sprite.getPosition(); };
 	virtual void reset()override;
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);

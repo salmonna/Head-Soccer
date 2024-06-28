@@ -133,17 +133,10 @@ sf::Sprite& Player::getSprite() {
 }
 //-----------------------------------------------------------------------------
 void Player::reset() {
-	//m_sprite.setPosition(m_basePosition);
 	// Update the position of the Box2D body
 	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	//m_ball.setPosition(position);
 	m_body->SetTransform(newPosition, m_body->GetAngle());
-	//update();
-}
-//-----------------------------------------------------------------------------
-sf::Vector2f Player::getPosition() const {
-
-	return m_sprite.getPosition();
 }
 //-----------------------------------------------------------------------------
 //get keys
@@ -177,4 +170,8 @@ bool Player::getSideOfPlayer() {
 
 bool Player::getSide() const {
 	return m_playerSide;
+}
+
+b2Body* Player::getBody() {
+	return m_body;
 }

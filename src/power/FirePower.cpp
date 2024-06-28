@@ -38,6 +38,15 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
     ballBody->SetAwake(false);
 }
 
+void FirePower::activatePowerOnPlayer(b2Body* playerBody) {
+
+    float kickForceX = 500;  // Horizontal kick force
+    float kickForceY = -400.2f;  // Vertical kick force (negative for upward)
+
+    b2Vec2 kickForce(kickForceX, kickForceY);
+    playerBody->ApplyForceToCenter(kickForce, true);
+
+}
 
 void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
 {
