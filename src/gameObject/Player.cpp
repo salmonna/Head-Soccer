@@ -25,7 +25,7 @@ m_currentMoveState(&m_standMoveState)
 	m_power = std::make_shared<ElectricPower>();
 
 
-	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	resetToPosition();
 
 	if (m_playerSide)

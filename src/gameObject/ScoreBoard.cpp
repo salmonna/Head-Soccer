@@ -2,7 +2,8 @@
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 
-ScoreBoard::ScoreBoard() :m_gameTime(90), timeCounterSec(m_gameTime % 60),
+
+ScoreBoard::ScoreBoard() :m_gameTime(20), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
 {
 
@@ -157,7 +158,6 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
-		reset();
 		return true;
 	}
 	return false;
@@ -185,4 +185,12 @@ void ScoreBoard::updateScore(int p1Points, int p2Points)
 
 	str = std::to_string(m_p2Points);
 	m_textVec[2].setString(str);
+}
+
+int ScoreBoard::getPoint(int num) {
+
+	if (num == 1) {
+		return m_p1Points;
+	}
+	return m_p2Points;
 }

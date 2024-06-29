@@ -15,6 +15,8 @@ class GameModeSelection:public GameState
 public:
 	GameModeSelection(Controller * controller, Board* boardState, Menu * menu, SelectTeam* selectTeam);
 
+	void textModeSelection();
+
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
 	virtual ~GameModeSelection();
@@ -27,5 +29,7 @@ private:
 	sf::Sprite m_Stage;
 	Board* m_boardPtr;
 	SelectTeam* m_selectTeamPtr;
+	std::vector<sf::Text> m_modeText;
+	std::vector<sf::Text> m_shadowText;
 };
 
