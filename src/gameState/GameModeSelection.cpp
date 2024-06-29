@@ -10,9 +10,9 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 	m_Stage.setTexture(texture[0]);
 
 	
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(350.f, 150.f))); //Button 1
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 150.f))); //Button 2
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 150.f))); //Button 3
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(350.f, 250.f))); //Button 1
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 250.f))); //Button 2
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 250.f))); //Button 3
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 
 	textModeSelection();
@@ -26,7 +26,7 @@ void GameModeSelection::textModeSelection()
 	{
 		m_modeText.push_back(sf::Text());
 		m_modeText[i].setFont(font);
-		m_modeText[i].setPosition(620, 385);
+		m_modeText[i].setPosition(620, 445);
 		m_modeText[i].setCharacterSize(150);
 		m_modeText[i].setFillColor(sf::Color::Black);
 		m_modeText[i].setStyle(sf::Text::Bold);
@@ -41,6 +41,11 @@ void GameModeSelection::textModeSelection()
 	m_modeText[2].setString("     Online Mode");
 	m_modeText[3].setString("Back To Menu");
 
+	auto title = m_modeText[1];
+	title.setString("Game Mode");
+	title.setStyle(sf::Text::Bold | sf::Text::Underlined);
+	title.setPosition(730.f, 0);
+	title.setCharacterSize(125);
 
 	for (int i = 0; i < m_modeText.size(); i++)
 	{
@@ -49,11 +54,14 @@ void GameModeSelection::textModeSelection()
 		shadow.move(5.f, 5.f); // Offset the shadow slightly
 		m_shadowText.push_back(shadow);
 	}
+
+	m_modeText.push_back(title);
 }
 //-------------------------------------------------------------
 void GameModeSelection::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_Stage);
+	window.draw(m_modeText[4]);
 	
 	sf::Vector2i mouseMove = sf::Mouse::getPosition(window);
 
