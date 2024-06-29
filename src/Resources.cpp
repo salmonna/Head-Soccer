@@ -45,16 +45,16 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
-	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png",};
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png" };
 	loadFromFile(power, m_powerTexture);
 
-	sf::Image im;
+	/*sf::Image im;
 	im.loadFromFile("electricPower.png");
 	im.createMaskFromColor(sf::Color(8, 0, 15));
 	im.createMaskFromColor(sf::Color::Black);
 	sf::Texture texture;
 	texture.loadFromImage(im);
-	m_powerTexture.push_back(texture);
+	m_powerTexture.push_back(texture);*/
 
 
 	std::vector<std::string> powerOfPlayer{ "fireDragon.png"};

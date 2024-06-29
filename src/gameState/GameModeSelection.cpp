@@ -9,10 +9,11 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getGameModeTexture();
 	m_Stage.setTexture(texture[0]);
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+	
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(350.f, 150.f))); //Button 1
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 150.f))); //Button 2
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 150.f))); //Button 3
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 
 	textModeSelection();
 }
@@ -21,7 +22,7 @@ void GameModeSelection::textModeSelection()
 {
 	sf::Font& font = Resources::getInstance().getFont();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		m_modeText.push_back(sf::Text());
 		m_modeText[i].setFont(font);
@@ -38,6 +39,8 @@ void GameModeSelection::textModeSelection()
 	m_modeText[0].setString("Multiplayer Mode");
 	m_modeText[1].setString("Single player Mode");
 	m_modeText[2].setString("     Online Mode");
+	m_modeText[3].setString("Back To Menu");
+
 
 	for (int i = 0; i < m_modeText.size(); i++)
 	{
