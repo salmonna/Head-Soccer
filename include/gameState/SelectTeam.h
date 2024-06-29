@@ -22,6 +22,7 @@ private:
 	void signOrPreedOnPlayers(sf::Vector2f mousePressed);
 	void isMouseOnPlayers(sf::Vector2f mousePressed, int index);
 	void checkToDraw(sf::RenderWindow& window) const;
+	void loadGameMode(int index);
 	void reset();
 
 	sf::Sprite m_stage;

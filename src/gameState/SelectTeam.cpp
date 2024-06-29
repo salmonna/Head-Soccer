@@ -79,11 +79,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
-			if (i == 1)
-			{
-				m_BoardPtr->reset();
-			}
-
+			loadGameMode(i);
 			reset();
 			m_buttons[i]->execute();
 			break;
@@ -145,6 +141,28 @@ void SelectTeam::reset() {
 }
 
 
+void SelectTeam::loadGameMode(int index)
+{
+	if (index == 1)return;
+
+	std::vector<std::string> movingObjectNames;
+	std::vector<std::string> staticObjectNames;
+	switch (m_numOfPlayers)
+	{
+	case 1:
+		movingObjectNames = { "RightPlayer", "ComputerPlayer", "Ball" };
+		break;
+	case 2:
+		movingObjectNames = { "RightPlayer", "LeftPlayer", "Ball" };
+		break;
+	default:
+		return; //undo
+		break;
+	}
+	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	m_BoardPtr->createMovingObjects(movingObjectNames);
+	m_BoardPtr->createStaticObjects(staticObjectNames);
+}
 
 
 
