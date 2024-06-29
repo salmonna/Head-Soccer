@@ -27,7 +27,7 @@ public:
 	void update();
 	void kick(bool rigthSide);
 	b2Body* getBody();
-
+	std::shared_ptr<Power> getPower();
 
 	virtual ~Ball() {
 		std::cout << " B-D" << std::endl;

@@ -40,11 +40,7 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
 
 void FirePower::activatePowerOnPlayer(b2Body* playerBody) {
 
-    float kickForceX = 500;  // Horizontal kick force
-    float kickForceY = -400.2f;  // Vertical kick force (negative for upward)
-
-    b2Vec2 kickForce(kickForceX, kickForceY);
-    playerBody->ApplyForceToCenter(kickForce, true);
+    playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -200), true);
 
 }
 

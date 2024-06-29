@@ -94,3 +94,8 @@ void Ball::kick(bool rigthSide) {
 b2Body* Ball::getBody() {
     return m_body;
 }
+//-----------------------------------------------------------------------------
+std::shared_ptr<Power> Ball::getPower()
+{
+    return m_power;
+}
