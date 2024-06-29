@@ -13,7 +13,7 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 
 
   m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+  m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
@@ -68,8 +68,12 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
-		if (m_playerSelected == m_numOfPlayers) {
+		if (i == 0 && !(m_playerSelected == m_numOfPlayers)) {
 
+			continue;
+		}
+		else
+		{
 			m_buttons[i]->draw(window);
 		}
 	}
