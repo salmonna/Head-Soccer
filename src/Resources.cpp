@@ -9,7 +9,7 @@
 Resources::Resources():m_selectedIndex(0){
 
 
-	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" ,"undo Button.png", "Tutorial State.png"};
+	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" ,"undo Button.png", "Left.png","Right.png" };
 	loadFromFile(fileNames,m_menuTexture);
 
 	std::vector<std::string> boardFileNames{ "Stadium.png", "Ad Board.png","Goal.png"};
