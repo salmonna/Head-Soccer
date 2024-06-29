@@ -9,7 +9,7 @@
 Resources::Resources():m_selectedIndex(0){
 
 
-	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" };
+	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" ,"undo Button.png", "Tutorial State.png"};
 	loadFromFile(fileNames,m_menuTexture);
 
 	std::vector<std::string> boardFileNames{ "Stadium.png", "Ad Board.png","Goal.png"};
@@ -45,8 +45,17 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
-	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" };
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png",};
 	loadFromFile(power, m_powerTexture);
+
+	sf::Image im;
+	im.loadFromFile("electricPower.png");
+	im.createMaskFromColor(sf::Color(8, 0, 15));
+	im.createMaskFromColor(sf::Color::Black);
+	sf::Texture texture;
+	texture.loadFromImage(im);
+	m_powerTexture.push_back(texture);
+
 
 	std::vector<std::string> powerOfPlayer{ "fireDragon.png"};
 	loadFromFile(powerOfPlayer, m_powerOfPlayer);

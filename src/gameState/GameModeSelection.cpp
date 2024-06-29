@@ -4,16 +4,17 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 
-GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, SelectTeam* selectTeam):m_boardPtr(boardState), m_selectTeamPtr(selectTeam)
+GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, Menu* menu, SelectTeam* selectTeam):m_boardPtr(boardState), m_selectTeamPtr(selectTeam)
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getGameModeTexture();
 	m_Stage.setTexture(texture[0]);
+
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(350.f, 150.f))); //Button 1
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 150.f))); //Button 2
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 150.f))); //Button 3
 
 	textModeSelection();
-
 }
 //-------------------------------------------------------------
 void GameModeSelection::textModeSelection()
@@ -83,12 +84,16 @@ void GameModeSelection::respond(sf::Vector2f mousePressed) {
 void GameModeSelection::loadGameMode(int gameMode)
 {
 
-	if (gameMode == 0) {
-		m_selectTeamPtr->setNumberOfPlayers(2);
-	}
-	else if(gameMode == 1)
+	switch (gameMode)
 	{
+	case 0:
+		m_selectTeamPtr->setNumberOfPlayers(2);
+		break;
+	case 1:
 		m_selectTeamPtr->setNumberOfPlayers(1);
+		break;
+	default:
+		break;
 	}
 }
 //-------------------------------------------------------------

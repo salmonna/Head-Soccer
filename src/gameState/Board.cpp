@@ -30,7 +30,7 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 		m_backGroundStadium[i].setTexture(texture[i]);
 
 	}
-	m_backGroundStadium[1].setPosition(0, 670);
+	m_backGroundStadium[1].setPosition(0, 674);
 
 	//m_buttons.push_back(std::make_unique<Pause>(menu, this));
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
@@ -146,7 +146,7 @@ void Board::moveAd()
 
 	if (sprite.getPosition().x >= 1800)
 	{
-		sprite.setPosition(-sprite.getGlobalBounds().width, 680);
+		sprite.setPosition(-sprite.getGlobalBounds().width, 674);
 	}
 
 }
@@ -177,19 +177,6 @@ void Board::updateScoreBar() {
 	}
 
 }
-//
-//GameState* Board::handleEvents()
-//{
-//
-//	if (ScoreBoard::getInstance().timeIsOver())
-//	{
-//		reset();
-//		return m_gameResults;
-//	}
-//	auto state = m_gameState;
-//	m_gameState = NULL;
-//	return state;
-//}
 
 void Board::reset() {
 	int size = m_gameObject.size() - 6;

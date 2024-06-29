@@ -2,12 +2,19 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 
-SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0),m_boardPtr(boardState)
+
+
+class GameModeSelection;
+
+SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
+, m_boardPtr(boardState)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[4]);
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),
-												Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
+
+  m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 
@@ -106,9 +113,9 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
-			loadGameObject();
-			reset();
 			m_buttons[i]->execute();
+      loadGameMode(i);
+			reset();
 			break;
 		}
 	}
@@ -168,24 +175,31 @@ void SelectTeam::reset() {
 		m_frames[i].setPosition(3 * 200 - 400, 320);
 	}
 }
-//-----------------------------------------------------------------------------
-void SelectTeam::loadGameObject()
+
+void SelectTeam::loadGameMode(int index)
 {
-	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
-	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	if (index == 1)return;
+
+	std::vector<std::string> movingObjectNames;
+	std::vector<std::string> staticObjectNames;
 	switch (m_numOfPlayers)
 	{
 	case 1:
-		movingObjectNames[1] = "ComputerPlayer";
+		movingObjectNames = { "RightPlayer", "ComputerPlayer", "Ball" };
 		break;
 	case 2:
+		movingObjectNames = { "RightPlayer", "LeftPlayer", "Ball" };
 		break;
 	default:
 		break;
 	}
+	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
 	m_boardPtr->createMovingObjects(movingObjectNames);
 	m_boardPtr->createStaticObjects(staticObjectNames);
 }
+
+//-----------------------------------------------------------------------------
+
 SelectTeam::~SelectTeam()
 {
 }

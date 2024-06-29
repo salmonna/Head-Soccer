@@ -40,6 +40,8 @@ void FirePower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity,
     {
         m_index1 = 0;
     }
+
+    ball.setFillColor(sf::Color(256, 256, 256, 0));
 }
 
 
