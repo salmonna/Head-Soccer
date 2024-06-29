@@ -25,6 +25,8 @@ public:
 	void drawFinalResult(sf::RenderWindow& window) const;
 	virtual void respond(sf::Vector2f mousePressed) override;
 
+	void updateFlags();
+
 	void resetGameResult();
 
 	~GameResults() = default;
@@ -36,5 +38,7 @@ private:
 	
 	std::vector<sf::Text> m_resultText;
 	std::vector<sf::Sprite> m_charcters;
+	std::vector<sf::Sprite> m_playersFlags;
+
 	bool m_initilaze;
 };

@@ -65,7 +65,7 @@ private:
 
 	std::vector<sf::Texture> m_selectTeam;
 
-	//std::vector<sf::Texture> m_countryFlags;
+	std::vector<sf::Texture> m_countryFlags;
 
 	sf::Font m_font;
 

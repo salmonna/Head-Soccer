@@ -118,7 +118,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 		if (m_buttons[i]->contains(mousePressed)) {
 
 			m_buttons[i]->execute();
-      loadGameMode(i);
+			loadGameMode(i);
 			reset();
 			break;
 		}
@@ -198,6 +198,7 @@ void SelectTeam::loadGameMode(int index)
 		break;
 	}
 	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	ScoreBoard::getInstance().loadPlayersFlag();
 	m_boardPtr->createMovingObjects(movingObjectNames);
 	m_boardPtr->createStaticObjects(staticObjectNames);
 }

@@ -39,22 +39,14 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gameResults{ "Replay.png","winner.png","draw.png"};
 	loadFromFile(gameResults, m_gameResultsTexture);
 
-	//std::vector<std::string> flags{"Brazil.png","Italy.png","England.png","Spain.png","Holand.png","Portugal.png","Germany.png"};
-	//loadFromFile(flags, m_countryFlags);
+	std::vector<std::string> flags{"Brazil.png","Italy.png","England.png","Spain.png","Holand.png","Portugal.png","Germany.png"};
+	loadFromFile(flags, m_countryFlags);
 
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
 	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png" };
 	loadFromFile(power, m_powerTexture);
-
-	/*sf::Image im;
-	im.loadFromFile("electricPower.png");
-	im.createMaskFromColor(sf::Color(8, 0, 15));
-	im.createMaskFromColor(sf::Color::Black);
-	sf::Texture texture;
-	texture.loadFromImage(im);
-	m_powerTexture.push_back(texture);*/
 
 
 	std::vector<std::string> powerOfPlayer{ "fireDragon.png"};
@@ -192,7 +184,7 @@ void Resources::resetPlayerOrder() {
 	m_selectedIndex = 0;
 }
 
-//std::vector<sf::Texture>& Resources::getCountriesFlags() {
-//
-//	return m_countryFlags;
-//}
+std::vector<sf::Texture>& Resources::getCountriesFlags() {
+
+	return m_countryFlags;
+}

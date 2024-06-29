@@ -35,12 +35,22 @@ public:
 
 	int getPoint(int num);
 
+	void loadPlayersFlag();
+	std::vector<sf::Sprite>& getFlags();
+
+
 	~ScoreBoard() = default;
 
 private:
 	ScoreBoard(const ScoreBoard&) = delete;
 	ScoreBoard& operator=(const ScoreBoard&) = delete;
 	ScoreBoard();
+
+	void defineScoreBoardTexture();
+
+	void defineProgressTexture();
+
+	void scoreBoardText();
 
 	void updateProgress(std::vector<sf::Sprite>& progressSprite, int& progress, float seconds);
 
@@ -60,6 +70,7 @@ private:
 	std::vector<sf::Sprite> m_SpriteVec;
 	std::vector<sf::Sprite> m_progressP1Sprite;
 	std::vector<sf::Sprite> m_progressP2Sprite;
+	std::vector<sf::Sprite> m_playersFlags;
 
 	//points
 	int m_p1Points;
