@@ -39,6 +39,7 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 	selectTextPlayer();
 
 	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
+	m_whistle.setVolume(15);
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::selectTextPlayer()
@@ -192,6 +193,7 @@ void SelectTeam::setNumberOfPlayers(int players) {
 //-----------------------------------------------------------------------------
 void SelectTeam::reset() {
 
+	m_selectedPlayer.clear();
 	m_playerSelected = 0;
 	for (int i = 0; i < m_frames.size(); i++)
 	{
@@ -202,6 +204,8 @@ void SelectTeam::reset() {
 void SelectTeam::loadGameMode(int index)
 {
 	if (index == 1)return;
+
+	selectedPlayer();
 
 	std::vector<std::string> movingObjectNames;
 	std::vector<std::string> staticObjectNames;
@@ -221,7 +225,7 @@ void SelectTeam::loadGameMode(int index)
 	m_boardPtr->createStaticObjects(staticObjectNames);
 	stopSongPlayWhistle();
 	
-	selectedPlayer();
+	
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::selectedPlayer()

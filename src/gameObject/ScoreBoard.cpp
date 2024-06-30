@@ -64,6 +64,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 	m_progressP2Sprite[1].setPosition(pos);
 
 	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
+	m_whistle.setVolume(15);
 
 }
 
