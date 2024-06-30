@@ -60,7 +60,6 @@ void Ball::setPosition(sf::Vector2f position)
 
     // Ensure no horizontal movement
     m_body->SetLinearVelocity(b2Vec2(0, m_body->GetLinearVelocity().y));
-
     update(); // Assuming this function updates the sprite position
 }
 

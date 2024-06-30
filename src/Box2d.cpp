@@ -170,8 +170,8 @@ b2Body* Box2d::createBall(sf::Vector2f basePosition) {
     circle.m_radius = 25.0f / SCALE;
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &circle;
-    fixtureDef.density = 1.f;
-    fixtureDef.friction = 0.3f;
+    fixtureDef.density = 0.4f;
+    fixtureDef.friction = 0.1f;
     fixtureDef.restitution = 0.7f;
     body->CreateFixture(&fixtureDef);
 

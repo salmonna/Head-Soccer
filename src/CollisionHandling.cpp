@@ -23,6 +23,18 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     //=======================================UPDATE========================================\\ 
 
+
+
+    bool Box2dCollide(b2Body* bodyA, b2Body* bodyB) {
+        // Get the AABBs for the first fixture of each body
+        const b2AABB& aabbA = bodyA->GetFixtureList()->GetAABB(0);
+        const b2AABB& aabbB = bodyB->GetFixtureList()->GetAABB(0);
+
+        // Check for intersection between AABBs
+        return (aabbA.lowerBound.x <= aabbB.upperBound.x && aabbA.upperBound.x >= aabbB.lowerBound.x &&
+            aabbA.lowerBound.y <= aabbB.upperBound.y && aabbA.upperBound.y >= aabbB.lowerBound.y);
+    }
+
     //update after collide
     void updateBall(Ball& ballObject, Player& playerObject)
     {
@@ -36,9 +48,13 @@ namespace // anonymous namespace — the standard way to make function "static"
             playerObject.getPower()->activatePowerOnBall(ballObject.getBody());
             playerObject.setAura(false);
         }
-        else if(ballObject.getPower()->powerIsActive())
+        else if(Box2dCollide(ballObject.getBody(), playerObject.getBody()))
         {
-            //ballObject.getPower()->activatePowerOnPlayer(playerObject.getBody());
+            if (ballObject.getPower()->powerIsActive()){
+                ballObject.getPower()->activatePowerOnPlayer(playerObject.getBody(), &playerObject.getSprite());
+                playerObject.restartClock();
+            }
+
         }
 
     }

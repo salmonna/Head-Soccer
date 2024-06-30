@@ -38,6 +38,7 @@ public:
 	void update();
 	b2Body* getBody();
 	bool getSideOfPlayer();
+	void restartClock();
 
 	virtual ~Player() {
 		std::cout << " P-D" << std::endl;
@@ -60,7 +61,7 @@ private:
 	std::shared_ptr<Power> m_power;
 
 	sf::Sprite m_sprite;
-	sf::Clock m_moveClock;
+	sf::Clock m_powerClock;
 	std::vector<sf::Vector2f> m_startSprite;
 	sf::Vector2f m_basePosition;
 

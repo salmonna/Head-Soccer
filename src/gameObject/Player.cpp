@@ -79,9 +79,23 @@ void Player::move(sf::Vector2f pressed) {
 	if (nextState) 
 		m_currentMoveState = nextState;
 
-	m_currentMoveState->movement(m_sprite,m_playerSide, m_body);
+	
 
 	update();
+
+	if (m_power->getPowerOnPlayer())
+	{
+		if (m_powerClock.getElapsedTime().asSeconds() > 20)
+		{
+			//m_body->SetAwake(true);
+			m_power->setPowerOnPlayer(false);
+		}
+	}
+	else
+	{
+		m_currentMoveState->movement(m_sprite,m_playerSide, m_body);
+	}
+
 
 	bool valid = false;
 	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
@@ -178,4 +192,8 @@ bool Player::getSide() const {
 
 b2Body* Player::getBody() {
 	return m_body;
+}
+
+void Player::restartClock() {
+	m_powerClock.restart();
 }

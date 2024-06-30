@@ -11,7 +11,6 @@ BigBallPower::BigBallPower()
 
 void BigBallPower::activatePowerOnBall(b2Body* ballBody)
 {
-    //setPowerIsActive(true);
 
     //currVelocity = sf::Vector2f(1500.f, 0.f);
     //currVelocity.x *= direction.x;

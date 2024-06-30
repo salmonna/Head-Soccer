@@ -3,7 +3,7 @@
 #include "Resources.h"
 
 
-FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
+FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide), m_powerOnPlayer(false)
 {
     m_sprite.setTexture(Resources::getInstance().getBallTexture()[2]);
 
@@ -33,20 +33,22 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
 
     ballBody->SetTransform(currentPosition, ballBody->GetAngle());
 
-    b2MassData massData;
-    ballBody->GetFixtureList()->GetShape()->ComputeMass(&massData, 5.0f); // Adjust density as needed
-    ballBody->SetMassData(&massData);
-    // Increase the restitution to make the ball bouncy
-    ballBody->GetFixtureList()->SetRestitution(0.9f); // Adjust restitution as needed
+    // Update the density
+    //b2MassData massData;
+    //ballBody->GetFixtureList()->GetShape()->ComputeMass(&massData, 80.0f); // Adjust density as needed
+    //ballBody->SetMassData(&massData);
 
     // Set awake state to false to "pause" the body
     ballBody->SetAwake(false);
 }
 
-void FirePower::activatePowerOnPlayer(b2Body* playerBody) {
+void FirePower::activatePowerOnPlayer(b2Body* playerBody, sf::Sprite* sprite) {
 
-    playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -200), true);
-
+    /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
+    sprite->setColor(sf::Color(128,128,128));
+    //playerBody->SetAwake(false);
+    m_powerOnPlayer = true;
+    setPowerIsActive(false);
 }
 
 void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
@@ -86,4 +88,12 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
 
 bool FirePower::getSideOfPlayer()const {
     return m_playerSide;
+}
+
+void FirePower::setPowerOnPlayer(bool powerOnPlayer){
+    m_powerOnPlayer = powerOnPlayer;
+}
+
+bool FirePower::getPowerOnPlayer() const {
+    return m_powerOnPlayer;
 }

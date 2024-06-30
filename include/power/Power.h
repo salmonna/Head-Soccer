@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Box2d.h"
 
+
 class Power 
 {
 public:
@@ -13,7 +14,7 @@ public:
 	sf::Sprite& getSprite();
 	virtual ~Power() = default;
 
-	virtual void activatePowerOnPlayer(b2Body* playerBody) {};
+	virtual void activatePowerOnPlayer(b2Body* playerBody, sf::Sprite* sprite) {};
 	virtual void activatePowerOnBall(b2Body* ballBody) = 0;
 	virtual void draw(sf::RenderWindow & window, sf::Vector2f position) {};
 
@@ -23,8 +24,12 @@ public:
 	virtual bool stayInTheAir();
 	virtual bool getSideOfPlayer() const { return true; };
 
+	virtual void setPowerOnPlayer(bool powerOnPlayer) {};
+	virtual bool getPowerOnPlayer()const { return false; };
+
 	void setPowerIsActive(bool powerIsActive);
 private:
+
 	bool m_powerIsActive;
 	sf::Sprite m_auraSprite;
 	sf::Clock m_clock;

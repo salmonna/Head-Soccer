@@ -27,7 +27,7 @@ void Power::startTimer()
 
 void Power::checkTimeIsOver()
 {
-	if (m_powerTimer.getElapsedTime().asSeconds() >= 3.5f)
+	if (m_powerTimer.getElapsedTime().asSeconds() >= 2.8f)
 		m_powerIsActive = false;
 }
 
