@@ -61,6 +61,8 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 			std::cout << "Class not found!\n";
 	}
 
+	ScoreBoard::getInstance().setFlagsPlayers();
+
 }
 
 void Board::createStaticObjects(const std::vector<std::string>& objectNames)

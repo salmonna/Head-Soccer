@@ -3,7 +3,7 @@
 #include "Resources.h"
 
 
-ScoreBoard::ScoreBoard() :m_gameTime(20), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(5), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
 {
 
@@ -63,6 +63,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 	pos.x += 2.8f;
 	m_progressP2Sprite[1].setPosition(pos);
 
+	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
 
 }
 
@@ -85,6 +86,11 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_progressP1Sprite[i]);
 		window.draw(m_progressP2Sprite[i]);
 	} 
+
+	for (int i = 0; i < m_flags.size(); i++)
+	{
+		window.draw(m_flags[i]);
+	}
 }
 
 
@@ -158,6 +164,8 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
+		
+		m_whistle.play();
 		return true;
 	}
 	return false;
@@ -170,6 +178,7 @@ void ScoreBoard::reset()
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
+	m_flags.clear();
 	resetProgressP1();
 	resetProgressP2();
 }
@@ -193,4 +202,24 @@ int ScoreBoard::getPoint(int num) {
 		return m_p1Points;
 	}
 	return m_p2Points;
+}
+
+void ScoreBoard::setFlagsPlayers() {
+
+	std::vector<int> players = Resources::getInstance().getPlayerOrder();
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		int index = Resources::getInstance().getPlayerOrder()[i];
+		auto sprite = sf::Sprite(Resources::getInstance().getCountriesFlags()[index]);
+		sprite.scale(0.5, 0.5);
+		m_flags.push_back(sprite);
+	}
+
+	m_flags[0].setPosition(1250.f, 165.f);
+	m_flags[1].setPosition(435.f, 165.f);
+}
+
+std::vector<sf::Sprite>& ScoreBoard::getFlags() {
+	return m_flags;
 }

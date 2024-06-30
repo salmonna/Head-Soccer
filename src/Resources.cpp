@@ -39,8 +39,8 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gameResults{ "Replay.png","winner.png","draw.png"};
 	loadFromFile(gameResults, m_gameResultsTexture);
 
-	//std::vector<std::string> flags{"Brazil.png","Italy.png","England.png","Spain.png","Holand.png","Portugal.png","Germany.png"};
-	//loadFromFile(flags, m_countryFlags);
+	std::vector<std::string> flags{"Brazil.png","Italy.png","England.png","Spain.png","Holand.png","Portugal.png","Germany.png"};
+	loadFromFile(flags, m_countryFlags);
 
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
@@ -61,7 +61,7 @@ Resources::Resources():m_selectedIndex(0){
 	loadFromFile(powerOfPlayer, m_powerOfPlayer);
 
 	// Loading sound buffers.
-	std::vector<std::string> soundStr = {"super saiyan sound.wav" };
+	std::vector<std::string> soundStr = {"super saiyan sound.wav","Whistle.wav","Intro Song.wav" };
 	for (int i = 0; i < soundStr.size(); i++) {
 		sf::SoundBuffer buffer;
 		if (!buffer.loadFromFile(soundStr[i])) {
@@ -70,6 +70,11 @@ Resources::Resources():m_selectedIndex(0){
 		m_bufferVec.push_back(buffer);
 	}
 
+	m_introSong.setBuffer(m_bufferVec[2]);
+	m_introSong.setVolume(15);
+	m_introSong.play();
+	m_introSong.setLoop(true);
+	
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{
@@ -192,7 +197,12 @@ void Resources::resetPlayerOrder() {
 	m_selectedIndex = 0;
 }
 
-//std::vector<sf::Texture>& Resources::getCountriesFlags() {
-//
-//	return m_countryFlags;
-//}
+std::vector<sf::Texture>& Resources::getCountriesFlags() {
+
+	return m_countryFlags;
+}
+
+sf::Sound& Resources::getIntroSong() {
+
+	return m_introSong;
+}
