@@ -147,8 +147,8 @@ b2Body* Box2d::createPlayer(sf::Vector2f basePosition) {
     b2FixtureDef playerFixtureDef;
     playerFixtureDef.shape = &playerBox;
     playerFixtureDef.density = 10.f;
-    playerFixtureDef.friction = 3.9f;
-    playerFixtureDef.restitution = 0.0f; // Ensure there's no bounce
+    playerFixtureDef.friction = 0.3f;
+    playerFixtureDef.restitution = 0.4f; // Ensure there's no bounce
     body->CreateFixture(&playerFixtureDef);
 
     // Set the gravity scale for the player
@@ -170,8 +170,8 @@ b2Body* Box2d::createBall(sf::Vector2f basePosition) {
     circle.m_radius = 25.0f / SCALE;
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &circle;
-    fixtureDef.density = 0.4f;
-    fixtureDef.friction = 0.1f;
+    fixtureDef.density = 1.f;
+    fixtureDef.friction = 0.3f;
     fixtureDef.restitution = 0.7f;
     body->CreateFixture(&fixtureDef);
 

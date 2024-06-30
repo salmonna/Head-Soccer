@@ -38,12 +38,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         }
         else if(ballObject.getPower()->powerIsActive())
         {
-            ballObject.getPower()->activatePowerOnPlayer(playerObject.getBody());
-            /*playerObject.reset();*/
+            //ballObject.getPower()->activatePowerOnPlayer(playerObject.getBody());
         }
 
     }
-
 
     // primary collision-processing functions
     void playerCollidBall(GameObject& player, GameObject& ball)
@@ -71,8 +69,9 @@ namespace // anonymous namespace — the standard way to make function "static"
         
         ScoreBoard::getInstance().setGoalSign();
 
-        ballObject.setPosition(sf::Vector2f(900.0f, 100.0f));
-
+        ballObject.getPower()->setPowerIsActive(false);
+        //ballObject.setPosition(sf::Vector2f(900.0f, 100.0f));
+        ballObject.reset();
     }
 
     void computerPlayerCollidBall(GameObject& computerPlayer, GameObject& ball) {

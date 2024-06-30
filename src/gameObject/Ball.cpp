@@ -4,7 +4,7 @@
 #include <iostream>
 #include "power/RegularBehavior.h"
 
-Ball::Ball():m_power(std::make_shared<RegularBehavior>())
+Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f, 100.0f)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -98,4 +98,16 @@ b2Body* Ball::getBody() {
 std::shared_ptr<Power> Ball::getPower()
 {
     return m_power;
+}
+//-----------------------------------------------------------------------------
+void Ball::reset() {
+    // Update the position of the Box2D body
+    b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
+    m_body->SetTransform(newPosition, m_body->GetAngle());
+
+    // Reset the velocity of the Box2D body
+    m_body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));  // Set linear velocity to zero
+    m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
+
+    update();
 }

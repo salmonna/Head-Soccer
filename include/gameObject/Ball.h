@@ -20,7 +20,7 @@ public:
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void move(sf::Vector2f pressed) override;
 	virtual sf::Sprite& getSprite() override;
-	virtual void reset() override{};
+	virtual void reset() override;
 
 	void setPosition(sf::Vector2f position);
 	void setPower(std::shared_ptr<Power> power);
@@ -38,6 +38,7 @@ public:
 	};
 private:
 
+	sf::Vector2f m_basePosition;
 	std::shared_ptr<Power> m_power;
 	sf::Sprite m_sprite;
 	static bool m_registeritBall;

@@ -135,9 +135,13 @@ sf::Sprite& Player::getSprite() {
 void Player::reset() {
 	// Update the position of the Box2D body
 	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
-	//m_ball.setPosition(position);
 	m_body->SetTransform(newPosition, m_body->GetAngle());
+
+	// Reset the velocity of the Box2D body
+	m_body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));  // Set linear velocity to zero
+	m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
 }
+
 //-----------------------------------------------------------------------------
 //get keys
 Keyboard Player::getKey() const

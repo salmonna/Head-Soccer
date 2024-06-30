@@ -25,7 +25,6 @@ FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteShee
 
 void FirePower::activatePowerOnBall(b2Body* ballBody)
 {
-
     setPowerIsActive(true);
 
     // Adjust position if necessary
@@ -33,6 +32,12 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
     currentPosition.y -= 8.f; // Move the body 200 pixels higher (adjust as needed)
 
     ballBody->SetTransform(currentPosition, ballBody->GetAngle());
+
+    b2MassData massData;
+    ballBody->GetFixtureList()->GetShape()->ComputeMass(&massData, 5.0f); // Adjust density as needed
+    ballBody->SetMassData(&massData);
+    // Increase the restitution to make the ball bouncy
+    ballBody->GetFixtureList()->SetRestitution(0.9f); // Adjust restitution as needed
 
     // Set awake state to false to "pause" the body
     ballBody->SetAwake(false);
