@@ -18,6 +18,8 @@
 #include "Keyboard.h"
 #include "Resources.h"
 
+#include "SoundControl.h"
+
 namespace // anonymous namespace — the standard way to make function "static"
 {
     // standingCollideWithBall
@@ -149,6 +151,7 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         goalObject.setIfGoal(true);
 
+        SoundControl::getInstance().getGoalSound().play();
         ballObject.setBallVelocity(sf::Vector2f(5.f, -10.f));
         ballObject.setPosition(sf::Vector2f(900.0f, 494.0f));
 

@@ -12,6 +12,8 @@ public:
 	
 	sf::Sound& getIntroSong();
 	sf::Sound& getWhistle();
+	sf::Sound& getCrowd();
+	sf::Sound& getGoalSound();
 	~SoundControl() = default;
 
 private:
@@ -22,4 +24,6 @@ private:
 
 	sf::Sound m_introSong;
 	sf::Sound m_whistle;
+	sf::Sound m_crowd;
+	sf::Sound m_goalSound;
 };

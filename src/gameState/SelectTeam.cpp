@@ -239,6 +239,8 @@ void SelectTeam::stopSongPlayWhistle()
 
 	SoundControl::getInstance().getWhistle().play();
 
+	SoundControl::getInstance().getCrowd().play();
+
 }
 
 //-----------------------------------------------------------------------------

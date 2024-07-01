@@ -4,7 +4,7 @@
 #include "SoundControl.h"
 
 
-ScoreBoard::ScoreBoard() :m_gameTime(5), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(15), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
 {
 
@@ -166,7 +166,10 @@ bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
 		
+		
 		SoundControl::getInstance().getWhistle().play(); // play whistle sound
+		SoundControl::getInstance().getCrowd().pause(); // pause crowd sound
+		SoundControl::getInstance().getGoalSound().pause();// pause goal sound
 		return true;
 	}
 	return false;
