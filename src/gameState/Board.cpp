@@ -192,6 +192,7 @@ void Board::reset() {
 	{
 		m_staticObject.pop_back();
 	}
+	ScoreBoard::getInstance().reset();
 }
 
 //=============================================== for_each_pair =======================================//

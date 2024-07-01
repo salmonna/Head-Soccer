@@ -46,6 +46,12 @@ private:
 	ScoreBoard& operator=(const ScoreBoard&) = delete;
 	ScoreBoard();
 
+	void defineScoreBoardTexture();
+
+	void defineProgressTexture();
+
+	void scoreBoardText();
+
 	void updateProgress(std::vector<sf::Sprite>& progressSprite, int& progress, float seconds);
 
 
@@ -65,7 +71,7 @@ private:
 	std::vector<sf::Sprite> m_progressP1Sprite;
 	std::vector<sf::Sprite> m_progressP2Sprite;
 	std::vector<sf::Sprite> m_flags;
-	
+
 
 	sf::Sound m_whistle;
 	

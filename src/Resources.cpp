@@ -48,14 +48,6 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png" };
 	loadFromFile(power, m_powerTexture);
 
-	/*sf::Image im;
-	im.loadFromFile("electricPower.png");
-	im.createMaskFromColor(sf::Color(8, 0, 15));
-	im.createMaskFromColor(sf::Color::Black);
-	sf::Texture texture;
-	texture.loadFromImage(im);
-	m_powerTexture.push_back(texture);*/
-
 
 	std::vector<std::string> powerOfPlayer{ "fireDragon.png"};
 	loadFromFile(powerOfPlayer, m_powerOfPlayer);
@@ -205,4 +197,5 @@ std::vector<sf::Texture>& Resources::getCountriesFlags() {
 sf::Sound& Resources::getIntroSong() {
 
 	return m_introSong;
+
 }
