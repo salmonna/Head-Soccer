@@ -33,6 +33,8 @@ public:
 
 	//progress bar
 	void Progress();
+	bool isGoal();
+	void setGoalSign();
 
 	int getPoint(int num);
 
@@ -54,6 +56,8 @@ private:
 
 	void updateProgress(std::vector<sf::Sprite>& progressSprite, int& progress, float seconds);
 
+	//goalSign
+	bool m_goalSign;
 
 	//time
 	int m_gameTime;
@@ -64,6 +68,7 @@ private:
 	sf::Clock m_clockGameTime;
 	sf::Clock m_clockEverySec;
 	sf::Clock m_clock;
+	sf::Clock m_clockGoalSign;
 
 	//text & sprite
 	std::vector<sf::Text> m_textVec;
@@ -73,6 +78,7 @@ private:
 	std::vector<sf::Sprite> m_flags;
 
 
+	sf::Sprite m_goalSprite;
 	sf::Sound m_whistle;
 	
 	//points
@@ -82,7 +88,5 @@ private:
 	//progress
 	int m_progressP1;
 	int m_progressP2;
-
-
 
 };

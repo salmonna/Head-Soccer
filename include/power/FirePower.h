@@ -5,10 +5,12 @@ class FirePower : public Power
 {
 public:
 
-	FirePower();
+	FirePower(bool playerSide = true);
 
-	void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction);
+	virtual void activatePowerOnPlayer(Player* player)override;
+	virtual void activatePowerOnBall(b2Body* ballBody) override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
+	virtual bool getSideOfPlayer() const override;
 
 	~FirePower() = default;
 
@@ -22,5 +24,5 @@ private:
 	int m_index1;
 	int m_index2;
 	sf::Sprite m_sprite;
-
+	bool m_playerSide;
 };

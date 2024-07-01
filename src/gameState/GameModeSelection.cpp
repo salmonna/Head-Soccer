@@ -94,17 +94,13 @@ void GameModeSelection::respond(sf::Vector2f mousePressed) {
 //-------------------------------------------------------------
 void GameModeSelection::loadGameMode(int gameMode)
 {
-
-	switch (gameMode)
+	if (gameMode == 0)
 	{
-	case 0:
 		m_selectTeamPtr->setNumberOfPlayers(2);
-		break;
-	case 1:
+	}
+	else if (gameMode == 1)
+	{
 		m_selectTeamPtr->setNumberOfPlayers(1);
-		break;
-	default:
-		break;
 	}
 }
 //-------------------------------------------------------------

@@ -6,9 +6,12 @@
 #include "Keyboard.h"
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
+
 #include <SFML/Audio.hpp>
 
 
+#include "Box2d.h"
+#include <iostream>
 //-------
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/StandPlayerState.h"
@@ -21,12 +24,14 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void move(sf::Vector2f pressed) override;
-
-	virtual  sf::Vector2f getPosition() const override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset()override;
+	virtual b2Body* getBody()override;
 	Keyboard getKey() const;
   
+	void setPowerOnPlayer(bool powerOnPlayer);
+	bool getPowerOnPlayer() const;
+
 	void resetProgress();
 
 	std::shared_ptr<Power> getPower();
@@ -34,8 +39,19 @@ public:
 	void setAura(bool aura);
 	bool getAura() const;
 	bool getSide() const;
+	void update();
+	
+	bool getSideOfPlayer();
+	void restartClock();
 
-	virtual ~Player() = default;
+	virtual ~Player() {
+		std::cout << " P-D" << std::endl;
+		m_body->DestroyFixture(m_body->GetFixtureList());
+		auto world = Box2d::getInstance().getBox2dWorld();
+		world->DestroyBody(m_body);
+		m_body = nullptr;
+	};
+
 private:
 
 	int m_numOfJump;
@@ -45,11 +61,13 @@ private:
 	int m_gravity;
 	bool m_playerSide;
 	bool m_aura;
+	bool m_powerOnPlayer;
 
 	std::shared_ptr<Power> m_power;
 
 	sf::Sprite m_sprite;
-	sf::Clock m_moveClock;
+	sf::Clock m_powerClock;
+	sf::Clock m_powerClock2;
 	std::vector<sf::Vector2f> m_startSprite;
 	sf::Vector2f m_basePosition;
 
@@ -68,6 +86,11 @@ private:
 	StandPlayerState m_standMoveState;
 
 	BaseMovePlayerState* m_currentMoveState;
+
+	sf::Color m_plaerColor;
+
+	b2Body* m_body;
+
 };
 
 

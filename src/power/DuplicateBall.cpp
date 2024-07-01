@@ -51,15 +51,15 @@ void DuplicateBall::resetPos(sf::Vector2f& position)
 	}
 }
 //--------------------------------------------------------------------------
-void DuplicateBall::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) {
+void DuplicateBall::activatePowerOnBall(b2Body* ballBody) {
 
-	currVelocity = sf::Vector2f(1500.f, 0.f);
-	currVelocity.x *= direction.x;
+	//currVelocity = sf::Vector2f(1500.f, 0.f);
+	//currVelocity.x *= direction.x;
 
-	sf::Vector2f currPos = ball.getPosition();
-	currPos.y = 400.f;
+	//sf::Vector2f currPos = ball.getPosition();
+	//currPos.y = 400.f;
 
-	ball.setPosition(currPos);
+	//ball.setPosition(currPos);
 
 	//m_direction = direction;
 	//m_isIntiliaz = true;

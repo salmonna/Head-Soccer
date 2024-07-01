@@ -30,6 +30,7 @@ private:
 	void loadGameMode(int index);
 	void selectedPlayer();
 	void reset();
+	void loadGameObject();
 	void stopSongPlayWhistle();
 
 	GameState* m_gameState;

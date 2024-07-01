@@ -7,7 +7,8 @@ public:
 
 	ElectricPower();
 
-	void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction);
+	virtual void activatePowerOnPlayer(Player* player) {};
+	virtual void activatePowerOnBall(b2Body* ballBody) override {};
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
 
 

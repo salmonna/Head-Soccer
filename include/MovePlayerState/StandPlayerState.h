@@ -13,7 +13,7 @@ public:
 	virtual ~StandPlayerState();
 
 	virtual BaseMovePlayerState* handleMoveStatus() override;
-	virtual void movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide)override;
+	virtual void movement(sf::Sprite& sprite, bool playerSide, b2Body* body)override;
 	void setKeyboard(bool playerSide);
 
 private:

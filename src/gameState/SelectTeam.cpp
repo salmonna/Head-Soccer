@@ -186,6 +186,7 @@ void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
 }
 
 //-----------------------------------------------------------------------------
+
 void SelectTeam::setNumberOfPlayers(int players) {
 
 	m_numOfPlayers = players;

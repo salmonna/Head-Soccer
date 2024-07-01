@@ -1,13 +1,13 @@
 #include "power/FirePower.h"
 #include "gameObject/Ball.h"
 #include "Resources.h"
+#include "gameObject/Player.h"
 
-
-FirePower::FirePower() :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0)
+FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getBallTexture()[2]);
 
-   
+    
     m_spriteSheet.push_back(std::pair(sf::Vector2i(9,81), sf::Vector2i(15,15)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(38, 75), sf::Vector2i(30, 30)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(80, 69), sf::Vector2i(45, 45)));
@@ -16,34 +16,42 @@ FirePower::FirePower() :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_ind
     m_spriteSheet.push_back(std::pair(sf::Vector2i(413, 23), sf::Vector2i(130, 130)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(615, 3), sf::Vector2i(160, 160)));
 
-
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(0, 194), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(219, 195), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(443, 195), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(653, 194), sf::Vector2i(200, 200)));
-
-
 };
 
-void FirePower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f & direction)
+void FirePower::activatePowerOnBall(b2Body* ballBody)
 {
     setPowerIsActive(true);
 
-    currVelocity = sf::Vector2f(1500.f, 0.f);
-    currVelocity.x *= direction.x;
+    // Adjust position if necessary
+    b2Vec2 currentPosition = ballBody->GetPosition();
+    currentPosition.y -= 8.f; // Move the body 200 pixels higher (adjust as needed)
 
-    sf::Vector2f currPos = ball.getPosition();
-    currPos.y -= 300.f;
-    ball.setPosition(currPos);
+    ballBody->SetTransform(currentPosition, ballBody->GetAngle());
 
-    if (m_index1 == m_spriteSheet.size())
-    {
-        m_index1 = 0;
-    }
+    // Update the density
+    //b2MassData massData;
+    //ballBody->GetFixtureList()->GetShape()->ComputeMass(&massData, 80.0f); // Adjust density as needed
+    //ballBody->SetMassData(&massData);
 
-    ball.setFillColor(sf::Color(256, 256, 256, 0));
+    // Set awake state to false to "pause" the body
+    ballBody->SetAwake(false);
 }
 
+void FirePower::activatePowerOnPlayer(Player* player) {
+
+    
+    /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
+    //player->getSprite().setColor(sf::Color(128, 128, 128));
+    player->getSprite().setColor(sf::Color(256, 256, 256));
+    //player->getBody()->SetAwake(false);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
+    setPowerIsActive(false);
+}
 
 void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
 {
@@ -80,3 +88,6 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
 
 }
 
+bool FirePower::getSideOfPlayer()const {
+    return m_playerSide;
+}

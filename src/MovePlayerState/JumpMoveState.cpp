@@ -2,13 +2,13 @@
 
 //----------------------------------------------------------------------------------
 JumpMoveState::JumpMoveState(StandPlayerState* standState, KickMoveState* kickMoveState) :m_currentState(nullptr),
-m_standMoveState(standState),m_kickMoveState(kickMoveState)
+m_standMoveState(standState),m_kickMoveState(kickMoveState),m_jump(false)
 {
 	m_startPos = sf::Vector2f(160, 8);
 }
 
 //----------------------------------------------------------------------------------
-void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide) {
+void JumpMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) {
 
 	if (playerSide) {
 		m_keys = Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
@@ -17,42 +17,36 @@ void JumpMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f
 		m_keys = Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
 	}
 
-	if (pos.y > -180)
-		pos.y -= 15;
+	b2Vec2 vel = body->GetLinearVelocity();
+	if (!m_jump) {  // Check if player is on the ground
+		body->ApplyLinearImpulseToCenter(b2Vec2(0.f, -JUMP_FORCE), true);
+		m_jump = true;
+	}
 
-	movePlayer(m_startPos, 7, 50, sprite, pos, basePos);
-	updateGravityAndCollision(sprite, basePos, pos, gravity);
+	movePlayer(m_startPos, 7, 160, sprite, sf::Vector2f(70, 95));
+
+	if (changeState(7))
+	{
+		//m_body->SetLinearVelocity(b2Vec2(m_body->GetLinearVelocity().x, 0.f));
+		m_currentState = (BaseMovePlayerState*)m_standMoveState;
+		m_jump = false;
+	}
 
 	if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
 
-		moveWithRange(-5, pos, playerSide);
+		body->SetLinearVelocity(b2Vec2(-5.f, body->GetLinearVelocity().y));
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
 
-		moveWithRange(5, pos, playerSide);
+		body->SetLinearVelocity(b2Vec2(5.f, body->GetLinearVelocity().y));
 	}
 	else if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//move right
 
 		m_currentState = m_kickMoveState;
 	}
 
-	
 }
-//----------------------------------------------------------------------------------
-void JumpMoveState::updateGravityAndCollision(sf::Sprite& sprite, sf::Vector2f basePos, sf::Vector2i& pos, int& gravity) {
 
-	if (sprite.getPosition().y < 750)
-	{
-		sprite.setPosition(float(basePos.x + pos.x), float(basePos.y + pos.y + gravity));
-		gravity += 5;
-	}
-	else
-	{
-		gravity = 0;
-		pos.y = 0;
-		m_currentState = (BaseMovePlayerState*)m_standMoveState;
-	}
-}
 //----------------------------------------------------------------------------------
 BaseMovePlayerState* JumpMoveState::handleMoveStatus()
 {

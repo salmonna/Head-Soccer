@@ -3,8 +3,8 @@
 #include "Resources.h"
 #include "FileException.h"
 
-ScoreBoard::ScoreBoard() :m_gameTime(30), timeCounterSec(m_gameTime % 60),
-timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
+ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
+timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
 	defineScoreBoardTexture();
 	scoreBoardText();
@@ -18,12 +18,25 @@ void ScoreBoard::defineScoreBoardTexture()
 {
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getScoreBoardTexture();
-	for (int i = 0; i < texturs.size(); i++)
+	for (int i = 0; i < texturs.size()-1; i++)
 	{
 		auto sprite = sf::Sprite(texturs[i]);
 		m_SpriteVec.push_back(sprite);
 	}
 
+	//--------------------goal sign------------------------------//
+	m_goalSprite.setTexture(texturs[1]);
+	m_goalSprite.setPosition(50, 200);
+
+	sf::Font & font = Resources::getInstance().getFont();
+	for (int i = 0; i < 3; i++)
+	{
+		m_textVec.push_back(sf::Text());
+		m_textVec[i].setFont(font);
+		m_textVec[i].setCharacterSize(70);
+		m_textVec[i].setFillColor(sf::Color::White);
+	}
+  
 	if (m_SpriteVec.size() == 0)
 		throw FileException("Deviation from the array");
 
@@ -120,6 +133,8 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_flags[i]);
 	}
 
+	if (m_goalSign)
+		window.draw(m_goalSprite);
 }
 
 
@@ -128,6 +143,15 @@ void ScoreBoard::Progress()
 	float seconds = m_clock.getElapsedTime().asSeconds();
 	ScoreBoard::getInstance().updateProgress(m_progressP1Sprite, m_progressP1, seconds);
 	ScoreBoard::getInstance().updateProgress(m_progressP2Sprite, m_progressP2, seconds);
+	
+	if (m_goalSign)
+		m_goalSprite.move(10, 0);
+
+	if (m_clockGoalSign.getElapsedTime().asSeconds() > 2)
+	{
+		m_goalSign = false;
+		m_goalSprite.setPosition(0, 200);
+	}
 
 }
 
@@ -150,6 +174,8 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 		throw FileException("Deviation from the array");
 
 	progressSprite[1].setTextureRect(characterRect);
+
+
 }
 
 
@@ -230,6 +256,11 @@ void ScoreBoard::reset()
 //=======================Points=======================
 void ScoreBoard::updateScore(int p1Points, int p2Points)
 {
+	if (p1Points != 0 && p2Points != 0){
+		m_goalSign = true;
+		m_clockGoalSign.restart();
+	}
+
 	m_p1Points += p1Points;
 	m_p2Points += p2Points;
 
@@ -249,6 +280,18 @@ int ScoreBoard::getPoint(int num) {
 		return m_p1Points;
 	}
 	return m_p2Points;
+}
+
+
+//========================goalSign======================//
+
+bool ScoreBoard::isGoal() {
+	return m_goalSign;
+}
+
+void ScoreBoard::setGoalSign() {
+	m_goalSign = true;
+	m_clockGoalSign.restart();
 }
 
 void ScoreBoard::setFlagsPlayers() {
