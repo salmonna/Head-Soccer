@@ -68,8 +68,6 @@ private:
 	std::vector<sf::Texture> m_countryFlags;
 
 	sf::Font m_font;
-	int m_selectedIndex;
-	
 
 	std::vector<sf::SoundBuffer> m_bufferVec;
 

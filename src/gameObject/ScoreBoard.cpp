@@ -140,8 +140,6 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_goalSprite);
 }
 
-}
-
 
 void ScoreBoard::Progress()
 {

@@ -87,6 +87,8 @@ private:
 
 	BaseMovePlayerState* m_currentMoveState;
 
+	sf::Color m_plaerColor;
+
 	b2Body* m_body;
 
 };

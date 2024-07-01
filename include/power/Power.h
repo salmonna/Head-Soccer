@@ -24,7 +24,7 @@ public:
 	virtual void startTimer();
 	virtual void checkTimeIsOver();
 	virtual bool stayInTheAir();
-	virtual bool getSideOfPlayer() const { return true; };
+	virtual bool getSideOfPlayer() const { return false; };
 
 	void setPowerIsActive(bool powerIsActive);
 private:

@@ -37,12 +37,6 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
     //ballBody->GetFixtureList()->GetShape()->ComputeMass(&massData, 80.0f); // Adjust density as needed
     //ballBody->SetMassData(&massData);
 
-    if (m_index1 == m_spriteSheet.size())
-    {
-        m_index1 = 0;
-    }
-
-    ball.setFillColor(sf::Color(256, 256, 256, 0));
     // Set awake state to false to "pause" the body
     ballBody->SetAwake(false);
 }
@@ -51,7 +45,8 @@ void FirePower::activatePowerOnPlayer(Player* player) {
 
     
     /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
-    player->getSprite().setColor(sf::Color(128, 128, 128));
+    //player->getSprite().setColor(sf::Color(128, 128, 128));
+    player->getSprite().setColor(sf::Color(256, 256, 256));
     //player->getBody()->SetAwake(false);
     player->restartClock();
     player->setPowerOnPlayer(true);

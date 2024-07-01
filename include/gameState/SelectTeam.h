@@ -44,6 +44,5 @@ private:
 
 	int m_numOfPlayers;
 	int m_playerSelected;
-	Board* m_boardPtr;
 };
 
