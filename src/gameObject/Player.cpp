@@ -9,6 +9,12 @@
 #include "power/DragonPower.h"
 #include "power/DuplicateBall.h"
 #include "power/BigBallPower.h"
+#include "power/TornadoPower.h"
+#include "power/KameHameHaPower.h"
+#include "power/ElectricPower.h"
+
+
+
 
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
@@ -18,8 +24,11 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<FirePower>(m_playerSide);
-	
+	m_power = std::make_shared<KameHameHaPower>();
+
+
+	m_sprite.setTexture(Resources::getInstance().getCharactersTexture()[0]);
+	resetToPosition();
 
 	if (m_playerSide)
 	{

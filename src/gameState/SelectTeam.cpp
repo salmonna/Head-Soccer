@@ -2,33 +2,63 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 
-SelectTeam::SelectTeam(Controller * controller, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0), m_boardPtr(boardState)
-{
-	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[0]);
-	//m_buttons.push_back(std::make_unique<StartButton>(boardState,this));
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), Resources::getInstance().getSelectTeam()[0], sf::Vector2f(520.f, 690.f))); //playButton
+
+class GameModeSelection;
+
+SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
+, m_boardPtr(boardState)
+{
+	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[4]);
+
+
+  m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
+  m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
-	
-	auto sprite = sf::Sprite(charctersTexture[1]);
-	sprite.setPosition(630, 50);
-	m_charcters.push_back(sprite);
 
-	auto frame = sf::Sprite(charctersTexture[2]);
-	frame.setPosition(3 * 200 - 500, 270);
+	auto frame = sf::Sprite(charctersTexture[9]);
+	frame.setPosition(3 * 200 - 400, 320);
 	m_frames.push_back(frame);
 	frame.setColor(sf::Color::Red);
 	m_frames.push_back(frame);
 
-	for (int i = 3; i < charctersTexture.size(); i++)
+	for (int i = 0; i < charctersTexture.size() - 3; i++)
 	{
 		auto sprite = sf::Sprite(charctersTexture[i]);
 		sprite.scale(0.6f,0.6f);
-		sprite.setPosition(i*200 - 500, 300);
+		sprite.setPosition((i+3)*200 - 400, 350);
 		m_charcters.push_back(sprite);
 	}
-	
+
+	auto sprite = sf::Sprite(charctersTexture[8]);
+	sprite.setPosition(630, 20);
+	m_charcters.push_back(sprite);
+
+	selectTextPlayer();
+}
+//-----------------------------------------------------------------------------
+void SelectTeam::selectTextPlayer()
+{
+	sf::Font& font = Resources::getInstance().getFont();
+	for (int i = 0; i < 3; i++)
+	{
+		m_selectText.push_back(sf::Text());
+		m_selectText[i].setFont(font);
+		m_selectText[i].setPosition(650, 150);
+		m_selectText[i].setCharacterSize(90);
+		m_selectText[i].setFillColor(sf::Color::Black);
+		m_selectText[i].setStyle(sf::Text::Bold);
+		// Adding an outline to the text
+		m_selectText[i].setOutlineColor(sf::Color::Green);
+		m_selectText[i].setOutlineThickness(5);
+	}
+	m_selectText[0].setString("Select the first player");
+	m_selectText[1].setString("Select the second player");
+	m_selectText[1].setOutlineColor(sf::Color::Red);
+	m_selectText[2].setString("Click below to start playing");
+	m_selectText[2].setOutlineColor(sf::Color::White);
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::draw(sf::RenderWindow& window) const {
@@ -38,8 +68,12 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
-		if (m_playerSelected >= m_numOfPlayers) {
+		if (i == 0 && !(m_playerSelected == m_numOfPlayers)) {
 
+			continue;
+		}
+		else
+		{
 			m_buttons[i]->draw(window);
 		}
 	}
@@ -56,15 +90,24 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 void SelectTeam::checkToDraw(sf::RenderWindow& window) const {
 
 	if (m_playerSelected < 1 || m_numOfPlayers == 1)
-	{
+	{	
+		if (m_playerSelected == 1)
+			window.draw(m_selectText[2]);
+		else
+			window.draw(m_selectText[0]);
+		
 		window.draw(m_frames[0]);
 	}
-	else if (m_playerSelected >= 1 && m_numOfPlayers > 1)
-	{
+	else if (m_playerSelected >= 1  && m_numOfPlayers > 1)
+	{	
+		if (m_playerSelected >= 2)
+			window.draw(m_selectText[2]);
+		else
+			window.draw(m_selectText[1]);
+
 		window.draw(m_frames[0]);
 		window.draw(m_frames[1]);
 	}
-
 }
 
 //-----------------------------------------------------------------------------
@@ -74,9 +117,9 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
-			loadGameObject();
-			reset();
 			m_buttons[i]->execute();
+			loadGameMode(i);
+			reset();
 			break;
 		}
 	}
@@ -88,14 +131,16 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
 	
-	for (int i = 1; i < m_charcters.size(); i++)
+	for (int i = 0; i < m_charcters.size() - 1; i++)
 	{
 		isMouseOnPlayers(mousePressed, i);
 
 		if (m_charcters[i].getGlobalBounds().contains(mousePressed)) {
 
-			m_playerSelected++;
-			Resources::getInstance().setSelectedPlayer(i - 1);
+			if (m_playerSelected < m_numOfPlayers) {
+				m_playerSelected++;
+				Resources::getInstance().setSelectedPlayer(i);
+			}
 		}
 	}
 }
@@ -132,28 +177,34 @@ void SelectTeam::reset() {
 	m_playerSelected = 0;
 	for (int i = 0; i < m_frames.size(); i++)
 	{
-		m_frames[i].setPosition(3 * 200 - 500, 270);
+		m_frames[i].setPosition(3 * 200 - 400, 320);
 	}
 }
-//-----------------------------------------------------------------------------
-void SelectTeam::loadGameObject()
+
+void SelectTeam::loadGameMode(int index)
 {
-	std::vector<std::string> movingObjectNames{ "RightPlayer", "LeftPlayer", "Ball" };
-	std::vector<std::string> staticObjectNames{ "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	if (index == 1)return;
+
+	std::vector<std::string> movingObjectNames;
+	std::vector<std::string> staticObjectNames;
 	switch (m_numOfPlayers)
 	{
 	case 1:
-		movingObjectNames[1] = "ComputerPlayer";
+		movingObjectNames = { "RightPlayer", "ComputerPlayer", "Ball" };
 		break;
 	case 2:
+		movingObjectNames = { "RightPlayer", "LeftPlayer", "Ball" };
 		break;
 	default:
 		break;
 	}
+	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
+	ScoreBoard::getInstance().loadPlayersFlag();
 	m_boardPtr->createMovingObjects(movingObjectNames);
 	m_boardPtr->createStaticObjects(staticObjectNames);
 }
 
+//-----------------------------------------------------------------------------
 
 SelectTeam::~SelectTeam()
 {

@@ -5,6 +5,15 @@
 ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
+	defineScoreBoardTexture();
+	scoreBoardText();
+	defineProgressTexture();
+
+
+}
+
+void ScoreBoard::defineScoreBoardTexture()
+{
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getScoreBoardTexture();
 	for (int i = 0; i < texturs.size()-1; i++)
@@ -12,8 +21,6 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		auto sprite = sf::Sprite(texturs[i]);
 		m_SpriteVec.push_back(sprite);
 	}
-	float x = 1800 / 2 -1200/2;
-	m_SpriteVec[0].setPosition(x, -500);
 
 	//--------------------goal sign------------------------------//
 	m_goalSprite.setTexture(texturs[1]);
@@ -27,15 +34,11 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		m_textVec[i].setCharacterSize(70);
 		m_textVec[i].setFillColor(sf::Color::White);
 	}
+	m_SpriteVec[0].setPosition(300.f, -500);
+}
 
-	//font time pos
-	m_textVec[0].setPosition(875, 0);
-
-	//font points pos
-	m_textVec[1].setPosition(x+175, 50);
-	m_textVec[2].setPosition(x + 1200-175-20, 50);
-
-
+void ScoreBoard::defineProgressTexture()
+{
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
 
 	sf::Vector2f pos = sf::Vector2f(550, 80);
@@ -47,7 +50,11 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		m_progressP1Sprite[i].scale(0.6, 1);
 		m_progressP1Sprite[i].setPosition(pos);
 	}
-	
+
+	pos.y += 3.5;
+	pos.x += 2.8f;
+	m_progressP1Sprite[1].setPosition(pos);
+
 	pos = sf::Vector2f(950, 80);
 
 	for (int i = 0; i < texture.size(); i++)
@@ -57,7 +64,51 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		m_progressP2Sprite[i].scale(0.6, 1);
 		m_progressP2Sprite[i].setPosition(pos);
 	}
+	pos.y += 3.5;
+	pos.x += 2.8f;
+	m_progressP2Sprite[1].setPosition(pos);
+}
 
+void ScoreBoard::scoreBoardText()
+{
+	sf::Font& font = Resources::getInstance().getFont();
+	for (int i = 0; i < 3; i++)
+	{
+		m_textVec.push_back(sf::Text());
+		m_textVec[i].setFont(font);
+		m_textVec[i].setCharacterSize(70);
+		m_textVec[i].setFillColor(sf::Color::White);
+	}
+
+	//font time pos
+	m_textVec[0].setPosition(875, 0);
+
+	//font points pos
+	m_textVec[1].setPosition(475.f, 50);
+	m_textVec[2].setPosition(1305.f, 50);
+}
+
+void ScoreBoard::loadPlayersFlag()
+{
+	std::vector<int> selectedPlayers  = Resources::getInstance().getPlayerOrder();
+	std::vector<sf::Texture>& texture = Resources::getInstance().getCountriesFlags();
+
+	sf::Vector2f pos(1400.f, 0);
+
+	for (int i = 0; i < selectedPlayers.size(); i++)
+	{
+		m_playersFlags.push_back(sf::Sprite(texture[selectedPlayers[i]]));
+		m_playersFlags[i].scale(0.5, 0.5);
+	}
+
+	m_playersFlags[0].setPosition(1250.f, 165.f);
+	m_playersFlags[1].setPosition(435.f, 165.f);	
+}
+
+
+std::vector<sf::Sprite>& ScoreBoard::getFlags()
+{
+	return m_playersFlags;
 }
 
 void ScoreBoard::draw(sf::RenderWindow & window) const
@@ -80,8 +131,15 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_progressP2Sprite[i]);
 	} 
 
+	for (int i = 0; i < m_playersFlags.size(); i++)
+	{
+		window.draw(m_playersFlags[i]);
+	}
+
 	if (m_goalSign)
 		window.draw(m_goalSprite);
+}
+
 }
 
 
@@ -166,7 +224,6 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
-		reset();
 		return true;
 	}
 	return false;
@@ -179,8 +236,12 @@ void ScoreBoard::reset()
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
+
 	resetProgressP1();
 	resetProgressP2();
+
+	m_playersFlags.clear();
+	Resources::getInstance().getPlayerOrder().clear();
 }
 
 //=======================Points=======================
@@ -200,6 +261,15 @@ void ScoreBoard::updateScore(int p1Points, int p2Points)
 	str = std::to_string(m_p2Points);
 	m_textVec[2].setString(str);
 }
+
+int ScoreBoard::getPoint(int num) {
+
+	if (num == 1) {
+		return m_p1Points;
+	}
+	return m_p2Points;
+}
+
 
 //========================goalSign======================//
 

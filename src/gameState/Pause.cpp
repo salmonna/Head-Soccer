@@ -10,11 +10,9 @@ m_boardState(boardState)
 {
 
 	std::vector<sf::Texture> & texture = Resources::getInstance().getPauseTexture();
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), texture[1], sf::Vector2f(845.f, 350.f))); //Resume Button
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)), texture[2], sf::Vector2f(845.f, 500.f))); //exit to menu Button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), texture[1], sf::Vector2f(800.f, 350.f))); //Resume Button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)), texture[2], sf::Vector2f(800.f, 500.f))); //exit to menu Button
 
-
-	
 }
 
 
@@ -45,6 +43,7 @@ void Pause::draw(sf::RenderWindow& window) const {
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
 		m_buttons[i]->draw(window);
+
 	}
 }
 

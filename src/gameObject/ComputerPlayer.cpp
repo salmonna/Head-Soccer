@@ -10,7 +10,9 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 
 	m_power = std::make_unique<FirePower>();
 
-   
+	std::srand(static_cast<unsigned>(std::time(0)));
+	int random_number = std::rand() % 7;
+	Resources::getInstance().setSelectedPlayer(random_number);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	resetToPosition();
 	m_basePosition = sf::Vector2f(272, 775);

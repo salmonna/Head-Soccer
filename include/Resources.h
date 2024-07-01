@@ -32,9 +32,14 @@ public:
 	std::vector<sf::SoundBuffer>& getBufferVec();
 
 	std::vector<sf::Texture>& getPlayerPower();
+	std::vector<sf::Texture>& getCountriesFlags();
+
 	void setSelectedPlayer(int index);
 
 	sf::Font & getFont();
+
+	std::vector<int> getPlayerOrder();
+	void resetPlayerOrder();
 
 private:
 
@@ -60,11 +65,14 @@ private:
 
 	std::vector<sf::Texture> m_selectTeam;
 
-	std::vector<int> m_selectedPlayer;
+	std::vector<sf::Texture> m_countryFlags;
 
 	sf::Font m_font;
 	int m_selectedIndex;
 	
 
 	std::vector<sf::SoundBuffer> m_bufferVec;
+
+	std::vector<int> m_selectedPlayer;
+	int m_selectedIndex;
 };

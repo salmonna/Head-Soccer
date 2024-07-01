@@ -29,10 +29,11 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 		m_backGroundStadium[i].setTexture(texture[i]);
 
 	}
-	m_backGroundStadium[1].setPosition(0, 670);
+	m_backGroundStadium[1].setPosition(0, 674);
 
 	//m_buttons.push_back(std::make_unique<Pause>(menu, this));
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)), Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
+						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
 
 	//m_goalSprite.setTexture(texture[2]);
 	//m_goalSprite.setPosition(50, 200);
@@ -148,7 +149,7 @@ void Board::moveAd()
 
 	if (sprite.getPosition().x >= 1800)
 	{
-		sprite.setPosition(-sprite.getGlobalBounds().width, 680);
+		sprite.setPosition(-sprite.getGlobalBounds().width, 674);
 	}
 
 }
