@@ -7,7 +7,7 @@ public:
 	DragonPower();
 	~DragonPower();
 
-	virtual void activatePowerOnBall(b2Body* ballBody)override;
+	virtual void activatePowerOnBall(Ball* ball)override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
 private:
 

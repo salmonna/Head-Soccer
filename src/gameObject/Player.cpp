@@ -22,7 +22,7 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<TornadoPower>(m_playerSide);
+	m_power = std::make_shared<FirePower>(m_playerSide);
 
 	if (m_playerSide)
 	{
@@ -39,7 +39,7 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 	m_sprite.setOrigin(40.f, 40.f);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	resetToPosition();
-	m_plaerColor = m_sprite.getColor();
+	m_playerColor = m_sprite.getColor();
 	m_sprite.setPosition(m_basePosition);
 
 }
@@ -86,7 +86,8 @@ void Player::move(sf::Vector2f pressed) {
 		// Check if more than 5 seconds have passed since the power was activated
 		if (m_powerClock2.getElapsedTime().asSeconds() > 3) {
 			m_powerOnPlayer = false;
-			m_sprite.setColor(m_plaerColor);
+			m_sprite.setColor(m_playerColor);
+
 		}
 	}
 	else {

@@ -51,7 +51,7 @@ void DuplicateBall::resetPos(sf::Vector2f& position)
 	}
 }
 //--------------------------------------------------------------------------
-void DuplicateBall::activatePowerOnBall(b2Body* ballBody) {
+void DuplicateBall::activatePowerOnBall(Ball* ball) {
 
 	//currVelocity = sf::Vector2f(1500.f, 0.f);
 	//currVelocity.x *= direction.x;

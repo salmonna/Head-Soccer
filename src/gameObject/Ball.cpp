@@ -10,7 +10,7 @@ Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f
 
     //----------------------box2d---------------------------//
     m_body = Box2d::getInstance().createBall(sf::Vector2f(900.f,100.f));
-	
+    m_body->GetMassData(&m_bodyMass);
     m_sprite.setTexture(*texture);
     m_sprite.setOrigin(25.0f, 25.0f);
 }
@@ -35,8 +35,8 @@ void  Ball::move(sf::Vector2f pressed)
 
             // Set new velocity for the ball
             b2Vec2 newVelocity(50.f * side, m_body->GetLinearVelocity().y); // Assuming direction is a float
-
             m_body->SetLinearVelocity(newVelocity);
+
         }
     }
 
@@ -109,4 +109,8 @@ void Ball::reset() {
     m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
 
     update();
+}
+//-----------------------------------------------------------------------------
+b2MassData Ball::getBallMass() const{
+    return m_bodyMass;
 }

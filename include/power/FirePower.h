@@ -8,7 +8,7 @@ public:
 	FirePower(bool playerSide = true);
 
 	virtual void activatePowerOnPlayer(Player* player)override;
-	virtual void activatePowerOnBall(b2Body* ballBody) override;
+	virtual void activatePowerOnBall(Ball* ball) override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
 	virtual bool getSideOfPlayer() const override;
 

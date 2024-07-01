@@ -7,36 +7,34 @@
 BigBallPower::BigBallPower(bool playerSide):m_playerSide(playerSide)
 {
 
-
 };
 
-void BigBallPower::activatePowerOnBall(b2Body* ballBody)
+void BigBallPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = ballBody->GetPosition();
-    currentPosition.y -= 8.f; // Move the body 200 pixels higher (adjust as needed)
-
-    ballBody->SetTransform(currentPosition, ballBody->GetAngle());
+    b2Vec2 currentPosition = ball->getBody()->GetPosition();
+    currentPosition.y -= 5.f; // Move the body 200 pixels higher (adjust as needed)
+    ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
     // Update the density
-    //b2MassData massData;
-    //ballBody->GetFixtureList()->GetShape()->ComputeMass(&massData, 80.0f); // Adjust density as needed
-    //ballBody->SetMassData(&massData);
+    b2MassData massData;
+    ball->getBody()->GetFixtureList()->GetShape()->ComputeMass(&massData, 50.0f); // Adjust density as needed
+    ball->getBody()->SetMassData(&massData);
+    
 
     // Set awake state to false to "pause" the body
-    ballBody->SetAwake(false);
+    ball->getBody()->SetAwake(false);
 }
 
 void BigBallPower::activatePowerOnPlayer(Player* player) {
 
-
-    /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
-    //player->getSprite().setColor(sf::Color(128, 128, 128));
-    player->getSprite().setColor(sf::Color(256, 256, 256));
-    //player->getBody()->SetAwake(false);
     player->restartClock();
     player->setPowerOnPlayer(true);
     setPowerIsActive(false);
+}
+
+bool BigBallPower::getSideOfPlayer()const {
+    return m_playerSide;
 }

@@ -20,20 +20,20 @@ TornadoPower::TornadoPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m
 
 };
 
-void TornadoPower::activatePowerOnBall(b2Body* ballBody)
+void TornadoPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = ballBody->GetPosition();
+    b2Vec2 currentPosition = ball->getBody()->GetPosition();
     float side;
     (m_playerSide) ? side = -1.f : side = 1.f;
     currentPosition.x += side; // Move the body 200 pixels higher (adjust as needed)
 
-    ballBody->SetTransform(currentPosition, ballBody->GetAngle());
+    ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
     // Set awake state to false to "pause" the body
-    ballBody->SetAwake(false);
+    ball->getBody()->SetAwake(false);
 }
 
 void TornadoPower::activatePowerOnPlayer(Player* player) {

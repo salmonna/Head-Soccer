@@ -8,7 +8,8 @@ public:
 	BigBallPower(bool playerSide);
 
 	virtual void activatePowerOnPlayer(Player* player)override;
-	virtual void activatePowerOnBall(b2Body* ballBody) override;
+	virtual void activatePowerOnBall(Ball* ball) override;
+	virtual bool getSideOfPlayer()const override;
 
 	~BigBallPower() = default;
 

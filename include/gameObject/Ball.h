@@ -23,6 +23,7 @@ public:
 	virtual void reset() override;
 	virtual b2Body* getBody()override;
 
+	b2MassData getBallMass() const;
 	void setPosition(sf::Vector2f position);
 	void setPower(std::shared_ptr<Power> power);
 	void update();
@@ -38,7 +39,7 @@ public:
 		m_body = nullptr;
 	};
 private:
-
+	b2MassData m_bodyMass;
 	sf::Vector2f m_basePosition;
 	std::shared_ptr<Power> m_power;
 	sf::Sprite m_sprite;

@@ -8,7 +8,7 @@ InvisiblePower::InvisiblePower()
 
 };
 
-void InvisiblePower::activatePowerOnBall(b2Body* ballBody)
+void InvisiblePower::activatePowerOnBall(Ball* ball)
 {
     //currVelocity = sf::Vector2f(1500.f, 0.f);
     //currVelocity.x *= direction.x;
