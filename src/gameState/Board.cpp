@@ -38,8 +38,8 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	//m_goalSprite.setPosition(50, 200);
 
 
-	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalBack", 
-												"RightGoalBack", "LeftGoalTop" , "RightGoalTop" };
+	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
+												"LeftGoalBack", "RightGoalBack" };
 	createStaticObjects(staticObjectNames);
 
 
@@ -94,7 +94,7 @@ void Board::respond(sf::Vector2f pressed) {
 
 	}
 	
-	for_each_pair(m_gameObject.begin() + 2, m_gameObject.end() - 2, [&](auto& a, auto& b) {
+	for_each_pair(m_gameObject.begin() + 4, m_gameObject.end() - 2, [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
 			processCollision(*a, *b);
@@ -179,9 +179,18 @@ void Board::for_each_pair(FwdIt begin, FwdIt end, Fn fn)
 			fn(*begin, *second);
 }
 //=============================================== collide =======================================//
-bool Board::collide(GameObject& a, GameObject& b)
-{
-	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
+//bool Board::collide(GameObject& a, GameObject& b)
+//{
+//	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
+//}
+bool Board::collide(GameObject& a, GameObject& b) {
+	// Get the AABBs for the first fixture of each body
+	const b2AABB& aabbA = a.getBody()->GetFixtureList()->GetAABB(0);
+	const b2AABB& aabbB = b.getBody()->GetFixtureList()->GetAABB(0);
+
+	// Check for intersection between AABBs
+	return (aabbA.lowerBound.x <= aabbB.upperBound.x && aabbA.upperBound.x >= aabbB.lowerBound.x &&
+		aabbA.lowerBound.y <= aabbB.upperBound.y && aabbA.upperBound.y >= aabbB.lowerBound.y);
 }
 //=============================================== draw =======================================//
 
@@ -204,16 +213,10 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 {
 
 	//draw the back ground stadium and field
-
-
 	for (int i = 0; i < m_backGroundStadium.size(); i++)
 	{
 		window.draw(m_backGroundStadium[i]);
 	}
-
-	//if (m_goalSign)
-	//	window.draw(m_goalSprite);
-
 
 	//draw the score board
 	ScoreBoard::getInstance().draw(window);

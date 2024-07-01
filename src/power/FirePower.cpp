@@ -1,9 +1,9 @@
 #include "power/FirePower.h"
 #include "gameObject/Ball.h"
 #include "Resources.h"
+#include "gameObject/Player.h"
 
-
-FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide), m_powerOnPlayer(false)
+FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getBallTexture()[2]);
 
@@ -15,7 +15,6 @@ FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteShee
     m_spriteSheet.push_back(std::pair(sf::Vector2i(265, 36), sf::Vector2i(115, 115)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(413, 23), sf::Vector2i(130, 130)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(615, 3), sf::Vector2i(160, 160)));
-
 
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(0, 194), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(219, 195), sf::Vector2i(200, 200)));
@@ -42,12 +41,14 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
     ballBody->SetAwake(false);
 }
 
-void FirePower::activatePowerOnPlayer(b2Body* playerBody, sf::Sprite* sprite) {
+void FirePower::activatePowerOnPlayer(Player* player) {
 
+    
     /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
-    sprite->setColor(sf::Color(128,128,128));
-    //playerBody->SetAwake(false);
-    m_powerOnPlayer = true;
+    player->getSprite().setColor(sf::Color(128, 128, 128));
+    //player->getBody()->SetAwake(false);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 
@@ -88,12 +89,4 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
 
 bool FirePower::getSideOfPlayer()const {
     return m_playerSide;
-}
-
-void FirePower::setPowerOnPlayer(bool powerOnPlayer){
-    m_powerOnPlayer = powerOnPlayer;
-}
-
-bool FirePower::getPowerOnPlayer() const {
-    return m_powerOnPlayer;
 }

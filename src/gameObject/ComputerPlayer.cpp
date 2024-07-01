@@ -129,6 +129,12 @@ void ComputerPlayer::update() {
 	m_sprite.setPosition(B2VecToSFVec(position1));
 }
 
+//-----------------------------------------------------------------------------
+b2Body* ComputerPlayer::getBody() {
+
+	return m_body;
+}
+
 ComputerPlayer::~ComputerPlayer()
 {
 	std::cout << " C-D" << std::endl;

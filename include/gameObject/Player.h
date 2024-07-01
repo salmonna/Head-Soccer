@@ -26,8 +26,12 @@ public:
 	virtual void move(sf::Vector2f pressed) override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset()override;
+	virtual b2Body* getBody()override;
 	Keyboard getKey() const;
   
+	void setPowerOnPlayer(bool powerOnPlayer);
+	bool getPowerOnPlayer() const;
+
 	void resetProgress();
 
 	std::shared_ptr<Power> getPower();
@@ -36,7 +40,7 @@ public:
 	bool getAura() const;
 	bool getSide() const;
 	void update();
-	b2Body* getBody();
+	
 	bool getSideOfPlayer();
 	void restartClock();
 
@@ -57,11 +61,13 @@ private:
 	int m_gravity;
 	bool m_playerSide;
 	bool m_aura;
+	bool m_powerOnPlayer;
 
 	std::shared_ptr<Power> m_power;
 
 	sf::Sprite m_sprite;
 	sf::Clock m_powerClock;
+	sf::Clock m_powerClock2;
 	std::vector<sf::Vector2f> m_startSprite;
 	sf::Vector2f m_basePosition;
 

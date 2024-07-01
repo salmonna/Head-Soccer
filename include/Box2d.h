@@ -21,6 +21,7 @@ public:
 	b2World* getBox2dWorld();
 	b2Body* createPlayer(sf::Vector2f basePosition);
 	b2Body* createBall(sf::Vector2f basePosition);
+	b2Body* createGoalBack(sf::Vector2f basePosition);
 
 private:	
 	Box2d(const Box2d&) = default;
@@ -34,5 +35,6 @@ private:
 	sf::RectangleShape m_rightWall;
 	sf::RectangleShape m_topGoalLeft;
 	sf::RectangleShape m_topGoalRight;
+	std::vector <sf::RectangleShape> m_goalBack;
 };
 

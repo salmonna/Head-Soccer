@@ -14,12 +14,12 @@
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
 , m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
 ,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
-m_currentMoveState(&m_standMoveState)
+m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnPlayer(false)
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
 	m_power = std::make_shared<FirePower>(m_playerSide);
-
+	
 
 	if (m_playerSide)
 	{
@@ -32,7 +32,6 @@ m_currentMoveState(&m_standMoveState)
 	}
 	//----------------------box2d---------------------------//
 	m_body = Box2d::getInstance().createPlayer(m_basePosition);
-
 
 	m_sprite.setOrigin(40.f, 40.f);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
@@ -79,22 +78,21 @@ void Player::move(sf::Vector2f pressed) {
 	if (nextState) 
 		m_currentMoveState = nextState;
 
-	
+	// Check if the power is active
+	if (m_powerOnPlayer) {
 
-	update();
-
-	if (m_power->getPowerOnPlayer())
-	{
-		if (m_powerClock.getElapsedTime().asSeconds() > 20)
-		{
-			//m_body->SetAwake(true);
-			m_power->setPowerOnPlayer(false);
+		// Check if more than 5 seconds have passed since the power was activated
+		if (m_powerClock2.getElapsedTime().asSeconds() > 3) {
+			m_powerOnPlayer = false;
 		}
 	}
-	else
-	{
-		m_currentMoveState->movement(m_sprite,m_playerSide, m_body);
+	else {
+
+		m_currentMoveState->movement(m_sprite, m_playerSide, m_body);
+		
 	}
+	update();
+
 
 
 	bool valid = false;
@@ -194,6 +192,15 @@ b2Body* Player::getBody() {
 	return m_body;
 }
 
+void Player::setPowerOnPlayer(bool powerOnPlayer) {
+	m_powerOnPlayer = powerOnPlayer;
+}
+
+bool Player::getPowerOnPlayer() const {
+	return m_powerOnPlayer;
+}
+
 void Player::restartClock() {
-	m_powerClock.restart();
+	m_powerClock2.restart().asSeconds();
+
 }

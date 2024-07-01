@@ -18,6 +18,7 @@ public:
 	virtual void draw(sf::RenderWindow& window)const override;
 	virtual sf::Sprite& getSprite() override { return m_sprite; };
 	virtual void reset()override;
+	virtual b2Body* getBody()override;
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
 	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0);

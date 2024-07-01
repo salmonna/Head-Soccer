@@ -23,18 +23,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     //=======================================UPDATE========================================\\ 
 
-
-
-    bool Box2dCollide(b2Body* bodyA, b2Body* bodyB) {
-        // Get the AABBs for the first fixture of each body
-        const b2AABB& aabbA = bodyA->GetFixtureList()->GetAABB(0);
-        const b2AABB& aabbB = bodyB->GetFixtureList()->GetAABB(0);
-
-        // Check for intersection between AABBs
-        return (aabbA.lowerBound.x <= aabbB.upperBound.x && aabbA.upperBound.x >= aabbB.lowerBound.x &&
-            aabbA.lowerBound.y <= aabbB.upperBound.y && aabbA.upperBound.y >= aabbB.lowerBound.y);
-    }
-
     //update after collide
     void updateBall(Ball& ballObject, Player& playerObject)
     {
@@ -48,15 +36,10 @@ namespace // anonymous namespace — the standard way to make function "static"
             playerObject.getPower()->activatePowerOnBall(ballObject.getBody());
             playerObject.setAura(false);
         }
-        else if(Box2dCollide(ballObject.getBody(), playerObject.getBody()))
-        {
-            if (ballObject.getPower()->powerIsActive()){
-                ballObject.getPower()->activatePowerOnPlayer(playerObject.getBody(), &playerObject.getSprite());
-                playerObject.restartClock();
-            }
-
+        else if (ballObject.getPower()->powerIsActive()){
+            ballObject.getPower()->activatePowerOnPlayer(&playerObject);
+            //playerObject.restartClock();
         }
-
     }
 
     // primary collision-processing functions
@@ -68,11 +51,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 
 
         updateBall(ballObject, playerObject);
-
-    }
-
-    void ballCollidGoalTop(GameObject& ball, GameObject& goal)
-    {
 
     }
 
@@ -99,13 +77,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     }
 
-    void playerCollidPlayer(GameObject& player1, GameObject& player2)
-    {       
-        
-    }
-
-    //...
-
     // secondary collision-processing functions that just
     // implement symmetry: swap the parameters and call a
     // primary function
@@ -116,11 +87,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         playerCollidBall(player, ball);
     }
    
-    void GoalTopColliedBall(GameObject& goal,
-        GameObject& ball)
-    {
-        ballCollidGoalTop(ball, goal);
-    }
     void GoalBackCollidWithBall(GameObject& goalBack, GameObject& ball) {
 
         ballCollidWithGoalBack(ball, goalBack);
@@ -131,14 +97,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         computerPlayerCollidBall(computerPlayer,ball);
 
     }
-    /*
-     void playerColliedPlayer(GameObject& player2,
-        GameObject& player1)
-    {
-        playerCollidPlayer(player1, player2);
-    }*/
-
-    //...
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
     // typedef void (*HitFunctionPtr)(GameObject&, GameObject&);
@@ -150,22 +108,12 @@ namespace // anonymous namespace — the standard way to make function "static"
     {
         HitMap phm;
         phm[Key(typeid(Player), typeid(Ball))] = &playerCollidBall;
-        phm[Key(typeid(Player), typeid(Player))] = &playerCollidPlayer;
-        phm[Key(typeid(Ball), typeid(GoalTop))] = &ballCollidGoalTop;
         phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
-
         phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
-        phm[Key(typeid(GoalTop), typeid(Ball))] = &GoalTopColliedBall;
         phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
-       
-        //--------------------ComputerPlayer Collision--------------------------
-        phm[Key(typeid(ComputerPlayer), typeid(Player))] = &playerCollidPlayer;
         phm[Key(typeid(ComputerPlayer), typeid(Ball))] = &computerPlayerCollidBall;
-        phm[Key(typeid(Player), typeid(ComputerPlayer))] = &playerCollidPlayer;
         phm[Key(typeid(Ball), typeid(ComputerPlayer))] = &BallCollidComputerPlayer;
         //----------------------------------------------------------------------
-
-        //...
         return phm;
     }
 

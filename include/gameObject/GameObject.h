@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "Box2d.h"
 
 class GameObject
 {
@@ -8,6 +9,8 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) const = 0;
 	virtual sf::Sprite& getSprite() = 0;
+	virtual b2Body* getBody() { return nullptr; };
+
 
 	~GameObject() = default;
 

@@ -79,13 +79,13 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
     topGoalBodyDef.position.Set(70.f / SCALE, 580.f / SCALE);
     b2Body* topGoalBody = m_world.CreateBody(&topGoalBodyDef);
     b2PolygonShape topGoalBox;
-    topGoalBox.SetAsBox(75.f / SCALE, 5.f / SCALE); // Box2D uses half-widths and half-heights
+    topGoalBox.SetAsBox(75.f / SCALE, 10.f / SCALE); // Box2D uses half-widths and half-heights
     topGoalBody->CreateFixture(&topGoalBox, 0.f);
 
     // Create the ceiling rectangle shape for rendering
-    sf::RectangleShape topGoal(sf::Vector2f(150.f, 10.f)); // Full width = 2 * half-width
+    sf::RectangleShape topGoal(sf::Vector2f(150.f, 20.f)); // Full width = 2 * half-width
     topGoal.setFillColor(sf::Color::Red);
-    topGoal.setOrigin(75.f, 5.f); // Origin at the center
+    topGoal.setOrigin(75.f, 10.f); // Origin at the center
     topGoal.setPosition(70.f, 580.f); // Position using Box2D coordinates scaled to SFML
     m_topGoalLeft = topGoal;
 
@@ -99,36 +99,22 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
 
     // Define the shape of the top goal (adjust dimensions as needed)
     b2PolygonShape topGoalBox2;
-    topGoalBox2.SetAsBox(150.f / SCALE, 5.f / SCALE); // SetAsBox takes half-width and half-height
+    topGoalBox2.SetAsBox(150.f / SCALE, 10.f / SCALE); // SetAsBox takes half-width and half-height
 
     // Create fixture for the top goal body
     topGoalBody2->CreateFixture(&topGoalBox2, 0.f); // Density set to 0 for static bodies
 
     // Create the rectangle shape for rendering
-    sf::RectangleShape topGoal2(sf::Vector2f(150.f, 10.f)); // Adjust size as needed for rendering
+    sf::RectangleShape topGoal2(sf::Vector2f(150.f, 20.f)); // Adjust size as needed for rendering
     topGoal2.setFillColor(sf::Color::Black);
-    topGoal2.setOrigin(150.f, 5.f); // Origin should match half-width and half-height for correct positioning
+    topGoal2.setOrigin(150.f, 10.f); // Origin should match half-width and half-height for correct positioning
     topGoal2.setPosition(1800.f, 580.f); // Position in screen coordinates
     m_topGoalRight = topGoal2;
 
 }
 
 
-//get world
-b2World* Box2d::getBox2dWorld() {
 
-    return &m_world;
-}
-
-void Box2d::draw(sf::RenderWindow& window)const {
-
-    window.draw(m_ground);
-    window.draw(m_ceiling);
-    window.draw(m_leftWall);
-    window.draw(m_rightWall);
-    window.draw(m_topGoalLeft); 
-    window.draw(m_topGoalRight);
-}
 
 //create player in box3d
 b2Body* Box2d::createPlayer(sf::Vector2f basePosition) {
@@ -178,6 +164,48 @@ b2Body* Box2d::createBall(sf::Vector2f basePosition) {
     return body;
 }
 
+//create goal back in box3d
+b2Body* Box2d::createGoalBack(sf::Vector2f basePosition) {
+    //-------------------------------------------goal Back---------------------------//
+
+    // Create the goal back
+    b2BodyDef goalBackBodyDef;
+    goalBackBodyDef.position.Set(basePosition.x / SCALE, basePosition.y / SCALE);
+    b2Body* goalBackBody = m_world.CreateBody(&goalBackBodyDef);
+    b2PolygonShape goalBackBox;
+    goalBackBox.SetAsBox(10.f / SCALE, 100.f / SCALE);
+    goalBackBody->CreateFixture(&goalBackBox, 0.f);
+
+    // Create the goal back rectangle shape for rendering
+    sf::RectangleShape goalBack(sf::Vector2f(20.f, 200.f));
+    goalBack.setFillColor(sf::Color::Green);
+    goalBack.setOrigin(10.f, 100.f);
+    goalBack.setPosition(basePosition.x, basePosition.y);
+    m_goalBack.push_back(goalBack);
+
+    return goalBackBody;
+}
+
+//get world
+b2World* Box2d::getBox2dWorld() {
+
+    return &m_world;
+}
+
+void Box2d::draw(sf::RenderWindow& window)const {
+
+    window.draw(m_ground);
+    window.draw(m_ceiling);
+    window.draw(m_leftWall);
+    window.draw(m_rightWall);
+    window.draw(m_topGoalLeft); 
+    window.draw(m_topGoalRight);
+    if (m_goalBack.size() == 2)
+    {
+        window.draw(m_goalBack[0]);
+        window.draw(m_goalBack[1]);
+    }
+}
 Box2d::~Box2d()
 {
 

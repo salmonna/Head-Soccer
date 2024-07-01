@@ -21,12 +21,13 @@ public:
 	virtual void move(sf::Vector2f pressed) override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset() override;
+	virtual b2Body* getBody()override;
 
 	void setPosition(sf::Vector2f position);
 	void setPower(std::shared_ptr<Power> power);
 	void update();
 	void kick(bool rigthSide);
-	b2Body* getBody();
+	
 	std::shared_ptr<Power> getPower();
 
 	virtual ~Ball() {
