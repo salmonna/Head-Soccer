@@ -46,7 +46,7 @@ void FirePower::activatePowerOnPlayer(Player* player) {
     
     /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
     //player->getSprite().setColor(sf::Color(128, 128, 128));
-    player->getSprite().setColor(sf::Color(256, 256, 256));
+    //player->getSprite().setColor(sf::Color(256, 256, 256));
     //player->getBody()->SetAwake(false);
     player->restartClock();
     player->setPowerOnPlayer(true);

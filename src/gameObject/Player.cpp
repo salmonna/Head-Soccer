@@ -24,11 +24,7 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<DragonPower>(m_playerSide);
-
-
-	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<FirePower>(m_playerSide);
+	m_power = std::make_shared<ElectricPower>(m_playerSide);
 
 	if (m_playerSide)
 	{
