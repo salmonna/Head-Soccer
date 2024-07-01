@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "StaticObject.h"
+#include <SFML/Audio.hpp>
 
 
 class ScoreBoard 
@@ -35,9 +36,8 @@ public:
 
 	int getPoint(int num);
 
-	void loadPlayersFlag();
+	void setFlagsPlayers();
 	std::vector<sf::Sprite>& getFlags();
-
 
 	~ScoreBoard() = default;
 
@@ -70,8 +70,11 @@ private:
 	std::vector<sf::Sprite> m_SpriteVec;
 	std::vector<sf::Sprite> m_progressP1Sprite;
 	std::vector<sf::Sprite> m_progressP2Sprite;
-	std::vector<sf::Sprite> m_playersFlags;
+	std::vector<sf::Sprite> m_flags;
 
+
+	sf::Sound m_whistle;
+	
 	//points
 	int m_p1Points;
 	int m_p2Points;

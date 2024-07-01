@@ -17,10 +17,10 @@ public:
 	virtual ~SelectTeam();
 
 	virtual void draw(sf::RenderWindow& window) const override;
-	virtual void respond(sf::Vector2f mousePressed) override;	
-	void setNumberOfPlayers(int players);
+	virtual void respond(sf::Vector2f mousePressed) override;
+	
 
-	void loadGameObject(int index);
+	void setNumberOfPlayers(int players);
 
 private:
 
@@ -28,8 +28,9 @@ private:
 	void isMouseOnPlayers(sf::Vector2f mousePressed, int index);
 	void checkToDraw(sf::RenderWindow& window) const;
 	void loadGameMode(int index);
+	void selectedPlayer();
 	void reset();
-
+	void stopSongPlayWhistle();
 
 	GameState* m_gameState;
 	Board* m_boardPtr;
@@ -41,6 +42,9 @@ private:
 	std::vector<sf::Sprite> m_charcters;
 
 	std::vector<sf::Text> m_selectText;
+	std::vector<int> m_selectedPlayer;
+
+	sf::Sound m_whistle;
 
 	int m_numOfPlayers;
 	int m_playerSelected;

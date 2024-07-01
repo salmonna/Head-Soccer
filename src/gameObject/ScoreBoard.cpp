@@ -3,7 +3,7 @@
 #include "Resources.h"
 
 
-ScoreBoard::ScoreBoard() :m_gameTime(2), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(5), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
 {
 	defineScoreBoardTexture();
@@ -81,17 +81,8 @@ void ScoreBoard::loadPlayersFlag()
 {
 	std::vector<int> selectedPlayers  = Resources::getInstance().getPlayerOrder();
 	std::vector<sf::Texture>& texture = Resources::getInstance().getCountriesFlags();
-
-	sf::Vector2f pos(1400.f, 0);
-
-	for (int i = 0; i < selectedPlayers.size(); i++)
-	{
-		m_playersFlags.push_back(sf::Sprite(texture[selectedPlayers[i]]));
-		m_playersFlags[i].scale(0.5, 0.5);
-	}
-
-	m_playersFlags[0].setPosition(1250.f, 165.f);
-	m_playersFlags[1].setPosition(435.f, 165.f);	
+	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
+	m_whistle.setVolume(15);
 }
 
 
@@ -120,9 +111,9 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_progressP2Sprite[i]);
 	} 
 
-	for (int i = 0; i < m_playersFlags.size(); i++)
+	for (int i = 0; i < m_flags.size(); i++)
 	{
-		window.draw(m_playersFlags[i]);
+		window.draw(m_flags[i]);
 	}
 
 }
@@ -198,6 +189,8 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
+		
+		m_whistle.play();
 		return true;
 	}
 	return false;
@@ -210,12 +203,9 @@ void ScoreBoard::reset()
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
-
+	m_flags.clear();
 	resetProgressP1();
 	resetProgressP2();
-
-	m_playersFlags.clear();
-	Resources::getInstance().getPlayerOrder().clear();
 }
 
 //=======================Points=======================
@@ -237,4 +227,24 @@ int ScoreBoard::getPoint(int num) {
 		return m_p1Points;
 	}
 	return m_p2Points;
+}
+
+void ScoreBoard::setFlagsPlayers() {
+
+	std::vector<int> players = Resources::getInstance().getPlayerOrder();
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		int index = Resources::getInstance().getPlayerOrder()[i];
+		auto sprite = sf::Sprite(Resources::getInstance().getCountriesFlags()[index]);
+		sprite.scale(0.5, 0.5);
+		m_flags.push_back(sprite);
+	}
+
+	m_flags[0].setPosition(1250.f, 165.f);
+	m_flags[1].setPosition(435.f, 165.f);
+}
+
+std::vector<sf::Sprite>& ScoreBoard::getFlags() {
+	return m_flags;
 }

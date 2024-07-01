@@ -6,6 +6,7 @@
 #include "gameState/Tutorial.h"
 #include "Command/Button.h"
 #include "GameState.h"
+#include <SFML/Audio.hpp>
 
 //class Button;
 class Controller;
@@ -22,5 +23,7 @@ private:
 
 	sf::Sprite m_Stage;
 	std::vector<std::unique_ptr<Button>> m_buttons;
+	bool m_isSongPlayed;
+
 };
 
