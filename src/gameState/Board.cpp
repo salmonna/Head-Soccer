@@ -63,6 +63,8 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 			std::cout << "Class not found!\n";
 	}
 
+	ScoreBoard::getInstance().setFlagsPlayers();
+
 }
 
 void Board::createStaticObjects(const std::vector<std::string>& objectNames)
@@ -166,7 +168,6 @@ void Board::reset() {
 	{
 		m_staticObject.pop_back();
 	}
-	ScoreBoard::getInstance().reset();
 }
 
 //=============================================== for_each_pair =======================================//

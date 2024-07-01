@@ -12,7 +12,7 @@
 #include "power/TornadoPower.h"
 //#include "power/KameHameHaPower.h"
 #include "power/ElectricPower.h"
-
+#include "power/AvatarPower.h"
 
 
 
@@ -22,6 +22,10 @@ Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0),
 ,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
 m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnPlayer(false)
 {
+
+	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
+	m_power = std::make_shared<DragonPower>(m_playerSide);
+
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
 	m_power = std::make_shared<FirePower>(m_playerSide);
