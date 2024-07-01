@@ -64,7 +64,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         ScoreBoard::getInstance().setGoalSign();
 
         ballObject.getPower()->setPowerIsActive(false);
-        //ballObject.setPosition(sf::Vector2f(900.0f, 100.0f));
         ballObject.reset();
     }
 

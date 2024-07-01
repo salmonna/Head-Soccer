@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "gameObject/Player.h"
 
-FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
+FirePower::FirePower(bool playerSide) :m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getBallTexture()[2]);
 
@@ -87,6 +87,7 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
     window.draw(m_sprite);
 
 }
+
 
 bool FirePower::getSideOfPlayer()const {
     return m_playerSide;

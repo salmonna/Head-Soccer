@@ -16,8 +16,6 @@ public:
 
 private:
 
-	sf::Vector2f m_ballVelocity;
-	sf::Clock m_clock;
 	sf::Clock m_spriteSheetClock;
 	std::vector<std::pair<sf::Vector2i, sf::Vector2i>> m_spriteSheet;
 	std::vector<std::pair<sf::Vector2i, sf::Vector2i>> m_spriteSheetFlame;
