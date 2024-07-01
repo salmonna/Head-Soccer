@@ -56,7 +56,7 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 
 }
 //--------------------------------------------------------------
-void DragonPower::activatePowerOnBall(b2Body* ballBody) {
+void DragonPower::activatePowerOnBall(Ball* ball) {
 
 	//currVelocity = sf::Vector2f(1500.f, 0.f);
 	//currVelocity.x *= direction.x;

@@ -5,6 +5,7 @@
 #include "power/RegularBehavior.h"
 
 Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f, 100.0f)
+, m_restartBall(false)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -13,6 +14,7 @@ Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f
 	
     m_sprite.setTexture(*texture);
     m_sprite.setOrigin(25.0f, 25.0f);
+    m_ballColor = m_sprite.getColor();
 }
 
 
@@ -35,9 +37,18 @@ void  Ball::move(sf::Vector2f pressed)
 
             // Set new velocity for the ball
             b2Vec2 newVelocity(50.f * side, m_body->GetLinearVelocity().y); // Assuming direction is a float
-
             m_body->SetLinearVelocity(newVelocity);
         }
+        else
+        {
+            m_restartBall = true;
+        }
+        
+    }
+    else if (m_restartBall)
+    {
+        m_sprite.setColor(m_ballColor);
+        m_restartBall = false;
     }
 
     update();
@@ -109,4 +120,8 @@ void Ball::reset() {
     m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
 
     update();
+}
+
+sf::Color Ball::getBallColor()const {
+    return m_ballColor;
 }

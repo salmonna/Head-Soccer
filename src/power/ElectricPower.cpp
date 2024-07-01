@@ -24,27 +24,29 @@ ElectricPower::ElectricPower(bool playerSide) :m_spriteSheetClock(), m_index(0),
 
 };
 
-void ElectricPower::activatePowerOnBall(b2Body* ballBody)
+void ElectricPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = ballBody->GetPosition();
+    b2Vec2 currentPosition = ball->getBody()->GetPosition();
     currentPosition.y -= 5.f; // Move the body 200 pixels higher (adjust as needed)
-    ballBody->SetTransform(currentPosition, ballBody->GetAngle());
+    ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
     // Set awake state to false to "pause" the body
-    ballBody->SetAwake(false);
+    ball->getBody()->SetAwake(false);
 }
 
 void ElectricPower::activatePowerOnPlayer(Player* player) {
 
+    //need to fix this power
 
-    player->getBody()->GetFixtureList()->SetSensor(true); //need to fix the power
-    /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
-    //player->getSprite().setColor(sf::Color(128, 128, 128));
-    //player->getSprite().setColor(sf::Color(256, 256, 256));
-    //player->getBody()->SetAwake(false);
+
+    // Adjust position if necessary
+    b2Vec2 currentPosition = player->getBody()->GetPosition();
+    currentPosition.y = -30.f; // Move the body 200 pixels higher (adjust as needed)
+    player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
+
     player->restartClock();
     player->setPowerOnPlayer(true); //freexe plower
     setPowerIsActive(false);

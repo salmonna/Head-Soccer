@@ -7,7 +7,7 @@ public:
 
 	BigBallPower();
 
-	virtual void activatePowerOnBall(b2Body* ballBody)override;
+	virtual void activatePowerOnBall(Ball* ball)override;
 
 	~BigBallPower() = default;
 

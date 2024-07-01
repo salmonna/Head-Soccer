@@ -22,15 +22,14 @@ FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteShee
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(653, 194), sf::Vector2i(200, 200)));
 };
 
-void FirePower::activatePowerOnBall(b2Body* ballBody)
+void FirePower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = ballBody->GetPosition();
+    b2Vec2 currentPosition = ball->getBody()->GetPosition();
     currentPosition.y -= 8.f; // Move the body 200 pixels higher (adjust as needed)
-
-    ballBody->SetTransform(currentPosition, ballBody->GetAngle());
+    ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
     // Update the density
     //b2MassData massData;
@@ -38,7 +37,7 @@ void FirePower::activatePowerOnBall(b2Body* ballBody)
     //ballBody->SetMassData(&massData);
 
     // Set awake state to false to "pause" the body
-    ballBody->SetAwake(false);
+    ball->getBody()->SetAwake(false);
 }
 
 void FirePower::activatePowerOnPlayer(Player* player) {

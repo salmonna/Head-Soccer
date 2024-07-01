@@ -22,7 +22,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 {
 
     //=======================================UPDATE========================================\\ 
-
     //update after collide
     void updateBall(Ball& ballObject, Player& playerObject)
     {
@@ -33,12 +32,12 @@ namespace // anonymous namespace — the standard way to make function "static"
         {
             playerObject.getPower()->startTimer();
             ballObject.setPower(playerObject.getPower());
-            playerObject.getPower()->activatePowerOnBall(ballObject.getBody());
+            playerObject.getPower()->activatePowerOnBall(&ballObject);
             playerObject.setAura(false);
         }
         else if (ballObject.getPower()->powerIsActive()){
             ballObject.getPower()->activatePowerOnPlayer(&playerObject);
-            //playerObject.restartClock();
+           // ballObject.getSprite().setColor(ballObject.getBallColor());
         }
     }
 

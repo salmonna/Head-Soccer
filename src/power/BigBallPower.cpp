@@ -9,7 +9,7 @@ BigBallPower::BigBallPower()
 
 };
 
-void BigBallPower::activatePowerOnBall(b2Body* ballBody)
+void BigBallPower::activatePowerOnBall(Ball* ball)
 {
 
     //currVelocity = sf::Vector2f(1500.f, 0.f);

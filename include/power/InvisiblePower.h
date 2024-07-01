@@ -5,12 +5,13 @@ class InvisiblePower : public Power
 {
 public:
 
-	InvisiblePower();
-
-	virtual void activatePowerOnBall(b2Body* ballBody)override;
-
+	InvisiblePower(bool playerSide = true);
+	virtual void activatePowerOnBall(Ball* ball)override;
+	virtual void activatePowerOnPlayer(Player* player)override;
+	bool getSideOfPlayer()const;
 	~InvisiblePower() = default;
 
 private:
+	bool m_playerSide;
 
 };

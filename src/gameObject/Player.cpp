@@ -15,7 +15,6 @@
 #include "power/AvatarPower.h"
 
 
-
 //-----------------------------------------------------------------------------
 Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
 , m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
@@ -24,7 +23,7 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<ElectricPower>(m_playerSide);
+	m_power = std::make_shared<InvisiblePower>(m_playerSide);
 
 	if (m_playerSide)
 	{
@@ -89,6 +88,17 @@ void Player::move(sf::Vector2f pressed) {
 		if (m_powerClock2.getElapsedTime().asSeconds() > 3) {
 			m_powerOnPlayer = false;
 			m_sprite.setColor(m_plaerColor);
+
+			if (m_sprite.getPosition().y > 900.f)
+			{
+				// Adjust position if necessary
+				b2Vec2 currentPosition = m_body->GetPosition();
+				currentPosition.y = 26.f; // Move the body 200 pixels higher (adjust as needed)
+
+				m_body->SetTransform(currentPosition, m_body->GetAngle());
+				m_body->GetFixtureList()->SetSensor(false); //need to fix the power
+			}
+
 		}
 	}
 	else {
@@ -157,6 +167,7 @@ void Player::reset() {
 	// Reset the velocity of the Box2D body
 	m_body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));  // Set linear velocity to zero
 	m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
+	m_body->GetFixtureList()->SetSensor(false); //need to fix the power
 }
 
 //-----------------------------------------------------------------------------
