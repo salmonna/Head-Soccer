@@ -5,8 +5,9 @@ Button::Button(std::unique_ptr<Command> command, sf::Texture& texture, sf::Vecto
 {
 	m_sprite.setTexture(texture);
 	m_sprite.setPosition(position);
-	
 	m_orignalScale = m_sprite.getScale();
+	//m_sprite.setOrigin(m_orignalScale.x/2, m_orignalScale.y/2);
+	
 }
 
 

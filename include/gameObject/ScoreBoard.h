@@ -66,9 +66,6 @@ private:
 	std::vector<sf::Sprite> m_progressP2Sprite;
 	std::vector<sf::Sprite> m_flags;
 	
-
-	sf::Sound m_whistle;
-	
 	//points
 	int m_p1Points;
 	int m_p2Points;

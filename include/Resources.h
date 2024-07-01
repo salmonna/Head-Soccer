@@ -75,6 +75,5 @@ private:
 
 	std::vector<int> m_selectedPlayer;
 
-	sf::Sound m_introSong;
 	int m_selectedIndex;
 };

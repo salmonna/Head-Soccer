@@ -44,8 +44,6 @@ private:
 	std::vector<sf::Text> m_selectText;
 	std::vector<int> m_selectedPlayer;
 
-	sf::Sound m_whistle;
-
 	int m_numOfPlayers;
 	int m_playerSelected;
 };

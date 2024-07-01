@@ -23,7 +23,6 @@ private:
 
 	sf::Sprite m_Stage;
 	std::vector<std::unique_ptr<Button>> m_buttons;
-	bool m_isSongPlayed;
 
 };
 

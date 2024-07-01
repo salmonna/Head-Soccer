@@ -1,6 +1,7 @@
 #pragma once
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
+#include "SoundControl.h"
 
 
 ScoreBoard::ScoreBoard() :m_gameTime(5), timeCounterSec(m_gameTime % 60),
@@ -63,8 +64,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 	pos.x += 2.8f;
 	m_progressP2Sprite[1].setPosition(pos);
 
-	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
-	m_whistle.setVolume(15);
+	
 
 }
 
@@ -166,7 +166,7 @@ bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
 		
-		m_whistle.play();
+		SoundControl::getInstance().getWhistle().play(); // play whistle sound
 		return true;
 	}
 	return false;

@@ -1,6 +1,8 @@
 #include "gameState/SelectTeam.h"
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
+#include "SoundControl.h"
+#include "Command/Sound.h"
 
 
 
@@ -11,10 +13,12 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[4]);
 
+	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 100.f)));
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 
@@ -37,9 +41,6 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 	m_charcters.push_back(sprite);
 
 	selectTextPlayer();
-
-	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
-	m_whistle.setVolume(15);
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::selectTextPlayer()
@@ -124,6 +125,9 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 
 				continue;
 			}
+			else if (i == 2) {
+				m_buttons[i]->execute();
+			}
 			else
 			{
 				m_buttons[i]->execute();
@@ -138,15 +142,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	signOrPreedOnPlayers(mousePressed);
 	
 }
-//-----------------------------------------------------------------------------
-void SelectTeam::stopSongPlayWhistle()
-{	
 
-	sf::Sound & introSong = Resources::getInstance().getIntroSong();
-	introSong.stop();
-	m_whistle.play();
-	
-}
 //-----------------------------------------------------------------------------
 void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
@@ -200,7 +196,7 @@ void SelectTeam::reset() {
 		m_frames[i].setPosition(3 * 200 - 400, 320);
 	}
 }
-
+//-----------------------------------------------------------------------------
 void SelectTeam::loadGameMode(int index)
 {
 	if (index == 1)return;
@@ -234,6 +230,15 @@ void SelectTeam::selectedPlayer()
 	{
 		Resources::getInstance().setSelectedPlayer(m_selectedPlayer[i]);
 	}
+}
+//-----------------------------------------------------------------------------
+void SelectTeam::stopSongPlayWhistle()
+{
+
+	SoundControl::getInstance().getIntroSong().pause();
+
+	SoundControl::getInstance().getWhistle().play();
+
 }
 
 //-----------------------------------------------------------------------------
