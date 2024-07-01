@@ -45,7 +45,7 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
-	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png" };
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png", "Avatar.png"};
 	loadFromFile(power, m_powerTexture);
 
 

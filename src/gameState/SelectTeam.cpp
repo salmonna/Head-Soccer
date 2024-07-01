@@ -221,7 +221,6 @@ void SelectTeam::loadGameMode(int index)
 		break;
 	}
 	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
-	ScoreBoard::getInstance().loadPlayersFlag();
 	m_boardPtr->createMovingObjects(movingObjectNames);
 	m_boardPtr->createStaticObjects(staticObjectNames);
 	stopSongPlayWhistle();

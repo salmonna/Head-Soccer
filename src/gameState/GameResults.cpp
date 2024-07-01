@@ -64,17 +64,6 @@ void GameResults::respond(sf::Vector2f mousePressed)
 	if (!m_initilaze) {
 		playerOrderAndSide();
 		finalScoreResult();
-		updateFlags();
-	}
-}
-void GameResults::updateFlags()
-{
-	std::vector<sf::Texture>& texture = Resources::getInstance().getCountriesFlags();
-	std::vector<int> flagsOrder = Resources::getInstance().getPlayerOrder();
-
-	for (int i = 0; i < flagsOrder.size(); i++)
-	{
-		m_playersFlags.push_back(sf::Sprite(texture[flagsOrder[i]]));
 	}
 }
 //----------------------------------------------------------------------------------
@@ -175,12 +164,6 @@ void GameResults::drawFinalResult(sf::RenderWindow& window) const
 	for (int i = 0; i < m_resultText.size(); i++)
 	{
 		window.draw(m_resultText[i]);
-	}
-
-
-	for (int i = 0; i < m_playersFlags.size(); i++)
-	{
-		window.draw(m_playersFlags[i]);
 	}
 
 	for (int i = 0; i < m_charcters.size(); i++)
