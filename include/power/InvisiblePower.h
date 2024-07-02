@@ -7,7 +7,7 @@ public:
 
 	InvisiblePower();
 
-	void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction);
+	virtual void activatePowerOnBall(Ball* ball)override;
 
 	~InvisiblePower() = default;
 

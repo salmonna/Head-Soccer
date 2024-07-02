@@ -1,7 +1,6 @@
 #pragma once
 #include "Controller.h"
-#include "Resources.h"
-
+#include "Box2d.h"
 
 //controller constractor
 Controller::Controller(): m_menu(this, &m_tutorial, &m_gameMode, &m_window.getWindow()), m_currentState(&m_menu)
@@ -25,6 +24,7 @@ void Controller::runTheGame()
 		m_window.clear();
 
 		m_currentState->draw(m_window.getWindow());
+		//Box2d::getInstance().draw(m_window.getWindow());
 		m_currentState->respond(m_window.getMousePressed());
 	}
 

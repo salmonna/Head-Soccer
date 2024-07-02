@@ -7,7 +7,7 @@ class RegularBehavior : public Power
 public:
 	RegularBehavior();
 
-	virtual void activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction) override
+	virtual void activatePowerOnBall(Ball* ball) override
 	{
 
 

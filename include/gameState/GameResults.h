@@ -36,6 +36,7 @@ private:
 	
 	std::vector<sf::Text> m_resultText;
 	std::vector<sf::Sprite> m_charcters;
+
 	std::vector<sf::Sprite> m_flags;
 	bool m_initilaze;
 };

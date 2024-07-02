@@ -13,7 +13,6 @@ Power::Power(): m_clock(), m_powerTimer(), m_stayTimer(), m_powerIsActive(false)
 }
 
 
-
 sf::Sprite& Power::getSprite() {
 
 	return m_auraSprite;
@@ -26,24 +25,21 @@ void Power::startTimer()
 	m_stayTimer.restart();
 }
 
-bool Power::isTimeIsOver()
+void Power::checkTimeIsOver()
 {
-	if (m_powerTimer.getElapsedTime().asSeconds() >= 3.f)
-	{
+	if (m_powerTimer.getElapsedTime().asSeconds() >= 2.8f)
 		m_powerIsActive = false;
-		return true;
-	}
-	return false;
 }
 
 bool Power::stayInTheAir()
 {
-	return m_stayTimer.getElapsedTime().asSeconds() >= 1.f;
+	return m_stayTimer.getElapsedTime().asSeconds() >= 2.f;
 }
 
 
-void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position) {
+void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position, sf::Vector2f origin) {
 	m_auraSprite.setPosition(position.x - 25,position.y - 55);
+	m_auraSprite.setOrigin(origin);
 	window.draw(m_auraSprite);
 	int timeSec = m_clock.getElapsedTime().asSeconds() * 10;
 

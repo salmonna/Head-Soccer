@@ -1,9 +1,9 @@
 #include "power/TornadoPower.h"
 #include "gameObject/Ball.h"
 #include "Resources.h"
+#include "gameObject/Player.h"
 
-
-TornadoPower::TornadoPower() :m_spriteSheetClock(), m_index(0)
+TornadoPower::TornadoPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[3]);
 
@@ -20,15 +20,28 @@ TornadoPower::TornadoPower() :m_spriteSheetClock(), m_index(0)
 
 };
 
-void TornadoPower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction)
+void TornadoPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
 
-    currVelocity = sf::Vector2f(1500.f, 0.f);
-    currVelocity.x *= direction.x;
+    // Adjust position if necessary
+    b2Vec2 currentPosition = ball->getBody()->GetPosition();
+    float side;
+    (m_playerSide) ? side = -1.f : side = 1.f;
+    currentPosition.x += side; // Move the body 200 pixels higher (adjust as needed)
 
-     m_index = 0;
-    
+    ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
+
+    // Set awake state to false to "pause" the body
+    ball->getBody()->SetAwake(false);
+}
+
+void TornadoPower::activatePowerOnPlayer(Player* player) {
+
+    player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
+    setPowerIsActive(false);
 }
 
 
@@ -49,10 +62,10 @@ void TornadoPower::draw(sf::RenderWindow& window, sf::Vector2f position)
     position.x -= 334.f/2;
     position.y -= 317.f*0.9f;
 
-
-
     m_sprite.setPosition(position);
     window.draw(m_sprite);
-
 }
 
+bool TornadoPower::getSideOfPlayer()const {
+    return m_playerSide;
+}

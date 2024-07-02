@@ -3,20 +3,29 @@
 #include "Resources.h"
 #include "SoundControl.h"
 
+ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
+timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
+{
+	defineScoreBoardTexture();
+	scoreBoardText();
+	defineProgressTexture();
 
-ScoreBoard::ScoreBoard() :m_gameTime(15), timeCounterSec(m_gameTime % 60),
-timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0)
+
+}
+
+void ScoreBoard::defineScoreBoardTexture()
 {
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getScoreBoardTexture();
-	for (int i = 0; i < texturs.size(); i++)
+	for (int i = 0; i < texturs.size()-1; i++)
 	{
 		auto sprite = sf::Sprite(texturs[i]);
 		m_SpriteVec.push_back(sprite);
 	}
-	float x = 300.f;
-	m_SpriteVec[0].setPosition(x, -500);
 
+	//--------------------goal sign------------------------------//
+	m_goalSprite.setTexture(texturs[1]);
+	m_goalSprite.setPosition(50, 200);
 
 	sf::Font & font = Resources::getInstance().getFont();
 	for (int i = 0; i < 3; i++)
@@ -26,15 +35,11 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		m_textVec[i].setCharacterSize(70);
 		m_textVec[i].setFillColor(sf::Color::White);
 	}
+	m_SpriteVec[0].setPosition(300.f, -500);
+}
 
-	//font time pos
-	m_textVec[0].setPosition(875, 0);
-
-	//font points pos
-	m_textVec[1].setPosition(x+175, 50);
-	m_textVec[2].setPosition(x + 1005, 50);
-
-
+void ScoreBoard::defineProgressTexture()
+{
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
 
 	sf::Vector2f pos = sf::Vector2f(550, 80);
@@ -63,9 +68,48 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 	pos.y += 3.5;
 	pos.x += 2.8f;
 	m_progressP2Sprite[1].setPosition(pos);
+}
 
-	
+void ScoreBoard::scoreBoardText()
+{
+	sf::Font& font = Resources::getInstance().getFont();
+	for (int i = 0; i < 3; i++)
+	{
+		m_textVec.push_back(sf::Text());
+		m_textVec[i].setFont(font);
+		m_textVec[i].setCharacterSize(70);
+		m_textVec[i].setFillColor(sf::Color::White);
+	}
 
+	//font time pos
+	m_textVec[0].setPosition(875, 0);
+
+	//font points pos
+	m_textVec[1].setPosition(475.f, 50);
+	m_textVec[2].setPosition(1305.f, 50);
+}
+
+void ScoreBoard::loadPlayersFlag()
+{
+	std::vector<int> selectedPlayers  = Resources::getInstance().getPlayerOrder();
+	std::vector<sf::Texture>& texture = Resources::getInstance().getCountriesFlags();
+
+	sf::Vector2f pos(1400.f, 0);
+
+	for (int i = 0; i < selectedPlayers.size(); i++)
+	{
+		m_playersFlags.push_back(sf::Sprite(texture[selectedPlayers[i]]));
+		m_playersFlags[i].scale(0.5, 0.5);
+	}
+
+	m_playersFlags[0].setPosition(1250.f, 165.f);
+	m_playersFlags[1].setPosition(435.f, 165.f);	
+}
+
+
+std::vector<sf::Sprite>& ScoreBoard::getFlags()
+{
+	return m_playersFlags;
 }
 
 void ScoreBoard::draw(sf::RenderWindow & window) const
@@ -88,10 +132,14 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_progressP2Sprite[i]);
 	} 
 
-	for (int i = 0; i < m_flags.size(); i++)
+  for (int i = 0; i < m_flags.size(); i++)
 	{
 		window.draw(m_flags[i]);
 	}
+  
+	if (m_goalSign)
+		window.draw(m_goalSprite);
+
 }
 
 
@@ -100,6 +148,15 @@ void ScoreBoard::Progress()
 	float seconds = m_clock.getElapsedTime().asSeconds();
 	ScoreBoard::getInstance().updateProgress(m_progressP1Sprite, m_progressP1, seconds);
 	ScoreBoard::getInstance().updateProgress(m_progressP2Sprite, m_progressP2, seconds);
+	
+	if (m_goalSign)
+		m_goalSprite.move(10, 0);
+
+	if (m_clockGoalSign.getElapsedTime().asSeconds() > 2)
+	{
+		m_goalSign = false;
+		m_goalSprite.setPosition(0, 200);
+	}
 
 }
 
@@ -117,6 +174,8 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 
 	sf::IntRect characterRect(0, 0, width, progressSprite[1].getGlobalBounds().height);
 	progressSprite[1].setTextureRect(characterRect);
+
+
 }
 
 
@@ -182,6 +241,7 @@ void ScoreBoard::reset()
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
+
 	m_flags.clear();
 	resetProgressP1();
 	resetProgressP2();
@@ -190,6 +250,11 @@ void ScoreBoard::reset()
 //=======================Points=======================
 void ScoreBoard::updateScore(int p1Points, int p2Points)
 {
+	if (p1Points != 0 && p2Points != 0){
+		m_goalSign = true;
+		m_clockGoalSign.restart();
+	}
+
 	m_p1Points += p1Points;
 	m_p2Points += p2Points;
 
@@ -206,6 +271,18 @@ int ScoreBoard::getPoint(int num) {
 		return m_p1Points;
 	}
 	return m_p2Points;
+}
+
+
+//========================goalSign======================//
+
+bool ScoreBoard::isGoal() {
+	return m_goalSign;
+}
+
+void ScoreBoard::setGoalSign() {
+	m_goalSign = true;
+	m_clockGoalSign.restart();
 }
 
 void ScoreBoard::setFlagsPlayers() {

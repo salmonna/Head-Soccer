@@ -64,7 +64,7 @@ void GameResults::respond(sf::Vector2f mousePressed)
 	if (!m_initilaze) {
 		playerOrderAndSide();
 		finalScoreResult();
-	}
+  }
 }
 //----------------------------------------------------------------------------------
 void GameResults::resetGameResult()
@@ -164,6 +164,12 @@ void GameResults::drawFinalResult(sf::RenderWindow& window) const
 	for (int i = 0; i < m_resultText.size(); i++)
 	{
 		window.draw(m_resultText[i]);
+	}
+
+
+	for (int i = 0; i < m_playersFlags.size(); i++)
+	{
+		window.draw(m_playersFlags[i]);
 	}
 
 	for (int i = 0; i < m_charcters.size(); i++)

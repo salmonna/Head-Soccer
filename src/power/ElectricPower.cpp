@@ -23,18 +23,6 @@ ElectricPower::ElectricPower() :m_spriteSheetClock(), m_index(0)
 
 };
 
-void ElectricPower::activatePower(sf::CircleShape& ball, sf::Vector2f& currVelocity, sf::Vector2f& direction)
-{
-    setPowerIsActive(true);
-
-    currVelocity = sf::Vector2f(1500.f, 0.f);
-    currVelocity.x *= direction.x;
-
-    m_index = 0;
-
-}
-
-
 void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
 {
     if (m_index == m_spriteSheet.size())

@@ -11,6 +11,7 @@ public:
 
 	virtual void draw(sf::RenderWindow& window)const override;
 	virtual sf::Sprite& getSprite()override;
+
 private:
 
 	sf::Sprite m_sprite;
