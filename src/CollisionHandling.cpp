@@ -18,6 +18,7 @@
 #include "Keyboard.h"
 #include "Resources.h"
 #include "SoundControl.h"
+#include "Box2d.h"
 
 
 namespace // anonymous namespace — the standard way to make function "static"
@@ -40,8 +41,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         }
         else if (ballObject.getPower()->powerIsActive()){
             ballObject.getPower()->activatePowerOnPlayer(&playerObject);
-            b2MassData mass = ballObject.getBallMass();
-            ballObject.getBody()->SetMassData(&mass);
         }
     }
 

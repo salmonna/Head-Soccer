@@ -166,12 +166,6 @@ void GameResults::drawFinalResult(sf::RenderWindow& window) const
 		window.draw(m_resultText[i]);
 	}
 
-
-	for (int i = 0; i < m_playersFlags.size(); i++)
-	{
-		window.draw(m_playersFlags[i]);
-	}
-
 	for (int i = 0; i < m_charcters.size(); i++)
 	{
 		window.draw(m_charcters[i]);

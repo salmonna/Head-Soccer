@@ -89,28 +89,6 @@ void ScoreBoard::scoreBoardText()
 	m_textVec[2].setPosition(1305.f, 50);
 }
 
-void ScoreBoard::loadPlayersFlag()
-{
-	std::vector<int> selectedPlayers  = Resources::getInstance().getPlayerOrder();
-	std::vector<sf::Texture>& texture = Resources::getInstance().getCountriesFlags();
-
-	sf::Vector2f pos(1400.f, 0);
-
-	for (int i = 0; i < selectedPlayers.size(); i++)
-	{
-		m_playersFlags.push_back(sf::Sprite(texture[selectedPlayers[i]]));
-		m_playersFlags[i].scale(0.5, 0.5);
-	}
-
-	m_playersFlags[0].setPosition(1250.f, 165.f);
-	m_playersFlags[1].setPosition(435.f, 165.f);	
-}
-
-
-std::vector<sf::Sprite>& ScoreBoard::getFlags()
-{
-	return m_playersFlags;
-}
 
 void ScoreBoard::draw(sf::RenderWindow & window) const
 {
