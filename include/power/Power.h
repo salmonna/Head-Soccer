@@ -17,7 +17,7 @@ public:
 	virtual ~Power() = default;
 
 	virtual void activatePowerOnPlayer(Player* player) {};
-	virtual void activatePowerOnBall(Ball * ball) = 0;
+	virtual void activatePowerOnBall(Ball* ball) {};
 	virtual void draw(sf::RenderWindow & window, sf::Vector2f position) {};
 
 	virtual bool powerIsActive();

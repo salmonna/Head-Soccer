@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "gameObject/Player.h"
 
-FirePower::FirePower(bool playerSide) :m_ballVelocity(), m_clock(), m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
+FirePower::FirePower(bool playerSide) :m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getBallTexture()[2]);
 
@@ -31,22 +31,14 @@ void FirePower::activatePowerOnBall(Ball* ball)
     currentPosition.y -= 8.f; // Move the body 200 pixels higher (adjust as needed)
     ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
-    // Update the density
-    //b2MassData massData;
-    //ballBody->GetFixtureList()->GetShape()->ComputeMass(&massData, 80.0f); // Adjust density as needed
-    //ballBody->SetMassData(&massData);
-
     // Set awake state to false to "pause" the body
     ball->getBody()->SetAwake(false);
 }
 
 void FirePower::activatePowerOnPlayer(Player* player) {
 
-    
-    /*playerBody->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1000.f), true);*/
-    //player->getSprite().setColor(sf::Color(128, 128, 128));
-    //player->getSprite().setColor(sf::Color(256, 256, 256));
-    //player->getBody()->SetAwake(false);
+    player->getSprite().setColor(sf::Color(256, 256, 256));
+    player->getBody()->SetAwake(false);
     player->restartClock();
     player->setPowerOnPlayer(true);
     setPowerIsActive(false);
@@ -86,6 +78,7 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
     window.draw(m_sprite);
 
 }
+
 
 bool FirePower::getSideOfPlayer()const {
     return m_playerSide;

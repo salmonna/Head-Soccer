@@ -134,7 +134,6 @@ b2Body* Box2d::createPlayer(sf::Vector2f basePosition) {
     playerFixtureDef.shape = &playerBox;
     playerFixtureDef.density = 10.f;
     playerFixtureDef.friction = 0.3f;
-    playerFixtureDef.restitution = 0.4f; // Ensure there's no bounce
     body->CreateFixture(&playerFixtureDef);
 
     // Set the gravity scale for the player
@@ -190,6 +189,13 @@ b2Body* Box2d::createGoalBack(sf::Vector2f basePosition) {
 b2World* Box2d::getBox2dWorld() {
 
     return &m_world;
+}
+
+void Box2d::step() {
+    float timeStep = 1.f / 60.f;
+    int32 velocityIterations = 6;
+    int32 positionIterations = 3;
+    m_world.Step(timeStep, velocityIterations, positionIterations);
 }
 
 void Box2d::draw(sf::RenderWindow& window)const {

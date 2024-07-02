@@ -7,7 +7,7 @@ class RegularBehavior : public Power
 public:
 	RegularBehavior();
 
-	virtual void activatePowerOnBall(Ball * ball) override
+	virtual void activatePowerOnBall(Ball* ball) override
 	{
 
 

@@ -4,6 +4,14 @@
 #include "Resources.h"
 #include "FileException.h"
 #include <iostream>
+#include "power/FirePower.h"
+#include "power/InvisiblePower.h"
+#include "power/DragonPower.h"
+#include "power/BigBallPower.h"
+#include "power/TornadoPower.h"
+#include "power/ElectricPower.h"
+#include "power/AvatarPower.h"
+#include <exception>
 
 //constractor of resources file are loading files
 Resources::Resources():m_selectedIndex(0){
@@ -123,7 +131,6 @@ std::vector<sf::Texture>& Resources::getScoreBoardTexture() {
 	return m_scoreBoardTexture;
 }
 
-
 //gameResultsTexture
 std::vector<sf::Texture>& Resources::getBallTexture() {
 
@@ -144,16 +151,51 @@ std::vector<sf::Texture>& Resources::getGameModeTexture() {
 //get characters
 sf::Texture& Resources::getCharactersTexture() {
 
-	if (m_selectedPlayer.size() < m_selectedIndex)
-		m_selectedPlayer.push_back(0);
+	try
+	{
+		int temp = m_selectedPlayer[m_selectedIndex];
+		m_selectedIndex++;
+		return m_charactersSheet[temp];
+	}
+	catch (const std::exception& e)
+	{
+		throw FileException("No available index found");
+	}
+
+}
+
+//get power
+std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 	
-	int temp = m_selectedPlayer[m_selectedIndex];
-	m_selectedIndex++;
-
-	if (m_charactersSheet.size() < temp)
-		throw FileException("No available character found");
-
-	return m_charactersSheet[temp];
+	try
+	{
+		int temp = m_selectedPlayer[m_selectedIndex-1];
+		switch (temp)
+		{
+		case 0:
+			return std::make_shared<FirePower>(playerSide);
+		case 1:
+			return std::make_shared<InvisiblePower>(playerSide);
+		case 2:
+			return std::make_shared<DragonPower>();
+		case 3:
+			return std::make_shared<BigBallPower>(playerSide);
+		case 4:
+			return std::make_shared<TornadoPower>(playerSide);
+		case 5:
+			return std::make_shared<ElectricPower>(playerSide);
+		case 6:
+			return std::make_shared<AvatarPower>(playerSide);
+		default:
+			break;
+		}
+		
+		return std::make_shared<FirePower>(playerSide);
+	}
+	catch (const std::exception& e)
+	{
+		throw FileException("No available index found in Resources::getPower");
+	}
 }
 
 //get select team textures

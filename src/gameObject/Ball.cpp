@@ -4,14 +4,13 @@
 #include <iostream>
 #include "power/RegularBehavior.h"
 
-Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f, 100.0f)
-, m_restartBall(false)
+Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f, 100.0f), m_restartBall(false)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
     //----------------------box2d---------------------------//
     m_body = Box2d::getInstance().createBall(sf::Vector2f(900.f,100.f));
-	
+    m_body->GetMassData(&m_bodyMass);
     m_sprite.setTexture(*texture);
     m_sprite.setOrigin(25.0f, 25.0f);
     m_ballColor = m_sprite.getColor();
@@ -47,6 +46,7 @@ void  Ball::move(sf::Vector2f pressed)
     }
     else if (m_restartBall)
     {
+        m_body->SetMassData(&m_bodyMass);
         m_sprite.setColor(m_ballColor);
         m_restartBall = false;
     }
@@ -124,4 +124,9 @@ void Ball::reset() {
 
 sf::Color Ball::getBallColor()const {
     return m_ballColor;
+}
+
+//-----------------------------------------------------------------------------
+b2MassData Ball::getBallMass() const{
+    return m_bodyMass;
 }

@@ -39,11 +39,8 @@ void ElectricPower::activatePowerOnBall(Ball* ball)
 
 void ElectricPower::activatePowerOnPlayer(Player* player) {
 
-    //need to fix the step
-    float timeStep = 1.f / 60.f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 3;
-    Box2d::getInstance().getBox2dWorld()->Step(timeStep, velocityIterations, positionIterations);
+    //need to fix this power
+    Box2d::getInstance().step();
 
 
     // Adjust position if necessary

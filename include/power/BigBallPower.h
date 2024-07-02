@@ -5,11 +5,16 @@ class BigBallPower : public Power
 {
 public:
 
-	BigBallPower();
+	BigBallPower(bool playerSide);
 
-	virtual void activatePowerOnBall(Ball* ball)override;
+	virtual void activatePowerOnPlayer(Player* player)override;
+	virtual void activatePowerOnBall(Ball* ball) override;
+	virtual bool getSideOfPlayer()const override;
 
 	~BigBallPower() = default;
 
 private:
+
+	bool m_playerSide;
+
 };
