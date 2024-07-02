@@ -52,4 +52,6 @@ private:
 	bool m_restartBall;
 	
 	static bool m_registeritBall;
+
+	float m_gravityScale;
 };

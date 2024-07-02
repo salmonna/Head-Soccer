@@ -17,7 +17,9 @@
 Resources::Resources():m_selectedIndex(0){
 
 
-	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" ,"undo Button.png", "Left.png","Right.png" };
+
+	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png",
+									   "Music.png" ,"undo Button.png", "Left.png","Right.png","Sound.png"};
 	loadFromFile(fileNames,m_menuTexture);
 
 	std::vector<std::string> boardFileNames{ "Stadium.png", "Ad Board.png"};
@@ -61,7 +63,8 @@ Resources::Resources():m_selectedIndex(0){
 	loadFromFile(powerOfPlayer, m_powerOfPlayer);
 
 	// Loading sound buffers.
-	std::vector<std::string> soundStr = {"super saiyan sound.wav","Whistle.wav","Intro Song.wav" };
+
+	std::vector<std::string> soundStr = {"super saiyan sound.wav","Whistle.wav","Intro Song.wav" ,"Crowd.wav","GoalSound.wav"};
 	for (int i = 0; i < soundStr.size(); i++) {
 		sf::SoundBuffer buffer;
 		if (!buffer.loadFromFile(soundStr[i])) {
@@ -69,12 +72,6 @@ Resources::Resources():m_selectedIndex(0){
 		}
 		m_bufferVec.push_back(buffer);
 	}
-
-	m_introSong.setBuffer(m_bufferVec[2]);
-	m_introSong.setVolume(15);
-	m_introSong.play();
-	m_introSong.setLoop(true);
-	
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{
@@ -177,7 +174,7 @@ std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 		case 1:
 			return std::make_shared<InvisiblePower>(playerSide);
 		case 2:
-			return std::make_shared<DragonPower>();
+			return std::make_shared<DragonPower>(playerSide);
 		case 3:
 			return std::make_shared<BigBallPower>(playerSide);
 		case 4:
@@ -234,10 +231,4 @@ void Resources::resetPlayerOrder() {
 std::vector<sf::Texture>& Resources::getCountriesFlags() {
 
 	return m_countryFlags;
-}
-
-sf::Sound& Resources::getIntroSong() {
-
-	return m_introSong;
-
 }

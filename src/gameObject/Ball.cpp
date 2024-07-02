@@ -14,6 +14,7 @@ Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f
     m_sprite.setTexture(*texture);
     m_sprite.setOrigin(25.0f, 25.0f);
     m_ballColor = m_sprite.getColor();
+    m_gravityScale = m_body->GetGravityScale();
 }
 
 
@@ -27,6 +28,7 @@ void  Ball::move()
         updatePowerState();
     else if (m_restartBall)
     {
+        m_body->SetGravityScale(m_gravityScale);
         m_body->SetMassData(&m_bodyMass);
         m_sprite.setColor(m_ballColor);
         m_restartBall = false;

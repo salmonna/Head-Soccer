@@ -38,6 +38,7 @@ public:
 
 	int getPoint(int num);
 
+
 	void setFlagsPlayers();
 	std::vector<sf::Sprite>& getFlags();
 
@@ -75,11 +76,10 @@ private:
 	std::vector<sf::Sprite> m_SpriteVec;
 	std::vector<sf::Sprite> m_progressP1Sprite;
 	std::vector<sf::Sprite> m_progressP2Sprite;
-	std::vector<sf::Sprite> m_flags;
-
 
 	sf::Sprite m_goalSprite;
-	sf::Sound m_whistle;
+
+	std::vector<sf::Sprite> m_flags;
 	
 	//points
 	int m_p1Points;
