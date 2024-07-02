@@ -5,7 +5,6 @@
 #include "Command/Sound.h"
 
 
-
 class GameModeSelection;
 
 SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
@@ -17,8 +16,7 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 720.f))); //playButton
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
-
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 100.f)));
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 100.f)));// sound button
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 
@@ -162,7 +160,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 			else
 			{
 				m_buttons[i]->execute();
-				if (i == 1 || i == 0) {
+				if (i != 2) {
 					loadGameMode(i);
 					reset();
 				}

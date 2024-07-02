@@ -33,6 +33,7 @@ void Pause::respond(sf::Vector2f pressed) {
 				ScoreBoard::getInstance().reset();
 				Resources::getInstance().resetPlayerOrder();
 				SoundControl::getInstance().getCrowd().pause();
+				SoundControl::getInstance().getIntroSong().play();
 			}
 
 			m_buttons[i]->execute();
