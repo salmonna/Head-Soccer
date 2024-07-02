@@ -42,9 +42,10 @@ void ElectricPower::activatePowerOnPlayer(Player* player) {
     //need to fix this power
     Box2d::getInstance().step();
 
+
     // Adjust position if necessary
     b2Vec2 currentPosition = player->getBody()->GetPosition();
-    currentPosition.y = 60.f; // Move the body 200 pixels higher (adjust as needed)
+    currentPosition.y = 60.f; //make the player disapear
     player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
 
     player->restartClock();

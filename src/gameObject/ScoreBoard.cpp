@@ -2,15 +2,27 @@
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 #include "FileException.h"
+#include <exception>
+
 
 ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
-	defineScoreBoardTexture();
-	scoreBoardText();
-	defineProgressTexture();
-	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
-	m_whistle.setVolume(15);
+
+	try {
+		defineScoreBoardTexture();
+		scoreBoardText();
+		defineProgressTexture();
+
+		m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
+		m_whistle.setVolume(15);
+
+	}
+	catch (const std::exception& e) {
+		throw FileException("Deviation from the arrays in funcs:defineScoreBoardTexture/ scoreBoardText/  defineProgressTexture");
+	};
+
+
 
 }
 
@@ -26,6 +38,8 @@ void ScoreBoard::defineScoreBoardTexture()
 
 	//--------------------goal sign------------------------------//
 	m_goalSprite.setTexture(texturs[1]);
+
+
 	m_goalSprite.setPosition(50, 200);
 
 	sf::Font & font = Resources::getInstance().getFont();
@@ -36,9 +50,6 @@ void ScoreBoard::defineScoreBoardTexture()
 		m_textVec[i].setCharacterSize(70);
 		m_textVec[i].setFillColor(sf::Color::White);
 	}
-  
-	if (m_SpriteVec.size() == 0)
-		throw FileException("Deviation from the array");
 
 	m_SpriteVec[0].setPosition(300.f, -500);
 }
@@ -47,42 +58,26 @@ void ScoreBoard::defineProgressTexture()
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
 
-	sf::Vector2f pos = sf::Vector2f(550, 80);
+	sf::Vector2f pos1 = sf::Vector2f(550, 80);
+	sf::Vector2f pos2 = sf::Vector2f(950, 80);
+	sf::Vector2f factor(2.8f, 3.5f);
 
 	for (int i = 0; i < texture.size(); i++)
 	{
-		m_progressP1Sprite.push_back(sf::Sprite());
-		m_progressP1Sprite[i].setTexture(texture[i]);
+		m_progressP1Sprite.push_back(sf::Sprite(texture[i]));
 		m_progressP1Sprite[i].scale(0.6, 1);
-		m_progressP1Sprite[i].setPosition(pos);
-	}
+		m_progressP1Sprite[i].setPosition(pos1);
 
-	pos.y += 3.5;
-	pos.x += 2.8f;
-
-
-	if (m_progressP1Sprite.size() == 0)
-		throw FileException("Deviation from the array");
-
-	m_progressP1Sprite[1].setPosition(pos);
-
-	pos = sf::Vector2f(950, 80);
-
-	for (int i = 0; i < texture.size(); i++)
-	{
-		m_progressP2Sprite.push_back(sf::Sprite());
-		m_progressP2Sprite[i].setTexture(texture[i]);
+		m_progressP2Sprite.push_back(sf::Sprite(texture[i]));
 		m_progressP2Sprite[i].scale(0.6, 1);
-		m_progressP2Sprite[i].setPosition(pos);
+		m_progressP2Sprite[i].setPosition(pos2);
 	}
-	pos.y += 3.5;
-	pos.x += 2.8f;
 
+	pos1 += factor;
+	pos2 += factor;
 
-	if (m_progressP2Sprite.size() == 0)
-		throw FileException("Deviation from the array");
-
-	m_progressP2Sprite[1].setPosition(pos);
+	m_progressP1Sprite[1].setPosition(pos1);
+	m_progressP2Sprite[1].setPosition(pos2);
 }
 
 void ScoreBoard::scoreBoardText()
@@ -97,8 +92,6 @@ void ScoreBoard::scoreBoardText()
 		m_textVec[i].setFillColor(sf::Color::White);
 	}
 
-	if (m_textVec.size() == 0)
-		throw FileException("Deviation from the array");
 
 	//font time pos
 	m_textVec[0].setPosition(875, 0);
@@ -115,18 +108,16 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_SpriteVec[i]);
 	}
 
-	
 	for (int i = 0; i < m_textVec.size(); i++)
 	{
 		window.draw(m_textVec[i]);
 	}
 
-
 	for (int i = 0; i < 2; i++)
 	{
 		window.draw(m_progressP1Sprite[i]);
 		window.draw(m_progressP2Sprite[i]);
-	} 
+	}
 
 	for (int i = 0; i < m_flags.size(); i++)
 	{
@@ -168,12 +159,13 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 	}
 
 
-	sf::IntRect characterRect(0, 0, width, progressSprite[1].getGlobalBounds().height);
-
-	if(progressSprite.size() == 0)
-		throw FileException("Deviation from the array");
-
-	progressSprite[1].setTextureRect(characterRect);
+	try {
+		sf::IntRect characterRect(0, 0, width, progressSprite[1].getGlobalBounds().height);
+		progressSprite[1].setTextureRect(characterRect);
+	}
+	catch (const std::exception& e) {
+		throw FileException("Deviation from the array: progressSprite");
+	}
 
 
 }
@@ -208,11 +200,6 @@ void ScoreBoard::resetProgressP2()
 //========================Time=======================
 void ScoreBoard::timeCalculation()
 {
-	if(m_textVec.size() == 0)
-		throw FileException("Deviation from the array");
-
-
-
 	sf::Time timeForSec = m_clockEverySec.getElapsedTime();
 	float secondsForSec = timeForSec.asSeconds();
 
@@ -226,7 +213,12 @@ void ScoreBoard::timeCalculation()
 	{
 		std::string str = std::to_string(timeCounterMin) + ":" + std::to_string(timeCounterSec);
 		--timeCounterSec;
-		m_textVec[0].setString(str);
+		try {
+			m_textVec[0].setString(str);
+		}
+		catch (const std::exception& e) {
+			throw FileException("Deviation from the array: m_textVec");
+		}
 		m_clockEverySec = sf::Clock();
 	}
 
@@ -264,14 +256,16 @@ void ScoreBoard::updateScore(int p1Points, int p2Points)
 	m_p1Points += p1Points;
 	m_p2Points += p2Points;
 
-	if(m_textVec.size() == 0)
+	try {
+		std::string str = std::to_string(m_p1Points);
+		m_textVec[1].setString(str);
+
+		str = std::to_string(m_p2Points);
+		m_textVec[2].setString(str);
+	}
+	catch (const std::exception& e) {
 		throw FileException("Deviation from the array");
-
-	std::string str = std::to_string(m_p1Points);
-	m_textVec[1].setString(str);
-
-	str = std::to_string(m_p2Points);
-	m_textVec[2].setString(str);
+	}
 }
 
 int ScoreBoard::getPoint(int num) {
@@ -306,13 +300,13 @@ void ScoreBoard::setFlagsPlayers() {
 		m_flags.push_back(sprite);
 	}
 
-	if (m_flags.size() == 0)
-		throw FileException("Deviation from the array");
- 
-	m_flags[0].setPosition(1250.f, 165.f);
-	m_flags[1].setPosition(435.f, 165.f);
-
-
+	try {
+		m_flags[0].setPosition(1250.f, 165.f);
+		m_flags[1].setPosition(435.f, 165.f);
+	}
+	catch (const std::exception& e) {
+		throw FileException("Deviation from the array: m_flags");
+	}
 
 }
 
