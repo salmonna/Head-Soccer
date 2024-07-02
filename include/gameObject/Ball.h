@@ -47,4 +47,5 @@ private:
 	b2Body* m_body;
 	sf::Color m_ballColor;
 	bool m_restartBall;
+	float m_gravityScale;
 };

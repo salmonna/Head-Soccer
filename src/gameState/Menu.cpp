@@ -10,7 +10,7 @@
 
 
 //menu constractor initilize his members
-Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window): m_isSongPlayed(false)
+Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window)
 {
 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getMenuTexture();

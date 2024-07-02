@@ -22,20 +22,21 @@ void DragonPower::activatePowerOnBall(Ball* ball) {
 	setPowerIsActive(true);
 
 	b2Vec2 currentPosition = ball->getBody()->GetPosition();
-	currentPosition.y -= 6.f; // Move the body 200 pixels higher (adjust as needed)
+	currentPosition.y -= 3.f; // Move the body 200 pixels higher (adjust as needed)
 	ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
 
-	// Update the density
-	b2MassData massData;
-	ball->getBody()->GetFixtureList()->GetShape()->ComputeMass(&massData, 50.0f); // Adjust density as needed
-	ball->getBody()->SetMassData(&massData);
+	//set gravity
+	ball->getBody()->SetGravityScale(0.0f);
+	b2Vec2 velocity(5.0f, 0.0f);
+	ball->getBody()->SetLinearVelocity(velocity);
+
 
 	// Set awake state to false to "pause" the body
 	ball->getBody()->SetAwake(false);
 	
 }
-
+//--------------------------------------------------------------
 void DragonPower::activatePowerOnPlayer(Player* player) {
 
 	player->setPowerOnPlayer(true);

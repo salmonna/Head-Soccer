@@ -5,7 +5,7 @@
 #include <exception>
 #include "SoundControl.h"
 
-ScoreBoard::ScoreBoard() :m_gameTime(15), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(35), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
 
@@ -13,9 +13,6 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		defineScoreBoardTexture();
 		scoreBoardText();
 		defineProgressTexture();
-
-		m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
-		m_whistle.setVolume(15);
 
 	}
 	catch (const std::exception& e) {
@@ -119,8 +116,7 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_progressP2Sprite[i]);
 	}
 
-
-  for (int i = 0; i < m_flags.size(); i++)
+	for (int i = 0; i < m_flags.size(); i++)
 	{
 		window.draw(m_flags[i]);
 	}

@@ -17,7 +17,6 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 250.f))); //Button 2
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 250.f))); //Button 3
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
-
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 100.f)));//sound Button
 
 	textModeSelection();
@@ -35,17 +34,17 @@ void GameModeSelection::textModeSelection()
 		m_modeText[i].setCharacterSize(150);
 		m_modeText[i].setFillColor(sf::Color::Black);
 		m_modeText[i].setStyle(sf::Text::Bold);
-
 		// Adding an outline to the text
 		m_modeText[i].setOutlineColor(sf::Color(135, 206, 250));
 		m_modeText[i].setOutlineThickness(3);
-
 	}
-	m_modeText[0].setString("Multiplayer Mode");
-	m_modeText[1].setString("Single player Mode");
-	m_modeText[2].setString("     Online Mode");
-	m_modeText[3].setString("Back To Menu");
-	m_modeText[4].setString("Trun off/on the Music");
+
+	std::vector<std::string> buttonText{ "Multiplayer Mode","Single player Mode","     Online Mode",
+										"Back To Menu","Trun off/on the Music" };
+	for (int i = 0; i < buttonText.size(); i++)
+	{
+		m_modeText[i].setString(buttonText[i]);
+	}
 
 	auto title = m_modeText[1];
 	title.setString("Game Mode");

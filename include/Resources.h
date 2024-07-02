@@ -37,9 +37,6 @@ public:
 	std::vector<sf::Texture>& getCountriesFlags();
 	std::shared_ptr<Power> getPower(bool playerSide);
 
-	sf::Sound& getIntroSong();
-
-	sf::Sound& getIntroSong();
 
 	void setSelectedPlayer(int index);
 

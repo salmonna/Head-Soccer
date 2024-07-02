@@ -78,7 +78,7 @@ void GameResults::respond(sf::Vector2f mousePressed)
 		finalScoreResult();
 
 		SoundControl::getInstance().getIntroSong().play();
-		}
+	}
 }
 //----------------------------------------------------------------------------------
 void GameResults::resetGameResult()

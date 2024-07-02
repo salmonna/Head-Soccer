@@ -73,12 +73,6 @@ Resources::Resources():m_selectedIndex(0){
 		m_bufferVec.push_back(buffer);
 	}
 
-	m_introSong.setBuffer(m_bufferVec[2]);
-	m_introSong.setVolume(15);
-	m_introSong.play();
-	m_introSong.setLoop(true);
-	
-
 	if (!m_font.loadFromFile("Font.otf"))
 	{
 		throw FileException("Font file not load!");
@@ -180,7 +174,7 @@ std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 		case 1:
 			return std::make_shared<InvisiblePower>(playerSide);
 		case 2:
-			return std::make_shared<DragonPower>();
+			return std::make_shared<DragonPower>(playerSide);
 		case 3:
 			return std::make_shared<BigBallPower>(playerSide);
 		case 4:
@@ -237,10 +231,4 @@ void Resources::resetPlayerOrder() {
 std::vector<sf::Texture>& Resources::getCountriesFlags() {
 
 	return m_countryFlags;
-}
-
-sf::Sound& Resources::getIntroSong() {
-
-	return m_introSong;
-
 }
