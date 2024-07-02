@@ -34,6 +34,8 @@ public:
 	std::vector<sf::Texture>& getPlayerPower();
 	std::vector<sf::Texture>& getCountriesFlags();
 
+	sf::Sound& getIntroSong();
+
 	void setSelectedPlayer(int index);
 
 	sf::Font & getFont();
@@ -72,5 +74,6 @@ private:
 	std::vector<sf::SoundBuffer> m_bufferVec;
 
 	std::vector<int> m_selectedPlayer;
+
 	int m_selectedIndex;
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
+#include "SoundControl.h"
 
 ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
@@ -131,13 +132,14 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_progressP2Sprite[i]);
 	} 
 
-	for (int i = 0; i < m_playersFlags.size(); i++)
+  for (int i = 0; i < m_flags.size(); i++)
 	{
-		window.draw(m_playersFlags[i]);
+		window.draw(m_flags[i]);
 	}
-
+  
 	if (m_goalSign)
 		window.draw(m_goalSprite);
+
 }
 
 
@@ -222,6 +224,11 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
+		
+		
+		SoundControl::getInstance().getWhistle().play(); // play whistle sound
+		SoundControl::getInstance().getCrowd().pause(); // pause crowd sound
+		SoundControl::getInstance().getGoalSound().pause();// pause goal sound
 		return true;
 	}
 	return false;
@@ -235,11 +242,9 @@ void ScoreBoard::reset()
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
 
+	m_flags.clear();
 	resetProgressP1();
 	resetProgressP2();
-
-	m_playersFlags.clear();
-	Resources::getInstance().getPlayerOrder().clear();
 }
 
 //=======================Points=======================
@@ -278,4 +283,24 @@ bool ScoreBoard::isGoal() {
 void ScoreBoard::setGoalSign() {
 	m_goalSign = true;
 	m_clockGoalSign.restart();
+}
+
+void ScoreBoard::setFlagsPlayers() {
+
+	std::vector<int> players = Resources::getInstance().getPlayerOrder();
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		int index = Resources::getInstance().getPlayerOrder()[i];
+		auto sprite = sf::Sprite(Resources::getInstance().getCountriesFlags()[index]);
+		sprite.scale(0.5, 0.5);
+		m_flags.push_back(sprite);
+	}
+
+	m_flags[0].setPosition(1250.f, 165.f);
+	m_flags[1].setPosition(435.f, 165.f);
+}
+
+std::vector<sf::Sprite>& ScoreBoard::getFlags() {
+	return m_flags;
 }

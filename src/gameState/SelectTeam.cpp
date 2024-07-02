@@ -1,6 +1,8 @@
 #include "gameState/SelectTeam.h"
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
+#include "SoundControl.h"
+#include "Command/Sound.h"
 
 
 
@@ -11,10 +13,12 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[4]);
 
+	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
 
-  m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
-  m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 690.f))); //playButton
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
 
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 100.f)));
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 
@@ -68,7 +72,7 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
-		if (i == 0 && !(m_playerSelected == m_numOfPlayers)) {
+		if (i == 0 && m_playerSelected != m_numOfPlayers) {
 
 			continue;
 		}
@@ -117,16 +121,28 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
-			m_buttons[i]->execute();
-			loadGameMode(i);
-			reset();
-			break;
+			if (i == 0 && m_playerSelected != m_numOfPlayers) {
+
+				continue;
+			}
+			else if (i == 2) {
+				m_buttons[i]->execute();
+			}
+			else
+			{
+				m_buttons[i]->execute();
+				loadGameMode(i);
+				reset();
+				
+				break;
+			}
 		}
 	}
 
 	signOrPreedOnPlayers(mousePressed);
 	
 }
+
 //-----------------------------------------------------------------------------
 void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
@@ -139,7 +155,7 @@ void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
 			if (m_playerSelected < m_numOfPlayers) {
 				m_playerSelected++;
-				Resources::getInstance().setSelectedPlayer(i);
+				m_selectedPlayer.push_back(i);
 			}
 		}
 	}
@@ -174,16 +190,19 @@ void SelectTeam::setNumberOfPlayers(int players) {
 //-----------------------------------------------------------------------------
 void SelectTeam::reset() {
 
+	m_selectedPlayer.clear();
 	m_playerSelected = 0;
 	for (int i = 0; i < m_frames.size(); i++)
 	{
 		m_frames[i].setPosition(3 * 200 - 400, 320);
 	}
 }
-
+//-----------------------------------------------------------------------------
 void SelectTeam::loadGameMode(int index)
 {
 	if (index == 1)return;
+
+	selectedPlayer();
 
 	std::vector<std::string> movingObjectNames;
 	std::vector<std::string> staticObjectNames;
@@ -202,6 +221,28 @@ void SelectTeam::loadGameMode(int index)
 	ScoreBoard::getInstance().loadPlayersFlag();
 	m_boardPtr->createMovingObjects(movingObjectNames);
 	m_boardPtr->createStaticObjects(staticObjectNames);
+	stopSongPlayWhistle();
+	
+	
+}
+//-----------------------------------------------------------------------------
+void SelectTeam::selectedPlayer()
+{
+	for (int i = 0; i < m_selectedPlayer.size(); i++)
+	{
+		Resources::getInstance().setSelectedPlayer(m_selectedPlayer[i]);
+	}
+}
+//-----------------------------------------------------------------------------
+void SelectTeam::stopSongPlayWhistle()
+{
+
+	SoundControl::getInstance().getIntroSong().pause();
+
+	SoundControl::getInstance().getWhistle().play();
+
+	SoundControl::getInstance().getCrowd().play();
+
 }
 
 //-----------------------------------------------------------------------------
