@@ -33,7 +33,7 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 
 	//m_buttons.push_back(std::make_unique<Pause>(menu, this));
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
-						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
+						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(1670.f, 45.f))); //pause Button
 
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
 												"LeftGoalBack", "RightGoalBack" };
@@ -98,6 +98,8 @@ void Board::respond(sf::Vector2f pressed) {
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
+		m_buttons[i]->respond();
+
 		if (m_buttons[i]->contains(pressed)) {
 
 			m_buttons[i]->execute();

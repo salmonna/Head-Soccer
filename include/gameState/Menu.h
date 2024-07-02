@@ -17,7 +17,7 @@ public:
 	Menu(Controller * controller, Tutorial * tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window);
 
 	virtual void draw(sf::RenderWindow & window) const override;
-	virtual void respond(sf::Vector2f mousePressed) override;
+	virtual void respond(sf::Vector2f position) override;
 
 private:
 

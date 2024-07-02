@@ -10,10 +10,11 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 	m_Stage.setTexture(texture[0]);
 
 	
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(350.f, 250.f))); //Button 1
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 250.f))); //Button 2
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 250.f))); //Button 3
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(485.f, 295.f))); //Button 1
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(935.f, 295.f))); //Button 2
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1385.f, 295.f))); //Button 3
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(1670.f, 45.f))); //Button 4
+
 
 	textModeSelection();
 }
@@ -83,6 +84,8 @@ void GameModeSelection::respond(sf::Vector2f mousePressed) {
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
+		m_buttons[i]->respond();
+
 		if (m_buttons[i]->contains(mousePressed)) {
 			loadGameMode(i);
 			m_buttons[i]->execute();

@@ -7,7 +7,8 @@ class Button
 public:
 	Button(std::unique_ptr<Command> command, sf::Texture & texture, sf::Vector2f position);
 
-	void draw(sf::RenderWindow& window) ;
+	void draw(sf::RenderWindow& window) const;
+	void respond();
 	bool contains(sf::Vector2f position) const;
 	void execute();
 	void scale(sf::Vector2f size);
