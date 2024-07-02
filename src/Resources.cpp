@@ -10,6 +10,7 @@
 #include "power/BigBallPower.h"
 #include "power/TornadoPower.h"
 #include "power/ElectricPower.h"
+#include "power/AvatarPower.h"
 #include <exception>
 
 //constractor of resources file are loading files
@@ -174,7 +175,7 @@ std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 		case 0:
 			return std::make_shared<FirePower>(playerSide);
 		case 1:
-			return std::make_shared<InvisiblePower>();
+			return std::make_shared<InvisiblePower>(playerSide);
 		case 2:
 			return std::make_shared<DragonPower>();
 		case 3:
@@ -182,7 +183,9 @@ std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 		case 4:
 			return std::make_shared<TornadoPower>(playerSide);
 		case 5:
-			return std::make_shared<ElectricPower>();
+			return std::make_shared<ElectricPower>(playerSide);
+		case 6:
+			return std::make_shared<AvatarPower>(playerSide);
 		default:
 			break;
 		}
