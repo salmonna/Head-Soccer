@@ -2,7 +2,6 @@
 #include "Resources.h"
 #include "Keyboard.h"
 #include <iostream>
-#include "power/RegularBehavior.h"
 
 Ball::Ball():m_power(std::make_shared<Power>()), m_basePosition(900.0f, 100.0f), m_restartBall(false)
 {

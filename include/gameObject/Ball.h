@@ -5,8 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
 #include <memory>
-#include "power/MoveBehavior.h"
-#include "power/RegularBehavior.h"
 #include "power/Power.h"
 #include "Box2d.h"
 #include <iostream>

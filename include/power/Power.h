@@ -1,6 +1,5 @@
 #pragma once
 #include "Window.h"
-#include "MoveBehavior.h"
 #include <SFML/Graphics.hpp>
 #include "Box2d.h"
 

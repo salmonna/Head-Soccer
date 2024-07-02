@@ -61,10 +61,7 @@ private:
 
 	Controller* m_controllerPtr;
 	std::vector<std::shared_ptr<GameObject>> m_collidingObject;
-
-	//std::vector<std::unique_ptr<BaseButton>> m_buttons;
-	std::vector<std::unique_ptr<Button>> m_buttons;
-
+ 	std::vector<std::unique_ptr<Button>> m_buttons;
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
 };
