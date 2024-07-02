@@ -15,7 +15,16 @@ m_playerSide(playerSide)
     {
         m_spriteSheet.push_back(std::pair(sf::Vector2i(0, i* height), sf::Vector2i(306.f, height)));
         m_spriteSheet.push_back(std::pair(sf::Vector2i(306.f, i* height), sf::Vector2i(306.f, height)));
+    }
 
+    try
+    {
+        m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
+
+    }
+    catch (const std::exception& e)
+    {
+        throw FileException("Deviation from the array");
     }
 
 
@@ -47,8 +56,15 @@ void AvatarPower::activatePowerOnPlayer(Player* player) {
     setPowerIsActive(false);
 }
 
-void AvatarPower::draw(sf::RenderWindow& window, sf::Vector2f position)
+void AvatarPower::draw(sf::RenderWindow& window) const
 {
+    window.draw(m_sprite);
+}
+
+
+void AvatarPower::animation(sf::Vector2f position)
+{
+
     if (m_index == m_spriteSheet.size())
     {
         m_index = 0;
@@ -62,12 +78,10 @@ void AvatarPower::draw(sf::RenderWindow& window, sf::Vector2f position)
     }
 
     position.x -= 306.f / 2;
-    position.y -= 177.f*0.8;
-
-
+    position.y -= 177.f * 0.8;
 
     m_sprite.setPosition(position);
-    window.draw(m_sprite);
+
 
 }
 

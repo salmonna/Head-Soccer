@@ -12,9 +12,24 @@ DragonPower::DragonPower():m_round(0),m_rightSide(false)
 	m_posDragon.push_back(std::make_pair(sf::Vector2i(14, 561), sf::Vector2i(231, 80)));
 
 	m_dragonSprite.setTexture(Resources::getInstance().getPlayerPower()[0]);
+
+	try
+	{
+		m_dragonSprite.setTextureRect(sf::IntRect(m_posDragon[0].first, m_posDragon[0].second));
+
+	}
+	catch (const std::exception& e)
+	{
+		throw FileException("Deviation from the array");
+	}
 }
 //--------------------------------------------------------------
-void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
+void DragonPower::draw(sf::RenderWindow& window) const {
+	window.draw(m_dragonSprite);
+}
+//--------------------------------------------------------------
+void DragonPower::animation(sf::Vector2f position)
+{
 
 	if (m_clockDragon.getElapsedTime().asMilliseconds() >= 150.f)
 	{
@@ -27,7 +42,7 @@ void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
 
 		m_clockDragon.restart();
 	}
-	
+
 	if (!m_rightSide) {
 
 		position.x -= (m_dragonSprite.getGlobalBounds().width * 0.9);
@@ -37,11 +52,13 @@ void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
 	{
 		position.x += (m_dragonSprite.getGlobalBounds().width * 0.9);
 		position.y -= (m_dragonSprite.getGlobalBounds().height / 2);
-		
+
 	}
 	m_dragonSprite.setPosition(position);
-	window.draw(m_dragonSprite);
+
 }
+
+
 //--------------------------------------------------------------
 void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 

@@ -22,6 +22,16 @@ ElectricPower::ElectricPower(bool playerSide) :m_spriteSheetClock(), m_index(0),
 
     }
 
+    try
+    {
+        m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
+
+    }
+    catch (const std::exception& e)
+    {
+        throw FileException("Deviation from the array");
+    }
+
 };
 
 void ElectricPower::activatePowerOnBall(Ball* ball)
@@ -53,8 +63,14 @@ void ElectricPower::activatePowerOnPlayer(Player* player) {
     setPowerIsActive(false);
 }
 
-void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
+void ElectricPower::draw(sf::RenderWindow& window) const
 {
+    window.draw(m_sprite);
+}
+
+void ElectricPower::animation(sf::Vector2f position)
+{
+
     if (m_index == m_spriteSheet.size())
     {
         m_index = 0;
@@ -70,12 +86,9 @@ void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
     position.x -= 213.f / 2;
     position.y -= 213.f / 2;
 
-
-
     m_sprite.setPosition(position);
-    window.draw(m_sprite);
-
 }
+
 
 bool ElectricPower::getSideOfPlayer()const {
     return m_playerSide;

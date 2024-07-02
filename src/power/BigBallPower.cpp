@@ -29,6 +29,8 @@ void BigBallPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
+
+
 void BigBallPower::activatePowerOnPlayer(Player* player) {
 
     Box2d::getInstance().step();

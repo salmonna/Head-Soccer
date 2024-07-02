@@ -59,7 +59,7 @@ void Ball::draw(sf::RenderWindow & window) const
 	window.draw(m_sprite);
 
     if (m_power->powerIsActive())
-        m_power->draw(window, m_sprite.getPosition());
+        m_power->draw(window);
 }
 
 void Ball::setPosition(sf::Vector2f position)
@@ -88,6 +88,8 @@ void Ball::update() {
     b2Vec2 position1 = m_body->GetPosition();
     m_sprite.setPosition(B2VecToSFVec(position1));
     m_sprite.setRotation(m_body->GetAngle() * 180.f / b2_pi);
+
+    m_power->animation(m_sprite.getPosition());
 }
 //-----------------------------------------------------------------------------
 void Ball::kick(bool rigthSide) {

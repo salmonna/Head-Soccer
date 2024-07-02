@@ -19,6 +19,18 @@ FirePower::FirePower(bool playerSide) :m_spriteSheetClock(), m_index1(0), m_inde
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(219, 195), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(443, 195), sf::Vector2i(200, 200)));
     m_spriteSheetFlame.push_back(std::pair(sf::Vector2i(653, 194), sf::Vector2i(200, 200)));
+
+
+    try
+    {
+        m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
+
+    }
+    catch (const std::exception& e)
+    {
+        throw FileException("Deviation from the array");
+    }
+
 };
 
 void FirePower::activatePowerOnBall(Ball* ball)
@@ -43,8 +55,15 @@ void FirePower::activatePowerOnPlayer(Player* player) {
     setPowerIsActive(false);
 }
 
-void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
+void FirePower::draw(sf::RenderWindow& window) const
 {
+    window.draw(m_sprite);
+}
+
+
+void FirePower::animation(sf::Vector2f position)
+{
+
     if (m_index2 == m_spriteSheetFlame.size())
     {
         m_index2 = 0;
@@ -59,7 +78,7 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
             m_spriteSheetClock.restart();
         }
     }
-    else if(m_index2 < m_spriteSheetFlame.size())
+    else if (m_index2 < m_spriteSheetFlame.size())
     {
 
         if (m_spriteSheetClock.getElapsedTime().asMilliseconds() >= 250.f)
@@ -74,9 +93,8 @@ void FirePower::draw(sf::RenderWindow& window, sf::Vector2f position)
     position.y -= 80.f;
 
     m_sprite.setPosition(position);
-    window.draw(m_sprite);
-
 }
+
 
 
 bool FirePower::getSideOfPlayer()const {

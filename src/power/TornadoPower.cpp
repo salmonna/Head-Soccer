@@ -18,6 +18,17 @@ TornadoPower::TornadoPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m
     m_spriteSheet.push_back(std::pair(sf::Vector2i(327, 634), sf::Vector2i(334.f, 317.f)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(654, 634), sf::Vector2i(334.f, 317.f)));
 
+
+    try
+    {
+        m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
+
+    }
+    catch (const std::exception& e)
+    {
+        throw FileException("Deviation from the array");
+    }
+
 };
 
 void TornadoPower::activatePowerOnBall(Ball* ball)
@@ -45,8 +56,14 @@ void TornadoPower::activatePowerOnPlayer(Player* player) {
 }
 
 
-void TornadoPower::draw(sf::RenderWindow& window, sf::Vector2f position)
+void TornadoPower::draw(sf::RenderWindow& window) const
 {
+    window.draw(m_sprite);
+}
+
+void TornadoPower::animation(sf::Vector2f position)
+{
+
     if (m_index == m_spriteSheet.size())
     {
         m_index = 0;
@@ -59,12 +76,13 @@ void TornadoPower::draw(sf::RenderWindow& window, sf::Vector2f position)
         m_spriteSheetClock.restart();
     }
 
-    position.x -= 334.f/2;
-    position.y -= 317.f*0.9f;
+    position.x -= 334.f / 2;
+    position.y -= 317.f * 0.9f;
 
     m_sprite.setPosition(position);
-    window.draw(m_sprite);
 }
+
+
 
 bool TornadoPower::getSideOfPlayer()const {
     return m_playerSide;

@@ -2,6 +2,8 @@
 #include "Window.h"
 #include <SFML/Graphics.hpp>
 #include "Box2d.h"
+#include "FileException.h"
+
 
 class Ball;
 class Player;
@@ -17,7 +19,8 @@ public:
 
 	virtual void activatePowerOnPlayer(Player* player) {};
 	virtual void activatePowerOnBall(Ball* ball) {};
-	virtual void draw(sf::RenderWindow & window, sf::Vector2f position) {};
+	virtual void animation(sf::Vector2f position) {};
+	virtual void draw(sf::RenderWindow & window) const {};
 
 	virtual bool powerIsActive();
 	virtual void startTimer();

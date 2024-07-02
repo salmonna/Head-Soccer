@@ -8,7 +8,9 @@ public:
 	~DragonPower();
 
 	virtual void activatePowerOnBall(Ball* ball)override;
-	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
+	virtual void animation(sf::Vector2f position) override;
+	virtual void draw(sf::RenderWindow& window) const override;
+
 private:
 
 	void dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it);
