@@ -108,20 +108,16 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_SpriteVec[i]);
 	}
 
-	
 	for (int i = 0; i < m_textVec.size(); i++)
 	{
 		window.draw(m_textVec[i]);
 	}
-
-
 
 	for (int i = 0; i < 2; i++)
 	{
 		window.draw(m_progressP1Sprite[i]);
 		window.draw(m_progressP2Sprite[i]);
 	}
-
 
 	for (int i = 0; i < m_flags.size(); i++)
 	{
