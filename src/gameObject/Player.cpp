@@ -22,7 +22,7 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<FirePower>(m_playerSide);
+	m_power = std::make_shared<BigBallPower>(m_playerSide);
 
 	if (m_playerSide)
 	{
@@ -87,7 +87,6 @@ void Player::move(sf::Vector2f pressed) {
 		if (m_powerClock2.getElapsedTime().asSeconds() > 3) {
 			m_powerOnPlayer = false;
 			m_sprite.setColor(m_playerColor);
-
 		}
 	}
 	else {

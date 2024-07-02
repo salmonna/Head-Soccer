@@ -45,4 +45,5 @@ private:
 	sf::Sprite m_sprite;
 	static bool m_registeritBall;
 	b2Body* m_body;
+	bool m_restartBall;
 };

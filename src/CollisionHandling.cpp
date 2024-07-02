@@ -38,8 +38,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         }
         else if (ballObject.getPower()->powerIsActive()){
             ballObject.getPower()->activatePowerOnPlayer(&playerObject);
-            b2MassData mass = ballObject.getBallMass();
-            ballObject.getBody()->SetMassData(&mass);
         }
     }
 

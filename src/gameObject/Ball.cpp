@@ -4,7 +4,7 @@
 #include <iostream>
 #include "power/RegularBehavior.h"
 
-Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f, 100.0f)
+Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f, 100.0f), m_restartBall(false)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
@@ -38,6 +38,14 @@ void  Ball::move(sf::Vector2f pressed)
             m_body->SetLinearVelocity(newVelocity);
 
         }
+        else {
+            m_restartBall = true;
+        }
+    }
+    else if (m_restartBall) {
+        m_body->SetMassData(&m_bodyMass);
+        m_restartBall = false;
+
     }
 
     update();

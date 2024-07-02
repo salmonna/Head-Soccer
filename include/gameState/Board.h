@@ -67,8 +67,6 @@ private:
 
 	std::vector<sf::Sprite> m_backGroundStadium;
 	bool m_pressedOnPause;
-
-	b2World* m_box2dWorld;
 };
 
 

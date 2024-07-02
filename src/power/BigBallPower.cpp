@@ -15,7 +15,9 @@ void BigBallPower::activatePowerOnBall(Ball* ball)
 
     // Adjust position if necessary
     b2Vec2 currentPosition = ball->getBody()->GetPosition();
-    currentPosition.y -= 5.f; // Move the body 200 pixels higher (adjust as needed)
+    float side;
+    (m_playerSide) ? side = -3.5f : side = 3.5f;
+    currentPosition.x += side; // Move the body 200 pixels higher (adjust as needed)
     ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
     // Update the density
@@ -23,15 +25,13 @@ void BigBallPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->GetFixtureList()->GetShape()->ComputeMass(&massData, 50.0f); // Adjust density as needed
     ball->getBody()->SetMassData(&massData);
     
-
     // Set awake state to false to "pause" the body
     ball->getBody()->SetAwake(false);
 }
 
 void BigBallPower::activatePowerOnPlayer(Player* player) {
 
-    player->restartClock();
-    player->setPowerOnPlayer(true);
+    Box2d::getInstance().step();
     setPowerIsActive(false);
 }
 

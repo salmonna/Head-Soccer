@@ -22,6 +22,7 @@ public:
 	b2Body* createPlayer(sf::Vector2f basePosition);
 	b2Body* createBall(sf::Vector2f basePosition);
 	b2Body* createGoalBack(sf::Vector2f basePosition);
+	void step();
 
 private:	
 	Box2d(const Box2d&) = default;

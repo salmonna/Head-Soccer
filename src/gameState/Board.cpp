@@ -35,17 +35,9 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
 						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
 
-	//m_goalSprite.setTexture(texture[2]);
-	//m_goalSprite.setPosition(50, 200);
-
-
 	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
 												"LeftGoalBack", "RightGoalBack" };
 	createStaticObjects(staticObjectNames);
-
-
-	m_box2dWorld = Box2d::getInstance().getBox2dWorld();
-
 }
 
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
@@ -110,15 +102,12 @@ void Board::respond(sf::Vector2f pressed) {
 			break;
 		}
 	}
-
-
 }
 
 //----------------handle Score Board---------------//
 void Board::handleScoreBoard() {
 
 	ScoreBoard::getInstance().timeCalculation();
-	ScoreBoard::getInstance().updateScore(0, 0);
 	ScoreBoard::getInstance().Progress();
 	if (ScoreBoard::getInstance().timeIsOver())
 	{
@@ -128,10 +117,7 @@ void Board::handleScoreBoard() {
 
 	if (!ScoreBoard::getInstance().isGoal())
 	{
-		float timeStep = 1.f / 60.f;
-		int32 velocityIterations = 6;
-		int32 positionIterations = 3;
-		m_box2dWorld->Step(timeStep, velocityIterations, positionIterations);
+		Box2d::getInstance().step();
 	}
 	else
 	{
@@ -180,10 +166,6 @@ void Board::for_each_pair(FwdIt begin, FwdIt end, Fn fn)
 			fn(*begin, *second);
 }
 //=============================================== collide =======================================//
-//bool Board::collide(GameObject& a, GameObject& b)
-//{
-//	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
-//}
 bool Board::collide(GameObject& a, GameObject& b) {
 	// Get the AABBs for the first fixture of each body
 	const b2AABB& aabbA = a.getBody()->GetFixtureList()->GetAABB(0);
@@ -194,25 +176,21 @@ bool Board::collide(GameObject& a, GameObject& b) {
 		aabbA.lowerBound.y <= aabbB.upperBound.y && aabbA.upperBound.y >= aabbB.lowerBound.y);
 }
 //=============================================== draw =======================================//
-
 // Method to draw all objects in the window
 void Board::draw(sf::RenderWindow& window) const{
 
 	//draw game objects
 	drawGameObjects(window);
 
-
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
 		m_buttons[i]->draw(window);
 	}
-
 }
 
 //draw game objects
 void  Board::drawGameObjects(sf::RenderWindow& window) const
 {
-
 	//draw the back ground stadium and field
 	for (int i = 0; i < m_backGroundStadium.size(); i++)
 	{
@@ -228,4 +206,3 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 		m_gameObject[i]->draw(window);
 	}
 }
-
