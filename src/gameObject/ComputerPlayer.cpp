@@ -8,19 +8,16 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 
 	sf::Vector2f pos(550, 80);
 
-	m_power = std::make_unique<FirePower>();
-
 	std::srand(static_cast<unsigned>(std::time(0)));
 	int random_number = std::rand() % 7;
 	Resources::getInstance().setSelectedPlayer(random_number);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
+	m_power = Resources::getInstance().getPower(false);
 	resetToPosition();
 	m_basePosition = sf::Vector2f(272, 775);
 
-
 	//----------------------box2d---------------------------//
 	m_body = Box2d::getInstance().createPlayer(m_basePosition);
-
 	m_sprite.setOrigin(30.f, 40.f);
 
 	m_startSprite.push_back(sf::Vector2f(160, 126));
@@ -28,62 +25,57 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 	m_startSprite.push_back(sf::Vector2f(160, 8));
 	m_startSprite.push_back(sf::Vector2f(160, 365));
 
-	m_rivalGoal = sf::Vector2f(1680,700);
 }
 
 bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(); });
 
-
+//-----------------------------------------------------------------------------
 void ComputerPlayer::move(sf::Vector2f ballPosition) {
+ 
+	sf::Vector2f direction = m_ball->getSprite().getPosition() - m_sprite.getPosition();
+	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-    const float speed = 200.0f;  
-    const float kickRange = 100.0f;  
-	//const float halfFieldX = 850.0f; // Assuming the field width is 800 units
+	updateMovement(m_ball->getSprite().getPosition(), length, direction);
+}
+//-----------------------------------------------------------------------------
+void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float length, const sf::Vector2f& direction) {
 
-    sf::Vector2f direction = ballPosition - m_sprite.getPosition();
-    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-	if (m_jump)
-	{
+	const float kickRange = 100.0f;
+	if (m_jump) {
 		movePlayer(m_startSprite[2], 7, 100);
 	}
 	update();
 
-    if (length > kickRange) {
-		
-		if (length > 600 && ballPosition.x > m_sprite.getPosition().x){
+	if (length > kickRange) {
+		if (length > 600 && ballPosition.x > m_sprite.getPosition().x) {
 			resetToPosition();
 			return;
 		}
 
-		//Right Direction Test
-		if (ballPosition.x > m_sprite.getPosition().x ) {
-
+		// Right Direction Test
+		if (ballPosition.x > m_sprite.getPosition().x) {
 			m_body->SetLinearVelocity(b2Vec2(7.f, m_body->GetLinearVelocity().y));
 			movePlayer(m_startSprite[1], 6, 10);
 		}
-		//Left Direction Test
+		// Left Direction Test
 		else if (ballPosition.x < m_sprite.getPosition().x) {
-
 			m_body->SetLinearVelocity(b2Vec2(-7.f, m_body->GetLinearVelocity().y));
 			movePlayer(m_startSprite[1], 6, 10);
 		}
-    }
-    else if(ballPosition.y < 750 && !m_jump) {
-		
+	}
+	else if (ballPosition.y < 750 && !m_jump) {
 		m_jump = true;
 		m_body->ApplyLinearImpulseToCenter(b2Vec2(0.f, -JUMP_FORCE), true);
-    }
-
+	}
 }
-
-
+//-----------------------------------------------------------------------------
 void ComputerPlayer::reset() {
 	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body->SetTransform(newPosition, m_body->GetAngle());
 	
 }
-
+//-----------------------------------------------------------------------------
 //function that move the player
 void ComputerPlayer::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 
@@ -105,38 +97,33 @@ void ComputerPlayer::movePlayer(sf::Vector2f startPos, int maxSprite, float maxT
 
 	}
 }
-
+//-----------------------------------------------------------------------------
+void ComputerPlayer::update() {
+	b2Vec2 position1 = m_body->GetPosition();
+	m_sprite.setPosition(B2VecToSFVec(position1));
+}
+//-----------------------------------------------------------------------------
 // Reset to default position if not jumping
 void ComputerPlayer::resetToPosition(sf::Vector2f startPos, int numOfJump) {
 
 	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
-	//m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
 }
-
+//-----------------------------------------------------------------------------
 void ComputerPlayer::draw(sf::RenderWindow& window)const {
 	ScoreBoard::getInstance().draw(window);
 	window.draw(m_sprite);
 }
-
-sf::Vector2f ComputerPlayer::getRivalGoal()const {
-
-	return m_rivalGoal;
-}
-
 //-----------------------------------------------------------------------------
-void ComputerPlayer::update() {
-	b2Vec2 position1 = m_body->GetPosition();
-	m_sprite.setPosition(B2VecToSFVec(position1));
-}
-
-//-----------------------------------------------------------------------------
-b2Body* ComputerPlayer::getBody() {
-
+b2Body* ComputerPlayer::getBody()const {
 	return m_body;
 }
-
+//-----------------------------------------------------------------------------
+void ComputerPlayer::setBall(std::shared_ptr<Ball> ball) {
+	m_ball = ball;
+}
+//-----------------------------------------------------------------------------
 ComputerPlayer::~ComputerPlayer()
 {
 	std::cout << " C-D" << std::endl;
@@ -145,4 +132,3 @@ ComputerPlayer::~ComputerPlayer()
 	world->DestroyBody(m_body);
 	m_body = nullptr;
 }
-

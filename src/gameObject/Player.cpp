@@ -80,9 +80,7 @@ void Player::move(sf::Vector2f pressed) {
 
 	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE))
 		resetPlayerProgress();
-
 }
-
 //-----------------------------------------------------------------------------
 // Reset to default position if not jumping
 void Player::resetToPosition(sf::Vector2f startPos) {
@@ -105,9 +103,7 @@ void Player::resetPlayerProgress()
 		ScoreBoard::getInstance().resetProgressP2();
 		setAura(true);
 	}
-
 }
-
 //-----------------------------------------------------------------------------
 void Player::deactivatePower() {
 	// Deactivate the power
@@ -125,7 +121,6 @@ void Player::deactivatePower() {
 		m_body->GetFixtureList()->SetSensor(false);
 	}
 }
-
 //-----------------------------------------------------------------------------
 void Player::reset() {
 	// Update the position of the Box2D body
@@ -136,7 +131,6 @@ void Player::reset() {
 	m_body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));  // Set linear velocity to zero
 	m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
 }
-
 //-----------------------------------------------------------------------------
 void Player::update() {
 	b2Vec2 position = m_body->GetPosition();
@@ -144,7 +138,7 @@ void Player::update() {
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Power> Player::getPower()
+std::shared_ptr<Power> Player::getPower()const
 {
 	return m_power;
 }
@@ -156,44 +150,48 @@ sf::Sprite& Player::getSprite() {
 bool Player::getAura() const{
 	return m_aura;
 }
-
+//-----------------------------------------------------------------------------
 void Player::setAura(bool aura) {
 	if (!m_aura && aura) {
 		m_sound.play();
 		m_sound.setLoop(true);
 	}
 	else
-	{
 		m_sound.stop();
-	}
-	
+
 	m_aura = aura;
 }
-
+//-----------------------------------------------------------------------------
 bool Player::getSideOfPlayer() const {
 	return m_playerSide;
 }
-
-b2Body* Player::getBody() {
+//-----------------------------------------------------------------------------
+b2Body* Player::getBody()const {
 	return m_body;
 }
-
-//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------//
 //get keys
 Keyboard Player::getKey() const
 {
 	return m_keys;
 }
-
+//-----------------------------------------------------------------------------
 void Player::setPowerOnPlayer(bool powerOnPlayer) {
 	m_powerOnPlayer = powerOnPlayer;
 }
-
+//-----------------------------------------------------------------------------
 bool Player::getPowerOnPlayer() const {
 	return m_powerOnPlayer;
 }
-
+//-----------------------------------------------------------------------------
 void Player::restartClock() {
 	m_powerClock.restart().asSeconds();
-
+}
+//-----------------------------------------------------------------------------
+Player::~Player() {
+	std::cout << " P-D" << std::endl;
+	m_body->DestroyFixture(m_body->GetFixtureList());
+	auto world = Box2d::getInstance().getBox2dWorld();
+	world->DestroyBody(m_body);
+	m_body = nullptr;
 }

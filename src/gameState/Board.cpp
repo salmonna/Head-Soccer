@@ -55,7 +55,14 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 		else
 			std::cout << "Class not found!\n";
 	}
+	if (objectNames[1] == "ComputerPlayer")
+	{
+		// Assuming m_movingObject is a vector or array of std::shared_ptr<BaseClass>
+		std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[2]);
+		std::shared_ptr<ComputerPlayer> computerObject = std::dynamic_pointer_cast<ComputerPlayer>(m_movingObject[1]);
 
+		computerObject->setBall(ballObject);
+	}
 	ScoreBoard::getInstance().setFlagsPlayers();
 
 }

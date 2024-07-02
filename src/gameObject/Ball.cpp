@@ -24,26 +24,7 @@ void  Ball::move(sf::Vector2f pressed)
 {
 
     if (m_power->powerIsActive())
-    {
-        m_power->checkTimeIsOver();
-       
-        if(m_power->stayInTheAir())
-        {
-            m_body->SetAwake(true);
-
-            float side;
-            (m_power->getSideOfPlayer()) ? side = -1.f : side = 1.f;
-
-            // Set new velocity for the ball
-            b2Vec2 newVelocity(50.f * side, m_body->GetLinearVelocity().y); // Assuming direction is a float
-            m_body->SetLinearVelocity(newVelocity);
-        }
-        else
-        {
-            m_restartBall = true;
-        }
-        
-    }
+        updatePowerState();
     else if (m_restartBall)
     {
         m_body->SetMassData(&m_bodyMass);
@@ -52,7 +33,6 @@ void  Ball::move(sf::Vector2f pressed)
     }
 
     update();
-
 }
 
 void Ball::draw(sf::RenderWindow & window) const
@@ -63,32 +43,30 @@ void Ball::draw(sf::RenderWindow & window) const
         m_power->draw(window, m_sprite.getPosition());
 }
 
-void Ball::setPosition(sf::Vector2f position)
-{
-    // Update the position of the Box2D body
-    b2Vec2 newPosition(position.x / SCALE, position.y / SCALE);
-    m_body->SetTransform(newPosition, 0); // Set rotation to 0 degrees
 
-    // Ensure no horizontal movement
-    m_body->SetLinearVelocity(b2Vec2(0, m_body->GetLinearVelocity().y));
-    update(); // Assuming this function updates the sprite position
-}
-
-sf::Sprite & Ball::getSprite()
-{
-    return m_sprite;
-}
-
-void Ball::setPower(std::shared_ptr<Power> power)
-{
-    m_power = power;
-}
 
 //-----------------------------------------------------------------------------
 void Ball::update() {
     b2Vec2 position1 = m_body->GetPosition();
     m_sprite.setPosition(B2VecToSFVec(position1));
     m_sprite.setRotation(m_body->GetAngle() * 180.f / b2_pi);
+}
+//-----------------------------------------------------------------------------
+void Ball::updatePowerState() {
+    m_power->checkTimeIsOver();
+
+    if (m_power->stayInTheAir()) {
+        m_body->SetAwake(true);
+
+        float side = (m_power->getSideOfPlayer()) ? -1.f : 1.f;
+
+        // Set new velocity for the ball
+        b2Vec2 newVelocity(50.f * side, m_body->GetLinearVelocity().y); // Assuming direction is a float
+        m_body->SetLinearVelocity(newVelocity);
+    }
+    else {
+        m_restartBall = true;
+    }
 }
 //-----------------------------------------------------------------------------
 void Ball::kick(bool rigthSide) {
@@ -99,15 +77,6 @@ void Ball::kick(bool rigthSide) {
     (rigthSide) ? kickForceX = -500.5f : kickForceX = 500.5f;
     b2Vec2 kickForce(kickForceX, kickForceY);
     m_body->ApplyForceToCenter(kickForce, true);
-}
-//-----------------------------------------------------------------------------
-b2Body* Ball::getBody() {
-    return m_body;
-}
-//-----------------------------------------------------------------------------
-std::shared_ptr<Power> Ball::getPower()
-{
-    return m_power;
 }
 //-----------------------------------------------------------------------------
 void Ball::reset() {
@@ -121,12 +90,49 @@ void Ball::reset() {
 
     update();
 }
-
+//-----------------------------------------------------------------------------
+b2Body* Ball::getBody() const {
+    return m_body;
+}
+//-----------------------------------------------------------------------------
+std::shared_ptr<Power> Ball::getPower()const
+{
+    return m_power;
+}
+//-----------------------------------------------------------------------------
 sf::Color Ball::getBallColor()const {
     return m_ballColor;
 }
-
+//-----------------------------------------------------------------------------
+sf::Sprite & Ball::getSprite()
+{
+    return m_sprite;
+}
 //-----------------------------------------------------------------------------
 b2MassData Ball::getBallMass() const{
     return m_bodyMass;
+}
+//-----------------------------------------------------------------------------
+void Ball::setPosition(sf::Vector2f position)
+{
+    // Update the position of the Box2D body
+    b2Vec2 newPosition(position.x / SCALE, position.y / SCALE);
+    m_body->SetTransform(newPosition, 0); // Set rotation to 0 degrees
+
+    // Ensure no horizontal movement
+    m_body->SetLinearVelocity(b2Vec2(0, m_body->GetLinearVelocity().y));
+    update(); // Assuming this function updates the sprite position
+}
+//-----------------------------------------------------------------------------
+void Ball::setPower(std::shared_ptr<Power> power)
+{
+    m_power = power;
+}
+//-----------------------------------------------------------------------------
+Ball::~Ball(){
+    std::cout << " B-D" << std::endl;
+    m_body->DestroyFixture(m_body->GetFixtureList());
+    auto world = Box2d::getInstance().getBox2dWorld();
+    world->DestroyBody(m_body);
+    m_body = nullptr;
 }
