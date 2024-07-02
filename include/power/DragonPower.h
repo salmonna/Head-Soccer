@@ -12,6 +12,7 @@ public:
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
 
 	bool getSideOfPlayer()const;
+	void defineStartposWithBall(sf::Vector2f & position);
 
 private:
 
@@ -23,4 +24,5 @@ private:
 
 	int m_round;
 	bool m_playerSide;
+	bool m_startPos;
 };

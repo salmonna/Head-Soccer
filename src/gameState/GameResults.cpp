@@ -3,6 +3,9 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 #include "gameObject/ScoreBoard.h"
+#include <exception>
+#include "FileException.h"
+
 //gameResults constactor
 GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(NULL),m_initilaze(false)
 {
@@ -62,8 +65,10 @@ void GameResults::respond(sf::Vector2f mousePressed)
 	}
 
 	if (!m_initilaze) {
+
 		playerOrderAndSide();
 		finalScoreResult();
+		
   }
 }
 //----------------------------------------------------------------------------------

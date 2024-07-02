@@ -127,8 +127,7 @@ void Board::handleScoreBoard() {
 		m_controllerPtr->setState(m_gameResults);
 		reset();
 	}
-
-	if (!ScoreBoard::getInstance().isGoal())
+	else if (!ScoreBoard::getInstance().isGoal())
 	{
 		float timeStep = 1.f / 60.f;
 		int32 velocityIterations = 6;
@@ -168,7 +167,6 @@ void Board::reset() {
 	{
 		m_staticObject.pop_back();
 	}
-	ScoreBoard::getInstance().reset();
 }
 
 //=============================================== for_each_pair =======================================//
