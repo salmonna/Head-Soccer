@@ -19,7 +19,7 @@ public:
 	Player(bool right, Keyboard keys);
 
 	virtual void draw(sf::RenderWindow& window) const override;
-	virtual void move(sf::Vector2f pressed) override;
+	virtual void move() override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset()override;
 	virtual b2Body* getBody()const override;

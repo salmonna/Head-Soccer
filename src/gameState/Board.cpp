@@ -93,8 +93,7 @@ void Board::respond(sf::Vector2f pressed) {
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size() && !ScoreBoard::getInstance().isGoal(); i++)
 	{
-		m_movingObject[i]->move(pressed);
-
+		m_movingObject[i]->move();
 	}
 	
 	for_each_pair(m_gameObject.begin() + 4, m_gameObject.end() - 2, [&](auto& a, auto& b) {

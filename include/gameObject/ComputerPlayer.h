@@ -14,7 +14,7 @@ public:
 
 	ComputerPlayer();
 	
-	virtual void move(sf::Vector2f pressed) override;
+	virtual void move() override;
 	virtual void draw(sf::RenderWindow& window)const override;
 	virtual sf::Sprite& getSprite() override { return m_sprite; };
 	virtual void reset()override;

@@ -43,27 +43,8 @@ bool Player::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlaye
 		Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S));  });
 
 //-----------------------------------------------------------------------------
-//draw plater
-void Player::draw(sf::RenderWindow& window) const {
-
-	if (m_aura)
-	{
-		if (!m_playerSide)
-			m_power->drawAura(window,m_sprite.getPosition(),m_sprite.getOrigin());
-		else {
-			auto position = sf::Vector2f(m_sprite.getPosition().x + 10, m_sprite.getPosition().y);
-			m_power->drawAura(window, position, m_sprite.getOrigin());
-		}
-	}
-  
-	ScoreBoard::getInstance().draw(window);
-
-	window.draw(m_sprite);
-
-}
-//-----------------------------------------------------------------------------
 //function that find where to move and  call to another function 
-void Player::move(sf::Vector2f pressed) {
+void Player::move() {
 
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
 	if (nextState) 
@@ -136,7 +117,25 @@ void Player::update() {
 	b2Vec2 position = m_body->GetPosition();
 	m_sprite.setPosition(B2VecToSFVec(position));
 }
+//-----------------------------------------------------------------------------
+//draw plater
+void Player::draw(sf::RenderWindow& window) const {
 
+	if (m_aura)
+	{
+		if (!m_playerSide)
+			m_power->drawAura(window,m_sprite.getPosition(),m_sprite.getOrigin());
+		else {
+			auto position = sf::Vector2f(m_sprite.getPosition().x + 10, m_sprite.getPosition().y);
+			m_power->drawAura(window, position, m_sprite.getOrigin());
+		}
+	}
+  
+	ScoreBoard::getInstance().draw(window);
+
+	window.draw(m_sprite);
+
+}
 //-----------------------------------------------------------------------------
 std::shared_ptr<Power> Player::getPower()const
 {

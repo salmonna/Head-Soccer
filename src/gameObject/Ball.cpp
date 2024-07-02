@@ -20,7 +20,7 @@ Ball::Ball():m_power(std::make_shared<RegularBehavior>()), m_basePosition(900.0f
 bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<Ball>(); });
 
-void  Ball::move(sf::Vector2f pressed)
+void  Ball::move()
 {
 
     if (m_power->powerIsActive())

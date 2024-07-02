@@ -31,7 +31,7 @@ bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMovin
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(); });
 
 //-----------------------------------------------------------------------------
-void ComputerPlayer::move(sf::Vector2f ballPosition) {
+void ComputerPlayer::move() {
  
 	sf::Vector2f direction = m_ball->getSprite().getPosition() - m_sprite.getPosition();
 	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
