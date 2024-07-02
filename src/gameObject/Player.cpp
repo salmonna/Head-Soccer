@@ -105,7 +105,7 @@ void Player::move(sf::Vector2f pressed) {
 
 
 
-	bool progressFull = ScoreBoard::getInstance().istProgressP2Full() || ScoreBoard::getInstance().istProgressP1Full();
+	bool progressFull = ScoreBoard::getInstance().isProgressP2Full() || ScoreBoard::getInstance().isProgressP1Full();
 
 	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && progressFull) {//power
 		resetProgress();
