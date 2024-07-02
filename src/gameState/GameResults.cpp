@@ -5,6 +5,8 @@
 #include "gameObject/ScoreBoard.h"
 #include <exception>
 #include "FileException.h"
+#include "SoundControl.h"
+#include "Command/Sound.h"
 
 //gameResults constactor
 GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(NULL),m_initilaze(false)
@@ -16,6 +18,10 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 	std::vector<sf::Texture>& texture2 = Resources::getInstance().getPauseTexture();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)),
 															texture2[2], sf::Vector2f(750.f, 750.f))); //exit to menu Button
+
+	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
+
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 0.f)));
 
 	IntiliazTextResult();
 
@@ -59,8 +65,10 @@ void GameResults::respond(sf::Vector2f mousePressed)
 
 			m_buttons[i]->execute();
 
-			resetGameResult();
-			return;
+			if (i == 0) {
+				resetGameResult();
+				return;
+			}
 		}
 	}
 
@@ -68,8 +76,9 @@ void GameResults::respond(sf::Vector2f mousePressed)
 
 		playerOrderAndSide();
 		finalScoreResult();
+		SoundControl::getInstance().getIntroSong().play();
 		
-  }
+	}
 }
 //----------------------------------------------------------------------------------
 void GameResults::resetGameResult()
