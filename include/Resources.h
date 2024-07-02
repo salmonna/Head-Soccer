@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
+#include "power/Power.h"
+#include <memory>
 
 class Resources
 {
@@ -33,6 +35,7 @@ public:
 
 	std::vector<sf::Texture>& getPlayerPower();
 	std::vector<sf::Texture>& getCountriesFlags();
+	std::shared_ptr<Power> getPower(bool playerSide);
 
 	void setSelectedPlayer(int index);
 
@@ -48,7 +51,6 @@ private:
 	Resources& operator=(const Resources&) = delete;
 	void loadFromFile(std::vector<std::string> fileNames, std::vector<sf::Texture>& texture);
 	Resources();
-	
 	std::vector<sf::Texture> m_menuTexture;
 	std::vector<sf::Texture> m_gameModeTexture;
 	std::vector<sf::Texture> m_boardTexture;
@@ -72,5 +74,6 @@ private:
 	std::vector<sf::SoundBuffer> m_bufferVec;
 
 	std::vector<int> m_selectedPlayer;
+	std::vector<std::shared_ptr<Power>> m_playerPower;
 	int m_selectedIndex;
 };

@@ -54,11 +54,6 @@ public:
 
 private:
 
-	int m_numOfJump;
-	int m_posX;
-	int m_posY;
-	int m_move;
-	int m_gravity;
 	bool m_playerSide;
 	bool m_aura;
 	bool m_powerOnPlayer;
@@ -67,8 +62,6 @@ private:
 
 	sf::Sprite m_sprite;
 	sf::Clock m_powerClock;
-	sf::Clock m_powerClock2;
-	std::vector<sf::Vector2f> m_startSprite;
 	sf::Vector2f m_basePosition;
 
 	Keyboard m_keys;
@@ -77,20 +70,17 @@ private:
 	static bool m_registeritRightPlayer;
 	static bool m_registeritLeftPlayer;
 
-	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590), int numOfJump = 0, int posX = 0, int posY = 0);
+	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590));
 
 	LeftMoveState m_leftMoveState;
 	RightMoveState m_rightMoveState;
 	JumpMoveState m_jumpMoveState;
 	KickMoveState m_kickMoveState;
 	StandPlayerState m_standMoveState;
-
 	BaseMovePlayerState* m_currentMoveState;
 
 	sf::Color m_playerColor;
-
 	b2Body* m_body;
-
 };
 
 

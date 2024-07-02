@@ -4,25 +4,15 @@
 #include <iostream>
 #include "Resources.h"
 #include "gameObject/scoreBoard.h"
-#include "power/FirePower.h"
-#include "power/InvisiblePower.h"
-#include "power/DragonPower.h"
-#include "power/DuplicateBall.h"
-#include "power/BigBallPower.h"
-#include "power/TornadoPower.h"
-//#include "power/KameHameHaPower.h"
-#include "power/ElectricPower.h"
-
 
 //-----------------------------------------------------------------------------
-Player::Player(bool right, Keyboard keys) :m_numOfJump(0), m_posX(0), m_posY(0), m_move(-2), m_gravity(0),m_keys(keys), m_playerSide(right)
-, m_aura(false), m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
+Player::Player(bool right, Keyboard keys) :m_keys(keys), m_playerSide(right), m_aura(false), m_powerOnPlayer(false),m_powerClock(),
+m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
 ,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
-m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnPlayer(false)
+m_currentMoveState(&m_standMoveState)
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<BigBallPower>(m_playerSide);
 
 	if (m_playerSide)
 	{
@@ -35,9 +25,10 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 	}
 	//----------------------box2d---------------------------//
 	m_body = Box2d::getInstance().createPlayer(m_basePosition);
-
+	
 	m_sprite.setOrigin(40.f, 40.f);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
+	m_power = Resources::getInstance().getPower(m_playerSide);
 	resetToPosition();
 	m_playerColor = m_sprite.getColor();
 	m_sprite.setPosition(m_basePosition);
@@ -84,7 +75,7 @@ void Player::move(sf::Vector2f pressed) {
 	if (m_powerOnPlayer) {
 
 		// Check if more than 5 seconds have passed since the power was activated
-		if (m_powerClock2.getElapsedTime().asSeconds() > 3) {
+		if (m_powerClock.getElapsedTime().asSeconds() > 3) {
 			m_powerOnPlayer = false;
 			m_sprite.setColor(m_playerColor);
 		}
@@ -122,12 +113,12 @@ void Player::move(sf::Vector2f pressed) {
 
 //-----------------------------------------------------------------------------
 // Reset to default position if not jumping
-void Player::resetToPosition(sf::Vector2f startPos, int numOfJump, int posX, int posY) {
+void Player::resetToPosition(sf::Vector2f startPos) {
 
-	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
+	sf::IntRect characterRect(startPos.x, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	m_sprite.setTextureRect(characterRect);
-	m_sprite.setPosition(float(m_basePosition.x + m_posX), float(m_basePosition.y + posY));
+	m_sprite.setPosition(float(m_basePosition.x ), float(m_basePosition.y));
 }
 //-----------------------------------------------------------------------------
 void Player::resetProgress()
@@ -204,6 +195,6 @@ bool Player::getPowerOnPlayer() const {
 }
 
 void Player::restartClock() {
-	m_powerClock2.restart().asSeconds();
+	m_powerClock.restart().asSeconds();
 
 }

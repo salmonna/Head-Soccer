@@ -2,14 +2,12 @@
 #include "gameObject/ScoreBoard.h"
 #include "Resources.h"
 
-ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(10), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
 	defineScoreBoardTexture();
 	scoreBoardText();
 	defineProgressTexture();
-
-
 }
 
 void ScoreBoard::defineScoreBoardTexture()

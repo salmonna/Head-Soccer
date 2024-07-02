@@ -114,8 +114,7 @@ void Board::handleScoreBoard() {
 		m_controllerPtr->setState(m_gameResults);
 		reset();
 	}
-
-	if (!ScoreBoard::getInstance().isGoal())
+	else if (!ScoreBoard::getInstance().isGoal())
 	{
 		Box2d::getInstance().step();
 	}
@@ -152,7 +151,6 @@ void Board::reset() {
 	{
 		m_staticObject.pop_back();
 	}
-	ScoreBoard::getInstance().reset();
 }
 
 //=============================================== for_each_pair =======================================//
