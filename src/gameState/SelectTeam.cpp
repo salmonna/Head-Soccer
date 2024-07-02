@@ -41,6 +41,9 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 	m_charcters.push_back(sprite);
 
 	selectTextPlayer();
+
+	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
+	m_whistle.setVolume(15);
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::selectTextPlayer()
@@ -144,6 +147,15 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 }
 
 //-----------------------------------------------------------------------------
+void SelectTeam::stopSongPlayWhistle()
+{	
+
+	sf::Sound & introSong = Resources::getInstance().getIntroSong();
+	introSong.stop();
+	m_whistle.play();
+	
+}
+//-----------------------------------------------------------------------------
 void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
 	
@@ -231,6 +243,7 @@ void SelectTeam::selectedPlayer()
 	{
 		Resources::getInstance().setSelectedPlayer(m_selectedPlayer[i]);
 	}
+
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::stopSongPlayWhistle()

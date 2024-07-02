@@ -77,7 +77,6 @@ private:
 	std::vector<sf::Sprite> m_progressP1Sprite;
 	std::vector<sf::Sprite> m_progressP2Sprite;
 
-
 	sf::Sprite m_goalSprite;
 
 	std::vector<sf::Sprite> m_flags;

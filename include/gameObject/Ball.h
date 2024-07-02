@@ -28,7 +28,7 @@ public:
 	void setPower(std::shared_ptr<Power> power);
 	void update();
 	void kick(bool rigthSide);
-	
+	sf::Color getBallColor()const;
 	std::shared_ptr<Power> getPower();
 
 	virtual ~Ball() {
@@ -45,4 +45,6 @@ private:
 	sf::Sprite m_sprite;
 	static bool m_registeritBall;
 	b2Body* m_body;
+	sf::Color m_ballColor;
+	bool m_restartBall;
 };

@@ -1,18 +1,19 @@
 #pragma once
 #include "Power.h"
 
-class ElectricPower : public Power
+class AvatarPower : public Power
 {
 public:
 
-	ElectricPower(bool playerSide);
+	AvatarPower(bool playerSide = true);
 
 	virtual void activatePowerOnPlayer(Player* player)override;
 	virtual void activatePowerOnBall(Ball* ball) override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
-	bool getSideOfPlayer()const;
+	virtual bool getSideOfPlayer() const override;
 
-	~ElectricPower() = default;
+
+	~AvatarPower() = default;
 
 private:
 	sf::Clock m_spriteSheetClock;
@@ -20,6 +21,5 @@ private:
 	int m_index;
 	sf::Sprite m_sprite;
 	bool m_playerSide;
-
 
 };

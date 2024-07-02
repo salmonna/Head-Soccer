@@ -191,6 +191,13 @@ b2World* Box2d::getBox2dWorld() {
     return &m_world;
 }
 
+void Box2d::step() {
+    float timeStep = 1.f / 60.f;
+    int32 velocityIterations = 6;
+    int32 positionIterations = 3;
+    m_world.Step(timeStep, velocityIterations, positionIterations);
+}
+
 void Box2d::draw(sf::RenderWindow& window)const {
 
     window.draw(m_ground);

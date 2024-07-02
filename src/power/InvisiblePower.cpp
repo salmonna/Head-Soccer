@@ -1,7 +1,9 @@
 #include "power/InvisiblePower.h"
 #include "Resources.h"
+#include "gameObject/Player.h"
+#include "gameObject/Ball.h"
 
-InvisiblePower::InvisiblePower() 
+InvisiblePower::InvisiblePower(bool playerSide):m_playerSide(playerSide)
 {
 
 
@@ -10,12 +12,26 @@ InvisiblePower::InvisiblePower()
 
 void InvisiblePower::activatePowerOnBall(Ball* ball)
 {
-    //currVelocity = sf::Vector2f(1500.f, 0.f);
-    //currVelocity.x *= direction.x;
+    setPowerIsActive(true);
 
-    //sf::Vector2f currPos = ball.getPosition();
-    //currPos.y -= 300.f;
-    //ball.setPosition(currPos);
+    // Adjust position if necessary
+    b2Vec2 currentPosition = ball->getBody()->GetPosition();
+    currentPosition.y -= 8.f; // Move the body 200 pixels higher (adjust as needed)
+    ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());    
+    ball->getSprite().setColor(sf::Color(64, 64, 64, 64));
+    // Set awake state to false to "pause" the body
+    ball->getBody()->SetAwake(false);
+}
 
-    //ball.setFillColor(sf::Color(256, 256, 256, 16));
+void InvisiblePower::activatePowerOnPlayer(Player* player) {
+
+
+   // player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
+    setPowerIsActive(false);
+}
+
+bool InvisiblePower::getSideOfPlayer()const {
+    return m_playerSide;
 }

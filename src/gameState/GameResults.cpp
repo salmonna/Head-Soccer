@@ -76,9 +76,9 @@ void GameResults::respond(sf::Vector2f mousePressed)
 
 		playerOrderAndSide();
 		finalScoreResult();
+
 		SoundControl::getInstance().getIntroSong().play();
-		
-	}
+		}
 }
 //----------------------------------------------------------------------------------
 void GameResults::resetGameResult()
@@ -186,6 +186,7 @@ void GameResults::drawFinalResult(sf::RenderWindow& window) const
 	}
 
 	for (int i = 0; i < m_flags.size(); i++)
+
 	{
 		window.draw(m_flags[i]);
 	}

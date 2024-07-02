@@ -4,9 +4,18 @@
 #include "Resources.h"
 #include "FileException.h"
 #include <iostream>
+#include "power/FirePower.h"
+#include "power/InvisiblePower.h"
+#include "power/DragonPower.h"
+#include "power/BigBallPower.h"
+#include "power/TornadoPower.h"
+#include "power/ElectricPower.h"
+#include "power/AvatarPower.h"
+#include <exception>
 
 //constractor of resources file are loading files
 Resources::Resources():m_selectedIndex(0){
+
 
 
 	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png",
@@ -46,7 +55,7 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
-	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png" };
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png", "Avatar.png"};
 	loadFromFile(power, m_powerTexture);
 
 
@@ -54,6 +63,7 @@ Resources::Resources():m_selectedIndex(0){
 	loadFromFile(powerOfPlayer, m_powerOfPlayer);
 
 	// Loading sound buffers.
+
 	std::vector<std::string> soundStr = {"super saiyan sound.wav","Whistle.wav","Intro Song.wav" ,"Crowd.wav","GoalSound.wav"};
 	for (int i = 0; i < soundStr.size(); i++) {
 		sf::SoundBuffer buffer;
@@ -63,6 +73,11 @@ Resources::Resources():m_selectedIndex(0){
 		m_bufferVec.push_back(buffer);
 	}
 
+	m_introSong.setBuffer(m_bufferVec[2]);
+	m_introSong.setVolume(15);
+	m_introSong.play();
+	m_introSong.setLoop(true);
+	
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{
@@ -119,7 +134,6 @@ std::vector<sf::Texture>& Resources::getScoreBoardTexture() {
 	return m_scoreBoardTexture;
 }
 
-
 //gameResultsTexture
 std::vector<sf::Texture>& Resources::getBallTexture() {
 
@@ -140,16 +154,51 @@ std::vector<sf::Texture>& Resources::getGameModeTexture() {
 //get characters
 sf::Texture& Resources::getCharactersTexture() {
 
-	if (m_selectedPlayer.size() < m_selectedIndex)
-		m_selectedPlayer.push_back(0);
+	try
+	{
+		int temp = m_selectedPlayer[m_selectedIndex];
+		m_selectedIndex++;
+		return m_charactersSheet[temp];
+	}
+	catch (const std::exception& e)
+	{
+		throw FileException("No available index found");
+	}
+
+}
+
+//get power
+std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 	
-	int temp = m_selectedPlayer[m_selectedIndex];
-	m_selectedIndex++;
-
-	if (m_charactersSheet.size() < temp)
-		throw FileException("No available character found");
-
-	return m_charactersSheet[temp];
+	try
+	{
+		int temp = m_selectedPlayer[m_selectedIndex-1];
+		switch (temp)
+		{
+		case 0:
+			return std::make_shared<FirePower>(playerSide);
+		case 1:
+			return std::make_shared<InvisiblePower>(playerSide);
+		case 2:
+			return std::make_shared<DragonPower>();
+		case 3:
+			return std::make_shared<BigBallPower>(playerSide);
+		case 4:
+			return std::make_shared<TornadoPower>(playerSide);
+		case 5:
+			return std::make_shared<ElectricPower>(playerSide);
+		case 6:
+			return std::make_shared<AvatarPower>(playerSide);
+		default:
+			break;
+		}
+		
+		return std::make_shared<FirePower>(playerSide);
+	}
+	catch (const std::exception& e)
+	{
+		throw FileException("No available index found in Resources::getPower");
+	}
 }
 
 //get select team textures
@@ -188,4 +237,10 @@ void Resources::resetPlayerOrder() {
 std::vector<sf::Texture>& Resources::getCountriesFlags() {
 
 	return m_countryFlags;
+}
+
+sf::Sound& Resources::getIntroSong() {
+
+	return m_introSong;
+
 }
