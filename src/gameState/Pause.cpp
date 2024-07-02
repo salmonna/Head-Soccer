@@ -26,6 +26,8 @@ void Pause::respond(sf::Vector2f pressed) {
 			if (i == 1) //exit to menu
 			{
 				m_boardState->reset();
+				ScoreBoard::getInstance().reset();
+				Resources::getInstance().resetPlayerOrder();
 			}
 
 			m_buttons[i]->execute();

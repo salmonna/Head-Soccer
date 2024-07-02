@@ -5,12 +5,12 @@ class ElectricPower : public Power
 {
 public:
 
-	ElectricPower();
+	ElectricPower(bool playerSide);
 
-	virtual void activatePowerOnPlayer(Player* player) {};
-	virtual void activatePowerOnBall(Ball* ball) override {};
+	virtual void activatePowerOnPlayer(Player* player)override;
+	virtual void activatePowerOnBall(Ball* ball) override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
-
+	bool getSideOfPlayer()const;
 
 	~ElectricPower() = default;
 
@@ -19,6 +19,7 @@ private:
 	std::vector<std::pair<sf::Vector2i, sf::Vector2i>> m_spriteSheet;
 	int m_index;
 	sf::Sprite m_sprite;
+	bool m_playerSide;
 
 
 };

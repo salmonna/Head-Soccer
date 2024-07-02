@@ -78,6 +78,17 @@ void Player::move(sf::Vector2f pressed) {
 		if (m_powerClock.getElapsedTime().asSeconds() > 3) {
 			m_powerOnPlayer = false;
 			m_sprite.setColor(m_playerColor);
+
+			if (m_sprite.getPosition().y > 900.f)
+			{
+				// Adjust position if necessary
+				b2Vec2 currentPosition = m_body->GetPosition();
+				currentPosition.y = 26.f; // Move the body 200 pixels higher (adjust as needed)
+
+				m_body->SetTransform(currentPosition, m_body->GetAngle());
+				m_body->GetFixtureList()->SetSensor(false); //need to fix the power
+			}
+
 		}
 	}
 	else {

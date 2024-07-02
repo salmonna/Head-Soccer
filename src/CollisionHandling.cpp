@@ -22,7 +22,6 @@ namespace // anonymous namespace — the standard way to make function "static"
 {
 
     //=======================================UPDATE========================================\\ 
-
     //update after collide
     void updateBall(Ball& ballObject, Player& playerObject)
     {

@@ -1,9 +1,10 @@
 #include "power/ElectricPower.h"
+#include "gameObject/Player.h"
 #include "gameObject/Ball.h"
 #include "Resources.h"
 
 
-ElectricPower::ElectricPower() :m_spriteSheetClock(), m_index(0)
+ElectricPower::ElectricPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[5]);
 
@@ -22,6 +23,34 @@ ElectricPower::ElectricPower() :m_spriteSheetClock(), m_index(0)
     }
 
 };
+
+void ElectricPower::activatePowerOnBall(Ball* ball)
+{
+    setPowerIsActive(true);
+
+    // Adjust position if necessary
+    b2Vec2 currentPosition = ball->getBody()->GetPosition();
+    currentPosition.y -= 5.f; // Move the body 200 pixels higher (adjust as needed)
+    ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
+
+    // Set awake state to false to "pause" the body
+    ball->getBody()->SetAwake(false);
+}
+
+void ElectricPower::activatePowerOnPlayer(Player* player) {
+
+    //need to fix this power
+
+
+    // Adjust position if necessary
+    b2Vec2 currentPosition = player->getBody()->GetPosition();
+    currentPosition.y = -30.f; // Move the body 200 pixels higher (adjust as needed)
+    player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
+
+    player->restartClock();
+    player->setPowerOnPlayer(true); //freexe plower
+    setPowerIsActive(false);
+}
 
 void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
 {
@@ -47,3 +76,6 @@ void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
 
 }
 
+bool ElectricPower::getSideOfPlayer()const {
+    return m_playerSide;
+}

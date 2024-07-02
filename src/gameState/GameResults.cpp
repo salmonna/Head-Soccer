@@ -64,17 +64,6 @@ void GameResults::respond(sf::Vector2f mousePressed)
 	if (!m_initilaze) {
 		playerOrderAndSide();
 		finalScoreResult();
-		updateFlags();
-	}
-}
-void GameResults::updateFlags()
-{
-	std::vector<sf::Texture>& texture = Resources::getInstance().getCountriesFlags();
-	std::vector<int> flagsOrder = Resources::getInstance().getPlayerOrder();
-
-	for (int i = 0; i < flagsOrder.size(); i++)
-	{
-		m_playersFlags.push_back(sf::Sprite(texture[flagsOrder[i]]));
 	}
 }
 //----------------------------------------------------------------------------------
@@ -82,12 +71,13 @@ void GameResults::resetGameResult()
 {	
 	m_initilaze = false;
 	m_charcters.clear();
+	m_flags.clear();
 	ScoreBoard::getInstance().reset();
 	m_gameResultSprite.erase(m_gameResultSprite.begin() + 1 , m_gameResultSprite.end());
 }
 //----------------------------------------------------------------------------------
 void GameResults::playerOrderAndSide()
-{
+{	
 	//set player oreder and sides
 	auto playerOrder = Resources::getInstance().getPlayerOrder();
 	auto sprite = sf::Sprite();
@@ -99,10 +89,13 @@ void GameResults::playerOrderAndSide()
 		m_charcters.push_back(sprite);
 	}
 
-	m_charcters[0].setPosition(1320, 350);
+	m_charcters[0].setPosition(1320.f, 350.f);
 	m_charcters[0].scale(-1, 1);
-	m_charcters[1].setPosition(400, 350);
+	m_charcters[1].setPosition(400.f, 350.f);
 
+	m_flags = ScoreBoard::getInstance().getFlags();
+	m_flags[0].setPosition(1080.f, 675.f);
+	m_flags[1].setPosition(530.f, 675.f);
 	Resources::getInstance().resetPlayerOrder();
 	m_initilaze = true;
 }
@@ -173,15 +166,14 @@ void GameResults::drawFinalResult(sf::RenderWindow& window) const
 		window.draw(m_resultText[i]);
 	}
 
-
-	for (int i = 0; i < m_playersFlags.size(); i++)
-	{
-		window.draw(m_playersFlags[i]);
-	}
-
 	for (int i = 0; i < m_charcters.size(); i++)
 	{
 		window.draw(m_charcters[i]);
+	}
+
+	for (int i = 0; i < m_flags.size(); i++)
+	{
+		window.draw(m_flags[i]);
 	}
 
 }

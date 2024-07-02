@@ -8,7 +8,7 @@
 
 
 //menu constractor initilize his members
-Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window)
+Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window): m_isSongPlayed(false)
 {
 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getMenuTexture();
@@ -22,12 +22,20 @@ Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameM
 
 //check if there is a click on one of the menu buttons
 void Menu::respond(sf::Vector2f pressed) {
+
+	if (!m_isSongPlayed) {
+		auto intrSong = Resources::getInstance().getIntroSong();
+		intrSong.play();
+		intrSong.setLoop(true);
+		m_isSongPlayed = true;
+	}
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
 		if (m_buttons[i]->contains(pressed)) {
 			
 			m_buttons[i]->execute();
+
 			return;
 		}
 	}
