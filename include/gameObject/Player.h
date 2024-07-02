@@ -32,16 +32,15 @@ public:
 	void setPowerOnPlayer(bool powerOnPlayer);
 	bool getPowerOnPlayer() const;
 
-	void resetProgress();
+	void resetPlayerProgress();
 
 	std::shared_ptr<Power> getPower();
 
 	void setAura(bool aura);
 	bool getAura() const;
-	bool getSide() const;
 	void update();
 	
-	bool getSideOfPlayer();
+	bool getSideOfPlayer()const;
 	void restartClock();
 
 	virtual ~Player() {
@@ -71,6 +70,7 @@ private:
 	static bool m_registeritLeftPlayer;
 
 	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590));
+	void deactivatePower();
 
 	LeftMoveState m_leftMoveState;
 	RightMoveState m_rightMoveState;

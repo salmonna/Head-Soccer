@@ -1,13 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Box2d.h"
+#include "Keyboard.h"
 
 class BaseMovePlayerState
 {
 public:
 	BaseMovePlayerState();
 	
-	virtual void movement(sf::Sprite& sprite, bool playerSide, b2Body* body) = 0;
+	virtual void movement(sf::Sprite& sprite, Keyboard key, b2Body* body) = 0;
 	virtual BaseMovePlayerState* handleMoveStatus() = 0;
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime, sf::Sprite& sprite, sf::Vector2f size);

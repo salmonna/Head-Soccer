@@ -141,8 +141,8 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 void ScoreBoard::Progress()
 {
 	float seconds = m_clock.getElapsedTime().asSeconds();
-	ScoreBoard::getInstance().updateProgress(m_progressP1Sprite, m_progressP1, seconds);
-	ScoreBoard::getInstance().updateProgress(m_progressP2Sprite, m_progressP2, seconds);
+	updateProgress(m_progressP1Sprite, m_progressP1, seconds);
+	updateProgress(m_progressP2Sprite, m_progressP2, seconds);
 	
 	if (m_goalSign)
 		m_goalSprite.move(10, 0);

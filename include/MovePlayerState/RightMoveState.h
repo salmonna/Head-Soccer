@@ -11,7 +11,7 @@ public:
 	RightMoveState(StandPlayerState * standMoveState, JumpMoveState* jumpMoveState);
 	virtual ~RightMoveState();
 
-	virtual void movement(sf::Sprite& sprite, bool playerSide, b2Body* body) override;
+	virtual void movement(sf::Sprite& sprite, Keyboard key, b2Body* body) override;
 	virtual BaseMovePlayerState* handleMoveStatus() override;
 
 private:
@@ -21,6 +21,5 @@ private:
 	JumpMoveState* m_jumpMoveState;
 	BaseMovePlayerState* m_currentState;
 
-	Keyboard m_keys;
 };
 

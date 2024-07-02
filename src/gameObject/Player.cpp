@@ -11,18 +11,14 @@ m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMov
 ,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
 m_currentMoveState(&m_standMoveState)
 {
-
-	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-
-	if (m_playerSide)
+	if (!m_playerSide)
+		m_basePosition = sf::Vector2f(272, 775);
+	else
 	{
 		m_sprite.setScale(-1, 1);
 		m_basePosition = sf::Vector2f(1520, 775);
 	}
-	else
-	{
-		m_basePosition = sf::Vector2f(272, 775);
-	}
+
 	//----------------------box2d---------------------------//
 	m_body = Box2d::getInstance().createPlayer(m_basePosition);
 	
@@ -32,8 +28,11 @@ m_currentMoveState(&m_standMoveState)
 	resetToPosition();
 	m_playerColor = m_sprite.getColor();
 	m_sprite.setPosition(m_basePosition);
+	
+	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
 
 }
+//---------------------------------------- Factory ----------------------------------
 
 bool Player::m_registeritRightPlayer = MovingFactory::registeritMoving("RightPlayer",
 	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<Player>(true,
@@ -67,58 +66,20 @@ void Player::draw(sf::RenderWindow& window) const {
 void Player::move(sf::Vector2f pressed) {
 
 	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
-
 	if (nextState) 
 		m_currentMoveState = nextState;
 
 	// Check if the power is active
-	if (m_powerOnPlayer) {
-
-		// Check if more than 5 seconds have passed since the power was activated
-		if (m_powerClock.getElapsedTime().asSeconds() > 3) {
-			m_powerOnPlayer = false;
-			m_sprite.setColor(m_playerColor);
-
-			if (m_sprite.getPosition().y > 900.f)
-			{
-				// Adjust position if necessary
-				b2Vec2 currentPosition = m_body->GetPosition();
-				currentPosition.y = 26.f; // Move the body 200 pixels higher (adjust as needed)
-
-				m_body->SetTransform(currentPosition, m_body->GetAngle());
-				m_body->GetFixtureList()->SetSensor(false); //need to fix the power
-			}
-
-		}
-	}
+	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2)) 
+		deactivatePower();
 	else {
-
-		m_currentMoveState->movement(m_sprite, m_playerSide, m_body);
-		
+		m_currentMoveState->movement(m_sprite, m_keys, m_body);
 	}
+
 	update();
 
-
-
-	bool valid = false;
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
-		valid = true;
-	}
-
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
-		valid = true;
-	}
-
-	if (valid)
-	{
-		resetProgress();
-		m_aura = true;
-		m_sound.play();
-		m_sound.setLoop(true);
-	}
-	
-	if (!m_aura)
-		m_sound.stop();
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE))
+		resetPlayerProgress();
 
 }
 
@@ -132,22 +93,39 @@ void Player::resetToPosition(sf::Vector2f startPos) {
 	m_sprite.setPosition(float(m_basePosition.x ), float(m_basePosition.y));
 }
 //-----------------------------------------------------------------------------
-void Player::resetProgress()
+void Player::resetPlayerProgress()
 {
-	if (!m_playerSide)
+	if (ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide)
 	{
 		ScoreBoard::getInstance().resetProgressP1();
+		setAura(true);
 	}
-	else
+	else if(ScoreBoard::getInstance().istProgressP2Full() && m_playerSide)
 	{
 		ScoreBoard::getInstance().resetProgressP2();
+		setAura(true);
 	}
 
 }
+
 //-----------------------------------------------------------------------------
-sf::Sprite& Player::getSprite() {
-	return m_sprite;
+void Player::deactivatePower() {
+	// Deactivate the power
+	m_powerOnPlayer = false;
+	m_sprite.setColor(m_playerColor);
+
+	// Check if the player's Y position is greater than 900.f
+	if (m_sprite.getPosition().y > 900.f) {
+		// Adjust position if necessary
+		b2Vec2 currentPosition = m_body->GetPosition();
+		currentPosition.y = 26.f; // Move the body to the desired Y position
+
+		// Update the body's position and fix the power-related sensor issue
+		m_body->SetTransform(currentPosition, m_body->GetAngle());
+		m_body->GetFixtureList()->SetSensor(false);
+	}
 }
+
 //-----------------------------------------------------------------------------
 void Player::reset() {
 	// Update the position of the Box2D body
@@ -160,41 +138,51 @@ void Player::reset() {
 }
 
 //-----------------------------------------------------------------------------
-//get keys
-Keyboard Player::getKey() const
-{
-	return m_keys;
+void Player::update() {
+	b2Vec2 position = m_body->GetPosition();
+	m_sprite.setPosition(B2VecToSFVec(position));
 }
+
 //-----------------------------------------------------------------------------
 std::shared_ptr<Power> Player::getPower()
 {
 	return m_power;
 }
-
-void Player::setAura(bool aura) {
-	m_aura = aura;
+//-----------------------------------------------------------------------------
+sf::Sprite& Player::getSprite() {
+	return m_sprite;
 }
 //-----------------------------------------------------------------------------
 bool Player::getAura() const{
 	return m_aura;
 }
-//-----------------------------------------------------------------------------
 
-void Player::update() {
-	b2Vec2 position1 = m_body->GetPosition();
-	m_sprite.setPosition(B2VecToSFVec(position1));
+void Player::setAura(bool aura) {
+	if (!m_aura && aura) {
+		m_sound.play();
+		m_sound.setLoop(true);
+	}
+	else
+	{
+		m_sound.stop();
+	}
+	
+	m_aura = aura;
 }
 
-bool Player::getSideOfPlayer() {
-	return m_playerSide;
-}
-
-bool Player::getSide() const {
+bool Player::getSideOfPlayer() const {
 	return m_playerSide;
 }
 
 b2Body* Player::getBody() {
 	return m_body;
+}
+
+//-----------------------------------------------------------------------------
+//get keys
+Keyboard Player::getKey() const
+{
+	return m_keys;
 }
 
 void Player::setPowerOnPlayer(bool powerOnPlayer) {
