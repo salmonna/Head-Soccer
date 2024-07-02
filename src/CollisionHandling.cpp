@@ -17,6 +17,9 @@
 #include "gameObject/GoalTop.h"
 #include "Keyboard.h"
 #include "Resources.h"
+#include "SoundControl.h"
+#include "Box2d.h"
+
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
@@ -60,6 +63,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         (goalObject.getGoalSide()) ? ScoreBoard::getInstance().updateScore(1, 0) : ScoreBoard::getInstance().updateScore(0, 1);
         
         ScoreBoard::getInstance().setGoalSign();
+        SoundControl::getInstance().getGoalSound().play();
 
         ballObject.getPower()->setPowerIsActive(false);
         ballObject.reset();

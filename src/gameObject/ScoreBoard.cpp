@@ -3,9 +3,9 @@
 #include "Resources.h"
 #include "FileException.h"
 #include <exception>
+#include "SoundControl.h"
 
-
-ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(15), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
 
@@ -119,13 +119,15 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_progressP2Sprite[i]);
 	}
 
-	for (int i = 0; i < m_flags.size(); i++)
+
+  for (int i = 0; i < m_flags.size(); i++)
 	{
 		window.draw(m_flags[i]);
 	}
-
+  
 	if (m_goalSign)
 		window.draw(m_goalSprite);
+
 }
 
 
@@ -226,8 +228,10 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
-		
-		m_whistle.play();
+
+		SoundControl::getInstance().getWhistle().play(); // play whistle sound
+		SoundControl::getInstance().getCrowd().pause(); // pause crowd sound
+		SoundControl::getInstance().getGoalSound().pause();// pause goal sound
 		return true;
 	}
 	return false;
@@ -240,6 +244,7 @@ void ScoreBoard::reset()
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
+
 	m_flags.clear();
 	resetProgressP1();
 	resetProgressP2();

@@ -3,17 +3,22 @@
 #include "Resources.h"
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
+#include "Command/Sound.h"
+#include "SoundControl.h"
 
 GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, Menu* menu, SelectTeam* selectTeam):m_boardPtr(boardState), m_selectTeamPtr(selectTeam)
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getGameModeTexture();
 	m_Stage.setTexture(texture[0]);
 
-	
+	std::vector<sf::Texture> & tex = Resources::getInstance().getMenuTexture();
+  
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(350.f, 250.f))); //Button 1
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 250.f))); //Button 2
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 250.f))); //Button 3
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
+
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 100.f)));//sound Button
 
 	textModeSelection();
 }
@@ -22,7 +27,7 @@ void GameModeSelection::textModeSelection()
 {
 	sf::Font& font = Resources::getInstance().getFont();
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		m_modeText.push_back(sf::Text());
 		m_modeText[i].setFont(font);
@@ -40,6 +45,7 @@ void GameModeSelection::textModeSelection()
 	m_modeText[1].setString("Single player Mode");
 	m_modeText[2].setString("     Online Mode");
 	m_modeText[3].setString("Back To Menu");
+	m_modeText[4].setString("Trun off/on the Music");
 
 	auto title = m_modeText[1];
 	title.setString("Game Mode");
@@ -61,7 +67,8 @@ void GameModeSelection::textModeSelection()
 void GameModeSelection::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_Stage);
-	window.draw(m_modeText[4]);
+
+	window.draw(m_modeText[5]);
 	
 	sf::Vector2i mouseMove = sf::Mouse::getPosition(window);
 
