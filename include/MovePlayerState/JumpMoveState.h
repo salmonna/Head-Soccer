@@ -3,7 +3,6 @@
 #include "MovePlayerState/LeftMoveState.h"
 #include "MovePlayerState/RightMoveState.h"
 #include "MovePlayerState/KickMoveState.h"
-#include "Keyboard.h"
 
 class StandPlayerState;
 
@@ -14,7 +13,7 @@ public:
 	virtual ~JumpMoveState();
 
 	virtual BaseMovePlayerState* handleMoveStatus() override;
-	virtual void movement(sf::Sprite& sprite, bool playerSide, b2Body* body)override;
+	virtual void movement(sf::Sprite& sprite, Keyboard key, b2Body* body)override;
 
 private:
 
@@ -23,9 +22,6 @@ private:
 	BaseMovePlayerState* m_currentState;
 	KickMoveState* m_kickMoveState;
 
-	Keyboard m_keys;
-
 	bool m_jump;
-
 };
 

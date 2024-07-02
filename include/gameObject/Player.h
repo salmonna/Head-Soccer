@@ -6,16 +6,12 @@
 #include "Keyboard.h"
 #include "Factory/MovingFactory.h"
 #include "power/Power.h"
-
 #include <SFML/Audio.hpp>
-
-
 #include "Box2d.h"
 #include <iostream>
-//-------
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/StandPlayerState.h"
-//-------
+
 
 class Player: public MovingObject
 {
@@ -23,54 +19,39 @@ public:
 	Player(bool right, Keyboard keys);
 
 	virtual void draw(sf::RenderWindow& window) const override;
-	virtual void move(sf::Vector2f pressed) override;
+	virtual void move() override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset()override;
-	virtual b2Body* getBody()override;
-	Keyboard getKey() const;
-  
-	void setPowerOnPlayer(bool powerOnPlayer);
-	bool getPowerOnPlayer() const;
-
-	void resetProgress();
-
-	std::shared_ptr<Power> getPower();
-
-	void setAura(bool aura);
-	bool getAura() const;
-	bool getSide() const;
-	void update();
+	virtual b2Body* getBody()const override;
 	
-	bool getSideOfPlayer();
+	void update();
 	void restartClock();
 
-	virtual ~Player() {
-		std::cout << " P-D" << std::endl;
-		m_body->DestroyFixture(m_body->GetFixtureList());
-		auto world = Box2d::getInstance().getBox2dWorld();
-		world->DestroyBody(m_body);
-		m_body = nullptr;
-	};
-
+	//----------------------- get --------------//
+	bool getSideOfPlayer()const;
+	bool getAura() const;
+	Keyboard getKey() const;
+	std::shared_ptr<Power> getPower() const;
+	bool getPowerOnPlayer() const;
+	
+	//----------------------- set --------------//
+	void setPowerOnPlayer(bool powerOnPlayer);
+	void setAura(bool aura);
+	
+	virtual ~Player();
 private:
 
-	bool m_playerSide;
-	bool m_aura;
-	bool m_powerOnPlayer;
-
-	std::shared_ptr<Power> m_power;
+	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590));
+	void deactivatePower();
+	void resetPlayerProgress();
 
 	sf::Sprite m_sprite;
 	sf::Clock m_powerClock;
 	sf::Vector2f m_basePosition;
+	sf::Color m_playerColor;
+	sf::Sound m_sound;
 
 	Keyboard m_keys;
-	sf::Sound m_sound;
-  
-	static bool m_registeritRightPlayer;
-	static bool m_registeritLeftPlayer;
-
-	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590));
 
 	LeftMoveState m_leftMoveState;
 	RightMoveState m_rightMoveState;
@@ -79,8 +60,14 @@ private:
 	StandPlayerState m_standMoveState;
 	BaseMovePlayerState* m_currentMoveState;
 
-	sf::Color m_playerColor;
+	std::shared_ptr<Power> m_power;
+
 	b2Body* m_body;
+
+	bool m_playerSide;
+	bool m_aura;
+	bool m_powerOnPlayer;
+
+	static bool m_registeritRightPlayer;
+	static bool m_registeritLeftPlayer;
 };
-
-

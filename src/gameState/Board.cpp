@@ -22,6 +22,7 @@
 // Constructor for the Board class
 Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults),m_controllerPtr(controller)
 {
+	
 	std::vector<sf::Texture>& texture = Resources::getInstance().getBoardTexture();
 	for (size_t i = 0; i < texture.size(); i++)
 	{
@@ -53,7 +54,14 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 		else
 			std::cout << "Class not found!\n";
 	}
+	if (objectNames[1] == "ComputerPlayer")
+	{
+		// Assuming m_movingObject is a vector or array of std::shared_ptr<BaseClass>
+		std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[2]);
+		std::shared_ptr<ComputerPlayer> computerObject = std::dynamic_pointer_cast<ComputerPlayer>(m_movingObject[1]);
 
+		computerObject->setBall(ballObject);
+	}
 	ScoreBoard::getInstance().setFlagsPlayers();
 
 }
@@ -84,8 +92,7 @@ void Board::respond(sf::Vector2f pressed) {
 	//move the players and the ball
 	for (int i = 0; i < m_movingObject.size() && !ScoreBoard::getInstance().isGoal(); i++)
 	{
-		m_movingObject[i]->move(pressed);
-
+		m_movingObject[i]->move();
 	}
 	
 	for_each_pair(m_gameObject.begin() + 4, m_gameObject.end() - 2, [&](auto& a, auto& b) {

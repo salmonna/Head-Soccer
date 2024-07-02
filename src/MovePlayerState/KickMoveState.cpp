@@ -7,7 +7,7 @@ m_standMoveState(standState),m_jumpMoveState(jumpMoveState)
 	m_startPos = sf::Vector2f(160, 126);
 }
 //-------------------------------------------------------------------------
-void KickMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) {
+void KickMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	movePlayer(m_startPos, 7, 10, sprite, sf::Vector2f(80, 95));
 

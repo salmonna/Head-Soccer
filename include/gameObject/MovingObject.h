@@ -8,7 +8,7 @@ class MovingObject:public GameObject
 public:
 	MovingObject() = default;
 
-	virtual void move(sf::Vector2f pressed) = 0;
+	virtual void move() = 0;
 	virtual void draw(sf::RenderWindow& window) const = 0;
 	virtual void reset() = 0;
 
