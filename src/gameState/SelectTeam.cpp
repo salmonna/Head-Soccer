@@ -7,7 +7,7 @@
 
 class GameModeSelection;
 
-SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_playerSelected(0)
+SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_PlayerSelected(0)
 , m_boardPtr(boardState)
 {
 	m_stage.setTexture(Resources::getInstance().getGameModeTexture()[4]);
@@ -57,7 +57,7 @@ void SelectTeam::selectTextPlayer()
 		m_selectText[i].setOutlineColor(sf::Color::Green);
 		m_selectText[i].setOutlineThickness(5);
 	}
-	std::vector<std::string> choseText{ "Select the first player","Select the second player",
+	std::vector<std::string> choseText{ "Select the first Player","Select the second Player",
 										"Click below to start playing"};
 
 	for (int i = 0; i < choseText.size(); i++)
@@ -95,7 +95,7 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
-		if (i == 0 && m_playerSelected != m_numOfPlayers) {
+		if (i == 0 && m_PlayerSelected != m_numOfPlayers) {
 
 			continue;
 		}
@@ -125,18 +125,18 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 
 void SelectTeam::checkToDraw(sf::RenderWindow& window) const {
 
-	if (m_playerSelected < 1 || m_numOfPlayers == 1)
+	if (m_PlayerSelected < 1 || m_numOfPlayers == 1)
 	{	
-		if (m_playerSelected == 1)
+		if (m_PlayerSelected == 1)
 			window.draw(m_selectText[2]);
 		else
 			window.draw(m_selectText[0]);
 		
 		window.draw(m_frames[0]);
 	}
-	else if (m_playerSelected >= 1  && m_numOfPlayers > 1)
+	else if (m_PlayerSelected >= 1  && m_numOfPlayers > 1)
 	{	
-		if (m_playerSelected >= 2)
+		if (m_PlayerSelected >= 2)
 			window.draw(m_selectText[2]);
 		else
 			window.draw(m_selectText[1]);
@@ -153,7 +153,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	{
 		if (m_buttons[i]->contains(mousePressed)) {
 
-			if (i == 0 && m_playerSelected != m_numOfPlayers) {
+			if (i == 0 && m_PlayerSelected != m_numOfPlayers) {
 
 				continue;
 			}
@@ -182,8 +182,8 @@ void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
 		if (m_charcters[i].getGlobalBounds().contains(mousePressed)) {
 
-			if (m_playerSelected < m_numOfPlayers) {
-				m_playerSelected++;
+			if (m_PlayerSelected < m_numOfPlayers) {
+				m_PlayerSelected++;
 				m_selectedPlayer.push_back(i);
 			}
 		}
@@ -199,11 +199,11 @@ void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
 
 		sf::Vector2f pos = m_charcters[index].getPosition();
 
-		if (m_playerSelected < 1) {
+		if (m_PlayerSelected < 1) {
 
 			m_frames[0].setPosition(pos.x, pos.y - 30);
 		}
-		else if (m_playerSelected == 1)
+		else if (m_PlayerSelected == 1)
 		{
 			m_frames[1].setPosition(pos.x, pos.y - 30);
 		}
@@ -212,15 +212,15 @@ void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
 
 //-----------------------------------------------------------------------------
 
-void SelectTeam::setNumberOfPlayers(int players) {
+void SelectTeam::setNumberOfPlayers(int Players) {
 
-	m_numOfPlayers = players;
+	m_numOfPlayers = Players;
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::reset() {
 
 	m_selectedPlayer.clear();
-	m_playerSelected = 0;
+	m_PlayerSelected = 0;
 	for (int i = 0; i < m_frames.size(); i++)
 	{
 		m_frames[i].setPosition(3 * 200 - 400, 320);

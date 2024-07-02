@@ -2,8 +2,10 @@
 #include "Resources.h"
 #include "power/FirePower.h"
 #include "gameObject/scoreBoard.h"
+#include "gameObject/ScoreBoard.h"
+#include "SoundControl.h"
 
-ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
+ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock()
 {
 
 	sf::Vector2f pos(550, 80);
@@ -13,7 +15,7 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 	Resources::getInstance().setSelectedPlayer(random_number);
 	m_sprite.setTexture(Resources::getInstance().getCharactersTexture());
 	m_power = Resources::getInstance().getPower(false);
-	resetToPosition();
+	resetToPosition(m_sprite,m_basePosition);
 	m_basePosition = sf::Vector2f(272, 775);
 
 	//----------------------box2d---------------------------//
@@ -25,6 +27,9 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false)
 	m_startSprite.push_back(sf::Vector2f(160, 8));
 	m_startSprite.push_back(sf::Vector2f(160, 365));
 
+	m_PlayerColor = m_sprite.getColor();
+
+	m_auraSound.setBuffer(Resources::getInstance().getBufferVec()[0]);
 }
 
 bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
@@ -36,7 +41,16 @@ void ComputerPlayer::move() {
 	sf::Vector2f direction = m_ball->getSprite().getPosition() - m_sprite.getPosition();
 	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-	updateMovement(m_ball->getSprite().getPosition(), length, direction);
+	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2.f)) {
+
+		deactivatePower(m_body,m_sprite,m_PlayerColor,m_powerOnPlayer);
+	}
+	else
+	{
+		updateMovement(m_ball->getSprite().getPosition(), length, direction);
+	}
+	update();
+	checkIfTurnOnAura();
 }
 //-----------------------------------------------------------------------------
 void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float length, const sf::Vector2f& direction) {
@@ -45,11 +59,10 @@ void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float leng
 	if (m_jump) {
 		movePlayer(m_startSprite[2], 7, 100);
 	}
-	update();
 
 	if (length > kickRange) {
-		if (length > 600 && ballPosition.x > m_sprite.getPosition().x) {
-			resetToPosition();
+		if (length > 500 && ballPosition.x > m_sprite.getPosition().x) {
+			resetToPosition(m_sprite,m_basePosition);
 			return;
 		}
 
@@ -70,13 +83,23 @@ void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float leng
 	}
 }
 //-----------------------------------------------------------------------------
+void ComputerPlayer::checkIfTurnOnAura() {
+
+	if (ScoreBoard::getInstance().istProgressP1Full()) {
+
+		ScoreBoard::getInstance().resetProgressP1();
+		setAura(true);
+	}
+}
+
+//-----------------------------------------------------------------------------
 void ComputerPlayer::reset() {
 	b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
 	m_body->SetTransform(newPosition, m_body->GetAngle());
 	
 }
 //-----------------------------------------------------------------------------
-//function that move the player
+//function that move the Player
 void ComputerPlayer::movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime) {
 
 	float sec = float(m_moveClock.getElapsedTime().asMilliseconds());
@@ -92,7 +115,7 @@ void ComputerPlayer::movePlayer(sf::Vector2f startPos, int maxSprite, float maxT
 		{
 			m_moveClock.restart();
 			m_numOfJump += 115;
-			resetToPosition(startPos, m_numOfJump);
+			resetToPosition(m_sprite,m_basePosition,startPos,m_numOfJump);
 		}
 
 	}
@@ -103,16 +126,12 @@ void ComputerPlayer::update() {
 	m_sprite.setPosition(B2VecToSFVec(position1));
 }
 //-----------------------------------------------------------------------------
-// Reset to default position if not jumping
-void ComputerPlayer::resetToPosition(sf::Vector2f startPos, int numOfJump) {
-
-	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
-	// Set the texture rectangle to the character's position and size on the sprite sheet
-	m_sprite.setTextureRect(characterRect);
-}
-//-----------------------------------------------------------------------------
 void ComputerPlayer::draw(sf::RenderWindow& window)const {
-	ScoreBoard::getInstance().draw(window);
+
+	if (m_aura) {
+		m_power->drawAura(window, m_sprite.getPosition(), m_sprite.getOrigin());
+	}
+
 	window.draw(m_sprite);
 }
 //-----------------------------------------------------------------------------
@@ -122,6 +141,46 @@ b2Body* ComputerPlayer::getBody()const {
 //-----------------------------------------------------------------------------
 void ComputerPlayer::setBall(std::shared_ptr<Ball> ball) {
 	m_ball = ball;
+}
+//-----------------------------------------------------------------------------
+bool ComputerPlayer::getAura()const {
+
+	return m_aura;
+}
+//-----------------------------------------------------------------------------
+bool ComputerPlayer::getSideOfPlayer()const  {
+
+	return false;
+}
+//-----------------------------------------------------------------------------
+void ComputerPlayer::setPowerOnPlayer(bool powerOnPlayer)  {
+
+	m_powerOnPlayer = powerOnPlayer;
+}
+//-----------------------------------------------------------------------------
+bool ComputerPlayer::getPowerOnPlayer() const  {
+
+	return m_powerOnPlayer;
+}
+//-----------------------------------------------------------------------------
+std::shared_ptr<Power> ComputerPlayer::getPower() const  {
+	return m_power;
+}
+//-----------------------------------------------------------------------------
+void ComputerPlayer::restartClock() {
+	m_powerClock.restart().asSeconds();
+}
+//-----------------------------------------------------------------------------
+void ComputerPlayer::setAura(bool aura) {
+
+	if (!m_aura && aura) {
+		m_auraSound.play();
+		m_auraSound.setLoop(true);
+	}
+	else
+		m_auraSound.stop();
+
+	m_aura = aura;
 }
 //-----------------------------------------------------------------------------
 ComputerPlayer::~ComputerPlayer()

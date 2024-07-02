@@ -31,11 +31,11 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png","Goal.png" };
 	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
 
-	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png", "Online.png","BackgroundGameMode2.png" };
+	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "MultiPlayer.png" ,"Player.png", "Online.png","BackgroundGameMode2.png" };
 	loadFromFile(gameMode, m_gameModeTexture);
 
 	std::vector<std::string> characters{"BrazilianPlayer.png", "ItalyPlayer.png","EnglandPlayer.png",
-										"SpainPlayer.png","HolandPlayer.png","PortugalPLayer.png","GermanyPlayer.png" }; 
+										"SpainPlayer.png","HolandPlayer.png","PortugalPlayer.png","GermanyPlayer.png" }; 
 	loadFromFile(characters, m_charactersSheet);
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png", "Ball 04.png" };
@@ -162,7 +162,7 @@ sf::Texture& Resources::getCharactersTexture() {
 }
 
 //get power
-std::shared_ptr<Power> Resources::getPower(bool playerSide) {
+std::shared_ptr<Power> Resources::getPower(bool PlayerSide) {
 	
 	try
 	{
@@ -170,24 +170,24 @@ std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 		switch (temp)
 		{
 		case 0:
-			return std::make_shared<FirePower>(playerSide);
+			return std::make_shared<FirePower>(PlayerSide);
 		case 1:
-			return std::make_shared<InvisiblePower>(playerSide);
+			return std::make_shared<InvisiblePower>(PlayerSide);
 		case 2:
-			return std::make_shared<DragonPower>(playerSide);
+			return std::make_shared<DragonPower>(PlayerSide);
 		case 3:
-			return std::make_shared<BigBallPower>(playerSide);
+			return std::make_shared<BigBallPower>(PlayerSide);
 		case 4:
-			return std::make_shared<TornadoPower>(playerSide);
+			return std::make_shared<TornadoPower>(PlayerSide);
 		case 5:
-			return std::make_shared<ElectricPower>(playerSide);
+			return std::make_shared<ElectricPower>(PlayerSide);
 		case 6:
-			return std::make_shared<AvatarPower>(playerSide);
+			return std::make_shared<AvatarPower>(PlayerSide);
 		default:
 			break;
 		}
 		
-		return std::make_shared<FirePower>(playerSide);
+		return std::make_shared<FirePower>(PlayerSide);
 	}
 	catch (const std::exception& e)
 	{

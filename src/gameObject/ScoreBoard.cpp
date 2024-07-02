@@ -291,9 +291,9 @@ void ScoreBoard::setGoalSign() {
 
 void ScoreBoard::setFlagsPlayers() {
 
-	std::vector<int> players = Resources::getInstance().getPlayerOrder();
+	std::vector<int> Players = Resources::getInstance().getPlayerOrder();
 
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < Players.size(); i++)
 	{
 		int index = Resources::getInstance().getPlayerOrder()[i];
 		auto sprite = sf::Sprite(Resources::getInstance().getCountriesFlags()[index]);

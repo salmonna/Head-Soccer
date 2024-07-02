@@ -18,7 +18,7 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
-	void setNumberOfPlayers(int players);
+	void setNumberOfPlayers(int Players);
 
 private:
 	void selectTextPlayer();
@@ -45,6 +45,6 @@ private:
 	std::vector<int> m_selectedPlayer;
 
 	int m_numOfPlayers;
-	int m_playerSelected;
+	int m_PlayerSelected;
 };
 

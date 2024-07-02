@@ -17,7 +17,7 @@ public:
 
 	void updateWinnerMatch(int leftPlayerPoint, int rightPlayerPoint);
 
-	void playerOrderAndSide();
+	void PlayerOrderAndSide();
 
 	void IntiliazTextResult();
 

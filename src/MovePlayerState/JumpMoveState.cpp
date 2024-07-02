@@ -11,7 +11,7 @@ m_standMoveState(standState),m_kickMoveState(kickMoveState),m_jump(false)
 void JumpMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	b2Vec2 vel = body->GetLinearVelocity();
-	if (!m_jump) {  // Check if player is on the ground
+	if (!m_jump) {  // Check if Player is on the ground
 		body->ApplyLinearImpulseToCenter(b2Vec2(0.f, -JUMP_FORCE), true);
 		m_jump = true;
 	}

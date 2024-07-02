@@ -74,7 +74,7 @@ void GameResults::respond(sf::Vector2f mousePressed)
 
 	if (!m_initilaze) {
 
-		playerOrderAndSide();
+		PlayerOrderAndSide();
 		finalScoreResult();
 
 		SoundControl::getInstance().getIntroSong().play();
@@ -90,15 +90,15 @@ void GameResults::resetGameResult()
 	m_gameResultSprite.erase(m_gameResultSprite.begin() + 1 , m_gameResultSprite.end());
 }
 //----------------------------------------------------------------------------------
-void GameResults::playerOrderAndSide()
+void GameResults::PlayerOrderAndSide()
 {	
-	//set player oreder and sides
-	auto playerOrder = Resources::getInstance().getPlayerOrder();
+	//set Player oreder and sides
+	auto PlayerOrder = Resources::getInstance().getPlayerOrder();
 	auto sprite = sf::Sprite();
 
-	for (int i = 0; i < playerOrder.size(); i++)
+	for (int i = 0; i < PlayerOrder.size(); i++)
 	{
-		int index = playerOrder[i];
+		int index = PlayerOrder[i];
 		sprite.setTexture(Resources::getInstance().getSelectTeam()[index]);
 		m_charcters.push_back(sprite);
 	}

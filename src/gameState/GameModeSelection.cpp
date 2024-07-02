@@ -39,7 +39,7 @@ void GameModeSelection::textModeSelection()
 		m_modeText[i].setOutlineThickness(3);
 	}
 
-	std::vector<std::string> buttonText{ "Multiplayer Mode","Single player Mode","     Online Mode",
+	std::vector<std::string> buttonText{ "MultiPlayer Mode","Single Player Mode","     Online Mode",
 										"Back To Menu","Trun off/on the Music" };
 	for (int i = 0; i < buttonText.size(); i++)
 	{

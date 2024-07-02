@@ -5,9 +5,9 @@ class FirePower : public Power
 {
 public:
 
-	FirePower(bool playerSide = true);
+	FirePower(bool PlayerSide = true);
 
-	virtual void activatePowerOnPlayer(Player* player)override;
+	virtual void activatePowerOnPlayer(Player* Player)override;
 	virtual void activatePowerOnBall(Ball* ball) override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
 	virtual bool getSideOfPlayer() const override;
@@ -22,5 +22,5 @@ private:
 	int m_index1;
 	int m_index2;
 	sf::Sprite m_sprite;
-	bool m_playerSide;
+	bool m_PlayerSide;
 };

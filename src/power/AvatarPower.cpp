@@ -4,8 +4,8 @@
 #include "Resources.h"
 
 
-AvatarPower::AvatarPower(bool playerSide) :m_spriteSheetClock(), m_index(0),
-m_playerSide(playerSide)
+AvatarPower::AvatarPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0),
+m_PlayerSide(PlayerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[6]);
 
@@ -27,7 +27,7 @@ void AvatarPower::activatePowerOnBall(Ball* ball)
     setPowerIsActive(true);
 
     float side;
-    (m_playerSide) ? side = -1.f : side = 1.f;
+    (m_PlayerSide) ? side = -1.f : side = 1.f;
    
     // Adjust position if necessary
     b2Vec2 currentPosition = ball->getBody()->GetPosition();
@@ -39,10 +39,10 @@ void AvatarPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void AvatarPower::activatePowerOnPlayer(Player* player) {
-    player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
-    player->restartClock();
-    player->setPowerOnPlayer(true);
+void AvatarPower::activatePowerOnPlayer(Player* Player) {
+    Player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
+    Player->restartClock();
+    Player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 
@@ -71,5 +71,5 @@ void AvatarPower::draw(sf::RenderWindow& window, sf::Vector2f position)
 }
 
 bool AvatarPower::getSideOfPlayer()const {
-    return m_playerSide;
+    return m_PlayerSide;
 }
