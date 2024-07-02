@@ -4,11 +4,15 @@
 class DragonPower:public Power
 {
 public:
-	DragonPower();
+	DragonPower(bool playerSide);
 	~DragonPower();
 
 	virtual void activatePowerOnBall(Ball* ball)override;
+	virtual void activatePowerOnPlayer(Player* player) override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
+
+	bool getSideOfPlayer()const;
+
 private:
 
 	void dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it);
@@ -18,5 +22,5 @@ private:
 	sf::Clock m_clockDragon;
 
 	int m_round;
-	bool m_rightSide;
+	bool m_playerSide;
 };

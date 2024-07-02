@@ -3,7 +3,6 @@
 #pragma once
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
-#include "../external/box2d/include/box2d/b2_world.h"
 
 const float SCALE = 30.f;  // Scale factor for converting Box2D units to SFML pixels
 const float GRAVITY = 30.7f;

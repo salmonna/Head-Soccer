@@ -1,7 +1,10 @@
 #include "power/DragonPower.h"
 #include "Resources.h"
+#include "gameObject/Ball.h"
+#include "gameObject/Player.h"
+
 //--------------------------------------------------------------
-DragonPower::DragonPower():m_round(0),m_rightSide(false)
+DragonPower::DragonPower(bool playerSide):m_round(0),m_playerSide(playerSide)
 {
 	m_posDragon.push_back(std::make_pair(sf::Vector2i(84, 41), sf::Vector2i(71, 71)));
 	m_posDragon.push_back(std::make_pair(sf::Vector2i(51, 119), sf::Vector2i(138, 77)));
@@ -12,6 +15,25 @@ DragonPower::DragonPower():m_round(0),m_rightSide(false)
 	m_posDragon.push_back(std::make_pair(sf::Vector2i(14, 561), sf::Vector2i(231, 80)));
 
 	m_dragonSprite.setTexture(Resources::getInstance().getPlayerPower()[0]);
+}
+//--------------------------------------------------------------
+void DragonPower::activatePowerOnBall(Ball* ball) {
+	
+	setPowerIsActive(true);
+
+	b2Vec2 currentPosition = ball->getBody()->GetPosition();
+	currentPosition.y -= 3.f; // Move the body 200 pixels higher (adjust as needed)
+	ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
+
+	// Set awake state to false to "pause" the body
+	ball->getBody()->SetAwake(false);
+	
+}
+
+void DragonPower::activatePowerOnPlayer(Player* player) {
+
+	player->setPowerOnPlayer(true);
+	setPowerIsActive(false);
 }
 //--------------------------------------------------------------
 void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
@@ -28,7 +50,7 @@ void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
 		m_clockDragon.restart();
 	}
 	
-	if (!m_rightSide) {
+	if (!m_playerSide) {
 
 		position.x -= (m_dragonSprite.getGlobalBounds().width * 0.9);
 		position.y -= (m_dragonSprite.getGlobalBounds().height / 2);
@@ -49,30 +71,16 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 	m_dragonSprite.setTextureRect(characterRect);
 	m_dragonSprite.setScale(4, 4);
 
-	if (m_rightSide) {
+	if (m_playerSide) {
 
 		m_dragonSprite.scale(-1,1);
 	}
 
 }
-//--------------------------------------------------------------
-void DragonPower::activatePowerOnBall(Ball* ball) {
 
-	//currVelocity = sf::Vector2f(1500.f, 0.f);
-	//currVelocity.x *= direction.x;
 
-	//sf::Vector2f currPos = ball.getPosition();
-	//currPos.y  = 400.f;
-
-	//if (direction.x < 0)
-	//{
-	//	m_rightSide = true;
-	//}
-	//
-
-	//ball.setPosition(currPos);
-
-	//m_round = 0;
+bool DragonPower::getSideOfPlayer()const {
+	return m_playerSide;
 }
 //--------------------------------------------------------------
 DragonPower::~DragonPower()
