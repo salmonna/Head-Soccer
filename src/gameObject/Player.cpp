@@ -23,7 +23,7 @@ m_currentMoveState(&m_standMoveState),m_powerClock(), m_powerClock2(),m_powerOnP
 {
 
 	m_sound.setBuffer(Resources::getInstance().getBufferVec()[0]);
-	m_power = std::make_shared<InvisiblePower>(m_playerSide);
+	m_power = std::make_shared<AvatarPower>(m_playerSide);
 
 	if (m_playerSide)
 	{
@@ -85,7 +85,7 @@ void Player::move(sf::Vector2f pressed) {
 	if (m_powerOnPlayer) {
 
 		// Check if more than 5 seconds have passed since the power was activated
-		if (m_powerClock2.getElapsedTime().asSeconds() > 3) {
+		if (m_powerClock2.getElapsedTime().asSeconds() > 1.5f) {
 			m_powerOnPlayer = false;
 			m_sprite.setColor(m_plaerColor);
 
@@ -96,7 +96,11 @@ void Player::move(sf::Vector2f pressed) {
 				currentPosition.y = 26.f; // Move the body 200 pixels higher (adjust as needed)
 
 				m_body->SetTransform(currentPosition, m_body->GetAngle());
-				m_body->GetFixtureList()->SetSensor(false); //need to fix the power
+				// Reset the velocity of the Box2D body
+				m_body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));  // Set linear velocity to zero
+				m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
+				
+				
 			}
 
 		}
@@ -110,22 +114,14 @@ void Player::move(sf::Vector2f pressed) {
 
 
 
-	bool valid = false;
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP2Full() && m_playerSide) {//power
-		valid = true;
-	}
-
-	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && ScoreBoard::getInstance().istProgressP1Full() && !m_playerSide) {//power
-		valid = true;
-	}
-
-	if (valid)
-	{
+	bool progressFull = ScoreBoard::getInstance().istProgressP2Full() || ScoreBoard::getInstance().istProgressP1Full();
+	if (sf::Keyboard::isKeyPressed(m_keys.SLIDE) && progressFull) {//power
 		resetProgress();
 		m_aura = true;
 		m_sound.play();
 		m_sound.setLoop(true);
 	}
+
 	
 	if (!m_aura)
 		m_sound.stop();
@@ -167,7 +163,6 @@ void Player::reset() {
 	// Reset the velocity of the Box2D body
 	m_body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));  // Set linear velocity to zero
 	m_body->SetAngularVelocity(0.0f);               // Set angular velocity to zero
-	m_body->GetFixtureList()->SetSensor(false); //need to fix the power
 }
 
 //-----------------------------------------------------------------------------

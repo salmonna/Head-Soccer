@@ -31,7 +31,7 @@ void AvatarPower::activatePowerOnBall(Ball* ball)
    
     // Adjust position if necessary
     b2Vec2 currentPosition = ball->getBody()->GetPosition();
-    currentPosition.x += 8.f* side; // Move the body 200 pixels higher (adjust as needed)
+    currentPosition.x += 4.f* side; // Move the body 200 pixels higher (adjust as needed)
     ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
 
@@ -40,8 +40,6 @@ void AvatarPower::activatePowerOnBall(Ball* ball)
 }
 
 void AvatarPower::activatePowerOnPlayer(Player* player) {
-
-
     player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
     player->restartClock();
     player->setPowerOnPlayer(true);

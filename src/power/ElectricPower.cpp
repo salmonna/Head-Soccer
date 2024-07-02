@@ -39,12 +39,16 @@ void ElectricPower::activatePowerOnBall(Ball* ball)
 
 void ElectricPower::activatePowerOnPlayer(Player* player) {
 
-    //need to fix this power
+    //need to fix the step
+    float timeStep = 1.f / 60.f;
+    int32 velocityIterations = 6;
+    int32 positionIterations = 3;
+    Box2d::getInstance().getBox2dWorld()->Step(timeStep, velocityIterations, positionIterations);
 
 
     // Adjust position if necessary
     b2Vec2 currentPosition = player->getBody()->GetPosition();
-    currentPosition.y = -30.f; // Move the body 200 pixels higher (adjust as needed)
+    currentPosition.y = 60.f; //make the player disapear
     player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
 
     player->restartClock();
