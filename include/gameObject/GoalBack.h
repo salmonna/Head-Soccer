@@ -12,7 +12,7 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual sf::Sprite& getSprite()override;
-	virtual b2Body* getBody()override;
+	virtual b2Body* getBody()const override;
 
 	//void setIfGoal(bool ballGetIn);
 	bool getGoalSide() const;

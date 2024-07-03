@@ -9,7 +9,7 @@ public:
 
 	virtual void draw(sf::RenderWindow& window) const = 0;
 	virtual sf::Sprite& getSprite() = 0;
-	virtual b2Body* getBody() { return nullptr; };
+	virtual b2Body* getBody() const  { return nullptr; };
 
 
 	~GameObject() = default;

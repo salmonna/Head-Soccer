@@ -4,12 +4,16 @@
 class DragonPower:public Power
 {
 public:
-	DragonPower();
+	DragonPower(bool PlayerSide);
 	~DragonPower();
 
 	virtual void activatePowerOnBall(Ball* ball)override;
 	virtual void animation(sf::Vector2f position) override;
 	virtual void draw(sf::RenderWindow& window) const override;
+
+	virtual void activatePowerOnPlayer(Player* Player) override;
+	bool getSideOfPlayer()const;
+	void defineStartposWithBall(sf::Vector2f & position);
 
 private:
 
@@ -20,5 +24,6 @@ private:
 	sf::Clock m_clockDragon;
 
 	int m_round;
-	bool m_rightSide;
+	bool m_PlayerSide;
+	bool m_startPos;
 };

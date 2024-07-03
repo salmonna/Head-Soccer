@@ -3,7 +3,6 @@
 //-----------------------------------------------------------------------------------------------------
 BaseMovePlayerState::BaseMovePlayerState() :m_numOfJump(0)
 {
-
 }
 //-----------------------------------------------------------------------------------------------------
 void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float maxTime, sf::Sprite& sprite, sf::Vector2f size) {

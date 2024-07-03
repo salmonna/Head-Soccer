@@ -12,25 +12,23 @@ class SelectTeam : public GameState
 public:
 	SelectTeam(Controller* controller, GameModeSelection * gameMode, Board* boardState);
   
-	void selectTextPlayer();
+	
 
-	virtual ~SelectTeam();
+	virtual ~SelectTeam() = default;
 
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void respond(sf::Vector2f mousePressed) override;
-	
-
-	void setNumberOfPlayers(int players);
+	void setNumberOfPlayers(int Players);
 
 private:
-
+	void selectTextPlayer();
+	void setPowerText();
 	void signOrPreedOnPlayers(sf::Vector2f mousePressed);
 	void isMouseOnPlayers(sf::Vector2f mousePressed, int index);
 	void checkToDraw(sf::RenderWindow& window) const;
 	void loadGameMode(int index);
 	void selectedPlayer();
 	void reset();
-	void loadGameObject();
 	void stopSongPlayWhistle();
 
 	GameState* m_gameState;
@@ -43,11 +41,10 @@ private:
 	std::vector<sf::Sprite> m_charcters;
 
 	std::vector<sf::Text> m_selectText;
+	std::vector<sf::Text> m_powerText;
 	std::vector<int> m_selectedPlayer;
 
-	sf::Sound m_whistle;
-
 	int m_numOfPlayers;
-	int m_playerSelected;
+	int m_PlayerSelected;
 };
 

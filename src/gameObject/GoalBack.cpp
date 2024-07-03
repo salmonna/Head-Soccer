@@ -33,7 +33,7 @@ void GoalBack::draw(sf::RenderWindow& window)const {
 	window.draw(m_sprite);
 }
 
-b2Body* GoalBack::getBody() {
+b2Body* GoalBack::getBody()const {
 	return m_body;
 }
 

@@ -17,7 +17,7 @@ public:
 	sf::Sprite& getSprite();
 	virtual ~Power() = default;
 
-	virtual void activatePowerOnPlayer(Player* player) {};
+	virtual void activatePowerOnPlayer(Player* Player) {};
 	virtual void activatePowerOnBall(Ball* ball) {};
 	virtual void animation(sf::Vector2f position) {};
 	virtual void draw(sf::RenderWindow & window) const {};

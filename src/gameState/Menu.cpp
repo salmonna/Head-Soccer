@@ -5,10 +5,12 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 #include "Command/Quit.h"
+#include "SoundControl.h"
+#include "Command/Sound.h"
 
 
 //menu constractor initilize his members
-Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window): m_isSongPlayed(false)
+Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window)
 {
 
 	std::vector<sf::Texture>& texture = Resources::getInstance().getMenuTexture();
@@ -18,17 +20,18 @@ Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameM
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(tutorial, controller)), texture[3], sf::Vector2f(885.f, 495.f))); //tutorial Button
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Quit>(window)), texture[1], sf::Vector2f(885.f, 645.f))); //exit Button
 
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), texture[10], sf::Vector2f(0.f, 0.f)));
+
+
+	sf::Sound& song = SoundControl::getInstance().getIntroSong();
+	song.play();
+	song.setLoop(true);
+	
 };
 
 //check if there is a click on one of the menu buttons
 void Menu::respond(sf::Vector2f position) {
 
-	if (!m_isSongPlayed) {
-		auto intrSong = Resources::getInstance().getIntroSong();
-		intrSong.play();
-		intrSong.setLoop(true);
-		m_isSongPlayed = true;
-	}
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
@@ -53,7 +56,3 @@ void Menu::draw(sf::RenderWindow& window) const{
 		m_buttons[i]->draw(window);
 	}
 }
-
-
-
-

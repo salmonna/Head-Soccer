@@ -3,9 +3,9 @@
 #include "Resources.h"
 #include "FileException.h"
 #include <exception>
+#include "SoundControl.h"
 
-
-ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
+ScoreBoard::ScoreBoard() :m_gameTime(35), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
 
@@ -13,9 +13,6 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		defineScoreBoardTexture();
 		defineScoreBoardText();
 		defineProgressTexture();
-
-		m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
-		m_whistle.setVolume(15);
 
 	}
 	catch (const std::exception& e) {
@@ -121,9 +118,10 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 	{
 		window.draw(m_flags[i]);
 	}
-
+  
 	if (m_goalSign)
 		window.draw(m_goalSprite);
+
 }
 
 
@@ -224,8 +222,10 @@ void ScoreBoard::timeCalculation()
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
-		
-		m_whistle.play();
+
+		SoundControl::getInstance().getWhistle().play(); // play whistle sound
+		SoundControl::getInstance().getCrowd().pause(); // pause crowd sound
+		SoundControl::getInstance().getGoalSound().pause();// pause goal sound
 		return true;
 	}
 	return false;
@@ -238,6 +238,7 @@ void ScoreBoard::reset()
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
+
 	m_flags.clear();
 	resetProgressP1();
 	resetProgressP2();
@@ -290,9 +291,9 @@ void ScoreBoard::setGoalSign() {
 
 void ScoreBoard::setFlagsPlayers() {
 
-	std::vector<int> players = Resources::getInstance().getPlayerOrder();
+	std::vector<int> Players = Resources::getInstance().getPlayerOrder();
 
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < Players.size(); i++)
 	{
 		int index = Resources::getInstance().getPlayerOrder()[i];
 		auto sprite = sf::Sprite(Resources::getInstance().getCountriesFlags()[index]);

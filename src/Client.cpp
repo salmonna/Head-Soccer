@@ -25,10 +25,10 @@ void Client::receiveData(MovingObject& otherPlayer) {
     packet.clear();
 }
 
-void Client::sendData(MovingObject& player) {
+void Client::sendData(MovingObject& Player) {
     sf::Packet packet;
     float key = 0;
-    sf::Vector2f position = player.getSprite().getPosition();
+    sf::Vector2f position = Player.getSprite().getPosition();
     packet << key;
     if (m_socket.send(packet) != sf::Socket::Done) {
         std::cerr << "Failed to send data to the server" << std::endl;

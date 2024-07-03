@@ -11,7 +11,7 @@ public:
 	KickMoveState(StandPlayerState* standState,JumpMoveState* jumpMoveState);
 	~KickMoveState();
 
-	virtual void movement(sf::Sprite& sprite, bool playerSide, b2Body* body) override;
+	virtual void movement(sf::Sprite& sprite, Keyboard key, b2Body* body) override;
 	virtual BaseMovePlayerState* handleMoveStatus() override;
 
 private:

@@ -3,6 +3,11 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 #include "gameObject/ScoreBoard.h"
+#include <exception>
+#include "FileException.h"
+#include "SoundControl.h"
+#include "Command/Sound.h"
+
 //gameResults constactor
 GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(NULL),m_initilaze(false)
 {
@@ -13,6 +18,10 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 	std::vector<sf::Texture>& texture2 = Resources::getInstance().getPauseTexture();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)),
 															texture2[2], sf::Vector2f(885.f, 795.f))); //exit to menu Button
+
+	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
+
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 0.f)));
 
 	IntiliazTextResult();
 
@@ -58,14 +67,19 @@ void GameResults::respond(sf::Vector2f mousePressed)
 
 			m_buttons[i]->execute();
 
-			resetGameResult();
-			return;
+			if (i == 0) {
+				resetGameResult();
+				return;
+			}
 		}
 	}
 
 	if (!m_initilaze) {
-		playerOrderAndSide();
+
+		PlayerOrderAndSide();
 		finalScoreResult();
+
+		SoundControl::getInstance().getIntroSong().play();
 	}
 }
 //----------------------------------------------------------------------------------
@@ -78,15 +92,15 @@ void GameResults::resetGameResult()
 	m_gameResultSprite.erase(m_gameResultSprite.begin() + 1 , m_gameResultSprite.end());
 }
 //----------------------------------------------------------------------------------
-void GameResults::playerOrderAndSide()
+void GameResults::PlayerOrderAndSide()
 {	
-	//set player oreder and sides
-	auto playerOrder = Resources::getInstance().getPlayerOrder();
+	//set Player oreder and sides
+	auto PlayerOrder = Resources::getInstance().getPlayerOrder();
 	auto sprite = sf::Sprite();
 
-	for (int i = 0; i < playerOrder.size(); i++)
+	for (int i = 0; i < PlayerOrder.size(); i++)
 	{
-		int index = playerOrder[i];
+		int index = PlayerOrder[i];
 		sprite.setTexture(Resources::getInstance().getSelectTeam()[index]);
 		m_charcters.push_back(sprite);
 	}
@@ -174,8 +188,8 @@ void GameResults::drawFinalResult(sf::RenderWindow& window) const
 	}
 
 	for (int i = 0; i < m_flags.size(); i++)
+
 	{
 		window.draw(m_flags[i]);
 	}
-
 }

@@ -35,9 +35,8 @@ public:
 
 	std::vector<sf::Texture>& getPlayerPower();
 	std::vector<sf::Texture>& getCountriesFlags();
-	std::shared_ptr<Power> getPower(bool playerSide);
+	std::shared_ptr<Power> getPower(bool PlayerSide);
 
-	sf::Sound& getIntroSong();
 
 	void setSelectedPlayer(int index);
 
@@ -77,7 +76,7 @@ private:
 
 	std::vector<int> m_selectedPlayer;
 
-	sf::Sound m_introSong;
-	std::vector<std::shared_ptr<Power>> m_playerPower;
+	std::vector<std::shared_ptr<Power>> m_PlayerPower;
+
 	int m_selectedIndex;
 };

@@ -4,7 +4,7 @@
 #include "Resources.h"
 #include <fstream>
 #include "FileException.h"
-#include "gameObject/Player.h"
+#include "gameObject/UserPlayer.h"
 #include "gameObject/StaticObject.h"
 #include "Keyboard.h"
 #include "gameObject/Ball.h"
@@ -22,6 +22,7 @@
 // Constructor for the Board class
 Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults),m_controllerPtr(controller)
 {
+	
 	std::vector<sf::Texture>& texture = Resources::getInstance().getBoardTexture();
 	for (size_t i = 0; i < texture.size(); i++)
 	{
@@ -31,7 +32,6 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	}
 	m_backGroundStadium[1].setPosition(0, 674);
 
-	//m_buttons.push_back(std::make_unique<Pause>(menu, this));
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
 						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(1670.f, 45.f))); //pause Button
 
@@ -54,7 +54,14 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 		else
 			std::cout << "Class not found!\n";
 	}
+	if (objectNames[1] == "ComputerPlayer")
+	{
+		// Assuming m_movingObject is a vector or array of std::shared_ptr<BaseClass>
+		std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[2]);
+		std::shared_ptr<ComputerPlayer> computerObject = std::dynamic_pointer_cast<ComputerPlayer>(m_movingObject[1]);
 
+		computerObject->setBall(ballObject);
+	}
 	ScoreBoard::getInstance().setFlagsPlayers();
 
 }
@@ -82,11 +89,10 @@ void Board::respond(sf::Vector2f pressed) {
 	handleScoreBoard();
 	moveAd();
 
-	//move the players and the ball
+	//move the Players and the ball
 	for (int i = 0; i < m_movingObject.size() && !ScoreBoard::getInstance().isGoal(); i++)
 	{
-		m_movingObject[i]->move(pressed);
-
+		m_movingObject[i]->move();
 	}
 	
 	for_each_pair(m_gameObject.begin() + 4, m_gameObject.end() - 2, [&](auto& a, auto& b) {

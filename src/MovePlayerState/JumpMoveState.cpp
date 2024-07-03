@@ -8,17 +8,10 @@ m_standMoveState(standState),m_kickMoveState(kickMoveState),m_jump(false)
 }
 
 //----------------------------------------------------------------------------------
-void JumpMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) {
-
-	if (playerSide) {
-		m_keys = Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
-	}
-	else {
-		m_keys = Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
-	}
+void JumpMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	b2Vec2 vel = body->GetLinearVelocity();
-	if (!m_jump) {  // Check if player is on the ground
+	if (!m_jump) {  // Check if Player is on the ground
 		body->ApplyLinearImpulseToCenter(b2Vec2(0.f, -JUMP_FORCE), true);
 		m_jump = true;
 	}
@@ -27,20 +20,19 @@ void JumpMoveState::movement(sf::Sprite& sprite, bool playerSide, b2Body* body) 
 
 	if (changeState(7))
 	{
-		//m_body->SetLinearVelocity(b2Vec2(m_body->GetLinearVelocity().x, 0.f));
 		m_currentState = (BaseMovePlayerState*)m_standMoveState;
 		m_jump = false;
 	}
 
-	if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
+	if (sf::Keyboard::isKeyPressed(key.LEFT)) {//move left
 
 		body->SetLinearVelocity(b2Vec2(-5.f, body->GetLinearVelocity().y));
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
+	else if (sf::Keyboard::isKeyPressed(key.RIGHT)) {//move right
 
 		body->SetLinearVelocity(b2Vec2(5.f, body->GetLinearVelocity().y));
 	}
-	else if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//move right
+	else if (sf::Keyboard::isKeyPressed(key.SPACE)) {//move right
 
 		m_currentState = m_kickMoveState;
 	}

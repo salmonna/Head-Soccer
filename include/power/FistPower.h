@@ -7,7 +7,7 @@ public:
 
 	FistPower(bool playerSide);
 
-	virtual void activatePowerOnPlayer(Player* player)override;
+	virtual void activatePowerOnPlayer(Player* Player)override;
 	virtual void activatePowerOnBall(Ball* ball) override;
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual void animation(sf::Vector2f position) override;

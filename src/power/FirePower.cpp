@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "gameObject/Player.h"
 
-FirePower::FirePower(bool playerSide) :m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
+FirePower::FirePower(bool PlayerSide) :m_spriteSheetClock(), m_index1(0), m_index2(0),m_PlayerSide(PlayerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[8]);
     
@@ -46,12 +46,12 @@ void FirePower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void FirePower::activatePowerOnPlayer(Player* player) {
+void FirePower::activatePowerOnPlayer(Player* Player) {
 
-    player->getSprite().setColor(sf::Color(256, 256, 256));
-    player->getBody()->SetAwake(false);
-    player->restartClock();
-    player->setPowerOnPlayer(true);
+    Player->getSprite().setColor(sf::Color(256, 256, 256));
+    Player->getBody()->SetAwake(false);
+    Player->restartClock();
+    Player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 
@@ -98,5 +98,5 @@ void FirePower::animation(sf::Vector2f position)
 
 
 bool FirePower::getSideOfPlayer()const {
-    return m_playerSide;
+    return m_PlayerSide;
 }

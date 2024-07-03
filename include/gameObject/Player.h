@@ -1,86 +1,26 @@
-
 #pragma once
-#include "MovingObject.h"
-#include <SFML/Graphics.hpp>
-#include <vector>
-#include "Keyboard.h"
-#include "Factory/MovingFactory.h"
+#include "gameObject/MovingObject.h"
 #include "power/Power.h"
 
-#include <SFML/Audio.hpp>
-
-
-#include "Box2d.h"
-#include <iostream>
-//-------
-#include "MovePlayerState/BaseMovePlayerState.h"
-#include "MovePlayerState/StandPlayerState.h"
-//-------
-
-class Player: public MovingObject
+class Player :public MovingObject
 {
 public:
-	Player(bool right, Keyboard keys);
-
-	virtual void draw(sf::RenderWindow& window) const override;
-	virtual void move(sf::Vector2f pressed) override;
-	virtual sf::Sprite& getSprite() override;
-	virtual void reset()override;
-	virtual b2Body* getBody()override;
-	Keyboard getKey() const;
-  
-	void setPowerOnPlayer(bool powerOnPlayer);
-	bool getPowerOnPlayer() const;
-
-	void resetProgress();
-
-	std::shared_ptr<Power> getPower();
-
-	void setAura(bool aura);
-	bool getAura() const;
-	bool getSide() const;
-	void update();
+	Player();
 	
-	bool getSideOfPlayer();
-	void restartClock();
+	virtual bool getAura() const = 0;
+	virtual void setAura(bool aura) = 0;
+	virtual bool getSideOfPlayer()const = 0;
+	virtual void setPowerOnPlayer(bool powerOnPlayer) = 0;
+	virtual bool getPowerOnPlayer() const = 0;
+	virtual std::shared_ptr<Power> getPower() const = 0;
+	virtual void restartClock() = 0;
 
-	virtual ~Player() {
-		std::cout << " P-D" << std::endl;
-		m_body->DestroyFixture(m_body->GetFixtureList());
-		auto world = Box2d::getInstance().getBox2dWorld();
-		world->DestroyBody(m_body);
-		m_body = nullptr;
-	};
+	void resetToPosition(sf::Sprite &sprite, sf::Vector2f basePosition, sf::Vector2f startPos = sf::Vector2f(160, 590),int numOfJump = 0);
+	void deactivatePower(b2Body* body, sf::Sprite& sprite, sf::Color PlayerColor, bool& powerOnPlayer);
+	virtual ~Player() = default;
 
 private:
 
-	bool m_playerSide;
-	bool m_aura;
-	bool m_powerOnPlayer;
-
-	std::shared_ptr<Power> m_power;
-
-	sf::Sprite m_sprite;
-	sf::Clock m_powerClock;
-	sf::Vector2f m_basePosition;
-
-	Keyboard m_keys;
-	sf::Sound m_sound;
-  
-	static bool m_registeritRightPlayer;
-	static bool m_registeritLeftPlayer;
-
-	void resetToPosition(sf::Vector2f startPos = sf::Vector2f(160, 590));
-
-	LeftMoveState m_leftMoveState;
-	RightMoveState m_rightMoveState;
-	JumpMoveState m_jumpMoveState;
-	KickMoveState m_kickMoveState;
-	StandPlayerState m_standMoveState;
-	BaseMovePlayerState* m_currentMoveState;
-
-	sf::Color m_playerColor;
-	b2Body* m_body;
 };
 
 

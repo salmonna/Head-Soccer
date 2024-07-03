@@ -17,7 +17,9 @@
 Resources::Resources():m_selectedIndex(0){
 
 
-	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png","Music.png" ,"undo Button.png", "Left.png","Right.png" };
+
+	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png",
+									   "Music.png" ,"undo Button.png", "Left.png","Right.png","Sound.png"};
 	loadFromFile(fileNames,m_menuTexture);
 
 	std::vector<std::string> boardFileNames{ "Stadium.png", "Ad Board.png"};
@@ -29,11 +31,11 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png","Goal.png" };
 	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
 
-	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "Multiplayer.png" ,"Player.png", "Online.png","BackgroundGameMode2.png" };
+	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "MultiPlayer.png" ,"Player.png", "Online.png","BackgroundGameMode2.png" };
 	loadFromFile(gameMode, m_gameModeTexture);
 
 	std::vector<std::string> characters{"BrazilianPlayer.png", "ItalyPlayer.png","EnglandPlayer.png",
-										"SpainPlayer.png","HolandPlayer.png","PortugalPLayer.png","GermanyPlayer.png" }; 
+										"SpainPlayer.png","HolandPlayer.png","PortugalPlayer.png","GermanyPlayer.png" }; 
 	loadFromFile(characters, m_charactersSheet);
 
 	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"};
@@ -62,7 +64,8 @@ Resources::Resources():m_selectedIndex(0){
 	loadFromFile(powerOfPlayer, m_powerOfPlayer);
 
 	// Loading sound buffers.
-	std::vector<std::string> soundStr = {"super saiyan sound.wav","Whistle.wav","Intro Song.wav" };
+
+	std::vector<std::string> soundStr = {"super saiyan sound.wav","Whistle.wav","Intro Song.wav" ,"Crowd.wav","GoalSound.wav"};
 	for (int i = 0; i < soundStr.size(); i++) {
 		sf::SoundBuffer buffer;
 		if (!buffer.loadFromFile(soundStr[i])) {
@@ -70,12 +73,6 @@ Resources::Resources():m_selectedIndex(0){
 		}
 		m_bufferVec.push_back(buffer);
 	}
-
-	m_introSong.setBuffer(m_bufferVec[2]);
-	m_introSong.setVolume(15);
-	m_introSong.play();
-	m_introSong.setLoop(true);
-	
 
 	if (!m_font.loadFromFile("Font.otf"))
 	{
@@ -166,7 +163,7 @@ sf::Texture& Resources::getCharactersTexture() {
 }
 
 //get power
-std::shared_ptr<Power> Resources::getPower(bool playerSide) {
+std::shared_ptr<Power> Resources::getPower(bool PlayerSide) {
 	
 	try
 	{
@@ -174,24 +171,24 @@ std::shared_ptr<Power> Resources::getPower(bool playerSide) {
 		switch (temp)
 		{
 		case 0:
-			return std::make_shared<FirePower>(playerSide);
+			return std::make_shared<FirePower>(PlayerSide);
 		case 1:
-			return std::make_shared<InvisiblePower>(playerSide);
+			return std::make_shared<InvisiblePower>(PlayerSide);
 		case 2:
-			return std::make_shared<DragonPower>();
+			return std::make_shared<DragonPower>(PlayerSide);
 		case 3:
 			return std::make_shared<FistPower>(playerSide);
 		case 4:
-			return std::make_shared<TornadoPower>(playerSide);
+			return std::make_shared<TornadoPower>(PlayerSide);
 		case 5:
 			return std::make_shared<DisappearPower>(playerSide);
 		case 6:
-			return std::make_shared<AvatarPower>(playerSide);
+			return std::make_shared<AvatarPower>(PlayerSide);
 		default:
 			break;
 		}
 		
-		return std::make_shared<FirePower>(playerSide);
+		return std::make_shared<FirePower>(PlayerSide);
 	}
 	catch (const std::exception& e)
 	{
@@ -235,10 +232,4 @@ void Resources::resetPlayerOrder() {
 std::vector<sf::Texture>& Resources::getCountriesFlags() {
 
 	return m_countryFlags;
-}
-
-sf::Sound& Resources::getIntroSong() {
-
-	return m_introSong;
-
 }

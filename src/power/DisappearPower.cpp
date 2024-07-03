@@ -54,12 +54,12 @@ void DisappearPower::activatePowerOnPlayer(Player* player) {
 
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = player->getBody()->GetPosition();
-    currentPosition.y = 60.f; //make the player disapear
-    player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
+    b2Vec2 currentPosition = Player->getBody()->GetPosition();
+    currentPosition.y = 60.f; //make the Player disapear
+    Player->getBody()->SetTransform(currentPosition, Player->getBody()->GetAngle());
 
-    player->restartClock();
-    player->setPowerOnPlayer(true); //freexe plower
+    Player->restartClock();
+    Player->setPowerOnPlayer(true); //freexe plower
     setPowerIsActive(false);
 }
 

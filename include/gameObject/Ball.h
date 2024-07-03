@@ -16,33 +16,40 @@ public:
 	Ball();
 
 	virtual void draw(sf::RenderWindow& window) const override;
-	virtual void move(sf::Vector2f pressed) override;
+	virtual void move() override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset() override;
-	virtual b2Body* getBody()override;
+	virtual b2Body* getBody()const override;
 
-	b2MassData getBallMass() const;
-	void setPosition(sf::Vector2f position);
-	void setPower(std::shared_ptr<Power> power);
 	void update();
 	void kick(bool rigthSide);
-	sf::Color getBallColor()const;
-	std::shared_ptr<Power> getPower();
 
-	virtual ~Ball() {
-		std::cout << " B-D" << std::endl;
-		m_body->DestroyFixture(m_body->GetFixtureList());
-		auto world = Box2d::getInstance().getBox2dWorld();
-		world->DestroyBody(m_body);
-		m_body = nullptr;
-	};
+	//----------------------- get --------------//
+	sf::Color getBallColor()const;
+	std::shared_ptr<Power> getPower()const;
+	b2MassData getBallMass() const;
+
+	//----------------------- set --------------//
+	void setPosition(sf::Vector2f position);
+	void setPower(std::shared_ptr<Power> power);
+
+	virtual ~Ball();
 private:
-	b2MassData m_bodyMass;
+
+	void updatePowerState();
+
 	sf::Vector2f m_basePosition;
-	std::shared_ptr<Power> m_power;
-	sf::Sprite m_sprite;
-	static bool m_registeritBall;
-	b2Body* m_body;
 	sf::Color m_ballColor;
+	sf::Sprite m_sprite;
+	
+	std::shared_ptr<Power> m_power;
+	
+	b2Body* m_body;
+	b2MassData m_bodyMass;
+
 	bool m_restartBall;
+	
+	static bool m_registeritBall;
+
+	float m_gravityScale;
 };
