@@ -177,11 +177,11 @@ std::shared_ptr<Power> Resources::getPower(bool PlayerSide) {
 		case 2:
 			return std::make_shared<DragonPower>(PlayerSide);
 		case 3:
-			return std::make_shared<FistPower>(playerSide);
+			return std::make_shared<FistPower>(PlayerSide);
 		case 4:
 			return std::make_shared<TornadoPower>(PlayerSide);
 		case 5:
-			return std::make_shared<DisappearPower>(playerSide);
+			return std::make_shared<DisappearPower>(PlayerSide);
 		case 6:
 			return std::make_shared<AvatarPower>(PlayerSide);
 		default:

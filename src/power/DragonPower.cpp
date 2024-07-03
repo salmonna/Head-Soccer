@@ -47,14 +47,8 @@ void DragonPower::activatePowerOnBall(Ball* ball) {
 	
 }
 //--------------------------------------------------------------
-void DragonPower::activatePowerOnPlayer(Player* Player) {
-
-	Player->setPowerOnPlayer(true);
-	setPowerIsActive(false);
-}
-//--------------------------------------------------------------
-void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
-
+void DragonPower::animation(sf::Vector2f position)
+{
 
 	if (m_clockDragon.getElapsedTime().asMilliseconds() >= 150.f)
 	{
@@ -67,11 +61,21 @@ void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
 
 		m_clockDragon.restart();
 	}
-	
+
 	defineStartposWithBall(position);
-	
+
 	m_dragonSprite.setPosition(position);
 
+}
+
+//--------------------------------------------------------------
+void DragonPower::activatePowerOnPlayer(Player* Player) {
+
+	Player->setPowerOnPlayer(true);
+	setPowerIsActive(false);
+}
+//--------------------------------------------------------------
+void DragonPower::draw(sf::RenderWindow& window) const {
 	window.draw(m_dragonSprite);
 }
 //--------------------------------------------------------------

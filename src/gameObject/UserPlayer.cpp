@@ -66,12 +66,12 @@ void UserPlayer::move() {
 //-----------------------------------------------------------------------------
 void UserPlayer::resetPlayerProgress()
 {
-	if (ScoreBoard::getInstance().istProgressP1Full() && !m_PlayerSide)
+	if (ScoreBoard::getInstance().isProgressP1Full() && !m_PlayerSide)
 	{
 		ScoreBoard::getInstance().resetProgressP1();
 		setAura(true);
 	}
-	else if(ScoreBoard::getInstance().istProgressP2Full() && m_PlayerSide)
+	else if(ScoreBoard::getInstance().isProgressP2Full() && m_PlayerSide)
 	{
 		ScoreBoard::getInstance().resetProgressP2();
 		setAura(true);

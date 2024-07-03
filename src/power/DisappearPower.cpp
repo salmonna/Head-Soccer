@@ -4,7 +4,7 @@
 #include "Resources.h"
 
 
-DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_playerSide(playerSide)
+DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_PlayerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[5]);
 
@@ -54,12 +54,12 @@ void DisappearPower::activatePowerOnPlayer(Player* player) {
 
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = Player->getBody()->GetPosition();
+    b2Vec2 currentPosition = player->getBody()->GetPosition();
     currentPosition.y = 60.f; //make the Player disapear
-    Player->getBody()->SetTransform(currentPosition, Player->getBody()->GetAngle());
+    player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
 
-    Player->restartClock();
-    Player->setPowerOnPlayer(true); //freexe plower
+    player->restartClock();
+    player->setPowerOnPlayer(true); //freexe plower
     setPowerIsActive(false);
 }
 
@@ -91,5 +91,5 @@ void DisappearPower::animation(sf::Vector2f position)
 
 
 bool DisappearPower::getSideOfPlayer()const {
-    return m_playerSide;
+    return m_PlayerSide;
 }
