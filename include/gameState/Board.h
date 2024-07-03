@@ -7,7 +7,7 @@
 #include "gameObject/ScoreBoard.h"
 #include "gameObject/Goal.h"
 #include "gameObject/MovingObject.h"
-#include "gameObject/Player.h"
+#include "gameObject/UserPlayer.h"
 //#include "Client.h"
 #include "GameState.h"
 #include "gameState/GameResults.h"

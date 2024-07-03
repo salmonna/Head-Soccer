@@ -5,9 +5,9 @@ class TornadoPower : public Power
 {
 public:
 
-	TornadoPower(bool playerSide);
+	TornadoPower(bool PlayerSide);
 
-	virtual void activatePowerOnPlayer(Player* player)override;
+	virtual void activatePowerOnPlayer(Player* Player)override;
 	virtual void activatePowerOnBall(Ball* ball) override;
 	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
 	bool getSideOfPlayer()const;
@@ -19,6 +19,6 @@ private:
 	std::vector<std::pair<sf::Vector2i, sf::Vector2i>> m_spriteSheet;
 	int m_index;
 	sf::Sprite m_sprite;
-	bool m_playerSide;
+	bool m_PlayerSide;
 
 };

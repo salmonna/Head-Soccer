@@ -4,7 +4,7 @@
 #include "gameObject/Player.h"
 
 
-BigBallPower::BigBallPower(bool playerSide):m_playerSide(playerSide)
+BigBallPower::BigBallPower(bool PlayerSide):m_PlayerSide(PlayerSide)
 {
 
 };
@@ -16,7 +16,7 @@ void BigBallPower::activatePowerOnBall(Ball* ball)
     // Adjust position if necessary
     b2Vec2 currentPosition = ball->getBody()->GetPosition();
     float side;
-    (m_playerSide) ? side = -3.5f : side = 3.5f;
+    (m_PlayerSide) ? side = -3.5f : side = 3.5f;
     currentPosition.x += side; // Move the body 200 pixels higher (adjust as needed)
     ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
@@ -29,12 +29,12 @@ void BigBallPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void BigBallPower::activatePowerOnPlayer(Player* player) {
+void BigBallPower::activatePowerOnPlayer(Player* Player) {
 
     Box2d::getInstance().step();
     setPowerIsActive(false);
 }
 
 bool BigBallPower::getSideOfPlayer()const {
-    return m_playerSide;
+    return m_PlayerSide;
 }

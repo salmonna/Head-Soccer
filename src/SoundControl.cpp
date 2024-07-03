@@ -16,6 +16,7 @@ SoundControl::SoundControl()
 
 	m_goalSound.setBuffer(Resources::getInstance().getBufferVec()[4]);
 	m_goalSound.setVolume(5);
+
 }
 //---------------------------------------------------------------------
 sf::Sound& SoundControl::getIntroSong() {

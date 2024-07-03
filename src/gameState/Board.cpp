@@ -4,7 +4,7 @@
 #include "Resources.h"
 #include <fstream>
 #include "FileException.h"
-#include "gameObject/Player.h"
+#include "gameObject/UserPlayer.h"
 #include "gameObject/StaticObject.h"
 #include "Keyboard.h"
 #include "gameObject/Ball.h"
@@ -89,7 +89,7 @@ void Board::respond(sf::Vector2f pressed) {
 	handleScoreBoard();
 	moveAd();
 
-	//move the players and the ball
+	//move the Players and the ball
 	for (int i = 0; i < m_movingObject.size() && !ScoreBoard::getInstance().isGoal(); i++)
 	{
 		m_movingObject[i]->move();

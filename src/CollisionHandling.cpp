@@ -6,7 +6,7 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include "gameObject/Player.h"
+#include "gameObject/UserPlayer.h"//////////
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
 #include "gameObject/ComputerPlayer.h"
@@ -26,32 +26,31 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     //=======================================UPDATE========================================\\ 
     //update after collide
-    void updateBall(Ball& ballObject, Player& playerObject)
+    void updateBall(Ball& ballObject, Player& PlayerObject)
     {
-
-        if (sf::Keyboard::isKeyPressed(playerObject.getKey().SPACE))//if player kicked the ball
-            ballObject.kick(playerObject.getSideOfPlayer());
-        else if (playerObject.getAura()) 
+        if (PlayerObject.getAura()) 
         {
-            playerObject.getPower()->startTimer();
-            ballObject.setPower(playerObject.getPower());
-            playerObject.getPower()->activatePowerOnBall(&ballObject);
-            playerObject.setAura(false);
+            PlayerObject.getPower()->startTimer();
+            ballObject.setPower(PlayerObject.getPower());
+            PlayerObject.getPower()->activatePowerOnBall(&ballObject);
+            PlayerObject.setAura(false);
         }
         else if (ballObject.getPower()->powerIsActive()){
-            ballObject.getPower()->activatePowerOnPlayer(&playerObject);
+            ballObject.getPower()->activatePowerOnPlayer(&PlayerObject);
         }
     }
 
     // primary collision-processing functions
-    void playerCollidBall(GameObject& player, GameObject& ball)
+    void PlayerCollidBall(GameObject& Player, GameObject& ball)
     {
 
         Ball & ballObject = static_cast<Ball&>(ball);
-        Player & playerObject = static_cast<Player&>(player);
+        UserPlayer & PlayerObject = static_cast<UserPlayer&>(Player);
 
+        if (sf::Keyboard::isKeyPressed(PlayerObject.getKey().SPACE))//if Player kicked the ball
+            ballObject.kick(PlayerObject.getSideOfPlayer());
 
-        updateBall(ballObject, playerObject);
+        updateBall(ballObject, PlayerObject);
 
     }
 
@@ -74,6 +73,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         Ball& ballObject = dynamic_cast<Ball&>(ball);
         ComputerPlayer& computerObject = dynamic_cast<ComputerPlayer&>(computerPlayer);
 
+        updateBall(ballObject,computerObject);
         ballObject.kick(false);
 
     }
@@ -83,9 +83,9 @@ namespace // anonymous namespace — the standard way to make function "static"
     // primary function
 
     void ballColliedPlayer(GameObject& ball,
-        GameObject& player)
+        GameObject& Player)
     {
-        playerCollidBall(player, ball);
+        PlayerCollidBall(Player, ball);
     }
    
     void GoalBackCollidWithBall(GameObject& goalBack, GameObject& ball) {
@@ -108,9 +108,9 @@ namespace // anonymous namespace — the standard way to make function "static"
     HitMap initializeCollisionMap()
     {
         HitMap phm;
-        phm[Key(typeid(Player), typeid(Ball))] = &playerCollidBall;
+        phm[Key(typeid(UserPlayer), typeid(Ball))] = &PlayerCollidBall;
         phm[Key(typeid(Ball), typeid(GoalBack))] = &ballCollidWithGoalBack;
-        phm[Key(typeid(Ball), typeid(Player))] = &ballColliedPlayer;
+        phm[Key(typeid(Ball), typeid(UserPlayer))] = &ballColliedPlayer;
         phm[Key(typeid(GoalBack), typeid(Ball))] = &GoalBackCollidWithBall;
         phm[Key(typeid(ComputerPlayer), typeid(Ball))] = &computerPlayerCollidBall;
         phm[Key(typeid(Ball), typeid(ComputerPlayer))] = &BallCollidComputerPlayer;

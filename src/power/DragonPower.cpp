@@ -4,7 +4,7 @@
 #include "gameObject/Player.h"
 
 //--------------------------------------------------------------
-DragonPower::DragonPower(bool playerSide):m_round(0),m_playerSide(playerSide),m_startPos(true)
+DragonPower::DragonPower(bool PlayerSide):m_round(0),m_PlayerSide(PlayerSide),m_startPos(true)
 {
 	m_posDragon.push_back(std::make_pair(sf::Vector2i(84, 41), sf::Vector2i(71, 71)));
 	m_posDragon.push_back(std::make_pair(sf::Vector2i(51, 119), sf::Vector2i(138, 77)));
@@ -37,10 +37,9 @@ void DragonPower::activatePowerOnBall(Ball* ball) {
 	
 }
 //--------------------------------------------------------------
-void DragonPower::activatePowerOnPlayer(Player* player) {
+void DragonPower::activatePowerOnPlayer(Player* Player) {
 
-	Box2d::getInstance().step();
-	player->setPowerOnPlayer(true);
+	Player->setPowerOnPlayer(true);
 	setPowerIsActive(false);
 }
 //--------------------------------------------------------------
@@ -67,7 +66,7 @@ void DragonPower::draw(sf::RenderWindow& window, sf::Vector2f position) {
 //--------------------------------------------------------------
 void DragonPower::defineStartposWithBall(sf::Vector2f & position) {
 
-	if (!m_playerSide) {
+	if (!m_PlayerSide) {
 
 		position.x -= (m_dragonSprite.getGlobalBounds().width * 0.9);
 		position.y -= (m_dragonSprite.getGlobalBounds().height / 2);
@@ -86,7 +85,7 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 	m_dragonSprite.setTextureRect(characterRect);
 	m_dragonSprite.setScale(4, 4);
 
-	if (m_playerSide) {
+	if (m_PlayerSide) {
 
 		m_dragonSprite.scale(-1,1);
 	}
@@ -95,7 +94,7 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 
 
 bool DragonPower::getSideOfPlayer()const {
-	return m_playerSide;
+	return m_PlayerSide;
 }
 //--------------------------------------------------------------
 DragonPower::~DragonPower()

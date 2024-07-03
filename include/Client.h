@@ -14,7 +14,7 @@ public:
 	Client();
 
 	void receiveData(MovingObject& otherPlayer);
-	void sendData(MovingObject& player);
+	void sendData(MovingObject& Player);
 
 	~Client();
 

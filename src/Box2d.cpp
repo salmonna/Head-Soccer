@@ -116,28 +116,28 @@ Box2d::Box2d():m_world(b2Vec2(0.f, GRAVITY))
 
 
 
-//create player in box3d
+//create Player in box3d
 b2Body* Box2d::createPlayer(sf::Vector2f basePosition) {
 
-    // Create the player
-    b2BodyDef playerBodyDef;
-    playerBodyDef.type = b2_dynamicBody;
-    playerBodyDef.position.Set(basePosition.x / SCALE, basePosition.y / SCALE);
-    b2Body* body = m_world.CreateBody(&playerBodyDef);
+    // Create the Player
+    b2BodyDef PlayerBodyDef;
+    PlayerBodyDef.type = b2_dynamicBody;
+    PlayerBodyDef.position.Set(basePosition.x / SCALE, basePosition.y / SCALE);
+    b2Body* body = m_world.CreateBody(&PlayerBodyDef);
 
-    // Prevent the player from rotating
+    // Prevent the Player from rotating
     body->SetFixedRotation(true);
 
-    b2PolygonShape playerBox;
-    playerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
-    b2FixtureDef playerFixtureDef;
-    playerFixtureDef.shape = &playerBox;
-    playerFixtureDef.density = 10.f;
-    playerFixtureDef.friction = 0.3f;
-    body->CreateFixture(&playerFixtureDef);
+    b2PolygonShape PlayerBox;
+    PlayerBox.SetAsBox(30.f / SCALE, 40.f / SCALE);
+    b2FixtureDef PlayerFixtureDef;
+    PlayerFixtureDef.shape = &PlayerBox;
+    PlayerFixtureDef.density = 10.f;
+    PlayerFixtureDef.friction = 0.3f;
+    body->CreateFixture(&PlayerFixtureDef);
 
-    // Set the gravity scale for the player
-    body->SetGravityScale(PLAYER_GRAVITY_SCALE);
+    // Set the gravity scale for the Player
+    body->SetGravityScale(Player_GRAVITY_SCALE);
 
     return body;
 }

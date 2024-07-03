@@ -3,7 +3,7 @@
 #include "gameObject/Player.h"
 #include "gameObject/Ball.h"
 
-InvisiblePower::InvisiblePower(bool playerSide):m_playerSide(playerSide)
+InvisiblePower::InvisiblePower(bool PlayerSide):m_PlayerSide(PlayerSide)
 {
 
 };
@@ -21,14 +21,15 @@ void InvisiblePower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void InvisiblePower::activatePowerOnPlayer(Player* player) {
+void InvisiblePower::activatePowerOnPlayer(Player* Player) {
 
-    Box2d::getInstance().step();
-    player->restartClock();
-    player->setPowerOnPlayer(true);
+
+   // Player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
+    Player->restartClock();
+    Player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 
 bool InvisiblePower::getSideOfPlayer()const {
-    return m_playerSide;
+    return m_PlayerSide;
 }

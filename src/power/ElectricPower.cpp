@@ -4,7 +4,7 @@
 #include "Resources.h"
 
 
-ElectricPower::ElectricPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_playerSide(playerSide)
+ElectricPower::ElectricPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0), m_PlayerSide(PlayerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[5]);
 
@@ -37,18 +37,18 @@ void ElectricPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void ElectricPower::activatePowerOnPlayer(Player* player) {
+void ElectricPower::activatePowerOnPlayer(Player* Player) {
 
     //need to fix this power
     Box2d::getInstance().step();
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = player->getBody()->GetPosition();
-    currentPosition.y = 60.f; //make the player disapear
-    player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
-    player->getBody()->SetAwake(false);
-    player->restartClock();
-    player->setPowerOnPlayer(true); //freexe plower
+    b2Vec2 currentPosition = Player->getBody()->GetPosition();
+    currentPosition.y = 60.f; //make the Player disapear
+    Player->getBody()->SetTransform(currentPosition, Player->getBody()->GetAngle());
+
+    Player->restartClock();
+    Player->setPowerOnPlayer(true); //freexe plower
     setPowerIsActive(false);
 }
 
@@ -77,5 +77,5 @@ void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
 }
 
 bool ElectricPower::getSideOfPlayer()const {
-    return m_playerSide;
+    return m_PlayerSide;
 }
