@@ -1,10 +1,10 @@
-#include "power/ElectricPower.h"
+#include "power/DisappearPower.h"
 #include "gameObject/Player.h"
 #include "gameObject/Ball.h"
 #include "Resources.h"
 
 
-ElectricPower::ElectricPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_playerSide(playerSide)
+DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_playerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[5]);
 
@@ -34,7 +34,7 @@ ElectricPower::ElectricPower(bool playerSide) :m_spriteSheetClock(), m_index(0),
 
 };
 
-void ElectricPower::activatePowerOnBall(Ball* ball)
+void DisappearPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
 
@@ -47,7 +47,7 @@ void ElectricPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void ElectricPower::activatePowerOnPlayer(Player* player) {
+void DisappearPower::activatePowerOnPlayer(Player* player) {
 
     //need to fix this power
     Box2d::getInstance().step();
@@ -63,12 +63,12 @@ void ElectricPower::activatePowerOnPlayer(Player* player) {
     setPowerIsActive(false);
 }
 
-void ElectricPower::draw(sf::RenderWindow& window) const
+void DisappearPower::draw(sf::RenderWindow& window) const
 {
     window.draw(m_sprite);
 }
 
-void ElectricPower::animation(sf::Vector2f position)
+void DisappearPower::animation(sf::Vector2f position)
 {
 
     if (m_index == m_spriteSheet.size())
@@ -90,6 +90,6 @@ void ElectricPower::animation(sf::Vector2f position)
 }
 
 
-bool ElectricPower::getSideOfPlayer()const {
+bool DisappearPower::getSideOfPlayer()const {
     return m_playerSide;
 }

@@ -5,7 +5,7 @@
 
 FirePower::FirePower(bool playerSide) :m_spriteSheetClock(), m_index1(0), m_index2(0),m_playerSide(playerSide)
 {
-    m_sprite.setTexture(Resources::getInstance().getBallTexture()[2]);
+    m_sprite.setTexture(Resources::getInstance().getPowerTexture()[8]);
     
     m_spriteSheet.push_back(std::pair(sf::Vector2i(9,81), sf::Vector2i(15,15)));
     m_spriteSheet.push_back(std::pair(sf::Vector2i(38, 75), sf::Vector2i(30, 30)));
