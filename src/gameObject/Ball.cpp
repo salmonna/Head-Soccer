@@ -2,7 +2,8 @@
 #include "Resources.h"
 #include "Keyboard.h"
 #include <iostream>
-
+//-----------------------------------------------------------------------------
+// Constructor initializes member variables
 Ball::Ball():m_power(std::make_shared<Power>()), m_basePosition(900.0f, 100.0f), m_restartBall(false)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
@@ -21,6 +22,7 @@ bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<Ball>(); });
 
 //-----------------------------------------------------------------------------
+// Move function for updating ball state
 void  Ball::move()
 {
 
@@ -37,6 +39,7 @@ void  Ball::move()
     update();
 }
 //-----------------------------------------------------------------------------
+// Draw function to render ball 
 void Ball::draw(sf::RenderWindow & window) const
 {
 	window.draw(m_sprite);
@@ -45,6 +48,7 @@ void Ball::draw(sf::RenderWindow & window) const
         m_power->draw(window);
 }
 //-----------------------------------------------------------------------------
+// Update function to sync Box2D body position and sprite position
 void Ball::update() {
     b2Vec2 position1 = m_body->GetPosition();
     m_sprite.setPosition(B2VecToSFVec(position1));
@@ -53,6 +57,7 @@ void Ball::update() {
     m_power->animation(m_sprite.getPosition());
 }
 //-----------------------------------------------------------------------------
+// Update power state function to handle active powers
 void Ball::updatePowerState() {
     m_power->checkTimeIsOver();
 
@@ -70,6 +75,7 @@ void Ball::updatePowerState() {
     }
 }
 //-----------------------------------------------------------------------------
+// Kick function to apply force to the ball
 void Ball::kick(bool rigthSide) {
 
     float kickForceX;  // Horizontal kick force
@@ -80,6 +86,7 @@ void Ball::kick(bool rigthSide) {
     m_body->ApplyForceToCenter(kickForce, true);
 }
 //-----------------------------------------------------------------------------
+// Reset function to reset ball position and velocity
 void Ball::reset() {
     // Update the position of the Box2D body
     b2Vec2 newPosition(m_basePosition.x / SCALE, m_basePosition.y / SCALE);
@@ -92,28 +99,34 @@ void Ball::reset() {
     update();
 }
 //-----------------------------------------------------------------------------
+// Getter function for retrieving the Box2D body
 b2Body* Ball::getBody() const {
     return m_body;
 }
 //-----------------------------------------------------------------------------
+// Getter function for retrieving the ball power
 std::shared_ptr<Power> Ball::getPower()const
 {
     return m_power;
 }
 //-----------------------------------------------------------------------------
+// Getter function for retrieving the ball color
 sf::Color Ball::getBallColor()const {
     return m_ballColor;
 }
 //-----------------------------------------------------------------------------
+// Getter function for retrieving the ball sprite
 sf::Sprite & Ball::getSprite()
 {
     return m_sprite;
 }
 //-----------------------------------------------------------------------------
+// Getter function for retrieving the ball mass data
 b2MassData Ball::getBallMass() const{
     return m_bodyMass;
 }
 //-----------------------------------------------------------------------------
+// Function to set the position of the ball
 void Ball::setPosition(sf::Vector2f position)
 {
     // Update the position of the Box2D body
@@ -125,11 +138,13 @@ void Ball::setPosition(sf::Vector2f position)
     update(); // Assuming this function updates the sprite position
 }
 //-----------------------------------------------------------------------------
+// Setter function to set the ball power
 void Ball::setPower(std::shared_ptr<Power> power)
 {
     m_power = power;
 }
 //-----------------------------------------------------------------------------
+// Destructor to clean up Box2D body and fixtures
 Ball::~Ball(){
     m_body->DestroyFixture(m_body->GetFixtureList());
     auto world = Box2d::getInstance().getBox2dWorld();

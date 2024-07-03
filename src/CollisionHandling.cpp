@@ -6,7 +6,7 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include "gameObject/UserPlayer.h"//////////
+#include "gameObject/UserPlayer.h"
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
 #include "gameObject/ComputerPlayer.h"

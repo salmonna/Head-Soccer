@@ -7,8 +7,8 @@
 #include "FileException.h"
 #include "SoundControl.h"
 #include "Command/Sound.h"
-
-//gameResults constactor
+//------------------------------------------------------------- Constructor -----------------------------------
+// Constructor initializes GameResults with necessary components
 GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(NULL),m_initilaze(false)
 {
 	auto sprite = sf::Sprite(Resources::getInstance().getGameModeTexture()[4]);
@@ -29,6 +29,7 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 
 
 //----------------------------------------------------------------------------------
+// Method to initialize text for game results
 void GameResults::IntiliazTextResult()
 {
 	sf::Font& font = Resources::getInstance().getFont();
@@ -73,7 +74,7 @@ void GameResults::respond(sf::Vector2f mousePressed)
 			}
 		}
 	}
-
+	// Initialize game results if not already initialized
 	if (!m_initilaze) {
 
 		PlayerOrderAndSide();
@@ -83,6 +84,7 @@ void GameResults::respond(sf::Vector2f mousePressed)
 	}
 }
 //----------------------------------------------------------------------------------
+// Method to reset game results
 void GameResults::resetGameResult()
 {	
 	m_initilaze = false;
@@ -92,6 +94,7 @@ void GameResults::resetGameResult()
 	m_gameResultSprite.erase(m_gameResultSprite.begin() + 1 , m_gameResultSprite.end());
 }
 //----------------------------------------------------------------------------------
+// Method to set player order and sides
 void GameResults::PlayerOrderAndSide()
 {	
 	//set Player oreder and sides
@@ -116,6 +119,7 @@ void GameResults::PlayerOrderAndSide()
 	m_initilaze = true;
 }
 //----------------------------------------------------------------------------------
+// Method to display final score result
 void GameResults::finalScoreResult()
 {
 	int leftPlayerPoint = ScoreBoard::getInstance().getPoint(1);
@@ -128,6 +132,7 @@ void GameResults::finalScoreResult()
 	
 }
 //----------------------------------------------------------------------------------
+// Method to update match winner display based on scores
 void GameResults::updateWinnerMatch(int leftPlayerPoint, int rightPlayerPoint)
 {
 	auto sprite = sf::Sprite();
@@ -156,7 +161,7 @@ void GameResults::updateWinnerMatch(int leftPlayerPoint, int rightPlayerPoint)
 	}
 }
 //----------------------------------------------------------------------------------
-//draw function
+// Method to draw game results screen
 void GameResults::draw(sf::RenderWindow& window) const
 {
 
@@ -175,6 +180,7 @@ void GameResults::draw(sf::RenderWindow& window) const
 	drawFinalResult(window);
 }
 //----------------------------------------------------------------------------------
+// Method to draw final result (text, characters, and flags)
 void GameResults::drawFinalResult(sf::RenderWindow& window) const
 {
 	for (int i = 0; i < m_resultText.size(); i++)

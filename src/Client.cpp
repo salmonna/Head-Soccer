@@ -1,7 +1,8 @@
 
 #include "Client.h"
 #include "FileException.h"
-
+//---------------------------------------------------------
+// Constructor: Initializes Client with default values and attempts to connect to a server.
 Client::Client():m_connected(false),m_server("192.168.1.24"),m_port(53000)
 {
     if (m_socket.connect(m_server, m_port) == sf::Socket::Done) {
@@ -13,7 +14,8 @@ Client::Client():m_connected(false),m_server("192.168.1.24"),m_port(53000)
         throw FileException("Faild to conect to server");
     }
 }
-
+//---------------------------------------------------------
+// Receives data from the server into a packet and processes it to update another player's state.
 void Client::receiveData(MovingObject& otherPlayer) {
     sf::Packet packet;
 
@@ -24,7 +26,8 @@ void Client::receiveData(MovingObject& otherPlayer) {
     }
     packet.clear();
 }
-
+//---------------------------------------------------------
+// Sends data (such as player's position) to the server in a packet.
 void Client::sendData(MovingObject& Player) {
     sf::Packet packet;
     float key = 0;

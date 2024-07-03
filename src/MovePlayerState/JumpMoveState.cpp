@@ -8,6 +8,8 @@ JumpMoveState::JumpMoveState(bool jump) :m_currentState(nullptr),m_jump(jump)
 }
 
 //----------------------------------------------------------------------------------
+// Handles movement logic for jumping state, applies jump force, checks state changes,
+//  and handles player movement based on input.
 void JumpMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	b2Vec2 vel = body->GetLinearVelocity();
@@ -40,13 +42,11 @@ void JumpMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 }
 
 //----------------------------------------------------------------------------------
+// Returns a unique pointer to the current player state and resets the current state to null.
 std::unique_ptr<BaseMovePlayerState> JumpMoveState::handleMoveStatus()
 {
 	std::unique_ptr<BaseMovePlayerState> temp = std::move(m_currentState);
-
-
 	return temp;
-
 }
 //----------------------------------------------------------------------------------
 JumpMoveState::~JumpMoveState()
