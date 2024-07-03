@@ -5,7 +5,7 @@
 #include "gameObject/ScoreBoard.h"
 #include "SoundControl.h"
 
-ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball> ball):m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock(),m_ball(ball)
+ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball>& ball):m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock(),m_ball(ball)
 {
 
 	sf::Vector2f pos(550, 80);
@@ -33,7 +33,7 @@ ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball> ball):m_numOfJump(0), m_jum
 }
 
 bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
-    [](std::shared_ptr<Ball> ball) -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(ball); });
+    [](std::shared_ptr<Ball>& ball) -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(ball); });
 
 //-----------------------------------------------------------------------------
 void ComputerPlayer::move() {
@@ -41,19 +41,16 @@ void ComputerPlayer::move() {
 	sf::Vector2f direction = m_ball->getSprite().getPosition() - m_sprite.getPosition();
 	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2.f)) {
-
+	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2.f)) 
 		deactivatePower(m_body,m_sprite,m_PlayerColor,m_powerOnPlayer);
-	}
-	else
-	{
+	else if (!m_powerOnPlayer && m_power->stayInTheAir())
 		updateMovement(m_ball->getSprite().getPosition(), length, direction);
-	}
+
 	update();
 	checkIfTurnOnAura();
 }
 //-----------------------------------------------------------------------------
-void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float length, const sf::Vector2f& direction) {
+void ComputerPlayer::updateMovement(const sf::Vector2f ballPosition, float length, const sf::Vector2f& direction) {
 
 	const float kickRange = 100.0f;
 	if (m_jump) {
@@ -181,7 +178,6 @@ void ComputerPlayer::setAura(bool aura) {
 //-----------------------------------------------------------------------------
 ComputerPlayer::~ComputerPlayer()
 {
-	std::cout << " C-D" << std::endl;
 	m_body->DestroyFixture(m_body->GetFixtureList());
 	auto world = Box2d::getInstance().getBox2dWorld();
 	world->DestroyBody(m_body);

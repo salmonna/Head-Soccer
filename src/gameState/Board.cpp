@@ -28,17 +28,16 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	{
 		m_backGroundStadium.push_back(sf::Sprite());
 		m_backGroundStadium[i].setTexture(texture[i]);
-
 	}
 	m_backGroundStadium[1].setPosition(0, 674);
-
+	auto ball = std::make_shared<Ball>();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
 						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
 
 	std::vector<std::string> staticObjectNames { "LeftOutsideGoalSide" , "RightOutsideGoalSide", "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
 												"LeftGoalBack", "RightGoalBack" };
 	createStaticObjects(staticObjectNames);
-	auto object = MovingFactory::createMoving("Ball", NULL);
+	auto object = MovingFactory::createMoving("Ball", ball);
 
 	if (object)
 	{
@@ -130,8 +129,8 @@ void Board::handleScoreBoard() {
 	}
 	else
 	{
-		m_movingObject[1]->reset();
-		m_movingObject[2]->reset();
+		for (auto& object : m_movingObject)
+			object->reset();
 	}
 }
 

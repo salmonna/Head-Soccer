@@ -1,6 +1,6 @@
 #include "Factory/MovingFactory.h"
 
-std::shared_ptr<MovingObject> MovingFactory::createMoving(const std::string& name, std::shared_ptr<Ball> ball) {
+std::shared_ptr<MovingObject> MovingFactory::createMoving(const std::string& name, std::shared_ptr<Ball>& ball) {
 	auto it = getMovingMap().find(name);
 	if (it == getMovingMap().end())
 		return nullptr;

@@ -42,7 +42,6 @@ void TornadoPower::activatePowerOnPlayer(Player* Player) {
     Player->restartClock();
     Player->setPowerOnPlayer(true);
     setPowerIsActive(false);
-    //Player->getBody()->SetAwake(false);
 }
 
 

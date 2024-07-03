@@ -130,7 +130,6 @@ void Ball::setPower(std::shared_ptr<Power> power)
 }
 //-----------------------------------------------------------------------------
 Ball::~Ball(){
-    std::cout << " B-D" << std::endl;
     m_body->DestroyFixture(m_body->GetFixtureList());
     auto world = Box2d::getInstance().getBox2dWorld();
     world->DestroyBody(m_body);

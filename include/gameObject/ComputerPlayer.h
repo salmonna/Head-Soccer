@@ -12,7 +12,7 @@ class ComputerPlayer :public Player
 {
 public:
 
-	ComputerPlayer(std::shared_ptr<Ball> ball);
+	ComputerPlayer(std::shared_ptr<Ball>& ball);
 	
 	virtual void move() override;
 	virtual void draw(sf::RenderWindow& window)const override;
@@ -37,7 +37,7 @@ private:
 	
 	void checkIfTurnOnAura();
 	void update();
-	void updateMovement(const sf::Vector2f& ballPosition, float length, const sf::Vector2f& direction);
+	void updateMovement(const sf::Vector2f ballPosition, float length, const sf::Vector2f& direction);
 	
 	std::shared_ptr<Ball> m_ball;
 	std::shared_ptr<Power> m_power;

@@ -18,13 +18,13 @@ void InvisiblePower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());    
     ball->getSprite().setColor(sf::Color(64, 64, 64, 64));
     // Set awake state to false to "pause" the body
+
     ball->getBody()->SetAwake(false);
 }
 
 void InvisiblePower::activatePowerOnPlayer(Player* Player) {
 
 
-   // Player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
     Player->restartClock();
     Player->setPowerOnPlayer(true);
     setPowerIsActive(false);

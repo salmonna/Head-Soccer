@@ -41,7 +41,7 @@ bool UserPlayer::m_registeritRightPlayer = MovingFactory::registeritMoving("Righ
 
 bool UserPlayer::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftPlayer",
 	[]() -> std::shared_ptr<MovingObject> { return std::make_shared<UserPlayer>(false,
-		Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S));  });
+		Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S));});
 
 //-----------------------------------------------------------------------------
 //function that find where to move and  call to another function 
@@ -52,9 +52,11 @@ void UserPlayer::move() {
 		m_currentMoveState = nextState;
 
 	// Check if the power is active
-	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 3)) 
-		deactivatePower(m_body,m_sprite,m_PlayerColor,m_powerOnPlayer);
-	else {
+	if (m_powerOnPlayer){
+		if (m_powerClock.getElapsedTime().asSeconds() > 3)
+			deactivatePower(m_body, m_sprite, m_PlayerColor, m_powerOnPlayer);
+	}
+	else if(!m_power->powerIsActive() && m_power->stayInTheAir()) {
 		m_currentMoveState->movement(m_sprite, m_keys, m_body);
 	}
 
@@ -110,7 +112,6 @@ void UserPlayer::draw(sf::RenderWindow& window) const {
 	ScoreBoard::getInstance().draw(window);
 
 	window.draw(m_sprite);
-
 }
 //-----------------------------------------------------------------------------
 std::shared_ptr<Power> UserPlayer::getPower()const
@@ -160,17 +161,10 @@ bool UserPlayer::getPowerOnPlayer() const {
 }
 //-----------------------------------------------------------------------------
 void UserPlayer::restartClock() {
-	std::cout << "before restart.asSeconds clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
-	m_powerClock.restart().asSeconds();
-	std::cout << "after restart.asSeconds clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
-	//------------------------------------------------------------------------- need to delete ----------//
-	std::cout << "before restart clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
 	m_powerClock.restart();
-	std::cout << "after restart clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
 }
 //-----------------------------------------------------------------------------
 UserPlayer::~UserPlayer() {
-	std::cout << " P-D" << std::endl;
 	m_body->DestroyFixture(m_body->GetFixtureList());
 	auto world = Box2d::getInstance().getBox2dWorld();
 	world->DestroyBody(m_body);

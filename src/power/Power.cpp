@@ -1,9 +1,9 @@
 
 #include "power/Power.h"
 #include "Resources.h"
+#include <iostream>
 
-
-Power::Power(): m_clock(), m_powerTimer(), m_stayTimer(), m_powerIsActive(false)
+Power::Power(): m_clock(), m_powerTimer(), m_powerIsActive(false)
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
 	m_auraSprite.setTexture(texture[2]);
@@ -12,12 +12,10 @@ Power::Power(): m_clock(), m_powerTimer(), m_stayTimer(), m_powerIsActive(false)
 	m_auraSprite.setTextureRect(characterRect);
 }
 
-
 sf::Sprite& Power::getSprite() {
 
 	return m_auraSprite;
 }
-
 
 void Power::startTimer()
 {
@@ -35,7 +33,6 @@ bool Power::stayInTheAir()
 {
 	return m_stayTimer.getElapsedTime().asSeconds() >= 2.f;
 }
-
 
 void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position, sf::Vector2f origin) {
 	m_auraSprite.setPosition(position.x - 25,position.y - 55);
