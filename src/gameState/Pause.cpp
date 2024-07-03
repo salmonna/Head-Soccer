@@ -15,7 +15,7 @@ m_boardState(boardState)
 	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)), texture[1], sf::Vector2f(900.f, 395.f))); //Resume Button
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getCrowd())), tex[10], sf::Vector2f(800.f, 545.f))); // sound button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getCrowd())), tex[10], sf::Vector2f(900.f, 545.f))); // sound button
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)), texture[2], sf::Vector2f(900.f, 695.f))); //exit to menu Button
 
 
@@ -31,7 +31,7 @@ void Pause::respond(sf::Vector2f pressed) {
 
 		if (m_buttons[i]->contains(pressed)) {
 
-			if (i == 1) //exit to menu
+			if (i == 2) //exit to menu
 			{
 				m_boardState->reset();
 				ScoreBoard::getInstance().reset();

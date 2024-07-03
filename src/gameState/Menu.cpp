@@ -18,9 +18,8 @@ Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameM
 
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameModeState, controller)), texture[0], sf::Vector2f(885.f, 345.f))); //playButton
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(tutorial, controller)), texture[3], sf::Vector2f(885.f, 495.f))); //tutorial Button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), texture[10], sf::Vector2f(1670.f, 45.f))); //sound Button
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Quit>(window)), texture[1], sf::Vector2f(885.f, 645.f))); //exit Button
-
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), texture[10], sf::Vector2f(0.f, 0.f)));
 
 
 	sf::Sound& song = SoundControl::getInstance().getIntroSong();

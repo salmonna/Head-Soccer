@@ -21,7 +21,7 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 
 	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 0.f)));
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(1670.f, 45.f)));
 
 	IntiliazTextResult();
 
