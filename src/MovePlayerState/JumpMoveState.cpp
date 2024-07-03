@@ -1,8 +1,8 @@
 #include "MovePlayerState/JumpMoveState.h"
-
+#include "MovePlayerState/StandPlayerState.h"
+#include "MovePlayerState/KickMoveState.h"
 //----------------------------------------------------------------------------------
-JumpMoveState::JumpMoveState(StandPlayerState* standState, KickMoveState* kickMoveState) :m_currentState(nullptr),
-m_standMoveState(standState),m_kickMoveState(kickMoveState),m_jump(false)
+JumpMoveState::JumpMoveState(bool jump) :m_currentState(nullptr),m_jump(jump)
 {
 	m_startPos = sf::Vector2f(160, 8);
 }
@@ -20,7 +20,7 @@ void JumpMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	if (changeState(7))
 	{
-		m_currentState = (BaseMovePlayerState*)m_standMoveState;
+		m_currentState = std::make_unique<StandPlayerState>();
 		m_jump = false;
 	}
 
@@ -34,16 +34,16 @@ void JumpMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 	}
 	else if (sf::Keyboard::isKeyPressed(key.SPACE)) {//move right
 
-		m_currentState = m_kickMoveState;
+		m_currentState = std::make_unique<KickMoveState>();
 	}
 
 }
 
 //----------------------------------------------------------------------------------
-BaseMovePlayerState* JumpMoveState::handleMoveStatus()
+std::unique_ptr<BaseMovePlayerState> JumpMoveState::handleMoveStatus()
 {
-	BaseMovePlayerState* temp = m_currentState;
-	m_currentState = nullptr;
+	std::unique_ptr<BaseMovePlayerState> temp = std::move(m_currentState);
+
 
 	return temp;
 
