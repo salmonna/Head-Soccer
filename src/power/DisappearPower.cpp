@@ -3,7 +3,7 @@
 #include "gameObject/Ball.h"
 #include "Resources.h"
 
-
+//-----------------------------------------------------------------------------------------
 DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_PlayerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[5]);
@@ -33,7 +33,8 @@ DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0
     }
 
 };
-
+//-----------------------------------------------------------------------------------------
+// Activates the power on a ball, adjusting its position and sleep state.
 void DisappearPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
@@ -46,7 +47,7 @@ void DisappearPower::activatePowerOnBall(Ball* ball)
     // Set awake state to false to "pause" the body
     ball->getBody()->SetAwake(false);
 }
-
+//-----------------------------------------------------------------------------------------
 void DisappearPower::activatePowerOnPlayer(Player* player) {
 
     //need to fix this power
@@ -61,12 +62,14 @@ void DisappearPower::activatePowerOnPlayer(Player* player) {
     player->setPowerOnPlayer(true); //freexe plower
     setPowerIsActive(false);
 }
-
+//-----------------------------------------------------------------------------------------
+// Draws the DisappearPower sprite onto the given render window.
 void DisappearPower::draw(sf::RenderWindow& window) const
 {
     window.draw(m_sprite);
 }
-
+//-----------------------------------------------------------------------------------------
+// Updates the animation frame of the DisappearPower sprite based on elapsed time.
 void DisappearPower::animation(sf::Vector2f position)
 {
 
@@ -88,7 +91,8 @@ void DisappearPower::animation(sf::Vector2f position)
     m_sprite.setPosition(position);
 }
 
-
+//-----------------------------------------------------------------------------------------
+// Retrieves the side of the player associated with the DisappearPower.
 bool DisappearPower::getSideOfPlayer()const {
     return m_PlayerSide;
 }
