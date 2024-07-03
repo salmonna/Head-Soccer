@@ -66,9 +66,9 @@ void DragonPower::animation(sf::Vector2f position)
 }
 
 //--------------------------------------------------------------
-void DragonPower::activatePowerOnPlayer(Player* Player) {
+void DragonPower::activatePowerOnPlayer(Player* player) {
 
-	Player->setPowerOnPlayer(true);
+	player->setPowerOnPlayer(true);
 	setPowerIsActive(false);
 }
 //--------------------------------------------------------------

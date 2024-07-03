@@ -7,7 +7,7 @@ public:
 
 	InvisiblePower(bool PlayerSide = true);
 	virtual void activatePowerOnBall(Ball* ball)override;
-	virtual void activatePowerOnPlayer(Player* Player)override;
+	virtual void activatePowerOnPlayer(Player* player)override;
 	bool getSideOfPlayer()const;
 	~InvisiblePower() = default;
 

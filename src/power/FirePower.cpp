@@ -46,12 +46,12 @@ void FirePower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void FirePower::activatePowerOnPlayer(Player* Player) {
+void FirePower::activatePowerOnPlayer(Player* player) {
 
-    Player->getSprite().setColor(sf::Color(256, 256, 256));
-    Player->getBody()->SetAwake(false);
-    Player->restartClock();
-    Player->setPowerOnPlayer(true);
+    player->getSprite().setColor(sf::Color(256, 256, 256));
+    player->getBody()->SetAwake(false);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 
