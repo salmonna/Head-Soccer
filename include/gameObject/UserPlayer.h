@@ -50,12 +50,7 @@ private:
 	sf::Sound m_auraSound;
 	Keyboard m_keys;
 
-	LeftMoveState m_leftMoveState;
-	RightMoveState m_rightMoveState;
-	JumpMoveState m_jumpMoveState;
-	KickMoveState m_kickMoveState;
-	StandPlayerState m_standMoveState;
-	BaseMovePlayerState* m_currentMoveState;
+	std::unique_ptr<BaseMovePlayerState> m_currentMoveState;
 
 	std::shared_ptr<Power> m_power;
 

@@ -8,9 +8,7 @@
 
 //-----------------------------------------------------------------------------
 UserPlayer::UserPlayer(bool right, Keyboard keys) :m_keys(keys), m_PlayerSide(right), m_aura(false), m_powerOnPlayer(false),m_powerClock(),
-m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
-,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
-m_currentMoveState(&m_standMoveState)
+m_currentMoveState(std::make_unique<StandPlayerState>())
 {
 	if (!m_PlayerSide)
 		m_basePosition = sf::Vector2f(272, 775);
@@ -47,9 +45,9 @@ bool UserPlayer::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftP
 //function that find where to move and  call to another function 
 void UserPlayer::move() {
 
-	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
+	std::unique_ptr<BaseMovePlayerState> nextState = m_currentMoveState->handleMoveStatus();
 	if (nextState) 
-		m_currentMoveState = nextState;
+		m_currentMoveState = std::move(nextState);
 
 	// Check if the power is active
 	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2)) 
