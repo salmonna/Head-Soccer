@@ -37,6 +37,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         }
         else if (ballObject.getPower()->powerIsActive()){
             ballObject.getPower()->activatePowerOnPlayer(&PlayerObject);
+            PlayerObject.restartClock();
         }
     }
 

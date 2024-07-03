@@ -7,7 +7,7 @@
 #include "SoundControl.h"
 
 //-----------------------------------------------------------------------------
-UserPlayer::UserPlayer(bool right, Keyboard keys) :m_keys(keys), m_PlayerSide(right), m_aura(false), m_powerOnPlayer(false),m_powerClock(),
+UserPlayer::UserPlayer(bool right, Keyboard keys) : /*Player(Resources::getInstance().getPower(m_PlayerSide)),*/ m_keys(keys), m_PlayerSide(right), m_aura(false), m_powerOnPlayer(false),m_powerClock(),
 m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
 ,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
 m_currentMoveState(&m_standMoveState)
@@ -52,7 +52,7 @@ void UserPlayer::move() {
 		m_currentMoveState = nextState;
 
 	// Check if the power is active
-	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2)) 
+	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 3)) 
 		deactivatePower(m_body,m_sprite,m_PlayerColor,m_powerOnPlayer);
 	else {
 		m_currentMoveState->movement(m_sprite, m_keys, m_body);
@@ -160,7 +160,13 @@ bool UserPlayer::getPowerOnPlayer() const {
 }
 //-----------------------------------------------------------------------------
 void UserPlayer::restartClock() {
+	std::cout << "before restart.asSeconds clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
 	m_powerClock.restart().asSeconds();
+	std::cout << "after restart.asSeconds clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
+	//------------------------------------------------------------------------- need to delete ----------//
+	std::cout << "before restart clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
+	m_powerClock.restart();
+	std::cout << "after restart clock: " << m_powerClock.getElapsedTime().asSeconds() << std::endl;
 }
 //-----------------------------------------------------------------------------
 UserPlayer::~UserPlayer() {

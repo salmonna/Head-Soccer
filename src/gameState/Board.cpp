@@ -38,13 +38,23 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	std::vector<std::string> staticObjectNames { "LeftOutsideGoalSide" , "RightOutsideGoalSide", "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
 												"LeftGoalBack", "RightGoalBack" };
 	createStaticObjects(staticObjectNames);
+	auto object = MovingFactory::createMoving("Ball", NULL);
+
+	if (object)
+	{
+		m_movingObject.push_back(object);
+		m_gameObject.push_back(object);
+	}
+	else
+		std::cout << "Class not found!\n";
+
 }
 
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 {
-
+	std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[0]);
 	for (const auto& name : objectNames) {
-		auto object = MovingFactory::createMoving(name);
+		auto object = MovingFactory::createMoving(name, ballObject);
 
 		if (object)
 		{
@@ -53,14 +63,6 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 		}
 		else
 			std::cout << "Class not found!\n";
-	}
-	if (objectNames[1] == "ComputerPlayer")
-	{
-		// Assuming m_movingObject is a vector or array of std::shared_ptr<BaseClass>
-		std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[2]);
-		std::shared_ptr<ComputerPlayer> computerObject = std::dynamic_pointer_cast<ComputerPlayer>(m_movingObject[1]);
-
-		computerObject->setBall(ballObject);
 	}
 	ScoreBoard::getInstance().setFlagsPlayers();
 
@@ -128,8 +130,8 @@ void Board::handleScoreBoard() {
 	}
 	else
 	{
-		m_movingObject[0]->reset();
 		m_movingObject[1]->reset();
+		m_movingObject[2]->reset();
 	}
 }
 
@@ -148,8 +150,8 @@ void Board::moveAd()
 }
 
 void Board::reset() {
-	m_gameObject.erase(m_gameObject.begin() + 8, m_gameObject.end());
-	m_movingObject.clear();
+	m_gameObject.erase(m_gameObject.begin() + 9, m_gameObject.end());
+	m_movingObject.erase(m_movingObject.begin() + 1, m_movingObject.end());
 }
 
 //=============================================== for_each_pair =======================================//

@@ -5,7 +5,7 @@
 #include "gameObject/ScoreBoard.h"
 #include "SoundControl.h"
 
-ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock()
+ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball> ball):m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock(),m_ball(ball)
 {
 
 	sf::Vector2f pos(550, 80);
@@ -33,7 +33,7 @@ ComputerPlayer::ComputerPlayer():m_numOfJump(0), m_jump(false),m_aura(false),m_p
 }
 
 bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
-    []() -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(); });
+    [](std::shared_ptr<Ball> ball) -> std::shared_ptr<MovingObject> { return std::make_shared<ComputerPlayer>(ball); });
 
 //-----------------------------------------------------------------------------
 void ComputerPlayer::move() {
@@ -137,10 +137,6 @@ void ComputerPlayer::draw(sf::RenderWindow& window)const {
 //-----------------------------------------------------------------------------
 b2Body* ComputerPlayer::getBody()const {
 	return m_body;
-}
-//-----------------------------------------------------------------------------
-void ComputerPlayer::setBall(std::shared_ptr<Ball> ball) {
-	m_ball = ball;
 }
 //-----------------------------------------------------------------------------
 bool ComputerPlayer::getAura()const {

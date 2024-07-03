@@ -236,10 +236,10 @@ void SelectTeam::loadGameMode(int index)
 	switch (m_numOfPlayers)
 	{
 	case 1:
-		movingObjectNames = { "RightPlayer", "ComputerPlayer", "Ball" };
+		movingObjectNames = { "RightPlayer", "ComputerPlayer"};
 		break;
 	case 2:
-		movingObjectNames = { "RightPlayer", "LeftPlayer", "Ball" };
+		movingObjectNames = { "RightPlayer", "LeftPlayer"};
 		break;
 	default:
 		break;

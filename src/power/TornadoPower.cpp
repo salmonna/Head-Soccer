@@ -37,11 +37,12 @@ void TornadoPower::activatePowerOnBall(Ball* ball)
 
 void TornadoPower::activatePowerOnPlayer(Player* Player) {
 
+    //Box2d::getInstance().step();
     Player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
     Player->restartClock();
     Player->setPowerOnPlayer(true);
     setPowerIsActive(false);
-    player->getBody()->SetAwake(false);
+    //Player->getBody()->SetAwake(false);
 }
 
 

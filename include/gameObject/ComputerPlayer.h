@@ -12,7 +12,7 @@ class ComputerPlayer :public Player
 {
 public:
 
-	ComputerPlayer();
+	ComputerPlayer(std::shared_ptr<Ball> ball);
 	
 	virtual void move() override;
 	virtual void draw(sf::RenderWindow& window)const override;
@@ -21,7 +21,6 @@ public:
 	virtual b2Body* getBody()const override;
 
 	void movePlayer(sf::Vector2f startPos, int maxSprite, float maxTime);
-	void setBall(std::shared_ptr<Ball> ball);
 
 	virtual bool getAura() const override;
 	virtual void setAura(bool aura) override;
