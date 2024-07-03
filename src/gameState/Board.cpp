@@ -117,6 +117,7 @@ void Board::respond(sf::Vector2f pressed) {
 //----------------handle Score Board---------------//
 void Board::handleScoreBoard() {
 
+	ScoreBoard::getInstance().updateScore(0, 0);
 	ScoreBoard::getInstance().timeCalculation();
 	ScoreBoard::getInstance().Progress();
 	if (ScoreBoard::getInstance().timeIsOver())

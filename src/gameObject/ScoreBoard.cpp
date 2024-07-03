@@ -134,7 +134,7 @@ void ScoreBoard::Progress()
 	if (m_goalSign)
 		m_goalSprite.move(10, 0);
 
-	if (m_clockGoalSign.getElapsedTime().asSeconds() > 2)
+	if (m_clockGoalSign.getElapsedTime().asSeconds() > 2.f)
 	{
 		m_goalSign = false;
 		m_goalSprite.setPosition(0, 200);
@@ -148,7 +148,7 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 {
 	int width = (progress + 1) * 8;
 
-	if (seconds >= 0.1 && width < 490)
+	if (seconds >= 0.2 && width < 590)
 	{
 		progress++;
 		m_clock.restart();
