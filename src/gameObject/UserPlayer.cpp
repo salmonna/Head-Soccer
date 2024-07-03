@@ -7,10 +7,8 @@
 #include "SoundControl.h"
 
 //-----------------------------------------------------------------------------
-UserPlayer::UserPlayer(bool right, Keyboard keys) : /*Player(Resources::getInstance().getPower(m_PlayerSide)),*/ m_keys(keys), m_PlayerSide(right), m_aura(false), m_powerOnPlayer(false),m_powerClock(),
-m_standMoveState(&m_leftMoveState, &m_rightMoveState,&m_jumpMoveState,&m_kickMoveState), m_leftMoveState(&m_standMoveState, &m_jumpMoveState)
-,m_jumpMoveState(&m_standMoveState,&m_kickMoveState), m_kickMoveState(&m_standMoveState,&m_jumpMoveState), m_rightMoveState(&m_standMoveState, &m_jumpMoveState),
-m_currentMoveState(&m_standMoveState)
+UserPlayer::UserPlayer(bool right, Keyboard keys) :m_keys(keys), m_PlayerSide(right), m_aura(false), m_powerOnPlayer(false),m_powerClock(),
+m_currentMoveState(std::make_unique<StandPlayerState>())
 {
 	if (!m_PlayerSide)
 		m_basePosition = sf::Vector2f(272, 775);
@@ -48,9 +46,9 @@ bool UserPlayer::m_registeritLeftPlayer = MovingFactory::registeritMoving("LeftP
 //function that find where to move and  call to another function 
 void UserPlayer::move() {
 
-	BaseMovePlayerState* nextState = m_currentMoveState->handleMoveStatus();
+	std::unique_ptr<BaseMovePlayerState> nextState = m_currentMoveState->handleMoveStatus();
 	if (nextState) 
-		m_currentMoveState = nextState;
+		m_currentMoveState = std::move(nextState);
 
 	// Check if the power is active
 	if (m_powerOnPlayer){
@@ -69,12 +67,12 @@ void UserPlayer::move() {
 //-----------------------------------------------------------------------------
 void UserPlayer::resetPlayerProgress()
 {
-	if (ScoreBoard::getInstance().istProgressP1Full() && !m_PlayerSide)
+	if (ScoreBoard::getInstance().isProgressP1Full() && !m_PlayerSide)
 	{
 		ScoreBoard::getInstance().resetProgressP1();
 		setAura(true);
 	}
-	else if(ScoreBoard::getInstance().istProgressP2Full() && m_PlayerSide)
+	else if(ScoreBoard::getInstance().isProgressP2Full() && m_PlayerSide)
 	{
 		ScoreBoard::getInstance().resetProgressP2();
 		setAura(true);

@@ -10,7 +10,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 {
 	try {
 		defineScoreBoardTexture();
-		scoreBoardText();
+		defineScoreBoardText();
 		defineProgressTexture();
 
 	}
@@ -31,8 +31,6 @@ void ScoreBoard::defineScoreBoardTexture()
 
 	//--------------------goal sign------------------------------//
 	m_goalSprite.setTexture(texturs[1]);
-
-
 	m_goalSprite.setPosition(50, 200);
 
 	sf::Font & font = Resources::getInstance().getFont();
@@ -73,7 +71,7 @@ void ScoreBoard::defineProgressTexture()
 	m_progressP2Sprite[1].setPosition(pos2);
 }
 
-void ScoreBoard::scoreBoardText()
+void ScoreBoard::defineScoreBoardText()
 {
 
 	sf::Font& font = Resources::getInstance().getFont();
@@ -132,7 +130,7 @@ void ScoreBoard::Progress()
 	if (m_goalSign)
 		m_goalSprite.move(10, 0);
 
-	if (m_clockGoalSign.getElapsedTime().asSeconds() > 2)
+	if (m_clockGoalSign.getElapsedTime().asSeconds() > 2.f)
 	{
 		m_goalSign = false;
 		m_goalSprite.setPosition(0, 200);
@@ -146,7 +144,7 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 {
 	int width = (progress + 1) * 8;
 
-	if (seconds >= 0.1 && width < 490)
+	if (seconds >= 0.2 && width < 590)
 	{
 		progress++;
 		m_clock.restart();
@@ -165,14 +163,14 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 }
 
 
-bool ScoreBoard::istProgressP1Full() {
+bool ScoreBoard::isProgressP1Full() const {
 
 	int progress = (m_progressP1 + 1) * 8;
 
 	return progress > 490;
 }
 
-bool ScoreBoard::istProgressP2Full() {
+bool ScoreBoard::isProgressP2Full() const {
 	int progress = (m_progressP2 + 1) * 8;
 
 	return progress > 490;
@@ -265,7 +263,7 @@ void ScoreBoard::updateScore(int p1Points, int p2Points)
 	}
 }
 
-int ScoreBoard::getPoint(int num) {
+int ScoreBoard::getPoint(int num) const{
 
 	if (num == 1) {
 		return m_p1Points;
@@ -276,7 +274,7 @@ int ScoreBoard::getPoint(int num) {
 
 //========================goalSign======================//
 
-bool ScoreBoard::isGoal() {
+bool ScoreBoard::isGoal() const {
 	return m_goalSign;
 }
 
@@ -284,6 +282,8 @@ void ScoreBoard::setGoalSign() {
 	m_goalSign = true;
 	m_clockGoalSign.restart();
 }
+
+
 
 void ScoreBoard::setFlagsPlayers() {
 
@@ -307,6 +307,14 @@ void ScoreBoard::setFlagsPlayers() {
 
 }
 
+
+//------------------------------------get----------------------------------
 std::vector<sf::Sprite>& ScoreBoard::getFlags() {
 	return m_flags;
 }
+
+
+sf::Sprite& ScoreBoard::getSprite() {
+	return m_SpriteVec[0]; 
+};
+

@@ -9,7 +9,8 @@ public:
 
 	virtual void activatePowerOnPlayer(Player* Player)override;
 	virtual void activatePowerOnBall(Ball* ball) override;
-	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
+	virtual void animation(sf::Vector2f position) override;
+	virtual void draw(sf::RenderWindow& window) const override;
 	virtual bool getSideOfPlayer() const override;
 
 

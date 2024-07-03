@@ -9,6 +9,9 @@ configure_file ("electricPower.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Whistle.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Intro Song.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Avatar.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Fist.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Fire.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 configure_file ("Crowd.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("GoalSound.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 

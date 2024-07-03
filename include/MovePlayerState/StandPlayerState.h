@@ -9,18 +9,14 @@
 class StandPlayerState: public BaseMovePlayerState
 {
 public:
-	StandPlayerState(LeftMoveState * leftMoveState , RightMoveState* rightMoveState , JumpMoveState* jumeMoveState ,KickMoveState * kickMoveState);
+	StandPlayerState();
 	virtual ~StandPlayerState();
 
-	virtual BaseMovePlayerState* handleMoveStatus() override;
+	virtual std::unique_ptr<BaseMovePlayerState> handleMoveStatus() override;
 	virtual void movement(sf::Sprite& sprite, Keyboard key, b2Body* body)override;
 
 private:
 
-	BaseMovePlayerState * m_nextState;
-	LeftMoveState* m_leftMoveState;
-	RightMoveState* m_rightMoveState;
-	JumpMoveState* m_jumpMoveState;
-	KickMoveState* m_kickMoveState;
+	std::unique_ptr<BaseMovePlayerState> m_nextState;
 };
 

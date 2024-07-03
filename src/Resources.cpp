@@ -7,9 +7,9 @@
 #include "power/FirePower.h"
 #include "power/InvisiblePower.h"
 #include "power/DragonPower.h"
-#include "power/BigBallPower.h"
+#include "power/FistPower.h"
 #include "power/TornadoPower.h"
-#include "power/ElectricPower.h"
+#include "power/DisappearPower.h"
 #include "power/AvatarPower.h"
 #include <exception>
 
@@ -38,7 +38,7 @@ Resources::Resources():m_selectedIndex(0){
 										"SpainPlayer.png","HolandPlayer.png","PortugalPlayer.png","GermanyPlayer.png" }; 
 	loadFromFile(characters, m_charactersSheet);
 
-	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png", "Ball 03.png", "Ball 04.png" };
+	std::vector<std::string> balls{ "Ball 01.png","Ball 02.png"};
 	loadFromFile(balls, m_ballTexture);
 
 	std::vector<std::string> selectTeam{ "brazilCharcter.png", "italyCharcter.png" ,"englandCharcter.png",
@@ -55,7 +55,8 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> gamePause{ "Pause.png","Resume.png", "Exit.png"};
 	loadFromFile(gamePause, m_pauseTexture);
 
-	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", "Kame Hame Ha.png","electricPower.png", "Avatar.png"};
+	std::vector<std::string> power{ "Progress Bar - Background.png","Progress Bar - Fill.png",  "Aura.png" ,"Tornado Power.png", 
+	"Kame Hame Ha.png","electricPower.png", "Avatar.png", "Fist.png", "Fire.png"};
 	loadFromFile(power, m_powerTexture);
 
 
@@ -176,11 +177,11 @@ std::shared_ptr<Power> Resources::getPower(bool PlayerSide) {
 		case 2:
 			return std::make_shared<DragonPower>(PlayerSide);
 		case 3:
-			return std::make_shared<BigBallPower>(PlayerSide);
+			return std::make_shared<FistPower>(PlayerSide);
 		case 4:
 			return std::make_shared<TornadoPower>(PlayerSide);
 		case 5:
-			return std::make_shared<ElectricPower>(PlayerSide);
+			return std::make_shared<DisappearPower>(PlayerSide);
 		case 6:
 			return std::make_shared<AvatarPower>(PlayerSide);
 		default:

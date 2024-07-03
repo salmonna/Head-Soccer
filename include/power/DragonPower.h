@@ -8,9 +8,10 @@ public:
 	~DragonPower();
 
 	virtual void activatePowerOnBall(Ball* ball)override;
-	virtual void activatePowerOnPlayer(Player* Player) override;
-	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
+	virtual void animation(sf::Vector2f position) override;
+	virtual void draw(sf::RenderWindow& window) const override;
 
+	virtual void activatePowerOnPlayer(Player* Player) override;
 	bool getSideOfPlayer()const;
 	void defineStartposWithBall(sf::Vector2f & position);
 

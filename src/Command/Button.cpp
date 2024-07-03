@@ -1,19 +1,30 @@
 #include "Command/Button.h"
 
+//400.f / 2, 125.f / 2
 
 Button::Button(std::unique_ptr<Command> command, sf::Texture& texture, sf::Vector2f position) :m_command(std::move(command)), m_isScaled(false)
 {
 	m_sprite.setTexture(texture);
+	auto width = m_sprite.getGlobalBounds().width;
+	auto height = m_sprite.getGlobalBounds().height;
+
+	m_sprite.setOrigin(width / 2, height / 2);
 	m_sprite.setPosition(position);
+
 	m_orignalScale = m_sprite.getScale();
-	//m_sprite.setOrigin(m_orignalScale.x/2, m_orignalScale.y/2);
-	
 }
 
 
-void Button::draw(sf::RenderWindow& window) 
+void Button::draw(sf::RenderWindow& window) const
 {
-	sf::Vector2i mouseMove = sf::Mouse::getPosition(window);
+	window.draw(m_sprite);
+}
+
+
+void Button::respond()
+{
+
+	sf::Vector2i mouseMove = sf::Mouse::getPosition();
 
 	if (contains(sf::Vector2f(float(mouseMove.x), float(mouseMove.y)))) {
 
@@ -26,13 +37,13 @@ void Button::draw(sf::RenderWindow& window)
 		scale(getOrignalSize());
 	}
 
-	window.draw(m_sprite);
 }
 
 
 bool Button::contains(sf::Vector2f position) const
 {	
-	return m_sprite.getGlobalBounds().contains(position);
+	sf::Vector2f newPos = m_sprite.getTransform().getInverse().transformPoint(position);
+	return m_sprite.getLocalBounds().contains(newPos);
 }
 
 void Button::execute()

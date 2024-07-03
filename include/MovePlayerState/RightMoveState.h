@@ -2,24 +2,19 @@
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "Keyboard.h"
 
-class StandPlayerState;
-class JumpMoveState;
-
 class RightMoveState : public BaseMovePlayerState
 {
 public:
-	RightMoveState(StandPlayerState * standMoveState, JumpMoveState* jumpMoveState);
+	RightMoveState();
 	virtual ~RightMoveState();
 
 	virtual void movement(sf::Sprite& sprite, Keyboard key, b2Body* body) override;
-	virtual BaseMovePlayerState* handleMoveStatus() override;
+	virtual std::unique_ptr<BaseMovePlayerState> handleMoveStatus()override;
 
 private:
 
 	sf::Vector2f m_startPos;
-	StandPlayerState* m_standMoveState;
-	JumpMoveState* m_jumpMoveState;
-	BaseMovePlayerState* m_currentState;
+	std::unique_ptr<BaseMovePlayerState> m_currentState;
 
 };
 

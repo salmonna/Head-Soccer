@@ -15,14 +15,14 @@ Tutorial::Tutorial(Controller* controller, Menu* prevState)
 	for (int i = 0; i < 2; i++)
 	{
 		auto sprite = sf::Sprite(Resources::getInstance().getMenuTexture()[8 + i]);
-		sprite.setPosition(250, 650);
+		sprite.setPosition(250.f, 650.f);
 		sprite.scale(0.3f,0.3f);
 		m_sprite.push_back(sprite);
 	}
-	m_sprite[2].setPosition(1150,650);
+	m_sprite[2].setPosition(1150.f,650.f);
 
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(prevState, controller)), texture[7], sf::Vector2f(0, 0))); //Button 4
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(prevState, controller)), texture[7], sf::Vector2f(1670.f, 45.f))); //Button 4
 
 	tutorialText();
 
@@ -37,8 +37,8 @@ void Tutorial::tutorialText()
 	{
 		m_tutorialText.push_back(sf::Text());
 		m_tutorialText[i].setFont(font);
-		m_tutorialText[i].setPosition(120, 100);
-		m_tutorialText[i].setCharacterSize(80);
+		m_tutorialText[i].setPosition(120.f, 100.f);
+		m_tutorialText[i].setCharacterSize(80.f);
 		m_tutorialText[i].setFillColor(sf::Color::Black);
 		m_tutorialText[i].setStyle(sf::Text::Bold);
 
@@ -54,8 +54,8 @@ void Tutorial::tutorialText()
 
 	m_tutorialText[1].setString("Left Player");
 	m_tutorialText[2].setString("Right Player");
-	m_tutorialText[1].setPosition(300, 550);
-	m_tutorialText[2].setPosition(1250, 550);
+	m_tutorialText[1].setPosition(300.f, 550.f);
+	m_tutorialText[2].setPosition(1250.f, 550.f);
 
 }
 
@@ -64,6 +64,8 @@ void Tutorial::respond(sf::Vector2f pressed) {
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
+		m_buttons[i]->respond();
+
 		if (m_buttons[i]->contains(pressed)) {
 
 			m_buttons[i]->execute();
