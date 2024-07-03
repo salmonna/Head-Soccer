@@ -35,7 +35,7 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
 						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(0.f,0.f))); //pause Button
 
-	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
+	std::vector<std::string> staticObjectNames { "LeftOutsideGoalSide" , "RightOutsideGoalSide", "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
 												"LeftGoalBack", "RightGoalBack" };
 	createStaticObjects(staticObjectNames);
 }
@@ -95,7 +95,7 @@ void Board::respond(sf::Vector2f pressed) {
 		m_movingObject[i]->move();
 	}
 	
-	for_each_pair(m_gameObject.begin() + 4, m_gameObject.end() - 2, [&](auto& a, auto& b) {
+	for_each_pair(m_gameObject.begin() + 6, m_gameObject.end(), [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
 			processCollision(*a, *b);
@@ -148,17 +148,8 @@ void Board::moveAd()
 }
 
 void Board::reset() {
-	int size = m_gameObject.size() - 6;
-	for (int i = 0; i < size; i++)
-	{
-		m_gameObject.pop_back();
-	}
+	m_gameObject.erase(m_gameObject.begin() + 8, m_gameObject.end());
 	m_movingObject.clear();
-	size = m_staticObject.size() - 6;
-	for (int i = 0; i < size; i++)
-	{
-		m_staticObject.pop_back();
-	}
 }
 
 //=============================================== for_each_pair =======================================//
@@ -207,8 +198,10 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 	ScoreBoard::getInstance().draw(window);
 
 	//draw the game objects
-	for (int i = 0; i < m_gameObject.size(); i++)
+	for (int i = 2; i < m_gameObject.size(); i++)
 	{
 		m_gameObject[i]->draw(window);
 	}
+	m_gameObject[0]->draw(window);
+	m_gameObject[1]->draw(window);
 }

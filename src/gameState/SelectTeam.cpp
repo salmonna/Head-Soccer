@@ -230,11 +230,9 @@ void SelectTeam::reset() {
 void SelectTeam::loadGameMode(int index)
 {
 	if (index == 1)return;
-
 	selectedPlayer();
 
 	std::vector<std::string> movingObjectNames;
-	std::vector<std::string> staticObjectNames;
 	switch (m_numOfPlayers)
 	{
 	case 1:
@@ -246,12 +244,8 @@ void SelectTeam::loadGameMode(int index)
 	default:
 		break;
 	}
-	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
 	m_boardPtr->createMovingObjects(movingObjectNames);
-	m_boardPtr->createStaticObjects(staticObjectNames);
 	stopSongPlayWhistle();
-	
-	
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::selectedPlayer()

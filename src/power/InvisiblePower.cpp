@@ -6,8 +6,6 @@
 InvisiblePower::InvisiblePower(bool playerSide):m_playerSide(playerSide)
 {
 
-
-
 };
 
 void InvisiblePower::activatePowerOnBall(Ball* ball)
@@ -25,8 +23,7 @@ void InvisiblePower::activatePowerOnBall(Ball* ball)
 
 void InvisiblePower::activatePowerOnPlayer(Player* player) {
 
-
-   // player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
+    Box2d::getInstance().step();
     player->restartClock();
     player->setPowerOnPlayer(true);
     setPowerIsActive(false);

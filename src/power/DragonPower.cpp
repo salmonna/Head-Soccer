@@ -39,6 +39,7 @@ void DragonPower::activatePowerOnBall(Ball* ball) {
 //--------------------------------------------------------------
 void DragonPower::activatePowerOnPlayer(Player* player) {
 
+	Box2d::getInstance().step();
 	player->setPowerOnPlayer(true);
 	setPowerIsActive(false);
 }

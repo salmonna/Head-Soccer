@@ -40,6 +40,8 @@ void AvatarPower::activatePowerOnBall(Ball* ball)
 }
 
 void AvatarPower::activatePowerOnPlayer(Player* player) {
+    
+    Box2d::getInstance().step();
     player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
     player->restartClock();
     player->setPowerOnPlayer(true);

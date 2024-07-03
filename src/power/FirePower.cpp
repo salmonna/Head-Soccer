@@ -37,6 +37,7 @@ void FirePower::activatePowerOnBall(Ball* ball)
 
 void FirePower::activatePowerOnPlayer(Player* player) {
 
+    Box2d::getInstance().step();
     player->getSprite().setColor(sf::Color(256, 256, 256));
     player->getBody()->SetAwake(false);
     player->restartClock();
