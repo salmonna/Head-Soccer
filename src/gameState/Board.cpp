@@ -20,7 +20,7 @@
 
 
 // Constructor for the Board class
-Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults),m_controllerPtr(controller)
+Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameResults(gameResults),m_controllerPtr(controller)
 {
 	
 	std::vector<sf::Texture>& texture = Resources::getInstance().getBoardTexture();
@@ -151,13 +151,14 @@ void Board::moveAd()
 }
 
 void Board::reset() {
-	int size = m_gameObject.size() - 6;
+	int size = int(m_gameObject.size()) - 6;
 	for (int i = 0; i < size; i++)
 	{
 		m_gameObject.pop_back();
 	}
+
 	m_movingObject.clear();
-	size = m_staticObject.size() - 6;
+	size = int(m_staticObject.size()) - 6;
 	for (int i = 0; i < size; i++)
 	{
 		m_staticObject.pop_back();

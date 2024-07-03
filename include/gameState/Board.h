@@ -53,8 +53,6 @@ private:
 	std::vector<std::shared_ptr<StaticObject>> m_staticObject;
 
 	GameResults * m_gameResults;
-	//Pause  m_pause;
-	GameState * m_gameState;
 	
 	//Client m_client;
 	//game objects vector

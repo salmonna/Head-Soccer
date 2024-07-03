@@ -38,7 +38,7 @@ private:
 	
 	void checkIfTurnOnAura();
 	void update();
-	void updateMovement(const sf::Vector2f& ballPosition, float length, const sf::Vector2f& direction);
+	void updateMovement(const sf::Vector2f& ballPosition, float length);
 	
 	std::shared_ptr<Ball> m_ball;
 	std::shared_ptr<Power> m_power;

@@ -7,7 +7,7 @@
 class GoalBack :public Goal
 {
 public:
-	GoalBack(int x, int y, bool needScale);
+	GoalBack(float x, float y, bool needScale);
 	~GoalBack();
 
 	virtual void draw(sf::RenderWindow& window) const override;

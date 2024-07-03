@@ -26,7 +26,7 @@ FirePower::FirePower(bool PlayerSide) :m_spriteSheetClock(), m_index1(0), m_inde
         m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
 
     }
-    catch (const std::exception& e)
+    catch (const std::exception&)
     {
         throw FileException("Deviation from the array");
     }
@@ -46,12 +46,12 @@ void FirePower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void FirePower::activatePowerOnPlayer(Player* Player) {
+void FirePower::activatePowerOnPlayer(Player* player) {
 
-    Player->getSprite().setColor(sf::Color(256, 256, 256));
-    Player->getBody()->SetAwake(false);
-    Player->restartClock();
-    Player->setPowerOnPlayer(true);
+    player->getSprite().setColor(sf::Color((sf::Uint8)256, (sf::Uint8)256, (sf::Uint8)256));
+    player->getBody()->SetAwake(false);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 

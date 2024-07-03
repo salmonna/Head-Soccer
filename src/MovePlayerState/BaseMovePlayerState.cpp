@@ -27,7 +27,7 @@ void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float 
 // Reset to default position if not jumping
 void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2f startPos, int numOfJump, sf::Vector2f size) {
 
-	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, size.x, size.y); // Assuming each character is 32x32 pixels
+	sf::IntRect characterRect(int(startPos.x) + numOfJump, int(startPos.y), int(size.x), int(size.y)); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	sprite.setTextureRect(characterRect);
 }

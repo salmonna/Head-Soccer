@@ -38,7 +38,7 @@ void Tutorial::tutorialText()
 		m_tutorialText.push_back(sf::Text());
 		m_tutorialText[i].setFont(font);
 		m_tutorialText[i].setPosition(120.f, 100.f);
-		m_tutorialText[i].setCharacterSize(80.f);
+		m_tutorialText[i].setCharacterSize(80);
 		m_tutorialText[i].setFillColor(sf::Color::Black);
 		m_tutorialText[i].setStyle(sf::Text::Bold);
 

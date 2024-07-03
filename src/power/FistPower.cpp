@@ -17,7 +17,7 @@ FistPower::FistPower(bool playerSide):m_playerSide(playerSide)
         }
 
     }
-    catch (const std::exception& e)
+    catch (const std::exception& )
     {
         throw FileException("Deviation from the array in BigBallPower");
     }    

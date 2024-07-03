@@ -47,13 +47,13 @@ void ComputerPlayer::move() {
 	}
 	else
 	{
-		updateMovement(m_ball->getSprite().getPosition(), length, direction);
+		updateMovement(m_ball->getSprite().getPosition(), length);
 	}
 	update();
 	checkIfTurnOnAura();
 }
 //-----------------------------------------------------------------------------
-void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float length, const sf::Vector2f& direction) {
+void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float length) {
 
 	const float kickRange = 100.0f;
 	if (m_jump) {

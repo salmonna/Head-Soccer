@@ -23,12 +23,10 @@ void InvisiblePower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void InvisiblePower::activatePowerOnPlayer(Player* Player) {
+void InvisiblePower::activatePowerOnPlayer(Player* player) {
 
-
-   // Player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
-    Player->restartClock();
-    Player->setPowerOnPlayer(true);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 

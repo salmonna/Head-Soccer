@@ -5,7 +5,7 @@
 class GoalSide : public Goal
 {
 	public:
-		GoalSide(int x, int y, bool needScale);
+		GoalSide(float x, float y, bool needScale);
 		~GoalSide();
 
 		virtual void draw(sf::RenderWindow& window)const override;

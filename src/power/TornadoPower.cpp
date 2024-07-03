@@ -8,15 +8,15 @@ TornadoPower::TornadoPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0), m
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[3]);
 
 
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(0, 0), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(327, 0), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(654, 0), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(0, 317), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(327, 317), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(654, 317), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(0, 634), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(327, 634), sf::Vector2i(334.f, 317.f)));
-    m_spriteSheet.push_back(std::pair(sf::Vector2i(654, 634), sf::Vector2i(334.f, 317.f)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(0, 0), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(327, 0), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(654, 0), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(0, 317), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(327, 317), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(654, 317), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(0, 634), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(327, 634), sf::Vector2i(334, 317)));
+    m_spriteSheet.push_back(std::pair(sf::Vector2i(654, 634), sf::Vector2i(334, 317)));
 
 
     try
@@ -24,7 +24,7 @@ TornadoPower::TornadoPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0), m
         m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
 
     }
-    catch (const std::exception& e)
+    catch (const std::exception&)
     {
         throw FileException("Deviation from the array");
     }
@@ -47,11 +47,11 @@ void TornadoPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void TornadoPower::activatePowerOnPlayer(Player* Player) {
+void TornadoPower::activatePowerOnPlayer(Player* player) {
 
-    Player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
-    Player->restartClock();
-    Player->setPowerOnPlayer(true);
+    player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 
@@ -76,7 +76,7 @@ void TornadoPower::animation(sf::Vector2f position)
         m_spriteSheetClock.restart();
     }
 
-    position.x -= 334.f / 2;
+    position.x -= 334.f / 2.f;
     position.y -= 317.f * 0.9f;
 
     m_sprite.setPosition(position);
