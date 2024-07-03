@@ -61,7 +61,7 @@ void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float leng
 	}
 
 	if (length > kickRange) {
-		if (length > 500 && ballPosition.x > m_sprite.getPosition().x) {
+		if (length > 300 && ballPosition.x > m_sprite.getPosition().x) {
 			resetToPosition(m_sprite,m_basePosition);
 			return;
 		}
