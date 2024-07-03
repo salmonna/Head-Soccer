@@ -17,7 +17,6 @@ public:
 		static Box2d instance;
 		return instance;
 	}
-	void draw(sf::RenderWindow& window)const;
 	b2World* getBox2dWorld();
 	b2Body* createPlayer(sf::Vector2f basePosition);
 	b2Body* createBall(sf::Vector2f basePosition);
@@ -30,12 +29,5 @@ private:
 	Box2d();
 	~Box2d();
 	b2World m_world;
-	sf::RectangleShape m_ground;
-	sf::RectangleShape m_ceiling;
-	sf::RectangleShape m_leftWall;
-	sf::RectangleShape m_rightWall;
-	sf::RectangleShape m_topGoalLeft;
-	sf::RectangleShape m_topGoalRight;
-	std::vector <sf::RectangleShape> m_goalBack;
 };
 
