@@ -30,7 +30,7 @@ class Controller;
 class Board : public GameState
 {
 public:
-	Board(Controller * controller, Menu * menu, Pause * pause, GameResults * gameResults);
+	Board(Controller * controller, Pause * pause, GameResults * gameResults);
 	virtual void respond(sf::Vector2f pressed) override;
 	void moveAd();
 	virtual void draw(sf::RenderWindow& window) const override;

@@ -22,9 +22,11 @@ bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
 
 void  Ball::move()
 {
-
-    if (m_power->powerIsActive())
-        updatePowerState();
+    if (m_power)
+    {
+        if (m_power->powerIsActive())
+            updatePowerState();
+    }
     else if (m_restartBall)
     {
         m_body->SetGravityScale(m_gravityScale);
@@ -38,10 +40,14 @@ void  Ball::move()
 
 void Ball::draw(sf::RenderWindow & window) const
 {
+
 	window.draw(m_sprite);
 
-    if (m_power->powerIsActive())
-        m_power->draw(window);
+    if (m_power)
+    {
+        if (m_power->powerIsActive())
+            m_power->draw(window);
+    }   
 }
 
 
@@ -52,6 +58,7 @@ void Ball::update() {
     m_sprite.setPosition(B2VecToSFVec(position1));
     m_sprite.setRotation(m_body->GetAngle() * 180.f / b2_pi);
 
+    if (m_power)
     m_power->animation(m_sprite.getPosition());
 }
 //-----------------------------------------------------------------------------

@@ -34,7 +34,9 @@ namespace // anonymous namespace — the standard way to make function "static"
             PlayerObject.getPower()->activatePowerOnBall(&ballObject);
             PlayerObject.setAura(false);
         }
-        else if (ballObject.getPower()->powerIsActive()){
+        else if (ballObject.getPower()){
+
+            if(ballObject.getPower()->powerIsActive())
             ballObject.getPower()->activatePowerOnPlayer(&PlayerObject);
         }
     }
@@ -63,6 +65,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         ScoreBoard::getInstance().setGoalSign();
         SoundControl::getInstance().getGoalSound().play();
 
+        if(ballObject.getPower())
         ballObject.getPower()->setPowerIsActive(false);
         ballObject.reset();
     }
