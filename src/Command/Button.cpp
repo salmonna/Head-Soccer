@@ -1,7 +1,6 @@
 #include "Command/Button.h"
-
-//400.f / 2, 125.f / 2
-
+//--------------------------------------------------------------------------------------
+// Constructor: Initializes the button with a command, texture, and position
 Button::Button(std::unique_ptr<Command> command, sf::Texture& texture, sf::Vector2f position) :m_command(std::move(command)), m_isScaled(false)
 {
 	m_sprite.setTexture(texture);
@@ -14,13 +13,15 @@ Button::Button(std::unique_ptr<Command> command, sf::Texture& texture, sf::Vecto
 	m_orignalScale = m_sprite.getScale();
 }
 
-
+//--------------------------------------------------------------------------------------
+// Draw the button on the given window
 void Button::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_sprite);
 }
 
-
+//--------------------------------------------------------------------------------------
+// Respond to mouse movement to scale the button if hovered over
 void Button::respond()
 {
 
@@ -38,19 +39,21 @@ void Button::respond()
 	}
 
 }
-
-
+//--------------------------------------------------------------------------------------
+// Check if the button contains the given position
 bool Button::contains(sf::Vector2f position) const
 {	
 	sf::Vector2f newPos = m_sprite.getTransform().getInverse().transformPoint(position);
 	return m_sprite.getLocalBounds().contains(newPos);
 }
-
+//--------------------------------------------------------------------------------------
+// Execute the command associated with the button
 void Button::execute()
 {
 	m_command->execute();
 }
-
+//--------------------------------------------------------------------------------------
+// Scale the button sprite to the given size
 void Button::scale(sf::Vector2f size) {
 
 	m_sprite.setScale(size);
@@ -61,15 +64,18 @@ void Button::scale(sf::Vector2f size) {
 	}
 	m_isScaled = true;
 }
-
+//--------------------------------------------------------------------------------------
+// Check if the button is currently scaled
 bool Button::isScaled() {
 
 	return m_isScaled;
 }
-
+//--------------------------------------------------------------------------------------
+// Get the original size of the button
 sf::Vector2f Button::getOrignalSize() {
 	return m_orignalScale;
 }
+//--------------------------------------------------------------------------------------
 Button::~Button()
 {
 
