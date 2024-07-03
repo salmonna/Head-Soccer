@@ -51,7 +51,7 @@ void Player::move() {
 		m_currentMoveState = nextState;
 
 	// Check if the power is active
-	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2)) 
+	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 3)) 
 		deactivatePower();
 	else {
 		m_currentMoveState->movement(m_sprite, m_keys, m_body);
