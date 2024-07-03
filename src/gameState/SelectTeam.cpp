@@ -14,9 +14,10 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 
 	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(520.f, 720.f))); //playButton
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(0, 0))); //Button 4
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 100.f)));// sound button
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(boardState, controller)),Resources::getInstance().getSelectTeam()[7], sf::Vector2f(890.f, 777.5f))); //playButton
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(gameMode, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(1670.f, 45.f))); //Button 4
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(1670.f, 145.f)));// sound button
+
 
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 
@@ -151,6 +152,8 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
+		m_buttons[i]->respond();
+
 		if (m_buttons[i]->contains(mousePressed)) {
 
 			if (i == 0 && m_PlayerSelected != m_numOfPlayers) {

@@ -10,7 +10,6 @@
 #include "gameObject/Ball.h"
 #include "gameObject/Goal.h"
 #include "gameObject/ComputerPlayer.h"
-#include "power/RegularBehavior.h"
 #include "gameObject/ScoreBoard.h"
 #include "gameObject/GoalSide.h"
 #include "gameObject/GoalBack.h"

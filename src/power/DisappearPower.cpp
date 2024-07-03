@@ -1,10 +1,10 @@
-#include "power/ElectricPower.h"
+#include "power/DisappearPower.h"
 #include "gameObject/Player.h"
 #include "gameObject/Ball.h"
 #include "Resources.h"
 
 
-ElectricPower::ElectricPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0), m_PlayerSide(PlayerSide)
+DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0), m_PlayerSide(playerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[5]);
 
@@ -22,9 +22,19 @@ ElectricPower::ElectricPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0),
 
     }
 
+    try
+    {
+        m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
+
+    }
+    catch (const std::exception& e)
+    {
+        throw FileException("Deviation from the array");
+    }
+
 };
 
-void ElectricPower::activatePowerOnBall(Ball* ball)
+void DisappearPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
 
@@ -37,24 +47,30 @@ void ElectricPower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
-void ElectricPower::activatePowerOnPlayer(Player* Player) {
+void DisappearPower::activatePowerOnPlayer(Player* player) {
 
     //need to fix this power
     Box2d::getInstance().step();
 
 
     // Adjust position if necessary
-    b2Vec2 currentPosition = Player->getBody()->GetPosition();
+    b2Vec2 currentPosition = player->getBody()->GetPosition();
     currentPosition.y = 60.f; //make the Player disapear
-    Player->getBody()->SetTransform(currentPosition, Player->getBody()->GetAngle());
+    player->getBody()->SetTransform(currentPosition, player->getBody()->GetAngle());
 
-    Player->restartClock();
-    Player->setPowerOnPlayer(true); //freexe plower
+    player->restartClock();
+    player->setPowerOnPlayer(true); //freexe plower
     setPowerIsActive(false);
 }
 
-void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
+void DisappearPower::draw(sf::RenderWindow& window) const
 {
+    window.draw(m_sprite);
+}
+
+void DisappearPower::animation(sf::Vector2f position)
+{
+
     if (m_index == m_spriteSheet.size())
     {
         m_index = 0;
@@ -70,13 +86,10 @@ void ElectricPower::draw(sf::RenderWindow& window, sf::Vector2f position)
     position.x -= 213.f / 2;
     position.y -= 213.f / 2;
 
-
-
     m_sprite.setPosition(position);
-    window.draw(m_sprite);
-
 }
 
-bool ElectricPower::getSideOfPlayer()const {
+
+bool DisappearPower::getSideOfPlayer()const {
     return m_PlayerSide;
 }

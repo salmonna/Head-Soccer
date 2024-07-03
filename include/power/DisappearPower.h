@@ -1,18 +1,19 @@
 #pragma once
 #include "Power.h"
 
-class ElectricPower : public Power
+class DisappearPower : public Power
 {
 public:
 
-	ElectricPower(bool PlayerSide);
+	DisappearPower(bool playerSide);
 
 	virtual void activatePowerOnPlayer(Player* Player)override;
 	virtual void activatePowerOnBall(Ball* ball) override;
-	virtual void draw(sf::RenderWindow& window, sf::Vector2f position) override;
+	virtual void animation(sf::Vector2f position) override;
+	virtual void draw(sf::RenderWindow& window) const;
 	bool getSideOfPlayer()const;
 
-	~ElectricPower() = default;
+	~DisappearPower() = default;
 
 private:
 	sf::Clock m_spriteSheetClock;

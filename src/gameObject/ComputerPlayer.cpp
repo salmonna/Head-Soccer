@@ -85,7 +85,7 @@ void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float leng
 //-----------------------------------------------------------------------------
 void ComputerPlayer::checkIfTurnOnAura() {
 
-	if (ScoreBoard::getInstance().istProgressP1Full()) {
+	if (ScoreBoard::getInstance().isProgressP1Full()) {
 
 		ScoreBoard::getInstance().resetProgressP1();
 		setAura(true);

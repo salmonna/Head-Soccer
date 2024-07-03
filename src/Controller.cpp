@@ -19,13 +19,13 @@ void Controller::runTheGame()
 
 	while (m_window.isOpen())
 	{
-		m_window.eventFunc();
-		m_window.display();
 		m_window.clear();
+		m_window.eventFunc();
 
-		m_currentState->draw(m_window.getWindow());
-		//Box2d::getInstance().draw(m_window.getWindow());      // need to delete the draw from box2d!!!
 		m_currentState->respond(m_window.getMousePressed());
+		m_currentState->draw(m_window.getWindow());
+
+		m_window.display();
 	}
 
 }

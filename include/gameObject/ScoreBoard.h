@@ -19,42 +19,43 @@ public:
 	void timeCalculation();
 	void updateScore(int p1Points, int p2Points);
 
-	sf::Sprite& getSprite() { return m_SpriteVec[0]; };
 
 	bool timeIsOver();
 	void reset();
 
-	
-	void resetProgressP1();
-	void resetProgressP2();
-
-	bool istProgressP1Full();
-	bool istProgressP2Full();
-
 	//progress bar
 	void Progress();
-	bool isGoal();
+	void resetProgressP1();
+	void resetProgressP2();
+	bool isProgressP1Full() const;
+	bool isProgressP2Full() const;
+
+	//goal
+	bool isGoal() const;
 	void setGoalSign();
-
-	int getPoint(int num);
-
-
 	void setFlagsPlayers();
-	std::vector<sf::Sprite>& getFlags();
 
-	~ScoreBoard() = default;
+	//get
+	int getPoint(int num) const;
+	std::vector<sf::Sprite>& getFlags();
+	sf::Sprite& getSprite();
+
 
 private:
+
 	ScoreBoard(const ScoreBoard&) = delete;
 	ScoreBoard& operator=(const ScoreBoard&) = delete;
+
 	ScoreBoard();
+	~ScoreBoard() = default;
 
+
+	//difine
 	void defineScoreBoardTexture();
-
 	void defineProgressTexture();
+	void defineScoreBoardText();
 
-	void scoreBoardText();
-
+	//update
 	void updateProgress(std::vector<sf::Sprite>& progressSprite, int& progress, float seconds);
 
 	//goalSign
@@ -76,10 +77,11 @@ private:
 	std::vector<sf::Sprite> m_SpriteVec;
 	std::vector<sf::Sprite> m_progressP1Sprite;
 	std::vector<sf::Sprite> m_progressP2Sprite;
-
+	std::vector<sf::Sprite> m_flags;
 	sf::Sprite m_goalSprite;
 
-	std::vector<sf::Sprite> m_flags;
+	//sound
+	sf::Sound m_whistle;
 	
 	//points
 	int m_p1Points;

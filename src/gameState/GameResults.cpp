@@ -17,11 +17,11 @@ GameResults::GameResults(Controller* controller, Menu* menuState): m_gameState(N
 
 	std::vector<sf::Texture>& texture2 = Resources::getInstance().getPauseTexture();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menuState, controller)),
-															texture2[2], sf::Vector2f(750.f, 750.f))); //exit to menu Button
+															texture2[2], sf::Vector2f(885.f, 795.f))); //exit to menu Button
 
 	std::vector<sf::Texture>& tex = Resources::getInstance().getMenuTexture();
 
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(0.f, 0.f)));
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(1670.f, 45.f)));
 
 	IntiliazTextResult();
 
@@ -61,6 +61,8 @@ void GameResults::respond(sf::Vector2f mousePressed)
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
 	{
+		m_buttons[i]->respond();
+
 		if (m_buttons[i]->contains(mousePressed)) {
 
 			m_buttons[i]->execute();
