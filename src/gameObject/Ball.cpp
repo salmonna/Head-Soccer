@@ -20,6 +20,7 @@ Ball::Ball():m_power(std::make_shared<Power>()), m_basePosition(900.0f, 100.0f),
 bool Ball::m_registeritBall = MovingFactory::registeritMoving("Ball",
     []() -> std::shared_ptr<MovingObject> { return std::make_shared<Ball>(); });
 
+//-----------------------------------------------------------------------------
 void  Ball::move()
 {
 
@@ -35,7 +36,7 @@ void  Ball::move()
 
     update();
 }
-
+//-----------------------------------------------------------------------------
 void Ball::draw(sf::RenderWindow & window) const
 {
 	window.draw(m_sprite);
@@ -43,9 +44,6 @@ void Ball::draw(sf::RenderWindow & window) const
     if (m_power->powerIsActive())
         m_power->draw(window);
 }
-
-
-
 //-----------------------------------------------------------------------------
 void Ball::update() {
     b2Vec2 position1 = m_body->GetPosition();
@@ -133,7 +131,6 @@ void Ball::setPower(std::shared_ptr<Power> power)
 }
 //-----------------------------------------------------------------------------
 Ball::~Ball(){
-    std::cout << " B-D" << std::endl;
     m_body->DestroyFixture(m_body->GetFixtureList());
     auto world = Box2d::getInstance().getBox2dWorld();
     world->DestroyBody(m_body);

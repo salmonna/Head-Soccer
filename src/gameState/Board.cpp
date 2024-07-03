@@ -28,23 +28,32 @@ Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* game
 	{
 		m_backGroundStadium.push_back(sf::Sprite());
 		m_backGroundStadium[i].setTexture(texture[i]);
-
 	}
 	m_backGroundStadium[1].setPosition(0, 674);
-
+	auto ball = std::make_shared<Ball>();
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(pause, controller)),
 						Resources::getInstance().getPauseTexture()[0], sf::Vector2f(1670.f, 45.f))); //pause Button
 
-	std::vector<std::string> staticObjectNames { "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
+	std::vector<std::string> staticObjectNames { "LeftOutsideGoalSide" , "RightOutsideGoalSide", "LeftInsideGoalSide","RightInsideGoalSide", "LeftGoalTop" , "RightGoalTop",
 												"LeftGoalBack", "RightGoalBack" };
 	createStaticObjects(staticObjectNames);
+	auto object = MovingFactory::createMoving("Ball", ball);
+
+	if (object)
+	{
+		m_movingObject.push_back(object);
+		m_gameObject.push_back(object);
+	}
+	else
+		std::cout << "Class not found!\n";
+
 }
 
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 {
-
+	std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[0]);
 	for (const auto& name : objectNames) {
-		auto object = MovingFactory::createMoving(name);
+		auto object = MovingFactory::createMoving(name, ballObject);
 
 		if (object)
 		{
@@ -53,14 +62,6 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 		}
 		else
 			std::cout << "Class not found!\n";
-	}
-	if (objectNames[1] == "ComputerPlayer")
-	{
-		// Assuming m_movingObject is a vector or array of std::shared_ptr<BaseClass>
-		std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[2]);
-		std::shared_ptr<ComputerPlayer> computerObject = std::dynamic_pointer_cast<ComputerPlayer>(m_movingObject[1]);
-
-		computerObject->setBall(ballObject);
 	}
 	ScoreBoard::getInstance().setFlagsPlayers();
 
@@ -95,7 +96,7 @@ void Board::respond(sf::Vector2f pressed) {
 		m_movingObject[i]->move();
 	}
 	
-	for_each_pair(m_gameObject.begin() + 4, m_gameObject.end() - 2, [&](auto& a, auto& b) {
+	for_each_pair(m_gameObject.begin() + 6, m_gameObject.end(), [&](auto& a, auto& b) {
 		if (collide(*a, *b))
 		{
 			processCollision(*a, *b);
@@ -117,6 +118,7 @@ void Board::respond(sf::Vector2f pressed) {
 //----------------handle Score Board---------------//
 void Board::handleScoreBoard() {
 
+	ScoreBoard::getInstance().updateScore(0, 0);
 	ScoreBoard::getInstance().timeCalculation();
 	ScoreBoard::getInstance().Progress();
 	if (ScoreBoard::getInstance().timeIsOver())
@@ -130,8 +132,8 @@ void Board::handleScoreBoard() {
 	}
 	else
 	{
-		m_movingObject[0]->reset();
-		m_movingObject[1]->reset();
+		for (auto& object : m_movingObject)
+			object->reset();
 	}
 }
 
@@ -150,17 +152,8 @@ void Board::moveAd()
 }
 
 void Board::reset() {
-	int size = m_gameObject.size() - 6;
-	for (int i = 0; i < size; i++)
-	{
-		m_gameObject.pop_back();
-	}
-	m_movingObject.clear();
-	size = m_staticObject.size() - 6;
-	for (int i = 0; i < size; i++)
-	{
-		m_staticObject.pop_back();
-	}
+	m_gameObject.erase(m_gameObject.begin() + 9, m_gameObject.end());
+	m_movingObject.erase(m_movingObject.begin() + 1, m_movingObject.end());
 }
 
 //=============================================== for_each_pair =======================================//
@@ -209,8 +202,10 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 	ScoreBoard::getInstance().draw(window);
 
 	//draw the game objects
-	for (int i = 0; i < m_gameObject.size(); i++)
+	for (int i = 2; i < m_gameObject.size(); i++)
 	{
 		m_gameObject[i]->draw(window);
 	}
+	m_gameObject[0]->draw(window);
+	m_gameObject[1]->draw(window);
 }

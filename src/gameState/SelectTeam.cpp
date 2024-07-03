@@ -77,7 +77,7 @@ void SelectTeam::selectTextPlayer()
 void SelectTeam::setPowerText() {
 
 	std::vector<std::string> powerText{ "FirePower","InvisiblePower","DragonPower",
-										"BigBallPower","TornadoPower","ElectricPower","AvatarPower" };
+										"FistPower","TornadoPower","DisappearPower","AvatarPower" };
 
 	for (int i = 0; i < powerText.size(); i++)
 	{
@@ -233,28 +233,22 @@ void SelectTeam::reset() {
 void SelectTeam::loadGameMode(int index)
 {
 	if (index == 1)return;
-
 	selectedPlayer();
 
 	std::vector<std::string> movingObjectNames;
-	std::vector<std::string> staticObjectNames;
 	switch (m_numOfPlayers)
 	{
 	case 1:
-		movingObjectNames = { "RightPlayer", "ComputerPlayer", "Ball" };
+		movingObjectNames = { "RightPlayer", "ComputerPlayer"};
 		break;
 	case 2:
-		movingObjectNames = { "RightPlayer", "LeftPlayer", "Ball" };
+		movingObjectNames = { "RightPlayer", "LeftPlayer"};
 		break;
 	default:
 		break;
 	}
-	staticObjectNames = { "LeftOutsideGoalSide" , "RightOutsideGoalSide" };
 	m_boardPtr->createMovingObjects(movingObjectNames);
-	m_boardPtr->createStaticObjects(staticObjectNames);
 	stopSongPlayWhistle();
-	
-	
 }
 //-----------------------------------------------------------------------------
 void SelectTeam::selectedPlayer()

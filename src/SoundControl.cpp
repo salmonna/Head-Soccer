@@ -6,13 +6,13 @@
 SoundControl::SoundControl()
 {
 	m_introSong.setBuffer(Resources::getInstance().getBufferVec()[2]);
-	m_introSong.setVolume(15);
+	m_introSong.setVolume(10);
 
 	m_whistle.setBuffer(Resources::getInstance().getBufferVec()[1]);
 	m_whistle.setVolume(5);
 
 	m_crowd.setBuffer(Resources::getInstance().getBufferVec()[3]);
-	m_crowd.setVolume(10);
+	m_crowd.setVolume(15);
 
 	m_goalSound.setBuffer(Resources::getInstance().getBufferVec()[4]);
 	m_goalSound.setVolume(5);

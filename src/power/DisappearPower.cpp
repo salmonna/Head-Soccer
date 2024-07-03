@@ -52,7 +52,6 @@ void DisappearPower::activatePowerOnPlayer(Player* player) {
     //need to fix this power
     Box2d::getInstance().step();
 
-
     // Adjust position if necessary
     b2Vec2 currentPosition = player->getBody()->GetPosition();
     currentPosition.y = 60.f; //make the Player disapear

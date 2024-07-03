@@ -35,16 +35,13 @@ void DragonPower::activatePowerOnBall(Ball* ball) {
 	currentPosition.y -= 3.f; // Move the body 200 pixels higher (adjust as needed)
 	ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
-
 	//set gravity
 	ball->getBody()->SetGravityScale(0.0f);
 	b2Vec2 velocity(5.0f, 0.0f);
 	ball->getBody()->SetLinearVelocity(velocity);
 
-
 	// Set awake state to false to "pause" the body
 	ball->getBody()->SetAwake(false);
-	
 }
 //--------------------------------------------------------------
 void DragonPower::animation(sf::Vector2f position)

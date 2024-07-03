@@ -40,7 +40,6 @@ void TornadoPower::activatePowerOnBall(Ball* ball)
     float side;
     (m_PlayerSide) ? side = -1.f : side = 1.f;
     currentPosition.x += side; // Move the body 200 pixels higher (adjust as needed)
-
     ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
     // Set awake state to false to "pause" the body
@@ -49,6 +48,7 @@ void TornadoPower::activatePowerOnBall(Ball* ball)
 
 void TornadoPower::activatePowerOnPlayer(Player* Player) {
 
+    //Box2d::getInstance().step();
     Player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
     Player->restartClock();
     Player->setPowerOnPlayer(true);
