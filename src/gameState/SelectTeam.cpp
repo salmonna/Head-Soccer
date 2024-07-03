@@ -77,7 +77,7 @@ void SelectTeam::selectTextPlayer()
 void SelectTeam::setPowerText() {
 
 	std::vector<std::string> powerText{ "FirePower","InvisiblePower","DragonPower",
-										"BigBallPower","TornadoPower","ElectricPower","AvatarPower" };
+										"FistPower","TornadoPower","DisappearPower","AvatarPower" };
 
 	for (int i = 0; i < powerText.size(); i++)
 	{

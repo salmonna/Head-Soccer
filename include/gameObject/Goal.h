@@ -6,10 +6,7 @@
 class Goal : public StaticObject
 {
 public:
-	Goal() {};
-	
-	virtual void draw(sf::RenderWindow& window) const override {};
-	void setRightGoal() {};
+	Goal() = default;
 
 	virtual ~Goal() = default;
 
