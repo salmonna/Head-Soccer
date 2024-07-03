@@ -31,6 +31,7 @@ m_currentMoveState(&m_standMoveState)
 	m_sprite.setPosition(m_basePosition);
 
 	m_auraSound.setBuffer(Resources::getInstance().getBufferVec()[0]);
+	m_auraSound.setVolume(3);
 
 }
 //---------------------------------------- Factory ----------------------------------

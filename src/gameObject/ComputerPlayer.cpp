@@ -30,6 +30,7 @@ ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball>& ball):m_numOfJump(0), m_ju
 	m_PlayerColor = m_sprite.getColor();
 
 	m_auraSound.setBuffer(Resources::getInstance().getBufferVec()[0]);
+	m_auraSound.setVolume(3);
 }
 
 bool ComputerPlayer::m_registeritComputerPlayer = MovingFactory::registeritMoving("ComputerPlayer",
@@ -58,7 +59,8 @@ void ComputerPlayer::updateMovement(const sf::Vector2f ballPosition, float lengt
 	}
 
 	if (length > kickRange) {
-		if (length > 500 && ballPosition.x > m_sprite.getPosition().x) {
+		int range = 400 + (std::rand() % (700 - 400 + 1));
+		if (length > range && ballPosition.x > m_sprite.getPosition().x) {
 			resetToPosition(m_sprite,m_basePosition);
 			return;
 		}
