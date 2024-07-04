@@ -1,6 +1,7 @@
 #include "gameObject/Ball.h"
 #include "Resources.h"
 #include "Keyboard.h"
+#include "power/AvatarPower.h"
 #include <iostream>
 
 Ball::Ball():m_basePosition(900.0f, 100.0f), m_restartBall(false)
@@ -9,6 +10,7 @@ Ball::Ball():m_basePosition(900.0f, 100.0f), m_restartBall(false)
 
     //----------------------box2d---------------------------//
     m_body = Box2d::getInstance().createBall(sf::Vector2f(900.f,100.f));
+    m_power = std::make_shared<AvatarPower>(true);
     m_body->GetMassData(&m_bodyMass);
     m_sprite.setTexture(*texture);
     m_sprite.setOrigin(25.0f, 25.0f);
