@@ -158,7 +158,7 @@ sf::Texture& Resources::getCharactersTexture() {
 		m_selectedIndex++;
 		return m_charactersSheet[temp];
 	}
-	catch (const std::exception& e)
+	catch (const std::exception& )
 	{
 		throw FileException("No available index found");
 	}
@@ -193,7 +193,7 @@ std::shared_ptr<Power> Resources::getPower(bool PlayerSide) {
 		
 		return std::make_shared<FirePower>(PlayerSide);
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
 		throw FileException("No available index found in Resources::getPower");
 	}

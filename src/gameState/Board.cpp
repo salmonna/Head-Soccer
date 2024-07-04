@@ -18,9 +18,10 @@
 #include "Command/SwichScreen.h"
 #include "Command/Command.h"
 
+
 //-------------------------------- Constructor -----------------------------------
 // Constructor initializes the Board class with necessary components
-Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults),m_controllerPtr(controller)
+Board::Board(Controller* controller, Pause* pause, GameResults* gameResults) :m_gameResults(gameResults),m_controllerPtr(controller)
 {
 	
 	std::vector<sf::Texture>& texture = Resources::getInstance().getBoardTexture();
@@ -129,14 +130,14 @@ void Board::handleScoreBoard() {
 		m_controllerPtr->setState(m_gameResults);
 		reset();
 	}
-	else if (!ScoreBoard::getInstance().isGoal())
-	{
-		Box2d::getInstance().step();
-	}
-	else
+	else if (ScoreBoard::getInstance().isGoal())
 	{
 		for (auto& object : m_movingObject)
 			object->reset();
+	}
+	else
+	{
+		Box2d::getInstance().step();
 	}
 }
 
@@ -157,6 +158,9 @@ void Board::moveAd()
 //--------------------------------------------------------------------------------
 // Method to reset game state
 void Board::reset() {
+	for (auto& object : m_movingObject)
+		object->reset();
+
 	m_gameObject.erase(m_gameObject.begin() + 9, m_gameObject.end());
 	m_movingObject.erase(m_movingObject.begin() + 1, m_movingObject.end());
 }

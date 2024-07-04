@@ -23,16 +23,16 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 	std::vector<sf::Texture>& charctersTexture = Resources::getInstance().getSelectTeam();
 
 	auto frame = sf::Sprite(charctersTexture[9]);
-	frame.setPosition(3 * 200 - 400, 320);
+	frame.setPosition(600.f, 320.f);
 	m_frames.push_back(frame);
 	frame.setColor(sf::Color::Red);
 	m_frames.push_back(frame);
 
-	for (int i = 0; i < charctersTexture.size() - 3; i++)
+	for (int i = 0; i < int(charctersTexture.size()) - 3; i++)
 	{
 		auto sprite = sf::Sprite(charctersTexture[i]);
 		sprite.scale(0.6f,0.6f);
-		sprite.setPosition((i+3)*200 - 400, 350);
+		sprite.setPosition((float(i)+3.f)*200.f - 400.f, 350.f);
 		m_charcters.push_back(sprite);
 	}
 
@@ -86,7 +86,7 @@ void SelectTeam::setPowerText() {
 	{
 		sf::Text text = m_selectText[0];
 		text.setPosition(790.f, 610.f);
-		text.setOutlineColor(sf::Color(135, 206, 250));
+		text.setOutlineColor(sf::Color((sf::Uint8)135, (sf::Uint8)206, (sf::Uint8)250));
 		text.setString(powerText[i]);
 		m_powerText.push_back(text);
 	}
@@ -187,7 +187,7 @@ void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
 	for (int i = 0; i < m_charcters.size() - 1; i++)
 	{
-		isMouseOnPlayers(mousePressed, i);
+		isMouseOnPlayers(i);
 
 		if (m_charcters[i].getGlobalBounds().contains(mousePressed)) {
 
@@ -200,7 +200,7 @@ void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 }
 //-----------------------------------------------------------------------------
 // Method to check if mouse is on specific player
-void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
+void SelectTeam::isMouseOnPlayers(int index) {
 
 	sf::Vector2i mouseMove = sf::Mouse::getPosition();
 
@@ -210,11 +210,11 @@ void SelectTeam::isMouseOnPlayers(sf::Vector2f mousePressed, int index) {
 
 		if (m_PlayerSelected < 1) {
 
-			m_frames[0].setPosition(pos.x, pos.y - 30);
+			m_frames[0].setPosition(pos.x, pos.y - 30.f);
 		}
 		else if (m_PlayerSelected == 1)
 		{
-			m_frames[1].setPosition(pos.x, pos.y - 30);
+			m_frames[1].setPosition(pos.x, pos.y - 30.f);
 		}
 	}
 }
@@ -233,7 +233,7 @@ void SelectTeam::reset() {
 	m_PlayerSelected = 0;
 	for (int i = 0; i < m_frames.size(); i++)
 	{
-		m_frames[i].setPosition(3 * 200 - 400, 320);
+		m_frames[i].setPosition(600.f, 320.f);
 	}
 }
 //-----------------------------------------------------------------------------

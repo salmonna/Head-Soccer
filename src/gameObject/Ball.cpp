@@ -1,15 +1,17 @@
 #include "gameObject/Ball.h"
 #include "Resources.h"
 #include "Keyboard.h"
+#include "power/AvatarPower.h"
 #include <iostream>
 //-----------------------------------------------------------------------------
 // Constructor initializes member variables
-Ball::Ball():m_power(std::make_shared<Power>()), m_basePosition(900.0f, 100.0f), m_restartBall(false)
+Ball::Ball():m_basePosition(900.0f, 100.0f), m_restartBall(false)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 
     //----------------------box2d---------------------------//
     m_body = Box2d::getInstance().createBall(sf::Vector2f(900.f,100.f));
+    m_power = std::make_shared<AvatarPower>(true);
     m_body->GetMassData(&m_bodyMass);
     m_sprite.setTexture(*texture);
     m_sprite.setOrigin(25.0f, 25.0f);
@@ -42,6 +44,7 @@ void  Ball::move()
 // Draw function to render ball 
 void Ball::draw(sf::RenderWindow & window) const
 {
+
 	window.draw(m_sprite);
 
     if (m_power->powerIsActive())

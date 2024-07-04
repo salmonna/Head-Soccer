@@ -17,10 +17,10 @@ public:
 	sf::Sprite& getSprite();
 	virtual ~Power() = default;
 
-	virtual void activatePowerOnPlayer(Player* Player) {};
-	virtual void activatePowerOnBall(Ball* ball) {};
-	virtual void animation(sf::Vector2f position) {};
-	virtual void draw(sf::RenderWindow & window) const {};
+	virtual void activatePowerOnPlayer(Player* player) = 0;
+	virtual void activatePowerOnBall(Ball* ball) = 0;
+	virtual void animation(sf::Vector2f position) = 0;
+	virtual void draw(sf::RenderWindow & window) const = 0;
 
 	virtual bool powerIsActive();
 	virtual void startTimer();

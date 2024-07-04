@@ -23,13 +23,13 @@ void InvisiblePower::activatePowerOnBall(Ball* ball)
 
     ball->getBody()->SetAwake(false);
 }
+
 //--------------------------------------------------------------
 // Activates the invisible power on the player
-void InvisiblePower::activatePowerOnPlayer(Player* Player) {
+void InvisiblePower::activatePowerOnPlayer(Player* player) {
 
-
-    Player->restartClock();
-    Player->setPowerOnPlayer(true);
+    player->restartClock();
+    player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
 //--------------------------------------------------------------

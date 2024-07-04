@@ -23,7 +23,7 @@ DragonPower::DragonPower(bool PlayerSide):m_round(0),m_PlayerSide(PlayerSide),m_
 		m_dragonSprite.setTextureRect(sf::IntRect(m_posDragon[0].first, m_posDragon[0].second));
 
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
 		throw FileException("Deviation from the array");
 	}
@@ -72,9 +72,9 @@ void DragonPower::animation(sf::Vector2f position)
 
 //--------------------------------------------------------------
 // Activates the dragon power on the player
-void DragonPower::activatePowerOnPlayer(Player* Player) {
-
-	Player->setPowerOnPlayer(true);
+void DragonPower::activatePowerOnPlayer(Player* player) {
+  
+	player->setPowerOnPlayer(true);
 	setPowerIsActive(false);
 }
 //--------------------------------------------------------------
@@ -88,13 +88,13 @@ void DragonPower::defineStartposWithBall(sf::Vector2f & position) {
 
 	if (!m_PlayerSide) {
 
-		position.x -= (m_dragonSprite.getGlobalBounds().width * 0.9);
-		position.y -= (m_dragonSprite.getGlobalBounds().height / 2);
+		position.x -= (m_dragonSprite.getGlobalBounds().width * 0.9f);
+		position.y -= (m_dragonSprite.getGlobalBounds().height / 2.f);
 	}
 	else
 	{
-		position.x += (m_dragonSprite.getGlobalBounds().width * 0.9);
-		position.y -= (m_dragonSprite.getGlobalBounds().height / 2);
+		position.x += (m_dragonSprite.getGlobalBounds().width * 0.9f);
+		position.y -= (m_dragonSprite.getGlobalBounds().height / 2.f);
 
 	}
 }
@@ -106,11 +106,11 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 
 	sf::IntRect characterRect(it.first.x, it.first.y, it.second.x, it.second.y);
 	m_dragonSprite.setTextureRect(characterRect);
-	m_dragonSprite.setScale(4, 4);
+	m_dragonSprite.setScale(4.f, 4.f);
 
 	if (m_PlayerSide) {
 
-		m_dragonSprite.scale(-1,1);
+		m_dragonSprite.scale(-1.f,1.f);
 	}
 
 }
