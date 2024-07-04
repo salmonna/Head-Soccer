@@ -3,11 +3,14 @@
 #include "MovePlayerState/StandPlayerState.h"
 
 //-------------------------------------------------------------------------
+// Constructor for KickMoveState initializes kick state and starting position.
 KickMoveState::KickMoveState():m_currentState(nullptr)
 {
 	m_startPos = sf::Vector2f(160, 126);
 }
 //-------------------------------------------------------------------------
+// Handles movement logic for kicking state,
+//  checks state changes to either jump or stand based on conditions.
 void KickMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	movePlayer(m_startPos, 7, 10, sprite, sf::Vector2f(80, 95));
@@ -26,6 +29,7 @@ void KickMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 }
 //-------------------------------------------------------------------------
+// Returns a unique pointer to the current player state and resets the current state to null.
 std::unique_ptr<BaseMovePlayerState> KickMoveState::handleMoveStatus() {
 
 	std::unique_ptr<BaseMovePlayerState> temp = std::move(m_currentState);

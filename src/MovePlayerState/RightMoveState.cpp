@@ -8,6 +8,7 @@ RightMoveState::RightMoveState():m_currentState(nullptr)
 	m_startPos = sf::Vector2f(160, 244);
 }
 //---------------------------------------------------------
+// Handles player movement based on keyboard input, updating physics and state.
 void RightMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	if (sf::Keyboard::isKeyPressed(key.JUMP))
@@ -29,6 +30,7 @@ void RightMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 	}
 }
 //---------------------------------------------------------
+// Retrieves the current move state and transfers ownership to the caller.
 std::unique_ptr<BaseMovePlayerState> RightMoveState::handleMoveStatus() {
 
 	std::unique_ptr<BaseMovePlayerState> temp = std::move(m_currentState);

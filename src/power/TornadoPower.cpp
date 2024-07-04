@@ -2,7 +2,7 @@
 #include "gameObject/Ball.h"
 #include "Resources.h"
 #include "gameObject/Player.h"
-
+//----------------------------------------------------------------------------
 TornadoPower::TornadoPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0), m_PlayerSide(PlayerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[3]);
@@ -30,7 +30,9 @@ TornadoPower::TornadoPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0), m
     }
 
 };
-
+//----------------------------------------------------------------------------
+// Activates the tornado power on the ball
+// This includes changing the ball's position and awake state
 void TornadoPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
@@ -40,14 +42,16 @@ void TornadoPower::activatePowerOnBall(Ball* ball)
     float side;
     (m_PlayerSide) ? side = -1.f : side = 1.f;
     currentPosition.x += side; // Move the body 200 pixels higher (adjust as needed)
-
     ball->getBody()->SetTransform(currentPosition, ball->getBody()->GetAngle());
 
     // Set awake state to false to "pause" the body
     ball->getBody()->SetAwake(false);
 }
 
+//----------------------------------------------------------------------------
+// Activates the tornado power on the player
 void TornadoPower::activatePowerOnPlayer(Player* player) {
+
 
     player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
     player->restartClock();
@@ -55,12 +59,14 @@ void TornadoPower::activatePowerOnPlayer(Player* player) {
     setPowerIsActive(false);
 }
 
-
+//----------------------------------------------------------------------------
+// Draws the tornado sprite to the window
 void TornadoPower::draw(sf::RenderWindow& window) const
 {
     window.draw(m_sprite);
 }
-
+//----------------------------------------------------------------------------
+// Manages the animation of the tornado power
 void TornadoPower::animation(sf::Vector2f position)
 {
 
@@ -82,8 +88,8 @@ void TornadoPower::animation(sf::Vector2f position)
     m_sprite.setPosition(position);
 }
 
-
-
+//----------------------------------------------------------------------------
+// Returns the side of the player (true if player side, false otherwise)
 bool TornadoPower::getSideOfPlayer()const {
     return m_PlayerSide;
 }

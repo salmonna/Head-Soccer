@@ -18,7 +18,7 @@ void Player::deactivatePower(b2Body * body,sf::Sprite& sprite ,sf::Color PlayerC
 	// Deactivate the power
 	powerOnPlayer = false;
 	sprite.setColor(PlayerColor);
-
+	body->SetAwake(true);
 	// Check if the Player's Y position is greater than 900.f
 	if (sprite.getPosition().y > 900.f) {
 		// Adjust position if necessary
@@ -27,6 +27,5 @@ void Player::deactivatePower(b2Body * body,sf::Sprite& sprite ,sf::Color PlayerC
 
 		// Update the body's position and fix the power-related sensor issue
 		body->SetTransform(currentPosition, body->GetAngle());
-		body->GetFixtureList()->SetSensor(false);
 	}
 }

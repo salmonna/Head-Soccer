@@ -4,7 +4,8 @@
 #include "Command/Command.h"
 #include "Resources.h"
 
-
+//------------------------------------------------------------- Constructor -----------------------------------
+// Constructor initializes Tutorial with necessary components
 Tutorial::Tutorial(Controller* controller, Menu* prevState)
 {
 
@@ -27,7 +28,8 @@ Tutorial::Tutorial(Controller* controller, Menu* prevState)
 	tutorialText();
 
 }
-
+//------------------------------------------------------------------------------
+// Method to initialize tutorial text
 void Tutorial::tutorialText()
 {
 
@@ -58,7 +60,7 @@ void Tutorial::tutorialText()
 	m_tutorialText[2].setPosition(1250.f, 550.f);
 
 }
-
+//------------------------------------------------------------------------------
 //check if there is a click on one of the menu buttons
 void Tutorial::respond(sf::Vector2f pressed) {
 	//respond to the buttons pressed
@@ -73,7 +75,7 @@ void Tutorial::respond(sf::Vector2f pressed) {
 		}
 	}
 }
-
+//------------------------------------------------------------------------------
 //draw
 void Tutorial::draw(sf::RenderWindow& window) const {
 

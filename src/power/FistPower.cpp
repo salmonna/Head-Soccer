@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "gameObject/Player.h"
 
-
+//--------------------------------------------------------------------
 FistPower::FistPower(bool playerSide):m_playerSide(playerSide)
 {
 
@@ -23,7 +23,9 @@ FistPower::FistPower(bool playerSide):m_playerSide(playerSide)
     }    
 
 };
-
+//--------------------------------------------------------------------
+// Activates the fist power on the ball
+// This includes changing the ball's position, density, and awake state
 void FistPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
@@ -45,10 +47,12 @@ void FistPower::activatePowerOnBall(Ball* ball)
 }
 
 //--------------------------------------------------------------
+// Draws the fist sprite to the window
 void FistPower::draw(sf::RenderWindow& window) const {
     window.draw(m_sprite);
 }
-
+//--------------------------------------------------------------
+// Manages the animation of the fist power
 void FistPower::animation(sf::Vector2f position)
 {
     if (!m_playerSide)
@@ -64,13 +68,15 @@ void FistPower::animation(sf::Vector2f position)
 
     m_sprite.setPosition(position);
 }
-
+//--------------------------------------------------------------------
+// Activates the fist power on the player
 void FistPower::activatePowerOnPlayer(Player* player) {
 
     Box2d::getInstance().step();
     setPowerIsActive(false);
 }
-
+//--------------------------------------------------------------------
+// Returns the side of the player (true if player side, false otherwise)
 bool FistPower::getSideOfPlayer()const {
     return m_playerSide;
 }

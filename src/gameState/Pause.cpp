@@ -6,7 +6,7 @@
 #include "SoundControl.h"
 #include "Command/Sound.h"
 
-
+//---------------------------------------------------------------------
 Pause::Pause(Controller* controller, Menu * menuState, Board * boardState):
 m_boardState(boardState)
 {
@@ -21,7 +21,7 @@ m_boardState(boardState)
 
 }
 
-
+//---------------------------------------------------------------------
 //check if there is a click on one of the menu buttons
 void Pause::respond(sf::Vector2f pressed) {
 	//respond to the buttons pressed
@@ -45,10 +45,9 @@ void Pause::respond(sf::Vector2f pressed) {
 		}
 	}
 }
-
+//---------------------------------------------------------------------
 //draw
 void Pause::draw(sf::RenderWindow& window) const {
-
 
 	m_boardState->drawGameObjects(window);
 

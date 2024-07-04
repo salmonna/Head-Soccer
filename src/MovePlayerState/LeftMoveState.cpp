@@ -9,6 +9,8 @@ LeftMoveState::LeftMoveState():m_currentState(nullptr)
 	m_startPos = sf::Vector2f(160, 244);
 }
 //----------------------------------------------------------
+// Handles movement logic for left movement state,
+//  triggers jump state or transitions to standing state based on conditions.
 void LeftMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
 	if (sf::Keyboard::isKeyPressed(key.JUMP))
@@ -27,6 +29,7 @@ void LeftMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 	}
 }
 //----------------------------------------------------------
+// Returns a unique pointer to the current player state and resets the current state to null.
 std::unique_ptr<BaseMovePlayerState> LeftMoveState::handleMoveStatus() {
 
 	std::unique_ptr<BaseMovePlayerState> temp = std::move(m_currentState);
