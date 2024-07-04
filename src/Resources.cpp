@@ -13,10 +13,9 @@
 #include "power/AvatarPower.h"
 #include <exception>
 
+//--------------------------------------------------------------------------------------
 //constractor of resources file are loading files
 Resources::Resources():m_selectedIndex(0){
-
-
 
 	std::vector<std::string> fileNames{"Play.png","Quit.png","Setting.png", "Tutorial.png","Stage.png","Sounds.png",
 									   "Music.png" ,"undo Button.png", "Left.png","Right.png","Sound.png"};
@@ -79,7 +78,7 @@ Resources::Resources():m_selectedIndex(0){
 		throw FileException("Font file not load!");
 	}
 }
-
+//--------------------------------------------------------------------------------------
 //loadFromFile file function
 void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf::Texture>& textures) {
 
@@ -92,60 +91,64 @@ void Resources::loadFromFile(std::vector<std::string> fileNames, std::vector<sf:
 		textures.push_back(texture);
 	}
 }
-
+//--------------------------------------------------------------------------------------
 std::vector<sf::Texture>& Resources::getPlayerPower() {
 
 	return m_powerOfPlayer;
 }
+//--------------------------------------------------------------------------------------
 std::vector<sf::Texture>& Resources::getPauseTexture()
 {
 	return m_pauseTexture;
 }
-
+//--------------------------------------------------------------------------------------
 sf::Texture& Resources::getGoalTexture(int index) {
 
 	return m_goalTexture[index];
 }
+//--------------------------------------------------------------------------------------
 //getMenuTexture
 
 std::vector<sf::Texture>& Resources::getMenuTexture() {
 
 	return m_menuTexture;
 }
+//--------------------------------------------------------------------------------------
 //getBoardTexture
 std::vector<sf::Texture>& Resources::getBoardTexture() {
 
 	return m_boardTexture;
 }
+//--------------------------------------------------------------------------------------
 //gameResultsTexture
 std::vector<sf::Texture>& Resources::gameResultsTexture() {
 
 	return m_gameResultsTexture;
 }
-
+//--------------------------------------------------------------------------------------
 //gameResultsTexture
 std::vector<sf::Texture>& Resources::getScoreBoardTexture() {
 
 	return m_scoreBoardTexture;
 }
-
+//--------------------------------------------------------------------------------------
 //gameResultsTexture
 std::vector<sf::Texture>& Resources::getBallTexture() {
 
 	return m_ballTexture;
 }
-
+//--------------------------------------------------------------------------------------
 //getFont
 sf::Font & Resources::getFont() {
 
 	return m_font;
 }
-
+//--------------------------------------------------------------------------------------
 //get game mode selection
 std::vector<sf::Texture>& Resources::getGameModeTexture() {
 	return m_gameModeTexture;
 }
-
+//--------------------------------------------------------------------------------------
 //get characters
 sf::Texture& Resources::getCharactersTexture() {
 
@@ -161,7 +164,7 @@ sf::Texture& Resources::getCharactersTexture() {
 	}
 
 }
-
+//--------------------------------------------------------------------------------------
 //get power
 std::shared_ptr<Power> Resources::getPower(bool PlayerSide) {
 	
@@ -195,40 +198,40 @@ std::shared_ptr<Power> Resources::getPower(bool PlayerSide) {
 		throw FileException("No available index found in Resources::getPower");
 	}
 }
-
+//--------------------------------------------------------------------------------------
 //get select team textures
 std::vector<sf::Texture>& Resources::getSelectTeam() {
 
 	return m_selectTeam;
 }
-
+//--------------------------------------------------------------------------------------
 //get power
 std::vector<sf::Texture>& Resources::getPowerTexture() {
 
 	return m_powerTexture;
 }
 
-
+//--------------------------------------------------------------------------------------
 std::vector<sf::SoundBuffer>& Resources::getBufferVec()
 {
 	return m_bufferVec;
 }
-
+//--------------------------------------------------------------------------------------
 void Resources::setSelectedPlayer(int index) {
 
 	m_selectedPlayer.push_back(index);
 }
 
-
+//--------------------------------------------------------------------------------------
 std::vector<int> Resources::getPlayerOrder() {
 	return m_selectedPlayer;
 }
-
+//--------------------------------------------------------------------------------------
 void Resources::resetPlayerOrder() {
 	m_selectedPlayer.clear();
 	m_selectedIndex = 0;
 }
-
+//--------------------------------------------------------------------------------------
 std::vector<sf::Texture>& Resources::getCountriesFlags() {
 
 	return m_countryFlags;

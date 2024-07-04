@@ -19,22 +19,26 @@ SoundControl::SoundControl()
 
 }
 //---------------------------------------------------------------------
+//get intro song sound
 sf::Sound& SoundControl::getIntroSong() {
 
 	return m_introSong;
 }
 //---------------------------------------------------------------------
+//get whistle sound
 sf::Sound& SoundControl::getWhistle() {
 
 	return m_whistle;
 }
 //---------------------------------------------------------------------
+//get crowd sound
 sf::Sound& SoundControl::getCrowd() {
 
 	return m_crowd;
 }
 
 //---------------------------------------------------------------------
+//get goal sound
 sf::Sound& SoundControl::getGoalSound() {
 
 	return m_goalSound;

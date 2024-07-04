@@ -5,6 +5,7 @@ BaseMovePlayerState::BaseMovePlayerState() :m_numOfJump(0)
 {
 }
 //-----------------------------------------------------------------------------------------------------
+// Function to handle player movement logic
 void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float maxTime, sf::Sprite& sprite, sf::Vector2f size) {
 
 	float sec = float(m_moveClock.getElapsedTime().asMilliseconds());
@@ -32,6 +33,7 @@ void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2f start
 	sprite.setTextureRect(characterRect);
 }
 //-----------------------------------------------------------------------------------------------------
+// Function to determine if state should change based on maxSprite
 bool BaseMovePlayerState::changeState(int maxSprite)const {
 
 	return m_numOfJump > 110 * maxSprite;

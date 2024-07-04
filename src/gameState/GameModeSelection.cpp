@@ -5,7 +5,8 @@
 #include "Command/Command.h"
 #include "Command/Sound.h"
 #include "SoundControl.h"
-
+//-------------------------------------------------------------
+// Constructor initializes GameModeSelection with necessary components
 GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, Menu* menu, SelectTeam* selectTeam):m_boardPtr(boardState), m_selectTeamPtr(selectTeam)
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getGameModeTexture();
@@ -22,6 +23,7 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 	textModeSelection();
 }
 //-------------------------------------------------------------
+// Method to initialize text for different game modes and titles
 void GameModeSelection::textModeSelection()
 {
 	sf::Font& font = Resources::getInstance().getFont();
@@ -63,6 +65,7 @@ void GameModeSelection::textModeSelection()
 	m_modeText.push_back(title);
 }
 //-------------------------------------------------------------
+// Method to draw game mode selection screen
 void GameModeSelection::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_Stage);
@@ -85,6 +88,7 @@ void GameModeSelection::draw(sf::RenderWindow& window) const {
 	
 }
 //-------------------------------------------------------------
+// Method to respond to user interaction (mouse click)
 void GameModeSelection::respond(sf::Vector2f mousePressed) {
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
@@ -100,6 +104,7 @@ void GameModeSelection::respond(sf::Vector2f mousePressed) {
 }
 
 //-------------------------------------------------------------
+// Method to load selected game mode based on button index
 void GameModeSelection::loadGameMode(int gameMode)
 {
 	if (gameMode == 0)

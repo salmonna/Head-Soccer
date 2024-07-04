@@ -6,7 +6,8 @@
 
 
 class GameModeSelection;
-
+//------------------------------------------------------------- Constructor -----------------------------------
+// Constructor initializes SelectTeam with necessary components
 SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Board* boardState) :m_controllerPtr(controller), m_numOfPlayers(0), m_PlayerSelected(0)
 , m_boardPtr(boardState)
 {
@@ -43,6 +44,7 @@ SelectTeam::SelectTeam(Controller * controller, GameModeSelection* gameMode, Boa
 
 }
 //-----------------------------------------------------------------------------
+// Method to initialize text for player selection
 void SelectTeam::selectTextPlayer()
 {
 	sf::Font& font = Resources::getInstance().getFont();
@@ -74,6 +76,7 @@ void SelectTeam::selectTextPlayer()
 	setPowerText();
 }
 //-----------------------------------------------------------------------------
+// Method to initialize text for power selection
 void SelectTeam::setPowerText() {
 
 	std::vector<std::string> powerText{ "FirePower","InvisiblePower","DragonPower",
@@ -89,6 +92,7 @@ void SelectTeam::setPowerText() {
 	}
 }
 //-----------------------------------------------------------------------------
+// Method to draw SelectTeam screen
 void SelectTeam::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_stage);
@@ -123,7 +127,7 @@ void SelectTeam::draw(sf::RenderWindow& window) const {
 	checkToDraw(window);
 }
 //-----------------------------------------------------------------------------
-
+// Method to check and draw selection text based on player selection
 void SelectTeam::checkToDraw(sf::RenderWindow& window) const {
 
 	if (m_PlayerSelected < 1 || m_numOfPlayers == 1)
@@ -148,6 +152,7 @@ void SelectTeam::checkToDraw(sf::RenderWindow& window) const {
 }
 
 //-----------------------------------------------------------------------------
+// Method to respond to user interaction (mouse click)
 void SelectTeam::respond(sf::Vector2f mousePressed) {
 	//respond to the buttons pressed
 	for (int i = 0; i < m_buttons.size(); i++)
@@ -177,6 +182,7 @@ void SelectTeam::respond(sf::Vector2f mousePressed) {
 }
 
 //-----------------------------------------------------------------------------
+// Method to check and respond to player selection
 void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 
 	for (int i = 0; i < m_charcters.size() - 1; i++)
@@ -193,7 +199,7 @@ void SelectTeam::signOrPreedOnPlayers(sf::Vector2f mousePressed) {
 	}
 }
 //-----------------------------------------------------------------------------
-
+// Method to check if mouse is on specific player
 void SelectTeam::isMouseOnPlayers(int index) {
 
 	sf::Vector2i mouseMove = sf::Mouse::getPosition();
@@ -214,12 +220,13 @@ void SelectTeam::isMouseOnPlayers(int index) {
 }
 
 //-----------------------------------------------------------------------------
-
+// Method to set number of players
 void SelectTeam::setNumberOfPlayers(int Players) {
 
 	m_numOfPlayers = Players;
 }
 //-----------------------------------------------------------------------------
+// Method to reset player selection
 void SelectTeam::reset() {
 
 	m_selectedPlayer.clear();
@@ -230,6 +237,7 @@ void SelectTeam::reset() {
 	}
 }
 //-----------------------------------------------------------------------------
+// Method to load game mode
 void SelectTeam::loadGameMode(int index)
 {
 	if (index == 1)return;
@@ -251,6 +259,7 @@ void SelectTeam::loadGameMode(int index)
 	stopSongPlayWhistle();
 }
 //-----------------------------------------------------------------------------
+// Method to set selected player(s) in resources
 void SelectTeam::selectedPlayer()
 {
 	for (int i = 0; i < m_selectedPlayer.size(); i++)
@@ -260,6 +269,7 @@ void SelectTeam::selectedPlayer()
 
 }
 //-----------------------------------------------------------------------------
+// Method to stop intro song and play whistle sound
 void SelectTeam::stopSongPlayWhistle()
 {
 	SoundControl::getInstance().getIntroSong().pause();

@@ -8,7 +8,7 @@
 #include "SoundControl.h"
 #include "Command/Sound.h"
 
-
+//--------------------------------------------------------------------------------------------
 //menu constractor initilize his members
 Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameModeState, sf::RenderWindow * window)
 {
@@ -27,7 +27,7 @@ Menu::Menu(Controller* controller, Tutorial* tutorial, GameModeSelection * gameM
 	song.setLoop(true);
 	
 };
-
+//--------------------------------------------------------------------------------------------
 //check if there is a click on one of the menu buttons
 void Menu::respond(sf::Vector2f position) {
 
@@ -44,7 +44,7 @@ void Menu::respond(sf::Vector2f position) {
 		}
 	}
 }
-
+//--------------------------------------------------------------------------------------------
 //draw
 void Menu::draw(sf::RenderWindow& window) const{
 

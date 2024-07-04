@@ -19,7 +19,8 @@
 #include "Command/Command.h"
 
 
-// Constructor for the Board class
+//-------------------------------- Constructor -----------------------------------
+// Constructor initializes the Board class with necessary components
 Board::Board(Controller* controller, Pause* pause, GameResults* gameResults) :m_gameResults(gameResults),m_controllerPtr(controller)
 {
 	
@@ -48,7 +49,8 @@ Board::Board(Controller* controller, Pause* pause, GameResults* gameResults) :m_
 		std::cout << "Class not found!\n";
 
 }
-
+//--------------------------------------------------------------------------------
+// Method to create moving objects based on names provided
 void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 {
 	std::shared_ptr<Ball> ballObject = std::dynamic_pointer_cast<Ball>(m_movingObject[0]);
@@ -66,7 +68,8 @@ void Board::createMovingObjects(const std::vector<std::string>& objectNames)
 	ScoreBoard::getInstance().setFlagsPlayers();
 
 }
-
+//--------------------------------------------------------------------------------
+// Method to create static objects based on names provided
 void Board::createStaticObjects(const std::vector<std::string>& objectNames)
 {
 	for (const auto& name : objectNames) {
@@ -115,7 +118,8 @@ void Board::respond(sf::Vector2f pressed) {
 	}
 }
 
-//----------------handle Score Board---------------//
+//--------------------------------------------------------------------------------
+// Method to update score board and manage game state
 void Board::handleScoreBoard() {
 
 	ScoreBoard::getInstance().updateScore(0, 0);
@@ -137,7 +141,8 @@ void Board::handleScoreBoard() {
 	}
 }
 
-
+//--------------------------------------------------------------------------------
+// Method to move advertisement on stadium background
 void Board::moveAd()
 {
 
@@ -150,7 +155,8 @@ void Board::moveAd()
 	}
 
 }
-
+//--------------------------------------------------------------------------------
+// Method to reset game state
 void Board::reset() {
 	m_gameObject.erase(m_gameObject.begin() + 9, m_gameObject.end());
 	m_movingObject.erase(m_movingObject.begin() + 1, m_movingObject.end());
@@ -188,7 +194,7 @@ void Board::draw(sf::RenderWindow& window) const{
 		m_buttons[i]->draw(window);
 	}
 }
-
+//--------------------------------------------------------------------------------
 //draw game objects
 void  Board::drawGameObjects(sf::RenderWindow& window) const
 {

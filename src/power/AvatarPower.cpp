@@ -3,7 +3,7 @@
 #include "gameObject/Player.h"
 #include "Resources.h"
 
-
+//---------------------------------------------------------------------------
 AvatarPower::AvatarPower(bool PlayerSide) :m_spriteSheetClock(), m_index(0),
 m_PlayerSide(PlayerSide)
 {
@@ -26,11 +26,9 @@ m_PlayerSide(PlayerSide)
     {
         throw FileException("Deviation from the array");
     }
-
-
-
 };
-
+//---------------------------------------------------------------------------
+// Activates the power on a ball, adjusting its position and sleep state.
 void AvatarPower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
@@ -47,7 +45,8 @@ void AvatarPower::activatePowerOnBall(Ball* ball)
     // Set awake state to false to "pause" the body
     ball->getBody()->SetAwake(false);
 }
-
+//---------------------------------------------------------------------------
+// Activates the power on a player, applying an impulse and setting state variables.
 void AvatarPower::activatePowerOnPlayer(Player* player) {
 
     player->getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1500.f), true);
@@ -55,13 +54,14 @@ void AvatarPower::activatePowerOnPlayer(Player* player) {
     player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
-
+//---------------------------------------------------------------------------
+// Draws the AvatarPower sprite onto the given render window.
 void AvatarPower::draw(sf::RenderWindow& window) const
 {
     window.draw(m_sprite);
 }
-
-
+//---------------------------------------------------------------------------
+// Updates the animation frame of the AvatarPower sprite based on elapsed time.
 void AvatarPower::animation(sf::Vector2f position)
 {
 
@@ -84,7 +84,8 @@ void AvatarPower::animation(sf::Vector2f position)
 
 
 }
-
+//---------------------------------------------------------------------------
+// Retrieves the side of the player associated with the AvatarPower.
 bool AvatarPower::getSideOfPlayer()const {
     return m_PlayerSide;
 }

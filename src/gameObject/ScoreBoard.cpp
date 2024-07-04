@@ -4,7 +4,8 @@
 #include "FileException.h"
 #include <exception>
 #include "SoundControl.h"
-
+//----------------------------------------------------------------------
+// Constructor initializes ScoreBoard object
 ScoreBoard::ScoreBoard() :m_gameTime(60), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
 {
@@ -18,7 +19,8 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		throw FileException("Deviation from the arrays in funcs:defineScoreBoardTexture/ scoreBoardText/  defineProgressTexture");
 	};
 }
-
+//----------------------------------------------------------------------
+// Define textures for the score board sprites
 void ScoreBoard::defineScoreBoardTexture()
 {
 
@@ -44,7 +46,8 @@ void ScoreBoard::defineScoreBoardTexture()
 
 	m_SpriteVec[0].setPosition(300.f, -500);
 }
-
+//----------------------------------------------------------------------
+// Define textures for the progress bar sprites
 void ScoreBoard::defineProgressTexture()
 {
 	std::vector<sf::Texture>& texture = Resources::getInstance().getPowerTexture();
@@ -70,7 +73,8 @@ void ScoreBoard::defineProgressTexture()
 	m_progressP1Sprite[1].setPosition(pos1);
 	m_progressP2Sprite[1].setPosition(pos2);
 }
-
+//----------------------------------------------------------------------
+// Define text positions for the score board
 void ScoreBoard::defineScoreBoardText()
 {
 
@@ -91,7 +95,8 @@ void ScoreBoard::defineScoreBoardText()
 	m_textVec[1].setPosition(475.f, 50.f);
 	m_textVec[2].setPosition(1305.f, 50.f);
 }
-
+//----------------------------------------------------------------------
+// Draw function to render ScoreBoard objects on the window
 void ScoreBoard::draw(sf::RenderWindow & window) const
 {
 	for (int i = 0; i < m_SpriteVec.size(); i++)
@@ -119,8 +124,8 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
 		window.draw(m_goalSprite);
 
 }
-
-
+//----------------------------------------------------------------------
+// Update progress bars for both players
 void ScoreBoard::Progress()
 {
 	float seconds = m_clock.getElapsedTime().asSeconds();
@@ -138,8 +143,8 @@ void ScoreBoard::Progress()
 
 }
 
-
-
+//----------------------------------------------------------------------
+// Update progress for a given set of progress sprites
 void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & progress, float seconds)
 {
 	int width = (progress + 1) * 8;
@@ -161,27 +166,29 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 
 
 }
-
-
+//----------------------------------------------------------------------
+// Check if progress bar for player 1 is full
 bool ScoreBoard::isProgressP1Full() const {
 
 	int progress = (m_progressP1 + 1) * 8;
 
 	return progress > 490;
 }
-
+//----------------------------------------------------------------------
+// Check if progress bar for player 2 is full
 bool ScoreBoard::isProgressP2Full() const {
 	int progress = (m_progressP2 + 1) * 8;
 
 	return progress > 490;
 }
-
-
+//----------------------------------------------------------------------
+// Reset progress bar for player 1
 void ScoreBoard::resetProgressP1()
 {
 	m_progressP1 = 0;
 }
-
+//----------------------------------------------------------------------
+// Reset progress bar for player 2
 void ScoreBoard::resetProgressP2()
 {
 	m_progressP2 = 0;
@@ -190,6 +197,7 @@ void ScoreBoard::resetProgressP2()
 
 
 //========================Time=======================
+// Calculate and update time display on the score board
 void ScoreBoard::timeCalculation()
 {
 	sf::Time timeForSec = m_clockEverySec.getElapsedTime();
@@ -215,6 +223,8 @@ void ScoreBoard::timeCalculation()
 	}
 
 }
+//----------------------------------------------------------------------
+// Check if game time is over
 bool ScoreBoard::timeIsOver()
 {
 	if (timeCounterSec == 0 && timeCounterMin == 0) {
@@ -228,7 +238,8 @@ bool ScoreBoard::timeIsOver()
 }
 
 
-
+//----------------------------------------------------------------------
+// Reset all score board data and progress
 void ScoreBoard::reset()
 {
 	timeCounterMin = m_gameTime / 60;
@@ -241,6 +252,7 @@ void ScoreBoard::reset()
 }
 
 //=======================Points=======================
+// Update scores for both players and handle goal sign display
 void ScoreBoard::updateScore(int p1Points, int p2Points)
 {
 	if (p1Points != 0 && p2Points != 0){
@@ -262,7 +274,8 @@ void ScoreBoard::updateScore(int p1Points, int p2Points)
 		throw FileException("Deviation from the array");
 	}
 }
-
+//----------------------------------------------------------------------
+// Get points for a specified player
 int ScoreBoard::getPoint(int num) const{
 
 	if (num == 1) {
@@ -273,18 +286,18 @@ int ScoreBoard::getPoint(int num) const{
 
 
 //========================goalSign======================//
-
+// Check if a goal has been scored
 bool ScoreBoard::isGoal() const {
 	return m_goalSign;
 }
-
+//----------------------------------------------------------------------
+// Set goal sign to indicate a goal has been scored
 void ScoreBoard::setGoalSign() {
 	m_goalSign = true;
 	m_clockGoalSign.restart();
 }
-
-
-
+//----------------------------------------------------------------------
+// Set flags for players based on their order
 void ScoreBoard::setFlagsPlayers() {
 
 	std::vector<int> Players = Resources::getInstance().getPlayerOrder();
@@ -306,14 +319,14 @@ void ScoreBoard::setFlagsPlayers() {
 	}
 
 }
-
-
-//------------------------------------get----------------------------------
+//----------------------------------------------------------------------
+// Get vector of flags for players
 std::vector<sf::Sprite>& ScoreBoard::getFlags() {
 	return m_flags;
 }
 
-
+//----------------------------------------------------------------------
+// Get score board sprite
 sf::Sprite& ScoreBoard::getSprite() {
 	return m_SpriteVec[0]; 
 };
