@@ -70,7 +70,7 @@ void FistPower::animation(sf::Vector2f position)
 }
 //--------------------------------------------------------------------
 // Activates the fist power on the player
-void FistPower::activatePowerOnPlayer(Player* player) {
+void FistPower::activatePowerOnPlayer(Player* ) {
 
     Box2d::getInstance().step();
     setPowerIsActive(false);
