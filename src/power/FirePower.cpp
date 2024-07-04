@@ -2,7 +2,9 @@
 #include "gameObject/Ball.h"
 #include "Resources.h"
 #include "gameObject/Player.h"
-
+//--------------------------------------------------------------------------------------
+// Constructor for the FirePower class
+// Initializes the sprite sheet for the fire effect and flame effect
 FirePower::FirePower(bool PlayerSide) :m_spriteSheetClock(), m_index1(0), m_index2(0),m_PlayerSide(PlayerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[8]);
@@ -32,7 +34,9 @@ FirePower::FirePower(bool PlayerSide) :m_spriteSheetClock(), m_index1(0), m_inde
     }
 
 };
-
+//--------------------------------------------------------------------------------------
+// Activates the fire power on the ball
+// This includes changing the ball's position and awake state
 void FirePower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
@@ -46,7 +50,10 @@ void FirePower::activatePowerOnBall(Ball* ball)
     ball->getBody()->SetAwake(false);
 }
 
+//--------------------------------------------------------------------------------------
+// Activates the fire power on the player
 void FirePower::activatePowerOnPlayer(Player* player) {
+
 
     player->getSprite().setColor(sf::Color((sf::Uint8)256, (sf::Uint8)256, (sf::Uint8)256));
     //player->getBody()->SetAwake(false);
@@ -54,13 +61,15 @@ void FirePower::activatePowerOnPlayer(Player* player) {
     player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
-
+//--------------------------------------------------------------------------------------
+// Draws the fire sprite to the window
 void FirePower::draw(sf::RenderWindow& window) const
 {
     window.draw(m_sprite);
 }
 
-
+//--------------------------------------------------------------------------------------
+// Manages the animation of the fire and flame effects
 void FirePower::animation(sf::Vector2f position)
 {
 
@@ -95,8 +104,8 @@ void FirePower::animation(sf::Vector2f position)
     m_sprite.setPosition(position);
 }
 
-
-
+//--------------------------------------------------------------------------------------
+// Returns the side of the player (true if player side, false otherwise)
 bool FirePower::getSideOfPlayer()const {
     return m_PlayerSide;
 }
