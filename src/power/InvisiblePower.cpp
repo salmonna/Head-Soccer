@@ -2,12 +2,14 @@
 #include "Resources.h"
 #include "gameObject/Player.h"
 #include "gameObject/Ball.h"
-
+//--------------------------------------------------------------
 InvisiblePower::InvisiblePower(bool PlayerSide):m_PlayerSide(PlayerSide)
 {
 
 };
-
+//--------------------------------------------------------------
+// Activates the invisible power on the ball
+// This includes changing the ball's position, color, and awake state
 void InvisiblePower::activatePowerOnBall(Ball* ball)
 {
     setPowerIsActive(true);
@@ -21,7 +23,8 @@ void InvisiblePower::activatePowerOnBall(Ball* ball)
 
     ball->getBody()->SetAwake(false);
 }
-
+//--------------------------------------------------------------
+// Activates the invisible power on the player
 void InvisiblePower::activatePowerOnPlayer(Player* Player) {
 
 
@@ -29,7 +32,8 @@ void InvisiblePower::activatePowerOnPlayer(Player* Player) {
     Player->setPowerOnPlayer(true);
     setPowerIsActive(false);
 }
-
+//--------------------------------------------------------------
+// Returns the side of the player (true if player side, false otherwise)
 bool InvisiblePower::getSideOfPlayer()const {
     return m_PlayerSide;
 }

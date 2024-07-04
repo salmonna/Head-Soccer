@@ -4,6 +4,8 @@
 #include "gameObject/Player.h"
 
 //--------------------------------------------------------------
+// Constructor for the DragonPower class
+// Initializes the positions and texture for the dragon sprite
 DragonPower::DragonPower(bool PlayerSide):m_round(0),m_PlayerSide(PlayerSide),m_startPos(true)
 {
 	m_posDragon.push_back(std::make_pair(sf::Vector2i(84, 41), sf::Vector2i(71, 71)));
@@ -27,6 +29,8 @@ DragonPower::DragonPower(bool PlayerSide):m_round(0),m_PlayerSide(PlayerSide),m_
 	}
 }
 //--------------------------------------------------------------
+// Activates the dragon power on the ball
+// This includes changing the ball's position, gravity, and velocity
 void DragonPower::activatePowerOnBall(Ball* ball) {
 	
 	setPowerIsActive(true);
@@ -44,6 +48,7 @@ void DragonPower::activatePowerOnBall(Ball* ball) {
 	ball->getBody()->SetAwake(false);
 }
 //--------------------------------------------------------------
+// Manages the animation of the dragon sprite
 void DragonPower::animation(sf::Vector2f position)
 {
 
@@ -66,16 +71,19 @@ void DragonPower::animation(sf::Vector2f position)
 }
 
 //--------------------------------------------------------------
+// Activates the dragon power on the player
 void DragonPower::activatePowerOnPlayer(Player* Player) {
 
 	Player->setPowerOnPlayer(true);
 	setPowerIsActive(false);
 }
 //--------------------------------------------------------------
+// Draws the dragon sprite to the window
 void DragonPower::draw(sf::RenderWindow& window) const {
 	window.draw(m_dragonSprite);
 }
 //--------------------------------------------------------------
+// Defines the starting position of the dragon relative to the ball
 void DragonPower::defineStartposWithBall(sf::Vector2f & position) {
 
 	if (!m_PlayerSide) {
@@ -93,6 +101,7 @@ void DragonPower::defineStartposWithBall(sf::Vector2f & position) {
 
 
 //--------------------------------------------------------------
+// Updates the texture rectangle of the dragon sprite
 void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 
 	sf::IntRect characterRect(it.first.x, it.first.y, it.second.x, it.second.y);
@@ -105,8 +114,8 @@ void DragonPower::dragonRect(std::pair<sf::Vector2i, sf::Vector2i> it) {
 	}
 
 }
-
-
+//--------------------------------------------------------------
+// Returns the side of the player (true if player side, false otherwise)
 bool DragonPower::getSideOfPlayer()const {
 	return m_PlayerSide;
 }
