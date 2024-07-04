@@ -5,7 +5,7 @@
 #include <iostream>
 //-----------------------------------------------------------------------------
 // Constructor initializes member variables
-Ball::Ball():m_power(std::make_shared<Power>()), m_basePosition(900.0f, 100.0f), m_restartBall(false)
+Ball::Ball():m_basePosition(900.0f, 100.0f), m_restartBall(false)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 

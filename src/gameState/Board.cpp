@@ -130,14 +130,14 @@ void Board::handleScoreBoard() {
 		m_controllerPtr->setState(m_gameResults);
 		reset();
 	}
-	else if (!ScoreBoard::getInstance().isGoal())
-	{
-		Box2d::getInstance().step();
-	}
-	else
+	else if (ScoreBoard::getInstance().isGoal())
 	{
 		for (auto& object : m_movingObject)
 			object->reset();
+	}
+	else
+	{
+		Box2d::getInstance().step();
 	}
 }
 
@@ -158,6 +158,9 @@ void Board::moveAd()
 //--------------------------------------------------------------------------------
 // Method to reset game state
 void Board::reset() {
+	for (auto& object : m_movingObject)
+		object->reset();
+
 	m_gameObject.erase(m_gameObject.begin() + 9, m_gameObject.end());
 	m_movingObject.erase(m_movingObject.begin() + 1, m_movingObject.end());
 }

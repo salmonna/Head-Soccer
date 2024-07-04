@@ -56,7 +56,7 @@ void UserPlayer::move() {
 		if (m_powerClock.getElapsedTime().asSeconds() > 3)
 			deactivatePower(m_body, m_sprite, m_PlayerColor, m_powerOnPlayer);
 	}
-	else if(!m_power->powerIsActive() && m_power->stayInTheAir()) {
+	else if(m_power->stayInTheAir()) {
 		m_currentMoveState->movement(m_sprite, m_keys, m_body);
 	}
 
