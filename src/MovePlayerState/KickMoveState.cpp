@@ -11,7 +11,7 @@ KickMoveState::KickMoveState():m_currentState(nullptr)
 //-------------------------------------------------------------------------
 // Handles movement logic for kicking state,
 //  checks state changes to either jump or stand based on conditions.
-void KickMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
+void KickMoveState::movement(sf::Sprite& sprite, Keyboard , b2Body*) {
 
 	movePlayer(m_startPos, 7, 10, sprite, sf::Vector2f(80, 95));
 
