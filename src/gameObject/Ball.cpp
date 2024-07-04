@@ -41,6 +41,7 @@ void  Ball::move()
 //-----------------------------------------------------------------------------
 void Ball::draw(sf::RenderWindow & window) const
 {
+
 	window.draw(m_sprite);
 
     if (m_power->powerIsActive())

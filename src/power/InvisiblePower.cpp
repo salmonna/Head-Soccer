@@ -24,7 +24,6 @@ void InvisiblePower::activatePowerOnBall(Ball* ball)
 
 void InvisiblePower::activatePowerOnPlayer(Player* player) {
 
-
     player->restartClock();
     player->setPowerOnPlayer(true);
     setPowerIsActive(false);

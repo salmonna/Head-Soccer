@@ -9,12 +9,12 @@ m_PlayerSide(PlayerSide)
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[6]);
 
-    float height = 220.f;
+    int height = 220;
 
     for (int i = 0; i < 5; i++)
     {
-        m_spriteSheet.push_back(std::pair(sf::Vector2i(0, i* height), sf::Vector2i(306.f, height)));
-        m_spriteSheet.push_back(std::pair(sf::Vector2i(306.f, i* height), sf::Vector2i(306.f, height)));
+        m_spriteSheet.push_back(std::pair(sf::Vector2i(0, i* height), sf::Vector2i(306, height)));
+        m_spriteSheet.push_back(std::pair(sf::Vector2i(306, i* height), sf::Vector2i(306, height)));
     }
 
     try
@@ -22,7 +22,7 @@ m_PlayerSide(PlayerSide)
         m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
 
     }
-    catch (const std::exception& e)
+    catch (const std::exception&)
     {
         throw FileException("Deviation from the array");
     }
@@ -77,8 +77,8 @@ void AvatarPower::animation(sf::Vector2f position)
         m_spriteSheetClock.restart();
     }
 
-    position.x -= 306.f / 2;
-    position.y -= 177.f * 0.8;
+    position.x -= 306.f / 2.f;
+    position.y -= 177.f * 0.8f;
 
     m_sprite.setPosition(position);
 

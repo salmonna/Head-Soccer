@@ -14,7 +14,7 @@ timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), 
 		defineProgressTexture();
 
 	}
-	catch (const std::exception& e) {
+	catch (const std::exception&) {
 		throw FileException("Deviation from the arrays in funcs:defineScoreBoardTexture/ scoreBoardText/  defineProgressTexture");
 	};
 }
@@ -56,11 +56,11 @@ void ScoreBoard::defineProgressTexture()
 	for (int i = 0; i < texture.size(); i++)
 	{
 		m_progressP1Sprite.push_back(sf::Sprite(texture[i]));
-		m_progressP1Sprite[i].scale(0.6, 1);
+		m_progressP1Sprite[i].scale(0.6f, 1.f);
 		m_progressP1Sprite[i].setPosition(pos1);
 
 		m_progressP2Sprite.push_back(sf::Sprite(texture[i]));
-		m_progressP2Sprite[i].scale(0.6, 1);
+		m_progressP2Sprite[i].scale(0.6f, 1.f);
 		m_progressP2Sprite[i].setPosition(pos2);
 	}
 
@@ -85,11 +85,11 @@ void ScoreBoard::defineScoreBoardText()
 
 
 	//font time pos
-	m_textVec[0].setPosition(875, 0);
+	m_textVec[0].setPosition(875.f, 0.f);
 
 	//font points pos
-	m_textVec[1].setPosition(475.f, 50);
-	m_textVec[2].setPosition(1305.f, 50);
+	m_textVec[1].setPosition(475.f, 50.f);
+	m_textVec[2].setPosition(1305.f, 50.f);
 }
 
 void ScoreBoard::draw(sf::RenderWindow & window) const
@@ -128,12 +128,12 @@ void ScoreBoard::Progress()
 	updateProgress(m_progressP2Sprite, m_progressP2, seconds);
 	
 	if (m_goalSign)
-		m_goalSprite.move(10, 0);
+		m_goalSprite.move(10.f, 0.f);
 
 	if (m_clockGoalSign.getElapsedTime().asSeconds() > 2.f)
 	{
 		m_goalSign = false;
-		m_goalSprite.setPosition(0, 200);
+		m_goalSprite.setPosition(0.f, 200.f);
 	}
 
 }
@@ -144,7 +144,7 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 {
 	int width = (progress + 1) * 8;
 
-	if (seconds >= 0.2 && width < 590)
+	if (seconds >= 0.2f && width < 590)
 	{
 		progress++;
 		m_clock.restart();
@@ -152,10 +152,10 @@ void ScoreBoard::updateProgress(std::vector<sf::Sprite>& progressSprite, int & p
 
 
 	try {
-		sf::IntRect characterRect(0, 0, width, progressSprite[1].getGlobalBounds().height);
+		sf::IntRect characterRect(0, 0, width, int(progressSprite[1].getGlobalBounds().height));
 		progressSprite[1].setTextureRect(characterRect);
 	}
-	catch (const std::exception& e) {
+	catch (const std::exception&) {
 		throw FileException("Deviation from the array: progressSprite");
 	}
 
@@ -208,7 +208,7 @@ void ScoreBoard::timeCalculation()
 		try {
 			m_textVec[0].setString(str);
 		}
-		catch (const std::exception& e) {
+		catch (const std::exception&) {
 			throw FileException("Deviation from the array: m_textVec");
 		}
 		m_clockEverySec = sf::Clock();
@@ -258,7 +258,7 @@ void ScoreBoard::updateScore(int p1Points, int p2Points)
 		str = std::to_string(m_p2Points);
 		m_textVec[2].setString(str);
 	}
-	catch (const std::exception& e) {
+	catch (const std::exception&) {
 		throw FileException("Deviation from the array");
 	}
 }
@@ -301,7 +301,7 @@ void ScoreBoard::setFlagsPlayers() {
 		m_flags[0].setPosition(1250.f, 165.f);
 		m_flags[1].setPosition(435.f, 165.f);
 	}
-	catch (const std::exception& e) {
+	catch (const std::exception&) {
 		throw FileException("Deviation from the array: m_flags");
 	}
 

@@ -4,7 +4,7 @@
 
 // Constructor for the Window class.
 //----------------------------------------------------------------
-Window::Window():m_keyPressed(0){}
+Window::Window(){}
 
 // Opens a new window with the specified number of columns and rows.
 //----------------------------------------------------------------
@@ -33,15 +33,10 @@ void Window::eventFunc() {
 
 			checkMouseReleased(event);
 			return ;
-
-		case sf::Event::KeyReleased:
-			m_keyPressed = event.size.width;
-			return;
 		}
 	}
-	m_mousePressed.x = -1;
-	m_mousePressed.y = -1;
-	m_keyPressed = -2;
+	m_mousePressed.x = -1.f;
+	m_mousePressed.y = -1.f;
 }
 //------------------------------------------------------------------//
 // checkMouseReleased
@@ -53,8 +48,8 @@ void Window::checkMouseReleased(sf::Event event) {
 		m_mousePressed = sf::Vector2f(m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 		return;
 	}
-	m_mousePressed.x = -1;
-	m_mousePressed.y = -1;
+	m_mousePressed.x = -1.f;
+	m_mousePressed.y = -1.f;
 }
 
 
@@ -66,7 +61,7 @@ sf::RenderWindow& Window::getWindow() {
 
 // Clears the window.
 void Window::clear() {
-	m_window.clear(sf::Color(128,128,128));
+	m_window.clear(sf::Color(128U,128U,128U));
 }
 
 // Displays the contents of the window.
@@ -87,8 +82,3 @@ sf::Vector2f Window::getMousePressed() {
 	return m_mousePressed;
 }
 
-//return key 
-//----------------------------------------------------------------
-int Window::getKeyPressed() {
-	return m_keyPressed;
-}

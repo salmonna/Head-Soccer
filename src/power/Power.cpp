@@ -35,10 +35,10 @@ bool Power::stayInTheAir()
 }
 
 void Power::drawAura(sf::RenderWindow& window, sf::Vector2f position, sf::Vector2f origin) {
-	m_auraSprite.setPosition(position.x - 25,position.y - 55);
+	m_auraSprite.setPosition(position.x - 25.f,position.y - 55.f);
 	m_auraSprite.setOrigin(origin);
 	window.draw(m_auraSprite);
-	int timeSec = m_clock.getElapsedTime().asSeconds() * 10;
+	int timeSec = int(m_clock.getElapsedTime().asSeconds()) * 10;
 
 	sf::IntRect characterRect(10 + 140*(timeSec%3), 0, 110, 150); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet

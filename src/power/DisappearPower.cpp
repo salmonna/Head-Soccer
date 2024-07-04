@@ -8,7 +8,7 @@ DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0
 {
     m_sprite.setTexture(Resources::getInstance().getPowerTexture()[5]);
 
-    float size = 213.f;
+    int size = 213;
 
     for (int i = 0; i < 7; i++)
     {
@@ -27,7 +27,7 @@ DisappearPower::DisappearPower(bool playerSide) :m_spriteSheetClock(), m_index(0
         m_sprite.setTextureRect(sf::IntRect(m_spriteSheet[0].first, m_spriteSheet[0].second));
 
     }
-    catch (const std::exception& e)
+    catch (const std::exception&)
     {
         throw FileException("Deviation from the array");
     }

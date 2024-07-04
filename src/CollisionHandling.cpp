@@ -37,7 +37,9 @@ namespace // anonymous namespace — the standard way to make function "static"
             PlayerObject.getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));  // Set linear velocity to zero
             PlayerObject.getBody()->SetAngularVelocity(0.0f);               // Set angular velocity to zero
         }
-        else if (ballObject.getPower()->powerIsActive()){
+        else if (ballObject.getPower()){
+
+            if(ballObject.getPower()->powerIsActive())
             ballObject.getPower()->activatePowerOnPlayer(&PlayerObject);
         }
     }
@@ -77,6 +79,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         ScoreBoard::getInstance().setGoalSign();
         SoundControl::getInstance().getGoalSound().play();
 
+        if(ballObject.getPower())
         ballObject.getPower()->setPowerIsActive(false);
         ballObject.reset();
     }

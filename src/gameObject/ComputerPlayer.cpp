@@ -45,13 +45,13 @@ void ComputerPlayer::move() {
 	if (m_powerOnPlayer && (m_powerClock.getElapsedTime().asSeconds() > 2.f)) 
 		deactivatePower(m_body,m_sprite,m_PlayerColor,m_powerOnPlayer);
 	else if (!m_powerOnPlayer && m_power->stayInTheAir())
-		updateMovement(m_ball->getSprite().getPosition(), length, direction);
+		updateMovement(m_ball->getSprite().getPosition(), length);
 
 	update();
 	checkIfTurnOnAura();
 }
 //-----------------------------------------------------------------------------
-void ComputerPlayer::updateMovement(const sf::Vector2f ballPosition, float length, const sf::Vector2f& direction) {
+void ComputerPlayer::updateMovement(const sf::Vector2f& ballPosition, float length) {
 
 	const float kickRange = 100.0f;
 	if (m_jump) {

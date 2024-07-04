@@ -20,7 +20,7 @@
 
 
 // Constructor for the Board class
-Board::Board(Controller* controller, Menu* menu, Pause* pause, GameResults* gameResults) :m_gameState(NULL), m_gameResults(gameResults),m_controllerPtr(controller)
+Board::Board(Controller* controller, Pause* pause, GameResults* gameResults) :m_gameResults(gameResults),m_controllerPtr(controller)
 {
 	
 	std::vector<sf::Texture>& texture = Resources::getInstance().getBoardTexture();
