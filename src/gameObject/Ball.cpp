@@ -5,7 +5,7 @@
 #include <iostream>
 //-----------------------------------------------------------------------------
 // Constructor initializes member variables
-Ball::Ball():m_basePosition(900.0f, 100.0f), m_restartBall(false)
+Ball::Ball():m_basePosition(900.0f, 100.0f), m_restartBall(false),m_body(nullptr)
 {
 	auto texture = &(Resources::getInstance().getBallTexture()[0]); 
 

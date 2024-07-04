@@ -6,7 +6,7 @@
 #include "SoundControl.h"
 //-----------------------------------------------------------------------------
 // Constructor initializes member variables and sets up the player
-ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball>& ball):m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock(),m_ball(ball)
+ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball>& ball):m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock(),m_ball(ball), m_body(nullptr)
 {
 
 	sf::Vector2f pos(550, 80);

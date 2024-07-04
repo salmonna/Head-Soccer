@@ -1,7 +1,7 @@
 #include "gameObject/GoalBack.h"
 #include "Box2d.h"
 
-GoalBack::GoalBack(float x, float y, bool needScale):m_side(needScale)
+GoalBack::GoalBack(float x, float y, bool needScale):m_side(needScale), m_body(nullptr)
 {
 	
 	m_sprite.setTexture(Resources::getInstance().getGoalTexture(1));
