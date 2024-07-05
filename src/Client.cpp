@@ -16,23 +16,23 @@ Client::Client():m_connected(false),m_server("192.168.1.24"),m_port(53000)
 }
 //---------------------------------------------------------
 // Receives data from the server into a packet and processes it to update another player's state.
-void Client::receiveData(MovingObject& otherPlayer) {
+void Client::receiveData(b2Body* body) {
     sf::Packet packet;
 
     if (m_socket.receive(packet) == sf::Socket::Done) {
-        float key;
-        packet >> key;
-      //  otherPlayer.move(key);
+        sf::Vector2f position;
+        packet >> position.x >> position.y;
+        // Update the position of the Box2D body
+        b2Vec2 newPosition(position.x / SCALE, position.y / SCALE);
+        body->SetTransform(newPosition, body->GetAngle());
     }
     packet.clear();
 }
 //---------------------------------------------------------
 // Sends data (such as player's position) to the server in a packet.
-void Client::sendData(MovingObject& Player) {
+void Client::sendData(sf::Vector2f otherPlayerPosition) {
     sf::Packet packet;
-    float key = 0;
-    sf::Vector2f position = Player.getSprite().getPosition();
-    packet << key;
+    packet << otherPlayerPosition.x << otherPlayerPosition.y;
     if (m_socket.send(packet) != sf::Socket::Done) {
         std::cerr << "Failed to send data to the server" << std::endl;
     }

@@ -7,14 +7,15 @@
 #include <iostream>
 #include <thread>
 #include "gameObject/MovingObject.h"
+#include "Box2d.h"
 
 class Client
 {
 public:
 	Client();
 
-	void receiveData(MovingObject& otherPlayer);
-	void sendData(MovingObject& Player);
+	void receiveData(b2Body* body);
+	void sendData(sf::Vector2f otherPlayerPosition);
 
 	~Client();
 
