@@ -4,6 +4,7 @@
 #include "FileException.h"
 #include <exception>
 #include "SoundControl.h"
+#include "iostream"
 //----------------------------------------------------------------------
 // Constructor initializes ScoreBoard object
 ScoreBoard::ScoreBoard() :m_gameTime(5), timeCounterSec(m_gameTime % 60),
@@ -247,6 +248,7 @@ bool ScoreBoard::timeIsOver()
 // Reset all score board data and progress
 void ScoreBoard::reset()
 {
+
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
@@ -315,6 +317,7 @@ void ScoreBoard::setGoalSign() {
 // Set flags for players based on their order
 void ScoreBoard::setFlagsPlayers() {
 
+
 	std::vector<int> Players = Resources::getInstance().getPlayerOrder();
 
 	for (int i = 0; i < Players.size(); i++)
@@ -326,6 +329,7 @@ void ScoreBoard::setFlagsPlayers() {
 	}
 
 	try {
+
 		m_flags[0].setPosition(1250.f, 165.f);
 		m_flags[1].setPosition(435.f, 165.f);
 	}
@@ -345,4 +349,7 @@ std::vector<sf::Sprite>& ScoreBoard::getFlags() {
 sf::Sprite& ScoreBoard::getSprite() {
 	return m_SpriteVec[0]; 
 };
-
+//----------------------------------------------------------------------
+sf::Clock& ScoreBoard::getClock() {
+	return m_clockGameTime;
+}

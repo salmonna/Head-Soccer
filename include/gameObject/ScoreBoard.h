@@ -39,6 +39,7 @@ public:
 	int getPoint(int num) const;
 	std::vector<sf::Sprite>& getFlags();
 	sf::Sprite& getSprite();
+	sf::Clock& getClock();
 
 
 private:
