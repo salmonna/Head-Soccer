@@ -14,9 +14,8 @@ GameModeSelection::GameModeSelection(Controller* controller, Board* boardState, 
 
 	std::vector<sf::Texture> & tex = Resources::getInstance().getMenuTexture();
   
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(350.f, 250.f))); //Button 1
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(800.f, 250.f))); //Button 2
-	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[3], sf::Vector2f(1250.f, 250.f))); //Button 3
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[1], sf::Vector2f(650.f, 250.f))); //Button 1
+	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(selectTeam, controller)), texture[2], sf::Vector2f(1100.f, 250.f))); //Button 2
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<SwichScreen>(menu, controller)), Resources::getInstance().getMenuTexture()[7], sf::Vector2f(1670.f, 45.f))); //Button 4
 	m_buttons.push_back(std::make_unique<Button>(std::move(std::make_unique<Sound>(SoundControl::getInstance().getIntroSong())), tex[10], sf::Vector2f(1670.f, 145.f)));//sound Button
 
@@ -28,7 +27,7 @@ void GameModeSelection::textModeSelection()
 {
 	sf::Font& font = Resources::getInstance().getFont();
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		m_modeText.push_back(sf::Text());
 		m_modeText[i].setFont(font);
@@ -41,7 +40,7 @@ void GameModeSelection::textModeSelection()
 		m_modeText[i].setOutlineThickness(3);
 	}
 
-	std::vector<std::string> buttonText{ "MultiPlayer Mode","Single Player Mode","     Online Mode",
+	std::vector<std::string> buttonText{ "MultiPlayer Mode","Single Player Mode",
 										"Back To Menu","Trun off/on the Music" };
 	for (int i = 0; i < buttonText.size(); i++)
 	{
@@ -70,7 +69,7 @@ void GameModeSelection::draw(sf::RenderWindow& window) const {
 
 	window.draw(m_Stage);
 
-	window.draw(m_modeText[5]);
+	window.draw(m_modeText[4]);
 	
 	sf::Vector2i mouseMove = sf::Mouse::getPosition(window);
 

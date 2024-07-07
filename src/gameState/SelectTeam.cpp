@@ -3,6 +3,7 @@
 #include "Command/Command.h"
 #include "SoundControl.h"
 #include "Command/Sound.h"
+#include "FileException.h"
 
 
 class GameModeSelection;
@@ -277,4 +278,7 @@ void SelectTeam::stopSongPlayWhistle()
 	SoundControl::getInstance().getWhistle().play();
 
 	SoundControl::getInstance().getCrowd().play();
+
+	ScoreBoard::getInstance().getClock().restart();
+	
 }
