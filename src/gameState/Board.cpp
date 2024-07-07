@@ -1,17 +1,11 @@
-
 #pragma once
 #include "gameState/Board.h"
 #include "Resources.h"
-#include <fstream>
 #include "FileException.h"
-#include "gameObject/UserPlayer.h"
 #include "gameObject/StaticObject.h"
 #include "Keyboard.h"
 #include "gameObject/Ball.h"
 #include "CollisionHandling.h"
-#include "gameObject/GoalSide.h"
-#include "gameObject/GoalBack.h"
-#include "gameObject/GoalTop.h"
 #include "Factory/MovingFactory.h"
 #include "Factory/StaticFactory.h"
 #include "gameState/GameResults.h"
