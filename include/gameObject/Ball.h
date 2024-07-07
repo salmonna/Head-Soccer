@@ -5,9 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include "Factory/MovingFactory.h"
 #include <memory>
-#include "power/MoveBehavior.h"
-#include "power/RegularBehavior.h"
 #include "power/Power.h"
+#include "Box2d.h"
+#include <iostream>
+
 
 class Ball : public MovingObject
 {
@@ -15,36 +16,40 @@ public:
 	Ball();
 
 	virtual void draw(sf::RenderWindow& window) const override;
-	void setRegular();
-	virtual void move(sf::Vector2f pressed) override;
-	virtual sf::Vector2f getPosition() const override;
+	virtual void move() override;
 	virtual sf::Sprite& getSprite() override;
 	virtual void reset() override;
+	virtual b2Body* getBody()const override;
 
-	sf::Vector2f getVelocity() const;
+	void update();
+	void kick(bool rigthSide);
+
+	//----------------------- get --------------//
+	sf::Color getBallColor()const;
+	std::shared_ptr<Power> getPower()const;
+	b2MassData getBallMass() const;
+
+	//----------------------- set --------------//
 	void setPosition(sf::Vector2f position);
-	void setBallVelocity(sf::Vector2f velocity);
-	float getRadius() const;
+	void setPower(std::shared_ptr<Power> power);
 
-	void restartBall();
-	sf::Clock& getClock();
-
-	void setMoveBehavior(std::shared_ptr<Power> power);
-	bool isRegularBehavior();
-
-	virtual ~Ball() { };
-
-
-	//just for chacking --------
-	sf::CircleShape& getCircle();
-	//--------------------------
+	virtual ~Ball();
 private:
 
-	std::shared_ptr<Power> m_power;
+	void updatePowerState();
 
+	sf::Vector2f m_basePosition;
+	sf::Color m_ballColor;
 	sf::Sprite m_sprite;
-	sf::CircleShape m_ball;
-	sf::Vector2f m_ballVelocity;
-	sf::Clock m_clock;
+	
+	std::shared_ptr<Power> m_power;
+	
+	b2Body* m_body;
+	b2MassData m_bodyMass;
+
+	bool m_restartBall;
+	
 	static bool m_registeritBall;
+
+	float m_gravityScale;
 };

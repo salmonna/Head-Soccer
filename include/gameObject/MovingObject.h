@@ -8,10 +8,11 @@ class MovingObject:public GameObject
 public:
 	MovingObject() = default;
 
-	virtual void move(sf::Vector2f pressed) = 0;
-	virtual void draw(sf::RenderWindow& window) const = 0;
-	virtual sf::Vector2f getPosition() const = 0;
+	virtual void move() = 0;
 	virtual void reset() = 0;
+
+	sf::Vector2f B2VecToSFVec(const b2Vec2& vector);
+	
 	~MovingObject() = default;
 
 private:

@@ -2,9 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include "Command.h"
 
-
-class GameState;
-
 class Quit : public Command
 {
 public:

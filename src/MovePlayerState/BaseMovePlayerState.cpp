@@ -3,14 +3,10 @@
 //-----------------------------------------------------------------------------------------------------
 BaseMovePlayerState::BaseMovePlayerState() :m_numOfJump(0)
 {
-
-	/*m_startSprite.push_back(sf::Vector2f(160, 126));
-	m_startSprite.push_back(sf::Vector2f(160, 244));
-	m_startSprite.push_back(sf::Vector2f(160, 8));
-	m_startSprite.push_back(sf::Vector2f(160, 365));*/
 }
 //-----------------------------------------------------------------------------------------------------
-void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float maxTime, sf::Sprite& sprite, sf::Vector2i& pos , sf::Vector2f basePos) {
+// Function to handle player movement logic
+void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float maxTime, sf::Sprite& sprite, sf::Vector2f size) {
 
 	float sec = float(m_moveClock.getElapsedTime().asMilliseconds());
 	if (maxTime < sec)
@@ -24,39 +20,23 @@ void BaseMovePlayerState::movePlayer(sf::Vector2f startPos,int maxSprite, float 
 		{
 			m_moveClock.restart();
 			m_numOfJump += 115;
-			resetToPosition(sprite, pos, basePos,startPos,m_numOfJump);
+			resetToPosition(sprite,startPos,m_numOfJump, size);
 		}
 	}
-
-}
-//-----------------------------------------------------------------------------------------------------
-bool BaseMovePlayerState::changeState(int maxSprite) {
-
-	return m_numOfJump > 110 * maxSprite;
 }
 //-----------------------------------------------------------------------------------------------------
 // Reset to default position if not jumping
-void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2i& pos,sf::Vector2f basePos,sf::Vector2f startPos, int numOfJump) {
+void BaseMovePlayerState::resetToPosition(sf::Sprite& sprite, sf::Vector2f startPos, int numOfJump, sf::Vector2f size) {
 
-	sf::IntRect characterRect(startPos.x + numOfJump, startPos.y, 80, 90); // Assuming each character is 32x32 pixels
+	sf::IntRect characterRect(int(startPos.x) + numOfJump, int(startPos.y), int(size.x), int(size.y)); // Assuming each character is 32x32 pixels
 	// Set the texture rectangle to the character's position and size on the sprite sheet
 	sprite.setTextureRect(characterRect);
-	sprite.setPosition(float(basePos.x + pos.x), float(basePos.y + pos.y));
 }
-
 //-----------------------------------------------------------------------------------------------------
-void BaseMovePlayerState::moveWithRange(int x, sf::Vector2i & pos, bool playerSide) {
+// Function to determine if state should change based on maxSprite
+bool BaseMovePlayerState::changeState(int maxSprite)const {
 
-	if (playerSide)
-	{
-		if (pos.x + x > -1400 && pos.x + x < 220)
-			pos.x += x;
-	}
-	else
-	{
-		if (pos.x + x > -220 && pos.x + x < 1400)
-			pos.x += x;
-	}
+	return m_numOfJump > 110 * maxSprite;
 }
 //-----------------------------------------------------------------------------------------------------
 BaseMovePlayerState::~BaseMovePlayerState()

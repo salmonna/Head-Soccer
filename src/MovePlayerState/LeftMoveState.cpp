@@ -1,24 +1,38 @@
 #include "MovePlayerState/LeftMoveState.h"
+#include "MovePlayerState/JumpMoveState.h"
+#include "MovePlayerState/StandPlayerState.h"
+#include <iostream>
+
 //----------------------------------------------------------
-LeftMoveState::LeftMoveState(StandPlayerState* standMoveState):m_standMoveState(standMoveState),m_currentState(nullptr)
+LeftMoveState::LeftMoveState():m_currentState(nullptr)
 {
 	m_startPos = sf::Vector2f(160, 244);
 }
 //----------------------------------------------------------
-void LeftMoveState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide) {
+// Handles movement logic for left movement state,
+//  triggers jump state or transitions to standing state based on conditions.
+void LeftMoveState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
-	moveWithRange(-5,pos, playerSide);
-	movePlayer(m_startPos, 6, 10,sprite,pos,basePos);
-
+	if (sf::Keyboard::isKeyPressed(key.JUMP))
+	{
+		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 0.f));
+		m_currentState = std::make_unique<JumpMoveState>(false);
+		return;
+	}
+	else {
+		body->SetLinearVelocity(b2Vec2(-10.f, body->GetLinearVelocity().y));
+		movePlayer(m_startPos, 6, 10, sprite, sf::Vector2f(80, 95));
+	}
 	if (changeState(6)) {
 
-		m_currentState = (BaseMovePlayerState*)m_standMoveState;
+		m_currentState = std::make_unique<StandPlayerState>();
 	}
 }
 //----------------------------------------------------------
-BaseMovePlayerState* LeftMoveState::handleMoveStatus() {
+// Returns a unique pointer to the current player state and resets the current state to null.
+std::unique_ptr<BaseMovePlayerState> LeftMoveState::handleMoveStatus() {
 
-	BaseMovePlayerState* temp = m_currentState;
+	std::unique_ptr<BaseMovePlayerState> temp = std::move(m_currentState);
 	m_currentState = nullptr;
 
 	return temp;

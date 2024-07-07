@@ -6,18 +6,10 @@
 class Goal : public StaticObject
 {
 public:
-	Goal();
-	
-	virtual void draw(sf::RenderWindow& window) const override;
-	void setRightGoal();
-
-	//sf::Sprite& getSprite(int i);
-
+	Goal() = default;
 
 	virtual ~Goal() = default;
 
 private:
-	std::vector<sf::Sprite> m_goalSprite;
-
 
 };

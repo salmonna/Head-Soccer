@@ -1,0 +1,10 @@
+configure_file ("winner.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("draw.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Brazil.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("England.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Germany.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Holand.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Italy.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Portugal.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Spain.png" ${CMAKE_BINARY_DIR} COPYONLY)
+

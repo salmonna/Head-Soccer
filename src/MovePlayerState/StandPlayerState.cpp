@@ -1,55 +1,45 @@
 #include"MovePlayerState/StandPlayerState.h"
-
+#include <iostream>
 
 //----------------------------------------------------------------------------------
-StandPlayerState::StandPlayerState(LeftMoveState* leftMoveState, RightMoveState* rightMoveState, JumpMoveState* jumeMoveState, KickMoveState* kickMoveState)
-	:m_leftMoveState(leftMoveState), m_rightMoveState(rightMoveState),m_jumpMoveState(jumeMoveState),m_kickMoveState(kickMoveState), m_nextState(nullptr)
+StandPlayerState::StandPlayerState():m_nextState(nullptr)
 {
-	
 }
 
 //----------------------------------------------------------------------------------
-void StandPlayerState::movement(sf::Sprite& sprite, sf::Vector2i& pos, sf::Vector2f basePos, int& gravity, bool playerSide) {
+// Handles player movement based on keyboard input, resetting position and setting next state.
+void StandPlayerState::movement(sf::Sprite& sprite, Keyboard key, b2Body* body) {
 
-	setKeyboard(playerSide);
+	resetToPosition(sprite);
+	body->SetLinearVelocity(b2Vec2(0.f, body->GetLinearVelocity().y));
 
-	resetToPosition(sprite,pos,basePos);
+	if (sf::Keyboard::isKeyPressed(key.SPACE)) {//kick
 
-	if (sf::Keyboard::isKeyPressed(m_keys.JUMP)) {//jump
-		m_nextState = m_jumpMoveState;
+		m_nextState = std::make_unique<KickMoveState>();
 	}
+	else if (sf::Keyboard::isKeyPressed(key.LEFT)) {//move left
 
-	else if (sf::Keyboard::isKeyPressed(m_keys.SPACE)) {//kick
-
-		m_nextState = m_kickMoveState;
+		m_nextState = std::make_unique<LeftMoveState>();
 	}
+	else if (sf::Keyboard::isKeyPressed(key.RIGHT)) {//move right
 
-	else if (sf::Keyboard::isKeyPressed(m_keys.LEFT)) {//move left
-
-		m_nextState = m_leftMoveState;
+		m_nextState = std::make_unique<RightMoveState>();
 	}
-
-	else if (sf::Keyboard::isKeyPressed(m_keys.RIGHT)) {//move right
-
-		m_nextState = m_rightMoveState;
-	}
-}
-//----------------------------------------------------------------------------------
-BaseMovePlayerState* StandPlayerState::handleMoveStatus() {
-	
-	BaseMovePlayerState* temp = m_nextState;
-	m_nextState = nullptr;
-	return temp;
-}
-//----------------------------------------------------------------------------------
-void StandPlayerState::setKeyboard(bool playerSide) {
-
-	if (playerSide) {
-		m_keys = Keyboard(sf::Keyboard::Space, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Down);
+	else if (sf::Keyboard::isKeyPressed(key.JUMP)) {//jump
+		body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, 0.f));
+		m_nextState = std::make_unique<JumpMoveState>(false);
 	}
 	else {
-		m_keys = Keyboard(sf::Keyboard::Q, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::S);
+		body->SetLinearVelocity(b2Vec2(0.f, body->GetLinearVelocity().y));  // Stop horizontal movement when no key is pressed
 	}
+
+}
+//----------------------------------------------------------------------------------
+// Retrieves the next move state and transfers ownership to the caller.
+std::unique_ptr<BaseMovePlayerState> StandPlayerState::handleMoveStatus() {
+	
+	std::unique_ptr<BaseMovePlayerState> temp = std::move(m_nextState);
+	return temp;
 }
 //----------------------------------------------------------------------------------
 StandPlayerState::~StandPlayerState()

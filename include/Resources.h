@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
+#include "power/Power.h"
+#include <memory>
 
 class Resources
 {
@@ -23,7 +25,7 @@ public:
 
 	sf::Texture& getGoalTexture(int index);
 	std::vector<sf::Texture>& getBallTexture();
-	std::vector<sf::Texture>& getCharactersTexture();
+	sf::Texture& getCharactersTexture();
 	std::vector<sf::Texture>& getGameModeTexture();
 	std::vector<sf::Texture>& getSelectTeam();
 
@@ -31,9 +33,17 @@ public:
 	std::vector<sf::Texture>& getPowerTexture();
 	std::vector<sf::SoundBuffer>& getBufferVec();
 
+	std::vector<sf::Texture>& getPlayerPower();
+	std::vector<sf::Texture>& getCountriesFlags();
+	std::shared_ptr<Power> getPower(bool PlayerSide);
 
+
+	void setSelectedPlayer(int index);
 
 	sf::Font & getFont();
+
+	std::vector<int> getPlayerOrder();
+	void resetPlayerOrder();
 
 private:
 
@@ -42,7 +52,6 @@ private:
 	Resources& operator=(const Resources&) = delete;
 	void loadFromFile(std::vector<std::string> fileNames, std::vector<sf::Texture>& texture);
 	Resources();
-	
 	std::vector<sf::Texture> m_menuTexture;
 	std::vector<sf::Texture> m_gameModeTexture;
 	std::vector<sf::Texture> m_boardTexture;
@@ -55,9 +64,19 @@ private:
 	std::vector<sf::Texture> m_pauseTexture;
 	std::vector<sf::Texture> m_powerTexture;
 
+	std::vector<sf::Texture> m_powerOfPlayer;
+
 	std::vector<sf::Texture> m_selectTeam;
+
+	std::vector<sf::Texture> m_countryFlags;
 
 	sf::Font m_font;
 
 	std::vector<sf::SoundBuffer> m_bufferVec;
+
+	std::vector<int> m_selectedPlayer;
+
+	std::vector<std::shared_ptr<Power>> m_PlayerPower;
+
+	int m_selectedIndex;
 };
