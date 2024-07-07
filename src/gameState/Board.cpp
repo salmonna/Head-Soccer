@@ -201,14 +201,14 @@ void  Board::drawGameObjects(sf::RenderWindow& window) const
 		window.draw(m_backGroundStadium[i]);
 	}
 
-	//draw the score board
-	ScoreBoard::getInstance().draw(window);
-
 	//draw the game objects
 	for (int i = 2; i < m_gameObject.size(); i++)
 	{
 		m_gameObject[i]->draw(window);
 	}
 	m_gameObject[0]->draw(window);
-	m_gameObject[1]->draw(window);
+	m_gameObject[1]->draw(window);	
+	
+	//draw the score board
+	ScoreBoard::getInstance().draw(window);
 }
