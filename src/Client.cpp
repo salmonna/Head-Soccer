@@ -16,7 +16,7 @@ Client::Client():m_connected(false),m_server("192.168.1.24"),m_port(53000)
 }
 //---------------------------------------------------------
 // Receives data from the server into a packet and processes it to update another player's state.
-void Client::receiveData(MovingObject& otherPlayer) {
+void Client::receiveData(MovingObject& ) {
     sf::Packet packet;
 
     if (m_socket.receive(packet) == sf::Socket::Done) {
