@@ -4,10 +4,13 @@
 #include "FileException.h"
 #include <exception>
 #include "SoundControl.h"
+#include "iostream"
 //----------------------------------------------------------------------
 // Constructor initializes ScoreBoard object
+
 ScoreBoard::ScoreBoard() :m_gameTime(90), timeCounterSec(m_gameTime % 60),
 timeCounterMin(m_gameTime / 60), m_p1Points(0), m_p2Points(0), m_progressP1(0), m_progressP2(0), m_goalSign(false)
+,m_startOfGame(true)
 {
 	try {
 		defineScoreBoardTexture();
@@ -25,7 +28,7 @@ void ScoreBoard::defineScoreBoardTexture()
 {
 
 	std::vector<sf::Texture>& texturs = Resources::getInstance().getScoreBoardTexture();
-	for (int i = 0; i < texturs.size()-1; i++)
+	for (int i = 0; i < texturs.size()-2; i++)
 	{
 		auto sprite = sf::Sprite(texturs[i]);
 		m_SpriteVec.push_back(sprite);
@@ -34,6 +37,8 @@ void ScoreBoard::defineScoreBoardTexture()
 	//--------------------goal sign------------------------------//
 	m_goalSprite.setTexture(texturs[1]);
 	m_goalSprite.setPosition(50, 200);
+	m_kickOffSprite.setTexture(texturs[2]);
+	m_kickOffSprite.setPosition(50,200);
 
 	sf::Font & font = Resources::getInstance().getFont();
 	for (int i = 0; i < 3; i++)
@@ -122,6 +127,8 @@ void ScoreBoard::draw(sf::RenderWindow & window) const
   
 	if (m_goalSign)
 		window.draw(m_goalSprite);
+	if (m_startOfGame)
+		window.draw(m_kickOffSprite);
 
 }
 //----------------------------------------------------------------------
@@ -242,11 +249,13 @@ bool ScoreBoard::timeIsOver()
 // Reset all score board data and progress
 void ScoreBoard::reset()
 {
+
 	timeCounterMin = m_gameTime / 60;
 	timeCounterSec = m_gameTime % 60;
 	m_p1Points = 0, m_p2Points = 0;
 
 	m_flags.clear();
+	m_startOfGame = true;
 	resetProgressP1();
 	resetProgressP2();
 }
@@ -272,6 +281,15 @@ void ScoreBoard::updateScore(int p1Points, int p2Points)
 	}
 	catch (const std::exception&) {
 		throw FileException("Deviation from the array");
+	}
+
+	if (m_startOfGame) {
+		m_kickOffSprite.move(10.f, 0.f);
+	}
+	if (m_clockGameTime.getElapsedTime().asSeconds() > 2.f)
+	{
+		m_startOfGame = false;
+		m_kickOffSprite.setPosition(0.f, 200.f);
 	}
 }
 //----------------------------------------------------------------------
@@ -300,6 +318,7 @@ void ScoreBoard::setGoalSign() {
 // Set flags for players based on their order
 void ScoreBoard::setFlagsPlayers() {
 
+
 	std::vector<int> Players = Resources::getInstance().getPlayerOrder();
 
 	for (int i = 0; i < Players.size(); i++)
@@ -311,6 +330,7 @@ void ScoreBoard::setFlagsPlayers() {
 	}
 
 	try {
+
 		m_flags[0].setPosition(1250.f, 165.f);
 		m_flags[1].setPosition(435.f, 165.f);
 	}
@@ -330,4 +350,7 @@ std::vector<sf::Sprite>& ScoreBoard::getFlags() {
 sf::Sprite& ScoreBoard::getSprite() {
 	return m_SpriteVec[0]; 
 };
-
+//----------------------------------------------------------------------
+sf::Clock& ScoreBoard::getClock() {
+	return m_clockGameTime;
+}

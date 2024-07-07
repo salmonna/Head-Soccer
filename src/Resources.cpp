@@ -27,7 +27,7 @@ Resources::Resources():m_selectedIndex(0){
 	std::vector<std::string> goalFilenames{ "Goal - Side.png","Goal - Back.png","Goal - Top.png" };
 	loadFromFile(goalFilenames, m_goalTexture);
 
-	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png","Goal.png" };
+	std::vector<std::string> ScoreBoardfileNames{ "ScoreBoard.png","Goal.png" ,"Kick Off.png" };
 	loadFromFile(ScoreBoardfileNames, m_scoreBoardTexture);
 
 	std::vector<std::string> gameMode{ "BackgroundGameMode.png", "MultiPlayer.png" ,"Player.png", "Online.png","BackgroundGameMode2.png" };

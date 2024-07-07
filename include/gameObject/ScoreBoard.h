@@ -39,6 +39,7 @@ public:
 	int getPoint(int num) const;
 	std::vector<sf::Sprite>& getFlags();
 	sf::Sprite& getSprite();
+	sf::Clock& getClock();
 
 
 private:
@@ -60,6 +61,7 @@ private:
 
 	//goalSign
 	bool m_goalSign;
+	bool m_startOfGame;
 
 	//time
 	int m_gameTime;
@@ -79,6 +81,7 @@ private:
 	std::vector<sf::Sprite> m_progressP2Sprite;
 	std::vector<sf::Sprite> m_flags;
 	sf::Sprite m_goalSprite;
+	sf::Sprite m_kickOffSprite;
 
 	//sound
 	sf::Sound m_whistle;
