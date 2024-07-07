@@ -85,3 +85,7 @@ The game features various states, power-ups, and AI-controlled players to provid
 - **Design Patterns**: Factory pattern for object creation, State pattern for player movements.
 - **Modular Architecture**: Separation of concerns with distinct classes for different functionalities,
 - **making the codebase easier to maintain and extend.
+
+## other comments:
+--------------------
+- **The game is played in full screen.
