@@ -12,7 +12,7 @@ SoundControl::SoundControl()
 	m_whistle.setVolume(5);
 
 	m_crowd.setBuffer(Resources::getInstance().getBufferVec()[3]);
-	m_crowd.setVolume(15);
+	m_crowd.setVolume(25);
 
 	m_goalSound.setBuffer(Resources::getInstance().getBufferVec()[4]);
 	m_goalSound.setVolume(5);

@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 // Constructor initializes UserPlayer object based on side and keyboard input
 UserPlayer::UserPlayer(bool right, Keyboard keys) :m_keys(keys), m_PlayerSide(right), m_aura(false), m_powerOnPlayer(false),m_powerClock(),
-m_currentMoveState(std::make_unique<StandPlayerState>())
+m_currentMoveState(std::make_unique<StandPlayerState>()),m_body(nullptr)
 {
 	if (!m_PlayerSide)
 		m_basePosition = sf::Vector2f(272, 775);
