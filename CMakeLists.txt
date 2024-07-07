@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.26)
 
-project (oop2_ex03)
-set (MY_AUTHORS "")
+project (Head_Soccer)
+set (MY_AUTHORS "Yosef_Tadesse-Daniel_Zalka-Selemon_Neguse")
 
 include (cmake/CompilerSettings.cmake)
 
