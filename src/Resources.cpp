@@ -62,7 +62,7 @@ Resources::Resources():m_selectedIndex(0){
 
 	// Loading sound buffers.
 
-	std::vector<std::string> soundStr = {"super saiyan sound.wav","Whistle.wav","Intro Song.wav" ,"Crowd.wav","GoalSound.wav"};
+	std::vector<std::string> soundStr = {"super-saiyan-sound.ogg","Whistle.ogg","Intro-Song.ogg" ,"Crowd.ogg","GoalSound.ogg"};
 	for (int i = 0; i < soundStr.size(); i++) {
 		sf::SoundBuffer buffer;
 		if (!buffer.loadFromFile(soundStr[i])) {
