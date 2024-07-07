@@ -1,5 +1,3 @@
-
-
 #pragma once
 #include "Resources.h"
 #include "FileException.h"

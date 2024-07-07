@@ -8,21 +8,16 @@
 #include "gameObject/Goal.h"
 #include "gameObject/MovingObject.h"
 #include "gameObject/UserPlayer.h"
-//#include "Client.h"
 #include "GameState.h"
 #include "gameState/GameResults.h"
 #include "Menu.h"
 #include "Pause.h"
-//class Pause;
 #include "Box2d.h"
-
 #include "gameObject/ComputerPlayer.h"
-
 #include "MovePlayerState/BaseMovePlayerState.h"
 #include "MovePlayerState/LeftMoveState.h"
 #include "MovePlayerState/RightMoveState.h"
 #include "MovePlayerState/StandPlayerState.h"
-
 #include "Command/Button.h"
 
 class Controller;
