@@ -27,15 +27,13 @@ The game features various states, power-ups, and AI-controlled players to provid
 - **Board.h + Board.cpp**: Manages the game board, including layout and elements.
 - **Box2d.h + Box2d.cpp**: Integrates the Box2D physics engine for handling physics simulations.
 - **GameModeSelection.h + GameModeSelection.cpp**: Manages the game mode selection screen.
-- **Client.h + Client.cpp**: Handles client-side networking functionality.
 - **GameResults.h + GameResults.cpp**: Displays and manages game results.
-- **GameSetting.h + GameSetting.cpp**: Manages game settings and configurations.
 - **GameState.h**: Defines different states the game can be in.
 - **Ball.h + Ball.cpp**: Represents the ball object in the game.
 - **ComputerPlayer.h + ComputerPlayer.cpp**: Implements the behavior of a computer-controlled player.
 - **KickMoveState.h + KickMoveState.cpp**: Implements the kicking state for player movements.
 - **Menu.h + Menu.cpp**: Manages the main menu and navigation.
-- **GameObject.h + GameObject.cpp**: Defines the base class for all game objects.
+- **GameObject.h**: Defines the base class for all game objects.
 - **LeftMoveState.h + LeftMoveState.cpp**: Implements the state for moving left.
 - **Pause.h + Pause.cpp**: Manages the pause functionality in the game.
 - **Goal.h**: Represents a goal object in the game.
