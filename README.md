@@ -10,7 +10,7 @@ The game features various states, power-ups, and AI-controlled players to provid
 Yosef Tadesse,
 Daniel Zalka,
 Selemon Neguse  
-Uploading headSoccer_.mp4…
+[Uploading headSoccer_.mp4…](https://github.com/user-attachments/assets/f04a29f1-5698-4a47-83fa-042f44fd25fd)
 
 ## Data Structures:
 
