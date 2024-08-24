@@ -7,8 +7,8 @@ The game features various states, power-ups, and AI-controlled players to provid
 ## Author: 
 
 
-Yosef Tadesse
-Daniel Zalka
+Yosef Tadesse,
+Daniel Zalka,
 Selemon Neguse  
 
 ## Data Structures:
