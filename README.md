@@ -12,7 +12,7 @@ Daniel Zalka,
 Selemon Neguse  
 
 
-![Uploading project-1 headsoccer.png…]()
+<img width="956" alt="project-1 headsoccer" src="https://github.com/user-attachments/assets/a550648d-2b85-4812-a4da-2614984b16c2">
 
 
 [Uploading headSoccer_.mp4…](https://github.com/user-attachments/assets/f04a29f1-5698-4a47-83fa-042f44fd25fd)
