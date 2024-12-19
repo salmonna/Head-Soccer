@@ -4,9 +4,10 @@
 #include "gameObject/scoreBoard.h"
 #include "gameObject/ScoreBoard.h"
 #include "SoundControl.h"
+
 //-----------------------------------------------------------------------------
 // Constructor initializes member variables and sets up the player
-ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball>& ball):m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock(),m_ball(ball)
+ComputerPlayer::ComputerPlayer(std::shared_ptr<Ball>& ball):m_numOfJump(0), m_jump(false),m_aura(false),m_powerOnPlayer(false),m_powerClock(),m_ball(ball), m_body(nullptr)
 {
 
 	sf::Vector2f pos(550, 80);
@@ -60,6 +61,13 @@ void ComputerPlayer::updateMovement(const sf::Vector2f ballPosition, float lengt
 	const float kickRange = 100.0f;
 	if (m_jump) {
 		movePlayer(m_startSprite[2], 7, 100);
+	}
+
+	if (m_ball->getPower()->powerIsActive() && ((int)m_sprite.getPosition().x != (int)m_basePosition.x))
+	{
+		m_body->SetLinearVelocity(b2Vec2(-7.f, m_body->GetLinearVelocity().y));
+		movePlayer(m_startSprite[1], 6, 10);
+		return;
 	}
 
 	if (length > kickRange) {
